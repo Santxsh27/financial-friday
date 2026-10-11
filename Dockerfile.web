@@ -1,7 +1,7 @@
 # Small, reproducible web layer over the verified API release.
 # The immutable normal Cloud Build below contains all verified dependencies.
 # Copy the complete UI package, including imported presentation modules/assets.
-FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:505371b34cfcce422b39b9ac1df2a8e8c77d54ab796ce5de060d4316832885c6
+FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:76730623641ad89904b08b5add9c4f40c0f035b7e51a6d7662514e6025669321
 COPY src/carapace_integrations /app/src/carapace_integrations
 ENV PYTHONPATH=/app/src
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=3)"

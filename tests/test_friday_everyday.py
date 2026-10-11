@@ -21,6 +21,7 @@ class EverydayInterfaceTests(unittest.TestCase):
         self.assertIn('friday-team-logo.png', ASSETS)
         self.assertIn("everydayImage('friday-team-logo','everyday-team-brand')", EVERYDAY_JS)
         self.assertIn('Vaultkeepers team logo', EVERYDAY_JS)
+        self.assertIn("present.tone==='good'?'check-circle'", EVERYDAY_JS)
 
     def run_js(self, script):
         node = shutil.which('node')

@@ -6,8 +6,9 @@ Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo step
 
 ### Current improvement: live Friday core and independent outcome replay (0.17.0)
 
-The selected **Money Journey** interface uses dark jade, mint actions and warm
-coral attention states. Friday's original code-rendered instrument aperture appears
+The **Money Journey** interface uses a soft midnight-lavender palette, lilac
+actions, peach accents and rounded task cards. Mint success, rose holds and amber
+review states remain distinct. Friday's original code-rendered instrument aperture appears
 on Home, the bill plan and task results, with concentric segmented rings, subtle
 scanning motion and pointer response. It does not use movie artwork or logos.
 Its status follows actual request/run evidence;

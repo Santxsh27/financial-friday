@@ -1,5 +1,9 @@
 # Money Journey design QA — 0.16.0
 
+Latest palette: soft midnight lavender, lilac actions, peach task accents and
+rounded cards supersede the historical jade treatment below. Status labels and
+mint/rose/amber meanings remain distinct. See `docs/SOFT_THEME_0170.md`.
+
 ## Current update — 0.17.0
 
 The historical raster-orb limitation below is superseded: the companion and brand

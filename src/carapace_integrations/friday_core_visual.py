@@ -21,7 +21,7 @@ CORE_JS = r"""
         const pixels=Math.round(size*scale);if(core.canvas.width!==pixels){core.canvas.width=pixels;core.canvas.height=pixels;}
         c.setTransform(scale,0,0,scale,0,0);c.clearRect(0,0,size,size);c.shadowBlur=0;
         const state=core.host.closest('.journey-companion')?.dataset.state||'idle';
-        const rgb=state==='held'?'255,122,135':state==='attention'?'255,207,120':state==='complete'?'108,242,191':state==='working'?'97,211,255':'115,207,241';
+        const rgb=state==='held'?'255,159,174':state==='attention'?'255,214,167':state==='complete'?'167,233,205':state==='working'?'164,212,255':'203,185,255';
         const animate=coreMotionAllowed();const t=animate?time/1000:0;
         const cx=size/2,cy=size/2,turn=t*(state==='working'?.48:.1),tau=Math.PI*2;
         const glow=c.createRadialGradient(cx,cy,size*.055,cx,cy,size*.47);glow.addColorStop(0,'rgba('+rgb+',.2)');glow.addColorStop(.58,'rgba('+rgb+',.045)');glow.addColorStop(1,'rgba('+rgb+',0)');c.fillStyle=glow;c.fillRect(0,0,size,size);

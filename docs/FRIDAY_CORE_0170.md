@@ -11,6 +11,15 @@ state colours, bounded animation, reduced motion and all financial behaviour
 remain unchanged. This is an original HUD-inspired implementation, not a legal
 clearance claim or exact reproduction of a film interface.
 
+The visual-only source `d181f15` was built by Cloud Build
+`456ede2c-0252-4fa5-aba7-b2368213c3a8`. Web revision `hud1011` now serves 100%
+using image digest `sha256:59cbe706852a98a884de65298fea4f0987726023b265505db0fd82963dc5d454`.
+The API remains on `core1011b`; no financial logic, access or model settings were
+changed. Native validation: 301 tests, 300 passed and one optional skip. Docker:
+301 tests, 289 passed and twelve optional dependency/integration skips. Browser
+rendering and motion pause passed without errors. Original release details below
+describe the earlier orbital variant; this update supersedes its visual design.
+
 The selected Money Journey layout remains. The assistant is now code-rendered,
 not a raster image: perspective-projected segmented orbits, foreground/background
 depth, moving particles, a breathing energy core and pointer parallax. Pending,

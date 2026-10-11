@@ -45,7 +45,7 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.17.0, October 11.** The `core1011b` API and web revisions
+**Live release: 0.17.0, October 11.** The `core1011b` API and `hud1011` web revisions
 serve the animated Friday core, Money Journey and independent saved-outcome replay.
 Zero-traffic candidate checks passed before promotion: transactional Firestore,
 reserve-aware planning, strict consent rejection and rejected anonymous access.

@@ -3,8 +3,9 @@
 ## Current update — 0.17.0
 
 The historical raster-orb limitation below is superseded: the companion and brand
-now use a live Canvas renderer with perspective-projected orbits, moving energy,
-pointer parallax and evidence-driven status colours. This is not WebGL, voice
+now use a live Canvas renderer with concentric segmented instrument rings, a
+hollow aperture, scanning motion and evidence-driven status colours. The first
+tilted-orbit variant was replaced by the original HUD aperture. This is not WebGL, voice
 activity or a bank monitor. Motion-off and reduced-motion pause animation.
 
 Fresh scoped checks cover Home, bill planning, Activity and successful receipt

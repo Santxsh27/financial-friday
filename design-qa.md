@@ -55,7 +55,8 @@ Loading/empty/unavailable states are explicit. No timer turns stages green. Test
 cover preview failure, financial authority, asset traversal and cloud authentication.
 Hidden gates, focus outlines, semantic native controls and reduced-motion/motion-off
 support remain; original file/privacy notices and execution consent are retained.
-No saved permission was changed by visual QA.
+No saved permission was changed by visual QA. The existing Motion control was
+tested: motion-off yields `animation-name: none`, then restored to on.
 
 Native: 307 tests, 306 passes / one optional skip. Isolated Docker: 307 tests,
 295 passes / twelve optional skips. Tooling: eleven passes. No failures.
@@ -75,3 +76,12 @@ used a UI-only overlay on the existing tested Docker runtime, preserving depende
 and volumes. Production uses the normal clean-source Cloud Build. Real payments,
 voice, new connectors, extensive assistive-technology testing and judge enrollment
 remain outside this UI release.
+
+## Live handoff
+
+The protected zero-traffic candidate loaded actual cloud records (one eligible bill,
+seven needing verification), all home assets and the exact fresh bill review.
+`financial-friday-web-everyday1011` was promoted to 100% traffic. The original live
+URL was reloaded and verified with no browser errors. Live evidence:
+`everyday-live.png` in the folder above. The API, IAP and permissions are unchanged.
+Temporary responsive viewport overrides were reset before handoff.

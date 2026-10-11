@@ -30,4 +30,21 @@ discloses this. Current bill/receipt values come from APIs, not mock constants.
 307 application tests: native 306 passes / one optional skip; isolated Docker 295
 passes / twelve optional skips. Eleven tooling tests pass. Visual evidence and
 iteration history are in [`design-qa.md`](../design-qa.md).
-Verified Cloud Run release identifiers are appended after deployment.
+## Verified Cloud Run release
+
+- Full clean-source build: `e194425c-d67a-4e9b-88e0-25ec2e049b31`, source `4a186b6`.
+- Final web-layer build: `934dda46-e4e4-4494-9a22-0bf7de103aec`, source `b7ca9af`.
+- Immutable final image: `sha256:00795154e53398bf04674fd0f21e130f89a976482bd85ac6f695537b4812991f`.
+- Web revision: `financial-friday-web-everyday1011`; private API remains `core1011b`.
+- Existing live URL: `https://financial-friday-web-171681243260.asia-south1.run.app/`.
+
+The zero-traffic candidate loaded current cloud records and every home image,
+selected the exact ₹2,479 provider record with its recipient, and returned no browser
+errors. Read-only backend verification confirmed version 0.17.0, unchanged balance,
+no payment authority in the plan, rejection of unconfirmed execution and anonymous
+access, disabled cloud follow-through, and zero payment requests. No live AI call
+or new payment was made for this presentation release. IAM/IAP settings are unchanged.
+
+`Dockerfile.web` now copies the complete UI package over the immutable tested base,
+including all imported modules and assets. `cloudbuild.web.yaml` supports repeatable
+web-only builds without rebuilding dependencies or replacing the API.

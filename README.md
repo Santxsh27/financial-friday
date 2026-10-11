@@ -58,8 +58,13 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.17.0, October 11.** The `core1011b` API and `soft1011` web revisions
-serve the animated Friday core, Money Journey and independent saved-outcome replay.
+**Live release: 0.17.0, October 11.** The `core1011b` API and `everyday1011` web revision
+serve the selected Everyday interface, bill journey and independent saved-outcome replay.
+The UI-only rollout retained the private API, IAP enrollment and saved permissions.
+Authenticated candidate checks loaded current bills and assets, selected the exact
+reviewed bill and produced no console errors. A read-only cloud smoke check found
+unchanged balance, zero payment requests and rejected anonymous access. See
+[Everyday interface release notes](docs/EVERYDAY_INTERFACE_1011.md).
 Zero-traffic candidate checks passed before promotion: transactional Firestore,
 reserve-aware planning, strict consent rejection and rejected anonymous access.
 Live Vertex generated a held plan (three model calls); independent replay returned
@@ -74,10 +79,12 @@ payment, and the cloud balance stayed unchanged. See [current release notes](doc
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
 **Latest validated code: 0.17.0.** Recent journal queries sort by time before
-limiting. 302 application tests ran (301 passed, one optional skip); eleven tooling
+limiting. 307 application tests ran (306 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and
-the Firestore transaction callback. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)
+the Firestore transaction callback, plus the read-only UI projection and protected
+resource routes. The isolated Docker suite ran 307 tests (295 passed, twelve optional
+skips), with no failures. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)
 for prior browser and deployment evidence. Current notes are in
 [0.17.0](docs/FRIDAY_CORE_0170.md). Synthetic tests are not fraud-accuracy results.
 

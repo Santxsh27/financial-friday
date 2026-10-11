@@ -13,10 +13,12 @@ from urllib.request import Request, urlopen
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
-from carapace_api.financial_friday_routes import FollowThroughRequest
+from carapace_api.financial_friday_routes import FollowThroughRequest, BillHandleRequest
 from pydantic import BaseModel, Field
 from typing import Literal
 from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse
+from pathlib import Path
 from starlette.concurrency import run_in_threadpool
 from starlette.requests import Request as StarletteRequest
 from .operations_ui import OPERATIONS_HTML
@@ -258,6 +260,10 @@ def create_demo_app() -> FastAPI:
     async def home() -> HTMLResponse:
         return HTMLResponse(FINANCIAL_FRIDAY_HTML, headers={"Cache-Control": "no-store"})
 
+    @application.get("/assets/friday-jade-orb.png")
+    async def friday_assistant_asset():
+        return FileResponse(Path(__file__).parent / "assets" / "friday-jade-orb.png", media_type="image/png")
+
     @application.get("/operations", response_class=HTMLResponse)
     async def operations() -> HTMLResponse:
         return HTMLResponse(OPERATIONS_HTML, headers={"Cache-Control": "no-store"})
@@ -341,6 +347,14 @@ def create_demo_app() -> FastAPI:
         code, result = await run_in_threadpool(_api_call, api_base_url, "/v1/friday/bill-plan", "GET")
         if code != 200:
             raise HTTPException(code, "Bill plan unavailable")
+        return result
+
+    @application.post("/api/friday/bills/handle")
+    async def friday_handle_bill(request: BillHandleRequest):
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            "/v1/friday/bills/handle", "POST", request.model_dump())
+        if code != 200:
+            raise HTTPException(code, result.get("detail", "Outcome unavailable. Check activity before retrying."))
         return result
 
     @application.get("/api/friday/test-provider/bills")

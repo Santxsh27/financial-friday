@@ -20,6 +20,8 @@ def plan_bills(snapshot: dict, *, max_bills: int = 32, max_states: int = 10000) 
         "scope": "ARTIFICIAL_MONEY", "read_only": True, "money_moved": False,
         "payment_authorized": False, "currency": "INR", "state": "PLANNED",
         "method": "EXACT_DEADLINE_PARETO_DP", "available_minor": available,
+        "protected_balance_minor": snapshot.get("protected_balance_minor"),
+        "balance_minor": snapshot.get("balance_minor"),
         "selected": [], "deferred": [], "review": [], "already_recorded": [],
         "planned_total_minor": 0, "remaining_above_reserve_minor": available,
         "objective": "Maximise bill count on earliest due dates first; minimise spend for ties.",
@@ -33,7 +35,7 @@ def plan_bills(snapshot: dict, *, max_bills: int = 32, max_states: int = 10000) 
         return result
     candidates, identities = [], set()
     for raw in snapshot.get("bills", []):
-        row = {k: raw.get(k) for k in ("bill_reference", "provider_id", "provider_name", "payee_id", "amount_minor", "due_date")}
+        row = {k: raw.get(k) for k in ("bill_reference", "provider_id", "provider_name", "payee_id", "amount_minor", "due_date", "bill_sha256")}
         identity = (row["provider_id"], row["bill_reference"])
         if identity in identities or not all(isinstance(row[k], str) and row[k] for k in ("provider_id", "bill_reference", "payee_id")):
             result["state"] = "AMBIGUOUS_RECORDS"

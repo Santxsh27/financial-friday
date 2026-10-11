@@ -69,3 +69,16 @@ def bill_increase_requires_review(bill: TestProviderBill, review_percent: int) -
     """Use exact integer arithmetic; a missing comparison never implies an increase."""
     return (bill.previous_amount_minor is not None
             and bill.amount_minor * 100 > bill.previous_amount_minor * (100 + review_percent))
+
+
+def provider_bill_matches(current: dict, expected: dict) -> bool:
+    """Compare validated fields, including defaults absent in older records.
+
+    This is not fuzzy matching. Invalid/extra fields and real changes fail closed.
+    It avoids treating omitted optional defaults as a changed payment instruction.
+    """
+    try:
+        return (TestProviderBill.model_validate(current).model_dump()
+                == TestProviderBill.model_validate(expected).model_dump())
+    except (ValueError, TypeError):
+        return False

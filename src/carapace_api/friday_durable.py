@@ -5,7 +5,7 @@ from typing import Any, Protocol
 from copy import deepcopy
 from hashlib import sha256
 
-from carapace_core.friday_live import FridayMandate, TestProviderBill, bill_increase_requires_review
+from carapace_core.friday_live import FridayMandate, TestProviderBill, bill_increase_requires_review, provider_bill_matches
 
 
 KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency"}
@@ -148,7 +148,7 @@ class FirestoreFridayState:
             elif prior_idem.exists:
                 reason = ["IDEMPOTENCY_CONFLICT"]
             elif live:
-                if not bill_record.exists or bill_record.to_dict() != live["authoritative_bill"]:
+                if not bill_record.exists or not provider_bill_matches(bill_record.to_dict(), live["authoritative_bill"]):
                     reason = ["PROVIDER_CHANGED"]
                 elif not mandate_record.exists or not balance_record.exists:
                     reason = ["MANDATE_OR_ACCOUNT_MISSING"]
@@ -159,6 +159,8 @@ class FirestoreFridayState:
                         reason = ["MANDATE_CHANGED"]
                     elif output.get("automatic") and (not rules["automatic_sandbox_execution"] or payload["amount_minor"] > rules["automatic_payment_limit_minor"]):
                         reason = ["AUTOMATIC_PERMISSION_CHANGED"]
+                    elif output.get("enforce_single_payment_limit") and payload["amount_minor"] > rules["automatic_payment_limit_minor"]:
+                        reason = ["SINGLE_PAYMENT_LIMIT_CHANGED"]
                     elif bill_increase_requires_review(
                         TestProviderBill.model_validate(live["authoritative_bill"]),
                         FridayMandate.model_validate(rules).bill_increase_review_percent,

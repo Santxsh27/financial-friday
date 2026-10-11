@@ -33,6 +33,13 @@ class FridayRunRequest(BaseModel):
     planner: Literal["configured", "local"] = "configured"
 
 
+class BillHandleRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    bill_reference: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{3,79}$")
+    expected_bill_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    confirm_sandbox_execution: bool = Field(strict=True)
+
+
 DOCUMENT_TYPES = {"image/png", "image/jpeg", "image/webp", "application/pdf"}
 MAX_DOCUMENT_BYTES = 8 * 1024 * 1024
 
@@ -114,6 +121,21 @@ def register_financial_friday_routes(application, service, authenticate):
     def follow_through(request: FollowThroughRequest, tenant: TenantContext = Depends(authenticate)):
         from .friday_followthrough import acknowledge_recorded_bill
         return acknowledge_recorded_bill(service, tenant.tenant_id, request.bill_reference)
+
+    @application.post("/v1/friday/bills/handle", tags=["financial-friday"])
+    async def handle_bill(request: BillHandleRequest, tenant: TenantContext = Depends(authenticate)):
+        from .friday_bill_handle import handle_reviewed_bill
+        if not request.confirm_sandbox_execution:
+            raise HTTPException(422, "Explicit artificial-money execution confirmation required")
+        try:
+            return await run_in_threadpool(handle_reviewed_bill, service, tenant.tenant_id,
+                                          request.bill_reference, request.expected_bill_sha256)
+        except KeyError as error:
+            raise HTTPException(404, "Bill not found in this workspace") from error
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+        except FridayUnderstandingUnavailable as error:
+            raise HTTPException(503, "Understanding unavailable; no payment submitted") from error
 
     @application.get("/v1/friday/storage-status", tags=["financial-friday"])
     def storage_status(tenant: TenantContext = Depends(authenticate)):

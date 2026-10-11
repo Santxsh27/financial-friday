@@ -68,6 +68,27 @@ class CloudWebTests(unittest.TestCase):
         self.assertEqual(self.calls[0][1:3], ("/v1/friday/live-input", "POST"))
         self.assertEqual(response.headers["cache-control"], "no-store")
 
+    def test_reviewed_bill_route_is_authenticated_same_origin_and_post_only(self):
+        path = "/api/friday/bills/handle"
+        self.assertEqual(self.client.post(path, json={}).status_code, 401)
+        headers = dict(self.headers, Origin="https://evil.example")
+        self.assertEqual(self.client.post(path, headers=headers, json={}).status_code, 403)
+        self.assertEqual(self.client.get(path, headers=self.headers).status_code, 404)
+        self.assertEqual(self.calls, [])
+        body = {"bill_reference": "BILL-1234", "expected_bill_sha256": "a" * 64,
+                "confirm_sandbox_execution": True}
+        self.assertEqual(self.client.post(path, headers=self.headers, json=body).status_code, 200)
+        self.assertEqual(self.calls[-1][0:3], ("one", "/v1/friday/bills/handle", "POST"))
+
+    def test_companion_asset_is_fixed_authenticated_and_real_png(self):
+        path = "/assets/friday-jade-orb.png"
+        self.assertEqual(self.client.get(path).status_code, 401)
+        image = self.client.get(path, headers=self.headers)
+        self.assertEqual(image.status_code, 200)
+        self.assertEqual(image.headers["content-type"], "image/png")
+        self.assertTrue(image.content.startswith(b"\x89PNG\r\n\x1a\n"))
+        self.assertEqual(self.client.get("/assets/../README.md", headers=self.headers).status_code, 404)
+
     def test_unrestricted_proxy_and_legacy_routes_absent(self):
         for path in ("/api/friday/../admin", "/api/friday/watch", "/api/friday/inbox",
                      "/api/friday/https://evil.example", "/operations", "/docs"):

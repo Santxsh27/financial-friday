@@ -4,18 +4,24 @@ Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo step
 
 ## A bounded AI operator for everyday financial tasks
 
-### Current improvement: clearer tasks and visible AI correction (October 11)
+### Current improvement: Money Journey and reviewed-bill execution (0.16.0)
 
-Release 0.15.2 adds violet primary actions, distinct teal/document-violet/amber
-task cards and evidence-based green/red/amber outcomes. Result screens now
-explain whether live Gemini planned, corrected a rejected proposal, or was not
-needed. Recorded planning calls, rejected proposals and confirmed new sandbox
-payments are shown separately. An AI plan correction is **not** a bank code
-repair. No new AI capability or financial authority is claimed by this UI change.
+The selected **Money Journey** interface uses dark jade, mint actions and warm
+coral attention states. Friday's animated glass-orb companion appears on Home,
+the bill plan and task results. Its status follows actual request/run evidence;
+it does not claim continuous monitoring or advance success stages on a timer.
+Reduced motion, labelled states and keyboard controls remain supported.
 
-Timed demonstration progress has been removed: the screen waits for the server
-and reconstructs stages from returned run evidence. Unknown outcomes never get
-a completed-action stage. The original permission gates and local fallback remain.
+The functional change is **less retyping**: select a saved provider bill, review
+the exact amount and recipient, then choose **Check & handle in sandbox**.
+Gemini interprets that exact record and proposes the restricted payment program.
+Independent checks prevent it from switching the bill, recipient or amount.
+Current provider details, saved limits and reserve are checked again before the
+atomic artificial-money commit. A changed record or permission stops execution.
+Receipt-first execution prevents a second financial effect for the same bill.
+
+This extends the existing bounded operator; it is not a claim of unrestricted
+financial agency, new bank access or autonomous production code repair.
 
 ### One connected bill-handling journey
 
@@ -24,13 +30,11 @@ a bill, deciding what fits a protected reserve, checking its payment details,
 handling an allowed task and confirming the recorded outcome. Documents and
 statements support that journey; Friday is not an unrestricted finance Jarvis.
 
-The new local interface leads with **Plan my bills**. Eligible plan rows have
-**Prepare bill check**, which fills the request from the current plan without
-submitting it. Choosing **Check bill** then uses the original interpretation,
-provider, permission and execution gates. Plan selection is never authorization;
-balances and evidence are rechecked at execution. Activity now shows provider,
-time and a labelled approved limit, not a technical case ID or a misleading
-claim that the limit was paid. Recorded receipts still open read-only.
+Home shows current eligible bills and **Open my bill plan**. Selecting a row
+does not act. The separate, explicit sandbox action binds the reviewed provider
+record and uses the original financial verifier/executor. Activity shows provider,
+time and a labelled approved limit, not a misleading claim that the limit was
+paid. Recorded receipts still open read-only.
 
 **Live release: 0.15.2, October 11.** The `clarity1011` API and web revisions
 passed zero-traffic checks and were promoted with private access unchanged.
@@ -39,11 +43,12 @@ passed. Live Vertex interpreted an artificial paid notice without preparing a
 payment, and the cloud balance stayed unchanged. See [current release notes](docs/CLARITY_0152.md)
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
-**Latest local work (not deployed):** recent cloud journal queries now sort by
-time before limiting, and the local daily briefing preserves the same chronology.
-271 application tests ran (270 passed, one optional skip); eleven tooling tests
-passed. The next UI is being selected from three task-focused design directions,
-not claimed as shipped. See [redesign and journal-fix notes](docs/FRIDAY_REDESIGN_1011.md).
+**Latest validated local work: 0.16.0.** Recent journal queries sort by time before
+limiting. 287 application tests ran (286 passed, one optional skip); eleven tooling
+tests passed. New tests cover reviewed-record changes, exact model fields,
+strict consent, tenant isolation, replay, and changed limits in both SQLite and
+the Firestore transaction callback. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)
+for browser and deployment evidence. Synthetic tests are not fraud-accuracy results.
 
 ### Reserve-aware planning (0.15.0 live)
 

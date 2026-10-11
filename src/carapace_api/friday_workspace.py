@@ -59,7 +59,7 @@ def financial_workspace(service, tenant: str) -> dict:
                       if valid else "Existing receipt does not match this bill; do not pay again without reconciliation.")
         elif bill_increase_requires_review(bill, mandate.bill_increase_review_percent):
             status, reason = "REVIEW_INCREASE", "Increase exceeds your chosen review threshold; this is not a fraud verdict."
-        bills.append({**bill.model_dump(), "status": status, "reason": reason,
+        bills.append({**bill.model_dump(), "bill_sha256": sha256_hex(bill.model_dump()), "status": status, "reason": reason,
                       "history_status": "AVAILABLE" if bill.previous_amount_minor else "NOT_AVAILABLE"})
     bills.sort(key=lambda b: (b["due_date"], b["bill_reference"]))
     committed = sum(b["amount_minor"] for b in bills if b["status"] != "RECORDED_PAID")

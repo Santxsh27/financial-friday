@@ -11,8 +11,8 @@ Save an instruction such as “Handle verified bills up to ₹3,000, protect ₹
 1. Start Docker Desktop and open this folder in Visual Studio Code.
 2. Run `docker compose --profile anthos up -d --build api anthos-demo`.
 3. Open http://localhost:8090 for Friday and http://localhost:8080/docs for the API.
-4. Open **My rules** to inspect/save standing permission. Open **Bills → Demo provider setup** to publish a fresh artificial bill.
-5. Paste a request directly on **Friday home**, use **Bills** for a longer message or **Documents** for its image/PDF. Submitting a valid request may complete an artificial payment within your saved automatic permission.
+4. Open **More → My rules** to inspect/save standing permission. Open **More → Check a bill → Try a demo or set up a test bill** to publish a fresh artificial bill.
+5. Use **Open my bill plan** to select a saved bill and **Check & handle in sandbox** without retyping. Alternatively paste a request on Home, or choose **Read a document** for its image/PDF. These actions can complete an artificial payment within the disclosed rules; no real funds are connected.
 6. Friday opens a separate **Run** screen. Change the amount or recipient and check that it stops.
 7. Use **Safety lab** for controlled subscription/timeout cases, and **Activity** to reopen existing receipts without paying again.
 8. Home's **Your sandbox briefing** counts recent recorded outcomes, not all-time totals. Use Activity search and outcome filters to find a receipt. **How Friday works** explains the journey; Escape closes help and `/` focuses the home command outside text fields.
@@ -43,9 +43,15 @@ Local SQLite mode runs the complete artificial-money journey. Version 0.13.2 inc
 
 Python, FastAPI, Pydantic, SQLite, cryptography/Ed25519, Google Gen AI SDK, Google Firestore client, Docker Compose, HTML/CSS/JavaScript and browser speech transcription. The repository retains earlier Bank of Anthos artificial-bank work.
 
-Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Build, service identity, Secret Manager and budget alerts. The API is version 0.14.1, using Gemini 3.5 Flash-Lite and transactional Firestore. Owner Google login through IAP works. The earlier fresh ₹2,487 cloud bill journey, receipt-first replay and recipient hold remain release history; the new workspace and a live paid-notice safety check passed on October 10. Access remains owner-only. Cloud Tasks and native Gemini Live voice remain planned. BigQuery, Document AI, ADK and Agora are not implemented.
+Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Build, service identity, Secret Manager and budget alerts. The latest validated local API is 0.16.0; deployment evidence is in `docs/MONEY_JOURNEY_0160.md`. The existing live configuration uses Gemini 3.5 Flash-Lite and transactional Firestore. Owner Google login through IAP works; access remains owner-only. Cloud Tasks and native Gemini Live voice remain planned. BigQuery, Document AI, ADK and Agora are not implemented.
 
 ## Verification
+
+Current local validation: **287 application tests** (286 passed, one optional
+skip) and **11 tooling tests**. The Money Journey redesign and reviewed-bill
+execution preserve existing financial and authentication boundaries. See
+`docs/MONEY_JOURNEY_0160.md` and `design-qa.md` for the current verification record.
+Earlier release results below are historical, not the latest test count.
 
 The **0.14.1 workspace release** ran 244 native tests: 243 passed, one optional
 integration skipped. My money now works locally and through the private cloud

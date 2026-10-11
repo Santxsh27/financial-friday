@@ -24,12 +24,23 @@ A successful experience ends with a bill-specific outcome: paid in the sandbox o
 
 ## Implemented customer examples
 
-The home screen lists upcoming artificial provider bills for review. Selecting one prepares a request but never submits payment. The Bills screen can create a fresh artificial provider record and editable message for three cases: a routine bill, an unexpected increase, and a changed recipient. Preparing an example does not submit payment. The result shows due date and previous amount. A configurable bill-increase threshold defaults to 30%; exceeding it holds the task, including at the final execution check. These records remain same-operator demo data, so they are not proof of an independently authenticated biller.
+Home previews eligible artificial bills. My money builds a reserve-aware bill plan;
+selecting a row is read-only. **Check & handle in sandbox** explicitly authorizes
+bounded artificial execution of that exact reviewed record. Gemini interprets it
+without the customer retyping, then independent checks and current commit gates
+decide whether to act. Paid records are excluded from unpaid selections and are
+available in the evidence disclosure and Activity. The Bills screen still accepts
+fresh artificial provider records and routine, increase or changed-recipient
+examples. A configurable increase threshold defaults to 30%; exceeding it holds
+the task, including at final execution. These same-operator records do not prove
+an independently authenticated biller.
 
 ## Next build priorities
 
 1. **Independent biller sandbox.** Move bill publication behind a separately authenticated simulator or an authorized provider sandbox. Demonstrate a message-payee swap and a provider-side change between planning and execution. Record the source identity and fetch time.
-2. **Bill status.** Connect the read-only home list to actual Friday outcomes so a card can say due soon, handled or needs review. The current list shows provider records only; it does not infer whether a bill was paid.
+2. **External bill status.** Local receipt-aware planning is implemented. Add an
+   authorized provider reconciliation connector before claiming that Friday's
+   sandbox receipt means an external bill is paid.
 3. **Payment review and handoff.** For customers without a connected bank, offer a safe, read-only summary of the verified bill so they can pay in their own banking app. Do not call that bill “paid” until provider or bank confirmation is available. Keep sandbox execution as the clearly labelled end-to-end demonstration.
 4. **Useful explanations.** Put the customer decision first: “₹2,487 due in three days; 55% above the previous bill; no payment submitted.” Put model calls, mutations and signature details in expandable evidence.
 5. **Held-out evaluation.** Compare Friday with rules-only processing on unseen routine, ambiguous and hostile bills. Report valid completion, false holds, unsafe actions allowed, duplicate effects, unavailable outcomes, latency and cost. A bill increase alert should be measured for usefulness, not presented as fraud-detection accuracy.

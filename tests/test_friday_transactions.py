@@ -129,6 +129,15 @@ class DurableTransactionTests(unittest.TestCase):
         self.assertEqual(result["outcome"]["reason"], ["PROVIDER_CHANGED"])
         self.assertEqual(self.service.mandate("tenant-a")["sandbox_balance_minor"], 5_000_000)
 
+    def test_legacy_optional_bill_defaults_do_not_create_false_cloud_hold(self):
+        bill = self.store.get("provider_bills", "tenant-a", "LIVE-1001")
+        bill.pop("previous_amount_minor")
+        bill.pop("currency")
+        self.store.put("provider_bills", "tenant-a", "LIVE-1001", bill)
+        result = self.service.run_live_signal("tenant-a", self.signal["event_id"])["run"]
+        self.assertEqual(result["status"], "COMPLETED_SYNTHETIC")
+        self.assertEqual(self.service.mandate("tenant-a")["sandbox_balance_minor"], 4_750_100)
+
     def test_commit_failure_has_no_partial_payment(self):
         self.store.fail_commit = True
         with self.assertRaises(RuntimeError):
@@ -161,6 +170,17 @@ class DurableTransactionTests(unittest.TestCase):
         self.service.save_mandate("tenant-a", FridayMandate(**rules))
         result = self.service.run_live_signal("tenant-a", self.signal["event_id"])["run"]
         self.assertEqual(result["outcome"]["reason"], ["PROTECTED_BALANCE"])
+
+    def test_reviewed_bill_single_limit_rechecked_in_firestore_transaction(self):
+        rules = self.service.mandate("tenant-a")["mandate"]
+        rules["automatic_payment_limit_minor"] = 1
+        self.service.save_mandate("tenant-a", FridayMandate(**rules))
+        result = self.service.run_live_signal("tenant-a", self.signal["event_id"],
+                                              enforce_single_payment_limit=True)["run"]
+        self.assertEqual(result["status"], "HELD")
+        self.assertEqual(result["outcome"]["reason"], ["SINGLE_PAYMENT_LIMIT_CHANGED"])
+        self.assertEqual(self.service.mandate("tenant-a")["sandbox_balance_minor"], 5_000_000)
+        self.assertFalse(any("payments" in path for path in self.store._client.records))
 
     def test_current_bill_increase_threshold_is_enforced_at_commit(self):
         rules = self.service.mandate("tenant-a")["mandate"]

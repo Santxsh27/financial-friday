@@ -25,6 +25,7 @@ from carapace_core.friday_live import (
     InterpretedFinancialSignal,
     TestProviderBill,
     bill_increase_requires_review,
+    provider_bill_matches,
 )
 from carapace_integrations.financial_friday_fixtures import CASES, load_case
 from .friday_durable import LocalFridayState
@@ -258,6 +259,7 @@ class FinancialFridayService:
         *,
         source_evidence_id: str | None = None,
         source_metadata: dict | None = None,
+        expected_bill_sha256: str | None = None,
     ) -> dict:
         event_id = signal.event_id or "evt-" + sha256_hex({
             "tenant": tenant, "source": signal.source_type, "content": signal.content_text
@@ -295,6 +297,10 @@ class FinancialFridayService:
                 )
                 bill = TestProviderBill.model_validate(durable_bill) if durable_bill else None
 
+        if expected_bill_sha256 is not None and (
+            bill is None or sha256_hex(bill.model_dump()) != expected_bill_sha256
+        ):
+            raise ValueError("Provider details changed during checking. Refresh before acting.")
         case_id = None
         payment_request = interpretation.request_kind in {"BILL", "PAYMENT_REQUEST"}
         if not payment_request:
@@ -443,7 +449,7 @@ class FinancialFridayService:
             items = [record["result"] for record in self.durable.list("signals", tenant, 20)]
         return {"items": items, "storage": self.storage_status()}
 
-    def run_live_signal(self, tenant: str, event_id: str) -> dict:
+    def run_live_signal(self, tenant: str, event_id: str, *, enforce_single_payment_limit=False) -> dict:
         with self.connect() as db:
             row = db.execute(
                 "SELECT case_id,result_json FROM friday_live_signals WHERE tenant_id=? AND event_id=?",
@@ -466,7 +472,7 @@ class FinancialFridayService:
             case_id, existing = row[0], json.loads(row[1])
         if existing.get("reason") and existing["reason"] != ["ABOVE_AUTOMATIC_LIMIT"]:
             raise ValueError("This input has unresolved contradictions and cannot execute.")
-        run = self.run(tenant, case_id)
+        run = self.run(tenant, case_id, enforce_single_payment_limit=enforce_single_payment_limit)
         updated = dict(existing, state="COMPLETED" if run["status"] != "HELD" else "ATTENTION",
                        run_id=run["run_id"], money_moved=run["outcome"].get("money_moved", False),
                        message="Friday completed the verified test bill." if run["status"] != "HELD" else "The safety kernel held this task.")
@@ -564,7 +570,7 @@ class FinancialFridayService:
             "live_activity": [json.loads(row[0]) for row in live_rows],
         }
 
-    def run(self, tenant: str, case_id: str, planner=None, *, automatic=False) -> dict:
+    def run(self, tenant: str, case_id: str, planner=None, *, automatic=False, enforce_single_payment_limit=False) -> dict:
         case = self._load_case(tenant, case_id)
         goal = FinancialGoal.model_validate(case["goal"])
         evidence = FinancialEvidence.model_validate(case["evidence"])
@@ -573,6 +579,7 @@ class FinancialFridayService:
             "run_id": "ff_" + uuid4().hex,
             "case_id": case_id,
             "automatic": automatic,
+            "enforce_single_payment_limit": enforce_single_payment_limit,
             "status": "PLANNING",
             "started_at": datetime.now(timezone.utc).isoformat(),
             "goal": goal.model_dump(),
@@ -810,12 +817,14 @@ class FinancialFridayService:
                         (tenant, bill["bill_reference"]),
                     ).fetchone()
                     changed = []
-                    if provider_row is None or json.loads(provider_row[0]) != bill:
+                    if provider_row is None or not provider_bill_matches(json.loads(provider_row[0]), bill):
                         changed = ["PROVIDER_CHANGED"]
                     elif mandate.instruction != goal.instruction or mandate.max_fee_minor < goal.max_fee_minor:
                         changed = ["MANDATE_CHANGED"]
                     elif result.get("automatic") and (not mandate.automatic_sandbox_execution or payload["amount_minor"] > mandate.automatic_payment_limit_minor):
                         changed = ["AUTOMATIC_PERMISSION_CHANGED"]
+                    elif result.get("enforce_single_payment_limit") and payload["amount_minor"] > mandate.automatic_payment_limit_minor:
+                        changed = ["SINGLE_PAYMENT_LIMIT_CHANGED"]
                     elif bill_increase_requires_review(TestProviderBill.model_validate(bill), mandate.bill_increase_review_percent):
                         changed = ["UNUSUAL_BILL_INCREASE"]
                     if changed:

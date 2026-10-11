@@ -243,7 +243,8 @@ EXPERIENCE_JS = r"""
           runs.forEach(r=>{if(!/^[A-Za-z0-9_-]{1,100}$/.test(r.run_id))return;const b=element('button',null,'activity-entry');b.type='button';b.dataset.runId=r.run_id;b.dataset.outcome=completedStatuses.includes(r.status)?'good':r.status==='HELD'?'held':'review';const present=activityPresentation(r);const copy=element('div');copy.append(element('b',present.title),element('small',present.detail));const status=element('span',present.status,'status '+b.dataset.outcome);b.append(copy,status);list.append(b);});filterActivity();
         }catch(e){list.replaceChildren(element('p','Activity could not be loaded. No payment was submitted. Try refreshing this read-only view.','activity-empty'));}finally{refresh.disabled=false;}}
       async function openRun(id){if(busy){toast('Wait for the current task to finish before reopening another run.');return;}show('run',false);$('result').classList.remove('visible');$('briefing').classList.remove('visible');source.textContent='Loading the recorded outcome. No payment is being submitted.';resetStages();state('working','Loading saved evidence');summarize('Opening your recorded receipt.','This is a read-only check, not another payment.','Waiting for the saved evidence.');
-        try{render(await jsonRequest('/api/friday/runs/'+encodeURIComponent(id)));}catch(e){state('attention','Outcome unavailable');source.textContent='This recorded run could not be loaded. No payment was submitted. Check activity before retrying any financial task.';summarize('The saved evidence could not be loaded.','No payment was submitted by opening this page.','Return to Activity and refresh before retrying a financial task.');}}
+        const requestedHash=location.hash;
+        try{const saved=await jsonRequest('/api/friday/runs/'+encodeURIComponent(id));if(active!=='run'||location.hash!==requestedHash)return;render(saved);}catch(e){if(active!=='run'||location.hash!==requestedHash)return;state('attention','Outcome unavailable');source.textContent='This recorded run could not be loaded. No payment was submitted. Check activity before retrying any financial task.';summarize('The saved evidence could not be loaded.','No payment was submitted by opening this page.','Return to Activity and refresh before retrying a financial task.');}}
       document.addEventListener('click',e=>{const target=e.target.closest('[data-screen-link],[data-run-id]');if(!target)return;if(target.dataset.runId){history.pushState(null,'','#run='+encodeURIComponent(target.dataset.runId));openRun(target.dataset.runId);}else show(target.dataset.screenLink);});refresh.addEventListener('click',refreshActivity);
       document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||guide.open||e.target.closest('input,textarea,select,[contenteditable="true"]'))return;if(e.key==='/'){e.preventDefault();show('home');$('home-command').focus();}else if(e.key==='?'){e.preventDefault();openGuide();}});
       function route(load=true){if(location.hash.startsWith('#run=')){show('run',false);if(load)openRun(decodeURIComponent(location.hash.slice(5)));else{source.textContent='Loading your recorded run…';state('working','Loading saved evidence');}}else show(location.hash.slice(1)||'home',false);}
@@ -256,7 +257,8 @@ EXPERIENCE_JS = r"""
 def enhance_friday_html(html: str) -> str:
     """Retain existing element IDs and API handlers while separating their views."""
     from .friday_simple import SIMPLE_CSS, SIMPLE_JS
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + "route(false);", 1)
-    return (html.replace("</head>", EXPERIENCE_CSS + SIMPLE_CSS + "</head>", 1)
+    from .friday_journey import JOURNEY_CSS, JOURNEY_JS
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + JOURNEY_JS + "route(false);", 1)
+    return (html.replace("</head>", EXPERIENCE_CSS + SIMPLE_CSS + JOURNEY_CSS + "</head>", 1)
             .replace('<main class="shell layout">', EXPERIENCE_NAV + '<main class="shell layout">', 1)
             .replace("    let watching=false;", compact_js + "\n    let watching=false;", 1))

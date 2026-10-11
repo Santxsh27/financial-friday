@@ -15,13 +15,15 @@ from urllib.request import Request as URLRequest, urlopen
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse
+from pathlib import Path
 from starlette.concurrency import run_in_threadpool
 
 MAX_BODY = 8 * 1024 * 1024
 ROUTES = {
     "GET": r"(?:scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100})",
     "PUT": r"mandate",
-    "POST": r"(?:statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
+    "POST": r"(?:bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
 }
 
 
@@ -151,6 +153,10 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     @app.get("/")
     async def home():
         return HTMLResponse(html)
+
+    @app.get("/assets/friday-jade-orb.png")
+    async def assistant_asset():
+        return FileResponse(Path(__file__).parent / "assets" / "friday-jade-orb.png", media_type="image/png")
 
     @app.get("/about")
     async def about():

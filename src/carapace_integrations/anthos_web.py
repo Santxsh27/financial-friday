@@ -260,9 +260,10 @@ def create_demo_app() -> FastAPI:
     async def home() -> HTMLResponse:
         return HTMLResponse(FINANCIAL_FRIDAY_HTML, headers={"Cache-Control": "no-store"})
 
-    @application.get("/assets/friday-jade-orb.png")
-    async def friday_assistant_asset():
-        return FileResponse(Path(__file__).parent / "assets" / "friday-jade-orb.png", media_type="image/png")
+    @application.get("/assets/{name}")
+    async def friday_assistant_asset(name: str):
+        from .friday_assets import friday_asset
+        return friday_asset(name)
 
     @application.get("/operations", response_class=HTMLResponse)
     async def operations() -> HTMLResponse:

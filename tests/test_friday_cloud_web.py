@@ -95,6 +95,15 @@ class CloudWebTests(unittest.TestCase):
             self.assertEqual(self.client.get(path, headers=self.headers).status_code, 404)
         self.assertEqual(self.client.delete("/api/friday/mandate", headers=self.headers).status_code, 404)
 
+    def test_everyday_assets_keep_identity_gate_and_never_call_backend(self):
+        for name in ('friday-orb.png', 'friday-windowsill.png', 'friday-brand.png',
+                     'friday-inter.ttf', 'friday-icon-shield.svg'):
+            with self.subTest(name=name):
+                self.assertEqual(self.client.get('/assets/' + name).status_code, 401)
+                self.assertEqual(self.client.get('/assets/' + name, headers=self.headers).status_code, 200)
+        self.assertEqual(self.client.get('/assets/secret.env', headers=self.headers).status_code, 404)
+        self.assertEqual(self.calls, [])
+
     def test_query_injection_rejected(self):
         self.assertEqual(self.client.get("/api/friday/mandate?tenant=two", headers=self.headers).status_code, 400)
         self.assertEqual(self.client.post("/api/friday/documents?filename=../secret", headers=self.headers,

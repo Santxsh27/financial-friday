@@ -49,7 +49,7 @@ process.stdout.write(JSON.stringify({correction,held,local,reverse,unknown,repla
         self.assertIn('data-screen-link="document"', SIMPLE_CSS)
 
     def test_simple_layer_is_in_the_real_local_and_cloud_html(self):
-        self.assertIn('id="friday-simple-styles"', FINANCIAL_FRIDAY_HTML)
+        self.assertIn('id="friday-everyday-styles"', FINANCIAL_FRIDAY_HTML)
         self.assertIn('Hi. I’m Friday.', FINANCIAL_FRIDAY_HTML)
         self.assertIn('Review spending', FINANCIAL_FRIDAY_HTML)
         self.assertIn('CSV format & privacy', FINANCIAL_FRIDAY_HTML)

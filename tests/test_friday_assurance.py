@@ -106,16 +106,16 @@ class FridayAssuranceTests(unittest.TestCase):
         self.assertIn("render=function(data){if(['CONFLICT','UNAVAILABLE'].includes(data.assurance?.state))", FINANCIAL_FRIDAY_HTML)
         self.assertIn('engineering.open=true;return;}simplerRender(data);', FINANCIAL_FRIDAY_HTML)
 
-    def test_soft_palette_loads_last_and_preserves_distinct_outcome_states(self):
-        from carapace_integrations.friday_soft_theme import SOFT_CSS
-        self.assertGreater(FINANCIAL_FRIDAY_HTML.index('id="friday-soft-theme"'),
-                           FINANCIAL_FRIDAY_HTML.index('id="friday-journey-styles"'))
+    def test_selected_design_replaces_old_themes_and_preserves_outcome_states(self):
+        from carapace_integrations.friday_everyday import EVERYDAY_CSS
+        self.assertIn('id="friday-everyday-styles"', FINANCIAL_FRIDAY_HTML)
+        self.assertNotIn('id="friday-soft-theme"', FINANCIAL_FRIDAY_HTML)
+        self.assertNotIn('id="friday-journey-styles"', FINANCIAL_FRIDAY_HTML)
         for marker in ('[data-state="complete"]', '[data-state="held"]',
                        '[data-state="attention"]', 'prefers-reduced-motion',
                        'html[data-motion="off"]', ':focus-visible'):
-            self.assertIn(marker, SOFT_CSS)
-        self.assertNotIn('display:none', SOFT_CSS)
-        self.assertNotIn('<script', SOFT_CSS)
+            self.assertIn(marker, EVERYDAY_CSS)
+        self.assertNotIn('<script', EVERYDAY_CSS)
 
     @unittest.skipUnless(shutil.which('node'), 'Node is optional for renderer execution validation')
     def test_conflict_renderer_executes_only_the_attention_path(self):

@@ -154,9 +154,10 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     async def home():
         return HTMLResponse(html)
 
-    @app.get("/assets/friday-jade-orb.png")
-    async def assistant_asset():
-        return FileResponse(Path(__file__).parent / "assets" / "friday-jade-orb.png", media_type="image/png")
+    @app.get("/assets/{name}")
+    async def assistant_asset(name: str):
+        from .friday_assets import friday_asset
+        return friday_asset(name)
 
     @app.get("/about")
     async def about():

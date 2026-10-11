@@ -34,4 +34,4 @@ carapace-witness-audit = "carapace_core.checkpoint_monitor:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-carapace_integrations = ["assets/*.png"]
+carapace_integrations = ["assets/*.png", "assets/*.svg", "assets/*.ttf", "assets/*.txt"]

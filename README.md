@@ -4,16 +4,28 @@ Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo step
 
 ## A bounded AI operator for everyday financial tasks
 
-### Current improvement: live Friday core and independent outcome replay (0.17.0)
+### Current interface: the selected Everyday design
 
-The **Money Journey** interface uses a soft midnight-lavender palette, lilac
-actions, peach accents and rounded task cards. Mint success, rose holds and amber
-review states remain distinct. Friday's original code-rendered instrument aperture appears
-on Home, the bill plan and task results, with concentric segmented rings, subtle
-scanning motion and pointer response. It does not use movie artwork or logos.
-Its status follows actual request/run evidence;
-it does not claim continuous monitoring or advance success stages on a timer.
-Reduced motion, labelled states and keyboard controls remain supported.
+The complete interface now uses warm ivory, peach actions and navy Friday panels.
+Home is a **bill inbox beside a financial co-pilot**, with current sandbox records,
+verification warnings, safety rules and recent receipts. Bills, documents, spending,
+activity and task results share the same design system, not stacked theme overrides.
+An original generated companion has gentle cosmetic motion; it is not a microphone
+or a claim of continuous bank monitoring. Reduced motion and keyboard focus remain
+supported. Inter and Feather icons are self-hosted with their licenses.
+
+Inbox previews and receipt reopening are read-only. Selecting a bill refreshes its
+provider record before review. The existing explicit sandbox execution action,
+permission checks, reserve, exact recipient/amount binding and independent outcome
+replay are unchanged. The interface clearly warns that checking a bill message can
+execute an artificial payment under saved rules. No email connector, real bank
+connection or real-money payment has been added. See [design verification](design-qa.md).
+
+### Independent outcome replay (0.17.0)
+
+Green completion, red holds and amber review states follow actual request/run
+evidence, not animation timers. The previous lavender/Canvas presentation is
+superseded by the selected Everyday interface above.
 
 New terminal runs are signed with their historical evidence. The final response
 and read-only reopening independently replay the program rules, verify signatures
@@ -40,7 +52,7 @@ a bill, deciding what fits a protected reserve, checking its payment details,
 handling an allowed task and confirming the recorded outcome. Documents and
 statements support that journey; Friday is not an unrestricted finance Jarvis.
 
-Home shows current eligible bills and **Open my bill plan**. Selecting a row
+Home shows current bills with **Review bill** or **See details**. Selecting a row
 does not act. The separate, explicit sandbox action binds the reviewed provider
 record and uses the original financial verifier/executor. Activity shows provider,
 time and a labelled approved limit, not a misleading claim that the limit was
@@ -91,14 +103,14 @@ See [release evidence](docs/BILL_PLAN_0150.md).
 
 ### Task-first interface
 
-Home now offers three tasks: **Check a bill**, **Read a document**, and
-**Understand my money**. My money separates statement analysis from saved inputs;
+Home offers a bill inbox, **Check my bill**, **Read a document**,
+**Understand my money** and **Review spending**. My money separates statement analysis from saved inputs;
 the artificial wallet is an optional panel, not the primary consumer dashboard.
 Statement results replace the upload form, with breakdowns behind expandable
 details. Task outcomes show the result and assurance journey first, with engineering evidence under
 **How Friday checked this**. Approval still shows the amount and recipient;
-consent, authentication and all financial checks remain unchanged. Settings and
-the safety lab remain under **More**. This interface is deployed to the existing
+consent, authentication and all financial checks remain unchanged. **My rules** is
+in the main navigation; additional tools remain in the sandbox menu. This interface uses the existing
 private Cloud Run website; no new public or banking access was granted.
 
 ### Analyze your own statement

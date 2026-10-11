@@ -6,8 +6,15 @@ outcome assurance; older unsealed receipts remain amber rather than certified gr
 Bill warnings explain the actual limit/reserve/evidence reason. Document actions
 disclose cloud processing and existing automatic-payment permission. See
 [submission readiness](docs/submission/READINESS_1012.md) for the rollout record.
+**Live now:** API `financial-friday-api-ready1012` and web
+`financial-friday-web-ready1012final` each serve 100% of their service traffic.
+The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
+has the updated logo, bill explanations and evidence-based outcome badges.
 Latest native verification: **314 tests ran, 313 passed, one optional integration
-skipped**, plus **11 tooling tests passed**. Tests do not guarantee zero defects,
+skipped**, plus **11 tooling tests passed**. Docker: **314 ran, 300 passed,
+14 skipped** (including JavaScript checks exercised by the native suite).
+Post-promotion cloud checks passed with unchanged balance and zero payment requests.
+Tests do not guarantee zero defects,
 fraud-detection accuracy or real-world banking readiness.
 
 Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo steps, technology list and remaining submission work. The [household bill journey](docs/CUSTOMER_JOURNEY.md) explains the customer value, three new artificial examples and next build priorities.

@@ -13,6 +13,10 @@ operator. It is not a new product pivot or permission to access real accounts.
 - Activity derives green/red/amber badges from independent assurance replay, not
   stored completion flags. Legacy unsealed records and conflicting journals cannot
   acquire certified green completion merely by reopening them.
+- The home activity icon follows that same assurance state. Historical receipt
+  metrics now say planning calls **for this run** and **recorded sandbox payment**,
+  not new payments made by opening the page. Legacy receipts finish loading and
+  explicitly mark historical stages as uncertified rather than leaving them pending.
 - Document consent explains Gemini cloud processing, raw-file disposal, saved
   extracted facts, and automatic artificial payment under existing permission.
 - Manual approval shares the single-task busy boundary. Unknown outcomes say to
@@ -40,7 +44,54 @@ Four statement rows yield ₹10,000 in, ₹3,200.50 out and ₹6,799.50 net flow
 matching rows stay included and are not called proven fraud. The earlier live
 Vertex paid-notice check made no payment request and left balance unchanged.
 
-Deployment and post-fix browser evidence will be recorded below only after checked.
+Docker command:
+`docker compose --profile test run --rm --no-deps --build -e CARAPACE_AI_PROVIDER=local -e CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED=false tests discover -s tests -q`.
+Result: **314 ran, 300 passed, 14 skipped**. Container skips include the Node-based
+presentation checks; the native suite executes those. Expected simulated 503/504
+test messages are failure-path fixtures, not observed live provider outages.
+
+## Published release and post-fix checks
+
+Both revisions passed zero-traffic candidate checks before promotion. On October 12:
+
+- API: `financial-friday-api-ready1012`, 100% traffic.
+- Web: `financial-friday-web-ready1012final`, 100% traffic.
+- App: https://financial-friday-web-171681243260.asia-south1.run.app/#home
+- Version remains `0.17.0`; this is a patch identified by the revisions and commits.
+- Full API build: `ccdc65a8-fa81-4ad8-9ed7-3b4c4093ae6c`, source commit `29a3032`,
+  image digest `sha256:76730623641ad89904b08b5add9c4f40c0f035b7e51a6d7662514e6025669321`.
+- Final web build: `42e0a9bf-09c3-4af3-bd19-196878675dd1`, source commit `93ba496`,
+  digest `sha256:81dfe89222dfe1d50acf93243dc20fe0f1d46691389053a478cddc0b78a43046`.
+  The web layer pins the verified API base image. Cloud build contexts were clean
+  Git archives; unrelated working-tree changes were not included.
+
+Authenticated candidate checks verified transactional Firestore, 13 current bill
+records, reserve-aware read-only planning, rejected unconfirmed execution, disabled
+unimplemented cloud follow-through, independent activity assurance and rejected
+anonymous access. A candidate **live Vertex** paid-notice interpretation correctly
+returned `NOT_A_PAYMENT_REQUEST`; no case or payment was created. After promotion,
+the canonical API check passed again without an additional AI call. Across these
+checks, the sandbox balance was unchanged and **payment requests were zero**.
+Existing saved permissions, IAP enrollment and private API access were preserved.
+
+Post-release browser checks inspected Overview, reviewed bill amount/recipient,
+Activity, a signed held receipt, and help/Escape focus behaviour. The held receipt
+reopened with three historical planning calls and no new payment; no pending stages
+were falsely promoted to successful execution. The local legacy receipt displays
+explicit uncertified stages and a finished read-only status. Document disclosures,
+rules and statement behaviour were also inspected in the audit. A 390px mobile
+home had no document overflow or broken images; the navigation scrolls internally.
+The final live desktop home had no horizontal overflow, broken images or stuck
+loading indicator. Captured console warnings/errors were empty on the inspected
+live release. Local API, UI and artificial Anthos ledger containers remain healthy.
+
+Screenshots (artificial data only):
+
+- [Published home and team mark](screenshots/readiness-1012-home.png)
+- [Published held result](screenshots/readiness-1012-held.png)
+
+This is evidence for the exercised paths, not an exhaustive guarantee of every
+possible input, browser, network failure or security threat.
 
 ## Submission blockers — do not call these finished
 

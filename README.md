@@ -1,5 +1,15 @@
 # Financial Friday
 
+**Readiness pass, October 12:** the selected Everyday interface uses the
+Vaultkeepers team mark. Activity badges and saved task results require independent
+outcome assurance; older unsealed receipts remain amber rather than certified green.
+Bill warnings explain the actual limit/reserve/evidence reason. Document actions
+disclose cloud processing and existing automatic-payment permission. See
+[submission readiness](docs/submission/READINESS_1012.md) for the rollout record.
+Latest native verification: **314 tests ran, 313 passed, one optional integration
+skipped**, plus **11 tooling tests passed**. Tests do not guarantee zero defects,
+fraud-detection accuracy or real-world banking readiness.
+
 Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo steps, technology list and remaining submission work. The [household bill journey](docs/CUSTOMER_JOURNEY.md) explains the customer value, three new artificial examples and next build priorities.
 
 ## A bounded AI operator for everyday financial tasks
@@ -58,7 +68,7 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.17.0, October 11.** The `core1011b` API and `everyday1011` web revision
+**Previous live release: 0.17.0, October 11.** The `core1011b` API and `everyday1011` web revision
 serve the selected Everyday interface, bill journey and independent saved-outcome replay.
 The UI-only rollout retained the private API, IAP enrollment and saved permissions.
 Authenticated candidate checks loaded current bills and assets, selected the exact
@@ -78,7 +88,7 @@ passed. Live Vertex interpreted an artificial paid notice without preparing a
 payment, and the cloud balance stayed unchanged. See [current release notes](docs/CLARITY_0152.md)
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
-**Latest validated code: 0.17.0.** Recent journal queries sort by time before
+**Earlier validated code: 0.17.0, October 11.** Recent journal queries sort by time before
 limiting. 307 application tests ran (306 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and
@@ -90,7 +100,7 @@ for prior browser and deployment evidence. Current notes are in
 
 ### Reserve-aware planning (0.15.0 live)
 
-**My money → Plan my bills** computes a personalised, read-only plan from current
+**Bills** computes a personalised, read-only plan from current
 tenant-owned artificial provider records and the saved reserve/single-payment
 limit. An exact Pareto-frontier dynamic program prioritises bill count on earlier
 due dates, then minimises spend for ties. Paid records, receipt conflicts,

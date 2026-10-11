@@ -568,6 +568,21 @@ class FinancialFridayService:
             except (ValueError, KeyError, TypeError):
                 invalid += 1
         paid = any(r["payload"]["goal_id"] == goal["goal_id"] for r in receipts)
+        recent = []
+        for row in rows:
+            r = json.loads(row[0])
+            # List badges use the same independent replay as the receipt page,
+            # not a stored success flag. A missing journal must never look green.
+            try:
+                assurance = self.get(tenant, r["run_id"])["assurance"]["state"]
+            except (KeyError, ValueError, TypeError):
+                assurance = "UNAVAILABLE"
+            recent.append({"run_id": r["run_id"], "case_id": r["case_id"],
+                           "status": r["status"], "started_at": r["started_at"],
+                           "assurance_state": assurance,
+                           "provider_id": (r.get("goal") or {}).get("provider_id"),
+                           "task_label": CASES.get(r["case_id"], (None,))[0],
+                           "payment_limit_minor": (r.get("goal") or {}).get("max_total_minor")})
         return {
             "scope": "Artificial-money sandbox journal only; no real account connected",
             "bill": {"label": "Sample electricity bill", "amount_minor": 199900,
@@ -575,12 +590,7 @@ class FinancialFridayService:
                      "scenario_id": "genuine-bill"},
             "recorded_total_minor": sum(r["payload"]["amount_minor"] for r in receipts),
             "verified_receipt_count": len(receipts), "invalid_receipt_count": invalid,
-            "recent_runs": [{"run_id": r["run_id"], "case_id": r["case_id"],
-                             "status": r["status"], "started_at": r["started_at"],
-                             "provider_id": (r.get("goal") or {}).get("provider_id"),
-                             "task_label": CASES.get(r["case_id"], (None,))[0],
-                             "payment_limit_minor": (r.get("goal") or {}).get("max_total_minor")}
-                            for r in (json.loads(row[0]) for row in rows)],
+            "recent_runs": recent,
             "balance": None,
             "live_activity": [json.loads(row[0]) for row in live_rows],
         }

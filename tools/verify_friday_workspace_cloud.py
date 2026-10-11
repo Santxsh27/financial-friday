@@ -66,6 +66,9 @@ def main():
     assert not unavailable["money_moved"] and not unavailable["external_settlement_verified"]
     assert request("/v1/friday/mandate")["sandbox_balance_minor"] == before
     recent = request("/v1/friday/today")["recent_runs"]
+    assert all(row.get("assurance_state") in {"VERIFIED", "VERIFIED_HOLD",
+        "SIGNED_RECOVERY_RECORD", "LEGACY_UNSEALED", "UNVERIFIED", "CONFLICT", "UNAVAILABLE"}
+        for row in recent), "activity must expose independently checked assurance, not just stored status"
     if recent:
         saved = request("/v1/friday/runs/" + recent[0]["run_id"])
         assert saved["assurance"]["read_only"] and not saved["assurance"]["money_moved"]
@@ -106,7 +109,8 @@ def main():
         "unconfirmed_bill_execution_rejected": True,
         "cloud_followthrough_disabled": True, "anonymous_access_rejected": True,
         "live_paid_alert_verified": paid_alert_verified,
-        "live_ai_intake_requested": args.check_paid_alert, "payment_requests": 0}))
+        "live_ai_intake_requested": args.check_paid_alert, "payment_requests": 0,
+        "activity_assurance_checked": True}))
 
 
 if __name__ == "__main__":

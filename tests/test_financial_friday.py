@@ -59,8 +59,22 @@ class FinancialFridayTests(unittest.TestCase):
         self.assertEqual(item['run_id'], run['run_id'])
         self.assertEqual(item['provider_id'], run['goal']['provider_id'])
         self.assertEqual(item['payment_limit_minor'], run['goal']['max_total_minor'])
+        self.assertEqual(item['assurance_state'], 'VERIFIED')
         self.assertEqual(self.payment_count(), before)
         self.assertEqual(self.service.daily_brief('other')['recent_runs'], [])
+
+    def test_activity_replays_evidence_and_never_certifies_legacy_or_corrupt_journal(self):
+        run = self.service.run('demo', 'genuine-bill')
+        self.service.planner.plan = Mock(side_effect=AssertionError('No planning during activity'))
+        with self.service.connect() as db:
+            db.execute('DELETE FROM friday_payments')
+        self.assertEqual(self.service.daily_brief('demo')['recent_runs'][0]['assurance_state'], 'CONFLICT')
+        run.pop('run_seal')
+        with self.service.connect() as db:
+            db.execute('UPDATE friday_runs SET result_json=? WHERE run_id=?', (json.dumps(run), run['run_id']))
+        self.assertEqual(self.service.daily_brief('demo')['recent_runs'][0]['assurance_state'], 'LEGACY_UNSEALED')
+        self.service.planner.plan.assert_not_called()
+        self.assertEqual(self.payment_count(), 0)
 
     def test_understanding_transient_failure_retries_before_any_execution(self):
         error = RuntimeError("temporary provider failure")

@@ -5,7 +5,8 @@ Use this folder for the final demo script, evaluation results, slides and submis
 Implemented evidence: [proposal safety evaluation](SAFETY_EVALUATION.md),
 [security boundaries](SECURITY_BOUNDARIES.md), and [live demo script](DEMO_SCRIPT.md).
 The generated safety corpus is not a live model benchmark.
-Latest release, verification and remaining blockers: [final handoff](FINAL_HANDOFF_1009.md).
+Latest release, verification and remaining blockers: [readiness pass](READINESS_1012.md).
+The [October 9 handoff](FINAL_HANDOFF_1009.md) is historical evidence.
 Live multimodal evidence: [document verification](../FRIDAY_DOCUMENT_VERIFICATION_1008.md),
 including the initial failure, fail-closed fix and two successful safety retests.
 

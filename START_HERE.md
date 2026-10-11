@@ -11,18 +11,23 @@ Save an instruction such as “Handle verified bills up to ₹3,000, protect ₹
 1. Start Docker Desktop and open this folder in Visual Studio Code.
 2. Run `docker compose --profile anthos up -d --build api anthos-demo`.
 3. Open http://localhost:8090 for Friday and http://localhost:8080/docs for the API.
-4. Open **More → My rules** to inspect/save standing permission. Open **More → Check a bill → Try a demo or set up a test bill** to publish a fresh artificial bill.
-5. Use **Open my bill plan** to select a saved bill and **Check & handle in sandbox** without retyping. Alternatively paste a request on Home, or choose **Read a document** for its image/PDF. These actions can complete an artificial payment within the disclosed rules; no real funds are connected.
+4. Open **My rules** in the top navigation to inspect/save standing permission. Artificial provider setup and **Safety lab** are development tools, not real bank connections.
+5. Use **Bills** or **Review bill** to select a saved provider record and **Check & handle in sandbox** without retyping. Alternatively paste a request on Overview, or choose **Documents** for an image/PDF. **Check document & apply my rules** can complete an artificial payment when automatic permission is enabled and the independent checks pass; no real funds are connected.
 6. Friday opens a separate **Run** screen. Change the amount or recipient and check that it stops.
 7. Use **Safety lab** for controlled subscription/timeout cases, and **Activity** to reopen existing receipts without paying again.
-8. Home's **Your sandbox briefing** counts recent recorded outcomes, not all-time totals. Use Activity search and outcome filters to find a receipt. **How Friday works** explains the journey; Escape closes help and `/` focuses the home command outside text fields.
+8. Overview's **Recent activity** shows recorded outcomes, not all-time totals. Activity filters use independently checked assurance; older unsealed receipts remain amber. **How Friday works** explains the journey; Escape closes help and `/` focuses the home command outside text fields.
+9. **Understand my money → Review spending** accepts a consented INR CSV. The analysis is read-only; net flow is not your bank balance. **Clear results & start again** removes the displayed analysis.
+
+The seven cloud sandbox records above ₹3,000 are previous ₹3,001 test bills,
+not failed payments. Friday correctly excludes them from the automatic plan.
+Do not raise a safety limit or delete evidence just to make a warning disappear.
 
 `docker compose stop` preserves the named data volume. Keep `.env`, credentials and signing keys out of GitHub.
 
 ## Implemented capabilities
 
 - **My money**: read-only bill, reserve and shortfall overview, with explicit record coverage.
-- Shared Understand / Handle / Protect / Resolve navigation and capability boundaries.
+- A connected bill-understanding, planning, safe handling and receipt-reconciliation journey.
 - Transaction-alert/unknown intake stops before preparing a new payment.
 - Tested bank/biller resolution kernel; provider correction execution is not connected.
 
@@ -41,16 +46,16 @@ Local SQLite mode runs the complete artificial-money journey. Version 0.13.2 inc
 
 ## Technology inventory
 
-Python, FastAPI, Pydantic, SQLite, cryptography/Ed25519, Google Gen AI SDK, Google Firestore client, Docker Compose, HTML/CSS/JavaScript and browser speech transcription. The repository retains earlier Bank of Anthos artificial-bank work.
+Python, FastAPI, Pydantic, SQLite, cryptography/Ed25519, Google Gen AI SDK, Google Firestore client, Docker Compose and HTML/CSS/JavaScript. Browser speech experiments are not the deployed native voice product. The repository retains earlier Bank of Anthos artificial-bank work.
 
 Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Build, service identity, Secret Manager and budget alerts. The deployed API is 0.17.0; deployment evidence is in `docs/FRIDAY_CORE_0170.md`. The live configuration uses Gemini 3.5 Flash-Lite and transactional Firestore. Owner Google login through IAP works; access remains owner-only. Cloud Tasks and native Gemini Live voice remain planned. BigQuery, Document AI, ADK and Agora are not implemented.
 
 ## Verification
 
-Current local validation: **302 application tests** (301 passed, one optional
-skip) and **11 tooling tests**. The Money Journey redesign and reviewed-bill
+Current native validation: **314 application tests** (313 passed, one optional
+skip) and **11 tooling tests**. The readiness pass and reviewed-bill
 execution preserve existing financial and authentication boundaries. See
-`docs/MONEY_JOURNEY_0160.md` and `design-qa.md` for the current verification record.
+`docs/submission/READINESS_1012.md` for the current verification/deployment record.
 Earlier release results below are historical, not the latest test count.
 
 The **0.14.1 workspace release** ran 244 native tests: 243 passed, one optional

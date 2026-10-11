@@ -9,6 +9,7 @@ ASSETS = {
     "friday-jade-orb.png": "image/png",  # Historical bookmarked asset.
     "friday-orb.png": "image/png",
     "friday-brand.png": "image/png",
+    "friday-team-logo.png": "image/png",
     "friday-windowsill.png": "image/png",
     "friday-inter.ttf": "font/ttf",
     **{"friday-icon-" + icon + ".svg": "image/svg+xml" for icon in ICONS},

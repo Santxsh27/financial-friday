@@ -103,7 +103,7 @@ class FridayAssuranceTests(unittest.TestCase):
 
     def test_conflict_is_not_overwritten_by_the_simplified_success_renderer(self):
         self.assertIn("engineering.querySelector('div').append(replayPanel)", FINANCIAL_FRIDAY_HTML)
-        self.assertIn("render=function(data){if(['CONFLICT','UNAVAILABLE'].includes(data.assurance?.state))", FINANCIAL_FRIDAY_HTML)
+        self.assertIn("render=function(data){if(['CONFLICT','UNAVAILABLE','LEGACY_UNSEALED','UNVERIFIED'].includes(data.assurance?.state))", FINANCIAL_FRIDAY_HTML)
         self.assertIn('engineering.open=true;return;}simplerRender(data);', FINANCIAL_FRIDAY_HTML)
 
     def test_selected_design_replaces_old_themes_and_preserves_outcome_states(self):
@@ -126,11 +126,11 @@ class FridayAssuranceTests(unittest.TestCase):
         const showWork=()=>{throw Error('Conflict cannot look completed')};
         const summarize=()=>{throw Error('Conflict cannot receive success summary')};
         """ + wrapper + """
-        for(const state of ['CONFLICT','UNAVAILABLE']){
+        for(const state of ['CONFLICT','UNAVAILABLE','LEGACY_UNSEALED','UNVERIFIED']){
           render({status:'COMPLETED_SYNTHETIC',assurance:{state}});
           if(!work.hidden||!engineering.open)throw Error('Attention evidence must be visible');
         }
-        if(calls!==2||cleared!==2)throw Error('Wrong render calls');
+        if(calls!==4||cleared!==4)throw Error('Wrong render calls');
         """
         result = subprocess.run(['node'], input=script, text=True, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)

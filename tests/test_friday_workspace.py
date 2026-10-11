@@ -161,6 +161,22 @@ class FridayWorkspaceTests(unittest.TestCase):
         self.assertEqual(view["bills"][0]["status"], "RECEIPT_CONFLICT")
         self.assertEqual(view["upcoming_total_minor"], bill.amount_minor)
 
+    def test_historical_bill_goal_is_not_offered_for_payment_again(self):
+        bill = self.bill()
+        receipt = self.receipt(bill)
+        receipt['payload']['goal_id'] = 'old-signal-goal'
+        receipt['signature'] = self.signer.sign(receipt['payload'])
+        with self.service.connect() as db:
+            db.execute('INSERT INTO friday_payments VALUES (?,?,?,?)',
+                       ('one', 'old-signal-goal', 'legacy-key', json.dumps(receipt)))
+            db.execute('INSERT INTO friday_dynamic_cases VALUES (?,?,?)',
+                       ('one', 'legacy-case', json.dumps({'goal': {'goal_id': 'old-signal-goal'},
+                         'live': {'authoritative_bill': bill.model_dump()}})))
+        view = financial_workspace(self.service, 'one')
+        self.assertEqual(view['bills'][0]['status'], 'RECORDED_PAID')
+        self.assertEqual(view['upcoming_total_minor'], 0)
+        self.assertEqual(financial_workspace(self.service, 'other')['bills'], [])
+
     def test_valid_signature_for_wrong_tenant_still_conflicts(self):
         bill = self.bill()
         self.record_receipt(bill, self.receipt(bill, "two"))

@@ -6,6 +6,7 @@ from copy import deepcopy
 from hashlib import sha256
 
 from carapace_core.friday_live import FridayMandate, TestProviderBill, bill_increase_requires_review, provider_bill_matches
+from carapace_core.friday_assurance import seal_friday_run
 
 
 KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency"}
@@ -181,6 +182,7 @@ class FirestoreFridayState:
                     transaction.set(account, {"balance_minor": balance})
             output["events"].append({"type": "RESTRICTED_EXECUTOR_RESULT", "status": output["status"],
                                      "new_payment": output["outcome"]["new_payment_created"]})
+            seal_friday_run(tenant, output, signer)
             transaction.set(run, {"result": output})
             return output
         return self._atomic(commit)

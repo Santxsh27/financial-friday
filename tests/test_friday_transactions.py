@@ -102,6 +102,7 @@ class DurableTransactionTests(unittest.TestCase):
         second = restored.run_live_signal("tenant-a", self.signal["event_id"])["run"]
         self.assertEqual(second["status"], "ALREADY_COMPLETED")
         self.assertEqual(restored.get("tenant-a", first["run_id"])["status"], "COMPLETED_SYNTHETIC")
+        self.assertEqual(restored.get("tenant-a", first["run_id"])["assurance"]["state"], "VERIFIED")
         self.assertEqual(restored.mandate("tenant-a")["sandbox_balance_minor"], 4_750_100)
         restored.save_mandate("tenant-a", FridayMandate(**restored.mandate("tenant-a")["mandate"]))
         self.assertEqual(restored.mandate("tenant-a")["sandbox_balance_minor"], 4_750_100)

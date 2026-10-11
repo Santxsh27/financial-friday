@@ -99,7 +99,7 @@ FINANCIAL_FRIDAY_HTML = r"""<!doctype html>
           <div class="card-head"><div class="eyebrow">Direct command</div><span class="badge" id="live-mode">Listening</span></div>
           <div class="command-prompt"><div class="command-avatar">F</div><div class="command-copy"><h3>Talk to Friday</h3><p>Paste a bill message, payment request or voice transcript. Friday will find the important details and tell you only what matters.</p>
           <label class="label" for="live-input">What should Friday handle?</label><textarea class="goal command-input" id="live-input">Message from TN Power: Bill LIVE-1001 for ₹2,499 is due. Payee: tnpower@upi</textarea>
-          <div class="inline-actions"><button class="run" id="check-live" type="button">Handle this safely</button><button class="planner voice" id="speak-live" type="button">◉ Speak</button></div>
+          <div class="inline-actions"><button class="run" id="check-live" type="button">Check bill</button><button class="planner voice" id="speak-live" type="button">◉ Speak</button></div>
           <div class="upload-row"><input id="document-input" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" aria-label="Upload a bill image or PDF"><button class="planner" id="check-document" type="button">Check document</button><span class="upload-note">PNG, JPEG, WebP or PDF · 8 MB max · raw file not stored</span></div>
           <div class="live-state" id="live-result">Ready when you are.</div></div></div>
           <section class="customer-examples" aria-label="Household bill examples"><h4>Try a household bill</h4><p>Each example creates a new artificial biller record and fills a message for you to review. Preparing an example does not submit a payment. Handling a matching bill may use your saved artificial-money permission.</p><div class="inline-actions"><button class="planner" type="button" data-household-example="routine">Routine bill</button><button class="planner" type="button" data-household-example="increase">Unexpected increase</button><button class="planner" type="button" data-household-example="payee">Changed recipient</button></div></section>
@@ -167,7 +167,7 @@ FINANCIAL_FRIDAY_HTML = r"""<!doctype html>
       stage('act',result.status==='HELD'?'blocked':finished?'done':'skipped',result.status==='RECONCILED_COMPLETED'?'Prior result found':result.status==='ALREADY_COMPLETED'?'Duplicate prevented':result.status==='HELD'?'No money moved':finished?'Completed once':'Outcome not confirmed');
       if(types.includes('AI_PROVIDER_RETRY'))stage('plan',result.status==='HELD'?'blocked':'retry',result.status==='HELD'?'AI unavailable; no action':'Provider recovered after retry');
       if(result.status==='ALREADY_COMPLETED'){stage('plan','skipped','No new payment plan');stage('prove','done','Existing receipt verified');}
-      $('journey-copy').textContent=deterministicHold?'Authoritative evidence contradicted the request, so Friday stopped before spending an AI call or touching money.':result.status==='RECONCILED_COMPLETED'?'Friday checked the provider first, found the earlier success and correctly avoided a duplicate retry.':'The visible stages below are reconstructed from this run’s signed backend evidence.';
+      $('journey-copy').textContent=deterministicHold?'Authoritative evidence contradicted the request, so Friday stopped before spending an AI call or touching money.':result.status==='RECONCILED_COMPLETED'?'Friday checked the provider first, found the earlier success and correctly avoided a duplicate retry.':'Stages reflect recorded backend evidence. Independent signature and journal checks appear under the evidence details.';
     }
     function outcomeText(r){
       if(r.status==='COMPLETED_SYNTHETIC')return ['good','Task completed safely','Friday selected an allowed route, the kernel proved it, and exactly one artificial-money payment was recorded.'];
@@ -223,7 +223,7 @@ FINANCIAL_FRIDAY_HTML = r"""<!doctype html>
       try{const reference='HOME-'+Date.now().toString(36).toUpperCase();const due=new Date(Date.now()+3*86400000).toISOString().slice(0,10);
         await jsonRequest('/api/friday/test-provider/bills','POST',{bill_reference:reference,provider_name:'TN Power (artificial)',provider_id:'tn-power-test',payee_id:'tnpower@upi',amount_minor:example.amount,previous_amount_minor:example.previous,due_date:due,currency:'INR'});
         $('live-input').value=`TN Power electricity bill ${reference} for INR ${(example.amount/100).toFixed(2)} is due ${due}. Payee: ${example.claimed}. Please check this one-time bill against the provider before handling it.`;
-        $('live-mode').textContent='Artificial example ready';$('live-result').textContent='Example prepared. Review or edit the message, then choose Handle this safely. No payment has been submitted.';$('live-input').focus();
+        $('live-mode').textContent='Artificial example ready';$('live-result').textContent='Example prepared. Review or edit the message, then choose Check bill. No payment has been submitted.';$('live-input').focus();
       }catch(error){$('live-result').textContent='Could not prepare the artificial example: '+String(error);}finally{button.disabled=false;}
     }
     function showLiveResult(data){
@@ -251,7 +251,7 @@ FINANCIAL_FRIDAY_HTML = r"""<!doctype html>
       $('result').classList.remove('visible');$('briefing').classList.remove('visible');history.replaceState(null,'',location.pathname+location.search+'#run');
       const button=$('check-live');button.disabled=true;button.textContent='Friday is analysing…';setCore('ANALYSING SIGNAL','Extracting financial intent');$('live-mode').textContent='Understanding';resetStages();pulse('understand','Extracting the financial request');
       try{const data=await jsonRequest('/api/friday/live-input','POST',{source_type:liveSource,content_text:$('live-input').value});await showSignalAndRun(data);toast(data.state==='ATTENTION'?'Friday stopped for attention':'Live input checked');liveSource='MESSAGE';}
-      catch(error){$('live-mode').textContent='Unavailable';$('live-result').textContent=String(error);stage('understand','blocked','Could not interpret safely');setCore('SAFE MODE','Signal could not be verified');}finally{button.disabled=false;button.textContent='Handle this safely';}
+      catch(error){$('live-mode').textContent='Unavailable';$('live-result').textContent=String(error);stage('understand','blocked','Could not interpret safely');setCore('SAFE MODE','Signal could not be verified');}finally{button.disabled=false;button.textContent='Check bill';}
     }
     async function checkDocument(){
       const file=$('document-input').files[0];if(!file){$('live-result').textContent='Choose a bill image or PDF first.';return;}

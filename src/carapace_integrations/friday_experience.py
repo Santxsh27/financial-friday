@@ -222,7 +222,18 @@ EXPERIENCE_JS = r"""
       function state(kind,text){runView.dataset.state=kind;signal.textContent=text;runView.setAttribute('aria-busy',String(kind==='working'));}
       const evidenceDetails=$('result').querySelector('.mission-details');evidenceDetails.insertBefore($('briefing'),evidenceDetails.querySelector('summary').nextSibling);$('verdict').hidden=true;$('verdict').style.display='none';
       const completedStatuses=['COMPLETED_SYNTHETIC','ALREADY_COMPLETED','RECONCILED_COMPLETED'];
-      const originalRender=render;render=function(r){originalRender(r);loadedRun=r.run_id;if(source.textContent.startsWith('Loading'))source.textContent='Recorded outcome loaded. Viewing this receipt does not submit another payment.';show('run',false);state(completedStatuses.includes(r.status)?'complete':r.status==='HELD'?'held':'attention',r.status==='HELD'?'Held · no new payment':r.status==='ALREADY_COMPLETED'?'Already handled · no repeat':r.status==='RECONCILED_COMPLETED'?'Recovered · no retry':r.status==='COMPLETED_SYNTHETIC'?'Completed · receipt recorded':'Attention · outcome not confirmed');summarize(r.status==='ALREADY_COMPLETED'?'Already handled. No repeat payment.':r.status==='COMPLETED_SYNTHETIC'?'Done. Your receipt is recorded.':r.status==='RECONCILED_COMPLETED'?'Previous outcome recovered. No blind retry.':r.status==='HELD'?'Stopped before a new payment.':'The outcome needs verification.',r.outcome?.message||'The status above is supported by the recorded run, not an animation.',completedStatuses.includes(r.status)?'You can reopen this receipt from Activity without submitting another payment.':'Read the evidence below before taking any further action.');};
+      const replayPanel=element('section',null,'money-section');replayPanel.setAttribute('aria-label','Independent saved-outcome verification');evidenceDetails.append(replayPanel);
+      const originalRender=render;render=function(r){
+        replayPanel.replaceChildren(element('h3','Independent outcome replay'));
+        const assurance=r.assurance;
+        replayPanel.append(element('p',assurance?nice(assurance.state):'Run recorded. Reopen from Activity to independently verify it.'));
+        (assurance?.checks||[]).forEach(c=>replayPanel.append(element('p',(c.passed?'✓ ':'! ')+c.name)));
+        replayPanel.append(element('small','Read-only: signature, rules and journal checks. Not proof of real-bank settlement.'));
+        if(['CONFLICT','UNAVAILABLE'].includes(assurance?.state)){
+          loadedRun=r.run_id;show('run',false);resetStages();$('result').classList.remove('visible');$('briefing').classList.remove('visible');
+          state('attention','Evidence conflict · outcome not verified');summarize('This outcome needs an independent check.','The saved evidence did not pass verification. This read-only check submitted no payment.','Do not pay again. Review the journal and signed evidence.');return;
+        }
+        originalRender(r);loadedRun=r.run_id;if(source.textContent.startsWith('Loading'))source.textContent='Recorded outcome loaded. Viewing this receipt does not submit another payment.';show('run',false);state(completedStatuses.includes(r.status)?'complete':r.status==='HELD'?'held':'attention',r.status==='HELD'?'Held · no new payment':r.status==='ALREADY_COMPLETED'?'Already handled · no repeat':r.status==='RECONCILED_COMPLETED'?'Recovered · no retry':r.status==='COMPLETED_SYNTHETIC'?'Completed · receipt recorded':'Attention · outcome not confirmed');summarize(r.status==='ALREADY_COMPLETED'?'Already handled. No repeat payment.':r.status==='COMPLETED_SYNTHETIC'?'Done. Your receipt is recorded.':r.status==='RECONCILED_COMPLETED'?'Previous outcome recovered. No blind retry.':r.status==='HELD'?'Stopped before a new payment.':'The outcome needs verification.',r.outcome?.message||'The status above is supported by the recorded run, not an animation.',completedStatuses.includes(r.status)?'You can reopen this receipt from Activity without submitting another payment.':'Read the evidence below before taking any further action.');};
       async function execute(fn,label){if(busy){toast('Friday is already handling a task. Check its outcome before starting another.');show('run',false);return;}
         busy=true;show('run');loadedRun=null;summarize('Friday is handling the checks.',label,'No result is assumed until the service returns verified evidence.');source.textContent=label;state('working','Working · awaiting verified result');
         try{await fn();}finally{busy=false;if(runView.dataset.state==='working'){state('attention','Outcome needs verification');summarize('Friday could not confirm the outcome.','No success is assumed when a service or connection fails.','Check Activity and the evidence below before retrying any financial task.');}}}
@@ -258,7 +269,8 @@ def enhance_friday_html(html: str) -> str:
     """Retain existing element IDs and API handlers while separating their views."""
     from .friday_simple import SIMPLE_CSS, SIMPLE_JS
     from .friday_journey import JOURNEY_CSS, JOURNEY_JS
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + JOURNEY_JS + "route(false);", 1)
-    return (html.replace("</head>", EXPERIENCE_CSS + SIMPLE_CSS + JOURNEY_CSS + "</head>", 1)
+    from .friday_core_visual import CORE_CSS, CORE_JS
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + "route(false);", 1)
+    return (html.replace("</head>", EXPERIENCE_CSS + SIMPLE_CSS + JOURNEY_CSS + CORE_CSS + "</head>", 1)
             .replace('<main class="shell layout">', EXPERIENCE_NAV + '<main class="shell layout">', 1)
             .replace("    let watching=false;", compact_js + "\n    let watching=false;", 1))

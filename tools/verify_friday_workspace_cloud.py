@@ -13,9 +13,11 @@ def main():
     parser.add_argument("--project", required=True)
     parser.add_argument("--gcloud", default="gcloud")
     parser.add_argument("--ca-file")
-    parser.add_argument("--expected-version", default="0.16.0")
+    parser.add_argument("--expected-version", default="0.17.0")
     parser.add_argument("--check-paid-alert", action="store_true",
         help="One live AI interpretation of an artificial paid notice; never a payment request")
+    parser.add_argument("--check-held-run", action="store_true",
+        help="Live Vertex recurring-only scenario: must hold, seal and replay without a payment")
     args = parser.parse_args()
     if not args.url.startswith("https://") or not args.url.endswith(".run.app"):
         parser.error("use the private Cloud Run HTTPS origin")
@@ -63,6 +65,22 @@ def main():
     assert unavailable["reason"] == "CLOUD_CONNECTOR_NOT_IMPLEMENTED"
     assert not unavailable["money_moved"] and not unavailable["external_settlement_verified"]
     assert request("/v1/friday/mandate")["sandbox_balance_minor"] == before
+    recent = request("/v1/friday/today")["recent_runs"]
+    if recent:
+        saved = request("/v1/friday/runs/" + recent[0]["run_id"])
+        assert saved["assurance"]["read_only"] and not saved["assurance"]["money_moved"]
+        assert saved["assurance"]["state"] not in {"CONFLICT", "UNAVAILABLE"}
+    if args.check_held_run:
+        held = request("/v1/friday/scenarios/recurring-only/run", {"planner": "configured"})
+        assert held["status"] == "HELD" and not held["outcome"]["money_moved"]
+        assert held["provenance"]["mode"] == "VERTEX_AI"
+        assert held["provenance"]["successful_model_calls"] > 0
+        assert held["assurance"]["state"] == "VERIFIED_HOLD"
+        replay = request("/v1/friday/runs/" + held["run_id"])
+        assert replay["assurance"]["state"] == "VERIFIED_HOLD"
+        assert request("/v1/friday/mandate")["sandbox_balance_minor"] == before
+        print(json.dumps({"held_run_id": held["run_id"], "model_calls": held["provenance"]["successful_model_calls"],
+                          "assurance": replay["assurance"]["state"], "balance_unchanged": True}))
     paid_alert_verified = False
     if args.check_paid_alert:
         assert workspace["bills"], "an existing artificial bill is needed for the alert check"

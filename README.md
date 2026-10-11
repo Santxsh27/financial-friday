@@ -4,13 +4,21 @@ Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo step
 
 ## A bounded AI operator for everyday financial tasks
 
-### Current improvement: Money Journey and reviewed-bill execution (0.16.0)
+### Current improvement: live Friday core and independent outcome replay (0.17.0)
 
 The selected **Money Journey** interface uses dark jade, mint actions and warm
-coral attention states. Friday's animated glass-orb companion appears on Home,
-the bill plan and task results. Its status follows actual request/run evidence;
+coral attention states. Friday's code-rendered, 3D-projected assistant core appears
+on Home, the bill plan and task results, with moving rings and pointer response.
+Its status follows actual request/run evidence;
 it does not claim continuous monitoring or advance success stages on a timer.
 Reduced motion, labelled states and keyboard controls remain supported.
+
+New terminal runs are signed with their historical evidence. The final response
+and read-only reopening independently replay the program rules, verify signatures
+and compare the outcome with the payment journal. Stored pass flags are not the
+authority. Conflicts cannot produce a green result; legacy runs remain explicitly
+unsealed. This adds assurance without another AI call or payment. See
+[0.17.0 architecture and audit notes](docs/FRIDAY_CORE_0170.md).
 
 The functional change is **less retyping**: select a saved provider bill, review
 the exact amount and recipient, then choose **Check & handle in sandbox**.
@@ -50,12 +58,13 @@ passed. Live Vertex interpreted an artificial paid notice without preparing a
 payment, and the cloud balance stayed unchanged. See [current release notes](docs/CLARITY_0152.md)
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
-**Latest validated release: 0.16.0.** Recent journal queries sort by time before
-limiting. 287 application tests ran (286 passed, one optional skip); eleven tooling
+**Latest validated code: 0.17.0.** Recent journal queries sort by time before
+limiting. 299 application tests ran (298 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and
 the Firestore transaction callback. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)
-for browser and deployment evidence. Synthetic tests are not fraud-accuracy results.
+for prior browser and deployment evidence. Current notes are in
+[0.17.0](docs/FRIDAY_CORE_0170.md). Synthetic tests are not fraud-accuracy results.
 
 ### Reserve-aware planning (0.15.0 live)
 

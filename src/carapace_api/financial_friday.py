@@ -12,6 +12,7 @@ from uuid import uuid4
 from pydantic import ValidationError
 
 from carapace_core.canonical import sha256_hex
+from carapace_core.friday_assurance import seal_friday_run, replay_friday_run
 from carapace_core.financial_friday import (
     FinancialEvidence,
     FinancialGoal,
@@ -494,6 +495,7 @@ class FinancialFridayService:
         return db
 
     def _save(self, tenant: str, result: dict) -> None:
+        seal_friday_run(tenant, result, self.signer)
         with self.connect() as db:
             db.execute(
                 "INSERT INTO friday_runs VALUES (?,?,?) ON CONFLICT(tenant_id,run_id) "
@@ -503,6 +505,19 @@ class FinancialFridayService:
         self.durable.put("runs", tenant, result["run_id"], {"result": result})
 
     def get(self, tenant: str, run_id: str) -> dict:
+        result = self._get_record(tenant, run_id)
+        journal = None
+        try:
+            if result.get("outcome", {}).get("receipt"):
+                goal = FinancialGoal.model_validate(result["goal"])
+                journal = self._existing_receipt(tenant, goal, result.get("payment_identity"))
+            result["assurance"] = replay_friday_run(tenant, result, self.signer, journal)
+        except (ValueError, KeyError, TypeError):
+            result["assurance"] = {"state": "CONFLICT", "read_only": True,
+                                   "money_moved": False, "checks": []}
+        return result
+
+    def _get_record(self, tenant: str, run_id: str) -> dict:
         if self.durable.mode == "FIRESTORE_TRANSACTIONAL":
             record = self.durable.get("runs", tenant, run_id)
             if record is None:
@@ -578,6 +593,11 @@ class FinancialFridayService:
         result = {
             "run_id": "ff_" + uuid4().hex,
             "case_id": case_id,
+            "evidence_snapshot": evidence.model_dump(),
+            "payment_identity": ({"authoritative_bill": {
+                k: case["live"]["authoritative_bill"][k]
+                for k in ("provider_id", "bill_reference")
+            }} if case.get("live") else None),
             "automatic": automatic,
             "enforce_single_payment_limit": enforce_single_payment_limit,
             "status": "PLANNING",
@@ -602,7 +622,7 @@ class FinancialFridayService:
             result["status"] = "HELD"
             result["outcome"] = {"money_moved": False, "reason": identity_errors}
             self._save(tenant, result)
-            return result
+            return self.get(tenant, result["run_id"])
 
         existing = self._existing_receipt(tenant, goal, case.get("live"))
         if existing is not None:
@@ -623,7 +643,7 @@ class FinancialFridayService:
             result["events"].append({"type": "EXISTING_PAYMENT_RECONCILED", "receipt_verified": bool(intact),
                                      "authority": "SAFETY_KERNEL", "new_payment": False})
             self._save(tenant, result)
-            return result
+            return self.get(tenant, result["run_id"])
 
         context = {"goal": goal.model_dump(), "evidence": evidence.model_dump()}
         program = None
@@ -676,28 +696,31 @@ class FinancialFridayService:
                 "reason": (verification or {}).get("errors", ["NO_VERIFIED_PROGRAM"]),
             }
             self._save(tenant, result)
-            return result
+            return self.get(tenant, result["run_id"])
 
         challenges = challenge_financial_program(program, goal, evidence)
         if not all(item["rejected"] for item in challenges):
             result["status"] = "HELD"
             result["outcome"] = {"money_moved": False, "reason": ["GUARD_CHALLENGE_FAILED"]}
             self._save(tenant, result)
-            return result
+            return self.get(tenant, result["run_id"])
         result["program"] = {
             "candidate": program.model_dump(),
             "verification": verification,
             "adversarial_checks": challenges,
         }
         self._execute(tenant, result, goal, evidence, program)
-        return result
+        return self.get(tenant, result["run_id"])
 
     def _existing_receipt(self, tenant, goal, live):
+        return self._receipt_by_identity(tenant, goal.goal_id, live)
+
+    def _receipt_by_identity(self, tenant, goal_id, live):
         if self.durable.mode == "FIRESTORE_TRANSACTIONAL":
-            return self.durable.payment_receipt(tenant, goal.goal_id, live)
+            return self.durable.payment_receipt(tenant, goal_id, live)
         with self.connect() as db:
             row = db.execute("SELECT receipt_json FROM friday_payments WHERE tenant_id=? AND goal_id=?",
-                             (tenant, goal.goal_id)).fetchone()
+                             (tenant, goal_id)).fetchone()
             if row is None and live:
                 bill = live["authoritative_bill"]
                 row = db.execute(
@@ -830,6 +853,7 @@ class FinancialFridayService:
                     if changed:
                         result["status"] = "HELD"
                         result["outcome"] = {"money_moved": False, "new_payment_created": False, "reason": changed}
+                        seal_friday_run(tenant, result, self.signer)
                         db.execute("UPDATE friday_runs SET result_json=? WHERE tenant_id=? AND run_id=?",
                                    (json.dumps(result), tenant, result["run_id"]))
                         return
@@ -843,6 +867,7 @@ class FinancialFridayService:
                             "reason": ["PROTECTED_BALANCE"],
                         }
                         result["events"].append({"type": "PROTECTED_BALANCE_HELD", "new_payment": False})
+                        seal_friday_run(tenant, result, self.signer)
                         db.execute(
                             "UPDATE friday_runs SET result_json=? WHERE tenant_id=? AND run_id=?",
                             (json.dumps(result), tenant, result["run_id"]),
@@ -882,6 +907,7 @@ class FinancialFridayService:
                 "status": result["status"],
                 "new_payment": result["outcome"]["new_payment_created"],
             })
+            seal_friday_run(tenant, result, self.signer)
             db.execute(
                 "UPDATE friday_runs SET result_json=? WHERE tenant_id=? AND run_id=?",
                 (json.dumps(result), tenant, result["run_id"]),

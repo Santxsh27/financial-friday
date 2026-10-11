@@ -36,19 +36,15 @@ def financial_workspace(service, tenant: str) -> dict:
             payment = service.durable.get("payments", tenant, hashlib.sha256(identity.encode()).hexdigest())
             receipt = payment.get("receipt") if payment else None
         else:
-            with service.connect() as db:
-                row = db.execute("SELECT receipt_json FROM friday_payments WHERE tenant_id=? AND goal_id=?",
-                                 (tenant, goal)).fetchone()
-            try:
-                receipt = json.loads(row[0]) if row else None
-            except (TypeError, ValueError):
-                receipt = {}
+            # Use the executor's same bill-identity resolver, including historical
+            # goals. Otherwise an already-paid older bill can appear payable.
+            receipt = service._receipt_by_identity(tenant, goal, {"authoritative_bill": bill.model_dump()})
         status, reason = "UNPAID_RECORD", "No matching internal payment receipt; external payment status is unknown."
         if receipt is not None:
             try:
                 payload = receipt["payload"]
                 valid = (all(payload.get(k) == v for k, v in {
-                    "tenant_id": tenant, "goal_id": goal, "provider_id": bill.provider_id,
+                    "tenant_id": tenant, "provider_id": bill.provider_id,
                     "payee_id": bill.payee_id, "amount_minor": bill.amount_minor,
                     "currency": bill.currency, "scope": "FINANCIAL_FRIDAY_ARTIFICIAL_MONEY"}.items())
                     and service.signer.verify(payload, receipt["signature"]))

@@ -62,7 +62,33 @@ legacy-record recheck as separate outcomes. Docker ran all 287 tests with ten
 optional-tool/integration skips and no failures.
 
 Browser fidelity and responsive evidence are recorded in `../design-qa.md`.
-Deployment identifiers and live checks will be appended only after verification.
+## Cloud deployment evidence
+
+Clean source commit: `3ff5f41`. Cloud Build:
+`b9a95013-82ba-45a5-ad67-8282f4e9ee4b`.
+Image digest:
+`sha256:5af1c5831213d06f555c18a597df804b95c52193273c919ec410ec9d4af8653b`.
+API and web revisions `financial-friday-api-jade1011` and
+`financial-friday-web-jade1011` were deployed without traffic, checked, then
+promoted to 100%. Existing IAP, tenant enrollment and private API settings were
+retained. The dirty, unrelated local `control_room_future.py` edit was excluded
+from the commit and clean build archive.
+
+Candidate and stable private API checks passed: version 0.16.0, transactional
+Firestore, 13 artificial bill records, no payment authority on the plan,
+unchanged balance, rejected unconfirmed execution (422), unavailable external
+follow-through and rejected anonymous access. The candidate also used live Vertex
+to interpret one artificial paid notice without a payment request or case.
+Owner browser checks confirmed the protected orb asset loads and the redesigned
+home/plan renders without console errors.
+
+Full stable-site action also passed for artificial bill `FRIDAY-c33cf0f72952`:
+run `ff_94d5ef6a4f634914af82f3d55c6f1894`. Gemini made three planning calls;
+the checker rejected two proposals before an accepted restricted program recorded
+one INR 2,479 payment to the enrolled artificial recipient. The cloud screen
+showed a saved receipt, actual correction evidence and no browser errors. This
+test intentionally changed the sandbox balance; the read-only candidate checks
+above did not. It is task-plan correction, not production bank-code repair.
 
 ## What is still outside the product
 

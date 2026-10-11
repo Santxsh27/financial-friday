@@ -2,7 +2,7 @@
 
 ## Implemented and verified
 
-- 0.16.0 local: selected Money Journey layout, visible Friday companion and
+- 0.16.0 deployed: selected Money Journey layout, visible Friday companion and
   reviewed-bill direct execution without retyping. Exact amount/payee/record and
   current financial rules remain gates. 287 native tests (286 passed, one skip),
   plus eleven tooling tests. Deployment/browser evidence: ../MONEY_JOURNEY_0160.md.

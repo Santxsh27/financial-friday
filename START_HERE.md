@@ -43,7 +43,7 @@ Local SQLite mode runs the complete artificial-money journey. Version 0.13.2 inc
 
 Python, FastAPI, Pydantic, SQLite, cryptography/Ed25519, Google Gen AI SDK, Google Firestore client, Docker Compose, HTML/CSS/JavaScript and browser speech transcription. The repository retains earlier Bank of Anthos artificial-bank work.
 
-Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Build, service identity, Secret Manager and budget alerts. The latest validated local API is 0.16.0; deployment evidence is in `docs/MONEY_JOURNEY_0160.md`. The existing live configuration uses Gemini 3.5 Flash-Lite and transactional Firestore. Owner Google login through IAP works; access remains owner-only. Cloud Tasks and native Gemini Live voice remain planned. BigQuery, Document AI, ADK and Agora are not implemented.
+Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Build, service identity, Secret Manager and budget alerts. The deployed API is 0.16.0; deployment evidence is in `docs/MONEY_JOURNEY_0160.md`. The live configuration uses Gemini 3.5 Flash-Lite and transactional Firestore. Owner Google login through IAP works; access remains owner-only. Cloud Tasks and native Gemini Live voice remain planned. BigQuery, Document AI, ADK and Agora are not implemented.
 
 ## Verification
 

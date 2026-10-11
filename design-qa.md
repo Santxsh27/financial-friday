@@ -35,6 +35,10 @@ Comparison and desktop/mobile screenshots are saved outside the repository at
   navigation away from the result screen.
 - Native suite: 287 tests, 286 passed, one optional skip; tooling: 11 passed.
   Runtime Docker: 287 tests, no failures, ten optional dependency/integration skips.
+- Stable Cloud Run site: protected asset and plan loaded, then live Vertex rejected
+  two proposals and corrected a third before one INR 2,479 artificial payment was
+  recorded transactionally. Result colours and stages reflected that evidence;
+  no browser errors. Source/deployment identifiers are in the release notes.
 
 ## Remaining boundaries
 

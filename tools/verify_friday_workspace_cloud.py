@@ -50,6 +50,14 @@ def main():
     if plan["state"] == "PLANNED":
         assert plan["planned_total_minor"] <= workspace["available_above_reserve_minor"]
         assert plan["remaining_above_reserve_minor"] >= 0
+        assert all(len(row["bill_sha256"]) == 64 for row in plan["selected"])
+    try:
+        request("/v1/friday/bills/handle", {"bill_reference": "RELEASE-CHECK-NO-ACTION",
+            "expected_bill_sha256": "0" * 64, "confirm_sandbox_execution": False})
+    except HTTPError as error:
+        assert error.code == 422, "unconfirmed execution must be rejected before AI or payment"
+    else:
+        raise AssertionError("unconfirmed bill execution unexpectedly accepted")
     unavailable = request("/v1/friday/follow-through", {"bill_reference": "RELEASE-CHECK-NO-ACTION"})
     assert unavailable["state"] == "UNAVAILABLE"
     assert unavailable["reason"] == "CLOUD_CONNECTOR_NOT_IMPLEMENTED"
@@ -77,6 +85,7 @@ def main():
     print(json.dumps({"version": health["version"], "workspace_verified": True,
         "bill_records": len(workspace["bills"]), "balance_unchanged": True,
         "plan_state": plan["state"], "plan_has_no_payment_authority": True,
+        "unconfirmed_bill_execution_rejected": True,
         "cloud_followthrough_disabled": True, "anonymous_access_rejected": True,
         "live_paid_alert_verified": paid_alert_verified,
         "live_ai_intake_requested": args.check_paid_alert, "payment_requests": 0}))

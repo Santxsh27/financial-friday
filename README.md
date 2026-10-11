@@ -36,14 +36,21 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.15.2, October 11.** The `clarity1011` API and web revisions
+**Live release: 0.16.0, October 11.** The `jade1011` API and web revisions
+serve the Money Journey and reviewed-bill action. Private candidate and stable
+API checks passed: transactional Firestore, reserve-aware planning, strict
+execution-consent rejection, unchanged read-only balance and rejected anonymous
+access. Live Vertex classified an artificial paid notice without preparing a
+payment. See [deployment evidence](docs/MONEY_JOURNEY_0160.md).
+
+**Previous live release: 0.15.2.** The `clarity1011` API and web revisions
 passed zero-traffic checks and were promoted with private access unchanged.
 265 application tests ran (264 passed, one optional skip); eleven tooling tests
 passed. Live Vertex interpreted an artificial paid notice without preparing a
 payment, and the cloud balance stayed unchanged. See [current release notes](docs/CLARITY_0152.md)
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
-**Latest validated local work: 0.16.0.** Recent journal queries sort by time before
+**Latest validated release: 0.16.0.** Recent journal queries sort by time before
 limiting. 287 application tests ran (286 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and

@@ -4,6 +4,8 @@ This module composes presentation only. It cannot approve, pay, change policy,
 or infer settlement. Inbox previews read the same tenant-scoped evidence APIs.
 """
 
+from .friday_preferences import PREFERENCES_CSS, PREFERENCES_JS
+
 EVERYDAY_CSS = r"""<style id="friday-everyday-styles">
 @font-face{font-family:FridayInter;src:url('/assets/friday-inter.ttf') format('truetype');font-weight:100 900;font-display:swap}
 :root{color-scheme:light;--bg:#faf9f6;--panel:#fff;--panel2:#f3f5f9;--ink:#12223d;--muted:#526481;--line:#e0e5ec;--lime:#2f59c9;--blue:#3159c8;--cyan:#247452;--red:#ac2944;--amber:#85510d;--radius:20px;--friday-pass:#247452;--friday-held:#ac2944;--friday-review:#85510d;--friday-live:#3159c8;font-family:FridayInter,Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
@@ -26,6 +28,7 @@ EVERYDAY_CSS = r"""<style id="friday-everyday-styles">
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important;transform:none!important}}html[data-motion="off"] *,html[data-motion="off"] *:before,html[data-motion="off"] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important;transform:none!important}
 .topbar .mark{position:relative;overflow:hidden;border-radius:12px;background:#f8f6f2}.topbar .mark img.everyday-team-brand{position:absolute;width:320%;height:320%;max-width:none;left:-111%;top:-89%;object-fit:contain}
 </style>"""
+EVERYDAY_CSS = EVERYDAY_CSS.replace('</style>', PREFERENCES_CSS + '</style>')
 
 EVERYDAY_JS = r"""
       // Chosen image layout. Read-only projections; no new financial authority.
@@ -99,3 +102,4 @@ EVERYDAY_JS = r"""
       shortHeading(bill,'Give Friday the request.','Paste the bill message. Friday checks trusted evidence and your saved permission before acting.');
       refreshEverydayHome();
 """
+EVERYDAY_JS += PREFERENCES_JS

@@ -21,6 +21,15 @@ Start with [START_HERE.md](START_HERE.md) for the plain-language tour, demo step
 
 ## A bounded AI operator for everyday financial tasks
 
+### Appearance and sound
+
+Use the top-bar moon/sun button to switch light/dark mode. The gear opens
+**Make Friday yours**: Daylight, Midnight or device theme; optional soft click
+sounds; and the existing reduced-motion control. Preferences stay in this browser,
+not your financial rules. Sound is muted by default, synthesized locally without
+microphone access, and only responds to user clicks—not background activity or
+payment confirmation. Hover/focus feedback is restrained and respects reduced motion.
+
 ### Current interface: the selected Everyday design
 
 The complete interface now uses warm ivory, peach actions and navy Friday panels.

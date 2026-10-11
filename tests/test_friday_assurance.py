@@ -96,7 +96,7 @@ class FridayAssuranceTests(unittest.TestCase):
     def test_companion_is_code_rendered_and_motion_is_bounded(self):
         self.assertIn('makeFridayCore()', FINANCIAL_FRIDAY_HTML)
         self.assertNotIn("image.src='/assets/friday-jade-orb.png'", FINANCIAL_FRIDAY_HTML)
-        for marker in ('IntersectionObserver', 'document.hidden', 'cancelAnimationFrame', 'time-lastCoreFrame>=32', 'Math.min(window.devicePixelRatio||1,2)', "dataset.motion!=='off'", 'PROJECTED_3D_CANVAS'):
+        for marker in ('IntersectionObserver', 'document.hidden', 'cancelAnimationFrame', 'time-lastCoreFrame>=32', 'Math.min(window.devicePixelRatio||1,2)', "dataset.motion!=='off'", 'INSTRUMENT_APERTURE_CANVAS'):
             self.assertIn(marker, CORE_JS)
         self.assertNotIn('fetch(', CORE_JS)
         self.assertNotIn('setInterval', CORE_JS)

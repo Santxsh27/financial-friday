@@ -2,6 +2,15 @@
 
 ## What changed
 
+Visual revision, October 11: the initial tilted-orbit design below was replaced
+with an original front-facing instrument aperture at the user's request. The
+current renderer is `INSTRUMENT_APERTURE_CANVAS`: nested segmented rings, offset
+notches, a hollow central aperture, rotating scan arcs and corner brackets. It
+contains no imported movie graphics or planetary/orbital geometry. Existing
+state colours, bounded animation, reduced motion and all financial behaviour
+remain unchanged. This is an original HUD-inspired implementation, not a legal
+clearance claim or exact reproduction of a film interface.
+
 The selected Money Journey layout remains. The assistant is now code-rendered,
 not a raster image: perspective-projected segmented orbits, foreground/background
 depth, moving particles, a breathing energy core and pointer parallax. Pending,

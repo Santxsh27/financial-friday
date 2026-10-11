@@ -93,6 +93,44 @@ Screenshots (artificial data only):
 This is evidence for the exercised paths, not an exhaustive guarantee of every
 possible input, browser, network failure or security threat.
 
+## Appearance and sound addendum — October 12
+
+The subsequent UI-only release is `financial-friday-web-prefs1012` at 100% traffic.
+The API remains `financial-friday-api-ready1012`. Build
+`87c89081-c2ca-4806-b023-42e93475c0e8` used clean source commit `36d1be6` and image
+`sha256:0cce184cc0bf6ce74a7f2922a5d6679fd9e54e87c0837946ac3868136cf53eb3`.
+The earlier readiness revisions above are retained as rollback/history evidence.
+
+- Top-bar moon/sun toggle; Daylight, Midnight and device theme selection.
+- Native modal preferences panel, Escape close and return focus; global navigation
+  shortcuts do not operate behind this modal.
+- Opt-in, locally synthesized click sounds, muted by default. Actual user clicks
+  are required; no page-load, background or receipt-success chimes. No microphone,
+  remote audio assets, permissions or model calls are involved. Audio is throttled;
+  blocked storage/audio degrades without crashing the interface.
+- Motion reuses the existing control. Device reduced-motion settings still win.
+- Gentle fine-pointer hover lift, arrow feedback and dark-mode colour tokens for
+  home, documents, rules, bills, activity and outcome evidence. A file-picker
+  contrast issue found during inspection was corrected before final publication.
+
+Final native: **319 ran, 318 passed, one skipped**. Docker interface release:
+**319 ran, 301 passed, 18 skipped** (Node presentation checks run natively).
+Tooling: **11 passed**. New executable regressions cover default-muted/no-autoplay,
+theme persistence/device changes, invalid values, trusted-click gating, throttling,
+muting, hidden tabs, storage/audio failure and absence of financial/microphone APIs.
+The final file-picker CSS adjustment was followed by another passing native suite.
+
+Local and protected candidate browser checks verified theme switching and the
+preferences controls. The 390px panel has no horizontal document/dialog overflow.
+On the promoted live origin, dark mode and enabled sound persist across reload;
+Escape restores focus to the gear; captured console errors/warnings were empty.
+Audio synthesis/control behaviour is tested; perceived loudness is not certified
+and depends on browser/device output settings. The final authenticated cloud smoke
+check passed with 13 records, unchanged balance, no new AI calls and zero payment
+requests. Sign-in protection and financial rules are unchanged.
+
+[Published preferences panel](screenshots/preferences-1012-live.png)
+
 ## Submission blockers — do not call these finished
 
 1. **Judge access:** Cloud Run web remains owner-only IAP and the API remains

@@ -7,12 +7,12 @@ Bill warnings explain the actual limit/reserve/evidence reason. Document actions
 disclose cloud processing and existing automatic-payment permission. See
 [submission readiness](docs/submission/READINESS_1012.md) for the rollout record.
 **Live now:** API `financial-friday-api-ready1012` and web
-`financial-friday-web-ready1012final` each serve 100% of their service traffic.
+`financial-friday-web-prefs1012` each serve 100% of their service traffic.
 The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
 has the updated logo, bill explanations and evidence-based outcome badges.
-Latest native verification: **314 tests ran, 313 passed, one optional integration
-skipped**, plus **11 tooling tests passed**. Docker: **314 ran, 300 passed,
-14 skipped** (including JavaScript checks exercised by the native suite).
+Latest native verification: **319 tests ran, 318 passed, one optional integration
+skipped**, plus **11 tooling tests passed**. Docker: **319 ran, 301 passed,
+18 skipped** (including JavaScript checks exercised by the native suite).
 Post-promotion cloud checks passed with unchanged balance and zero payment requests.
 Tests do not guarantee zero defects,
 fraud-detection accuracy or real-world banking readiness.

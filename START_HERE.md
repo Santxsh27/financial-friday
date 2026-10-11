@@ -17,6 +17,9 @@ Save an instruction such as “Handle verified bills up to ₹3,000, protect ₹
 7. Use **Safety lab** for controlled subscription/timeout cases, and **Activity** to reopen existing receipts without paying again.
 8. Overview's **Recent activity** shows recorded outcomes, not all-time totals. Activity filters use independently checked assurance; older unsealed receipts remain amber. **How Friday works** explains the journey; Escape closes help and `/` focuses the home command outside text fields.
 9. **Understand my money → Review spending** accepts a consented INR CSV. The analysis is read-only; net flow is not your bank balance. **Clear results & start again** removes the displayed analysis.
+10. The top-bar **moon/sun** changes light/dark mode. The **gear** opens appearance
+    settings: device theme, optional soft click sounds and gentle motion. These
+    preferences stay in this browser and never change financial permission.
 
 The seven cloud sandbox records above ₹3,000 are previous ₹3,001 test bills,
 not failed payments. Friday correctly excludes them from the automatic plan.
@@ -52,7 +55,7 @@ Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Bui
 
 ## Verification
 
-Current native validation: **314 application tests** (313 passed, one optional
+Current native validation: **319 application tests** (318 passed, one optional
 skip) and **11 tooling tests**. The readiness pass and reviewed-bill
 execution preserve existing financial and authentication boundaries. See
 `docs/submission/READINESS_1012.md` for the current verification/deployment record.

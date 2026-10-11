@@ -46,7 +46,7 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.17.0, October 11.** The `core1011b` API and `hud1011` web revisions
+**Live release: 0.17.0, October 11.** The `core1011b` API and `soft1011` web revisions
 serve the animated Friday core, Money Journey and independent saved-outcome replay.
 Zero-traffic candidate checks passed before promotion: transactional Firestore,
 reserve-aware planning, strict consent rejection and rejected anonymous access.
@@ -62,7 +62,7 @@ payment, and the cloud balance stayed unchanged. See [current release notes](doc
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
 **Latest validated code: 0.17.0.** Recent journal queries sort by time before
-limiting. 301 application tests ran (300 passed, one optional skip); eleven tooling
+limiting. 302 application tests ran (301 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and
 the Firestore transaction callback. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)

@@ -47,7 +47,7 @@ Google Cloud includes Vertex AI, private Cloud Run, Artifact Registry, Cloud Bui
 
 ## Verification
 
-Current local validation: **301 application tests** (300 passed, one optional
+Current local validation: **302 application tests** (301 passed, one optional
 skip) and **11 tooling tests**. The Money Journey redesign and reviewed-bill
 execution preserve existing financial and authentication boundaries. See
 `docs/MONEY_JOURNEY_0160.md` and `design-qa.md` for the current verification record.

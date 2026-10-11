@@ -20,3 +20,15 @@ Native validation: 302 tests, 301 passed and one optional skip. A regression che
 covers stylesheet order, outcome states, focus/reduced-motion selectors and the
 absence of script or hidden-control rules. Screenshots and browser checks are
 targeted validation, not an accessibility certification.
+
+## Release evidence
+
+Source: `c8d3a5c`. Cloud Build `69f87374-fa0b-4880-b344-4139e147b1b4`
+completed successfully. Web revision `soft1011` serves 100% of live traffic using
+image digest `sha256:04ea4f200c12b22d6bdba0b5896820003caaf4ce4182878acf70b2faecb309f3`.
+The API remains on `core1011b`; IAP and private backend protections are unchanged.
+Docker validation: 302 tests, 290 passed and twelve optional skips. Fresh browser
+checks covered Home, document intake and read-only successful receipt reopening;
+no console errors or warnings were returned. The transition's initial fade frame
+was distinguished from the fully visible document screen. No payment was rerun.
+Screenshots are in the workspace's `audit-friday-core` folder.

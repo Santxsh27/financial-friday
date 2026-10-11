@@ -74,6 +74,8 @@ process.stdout.write(JSON.stringify(['VERIFIED','LEGACY_UNSEALED','CONFLICT','UN
         self.assertIn('return {show,openRun,execute}', EXPERIENCE_JS)
         self.assertIn('Approval outcome unavailable. Check Activity before retrying.', FINANCIAL_FRIDAY_HTML)
         self.assertIn('clearStatement.disabled=true', EXPERIENCE_JS)
+        self.assertIn('Historical evidence not certified', EXPERIENCE_JS)
+        self.assertIn('reopening submitted no payment.', EXPERIENCE_JS)
 
     def test_one_design_system_not_stacked_theme_overrides(self):
         self.assertEqual(FINANCIAL_FRIDAY_HTML.count('<style'), 1)

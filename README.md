@@ -59,7 +59,7 @@ payment, and the cloud balance stayed unchanged. See [current release notes](doc
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
 **Latest validated code: 0.17.0.** Recent journal queries sort by time before
-limiting. 299 application tests ran (298 passed, one optional skip); eleven tooling
+limiting. 301 application tests ran (300 passed, one optional skip); eleven tooling
 tests passed. New tests cover reviewed-record changes, exact model fields,
 strict consent, tenant isolation, replay, and changed limits in both SQLite and
 the Firestore transaction callback. See [Money Journey release notes](docs/MONEY_JOURNEY_0160.md)

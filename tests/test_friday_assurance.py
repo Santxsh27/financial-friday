@@ -15,6 +15,7 @@ from carapace_core.bank_envelope import BankEnvelopeSigner
 from carapace_core.friday_assurance import seal_friday_run, replay_friday_run
 from carapace_integrations.financial_friday_ui import FINANCIAL_FRIDAY_HTML
 from carapace_integrations.friday_core_visual import CORE_JS
+from carapace_integrations.friday_simple import SIMPLE_JS
 
 
 class FridayAssuranceTests(unittest.TestCase):
@@ -99,6 +100,29 @@ class FridayAssuranceTests(unittest.TestCase):
             self.assertIn(marker, CORE_JS)
         self.assertNotIn('fetch(', CORE_JS)
         self.assertNotIn('setInterval', CORE_JS)
+
+    def test_conflict_is_not_overwritten_by_the_simplified_success_renderer(self):
+        self.assertIn("engineering.querySelector('div').append(replayPanel)", FINANCIAL_FRIDAY_HTML)
+        self.assertIn("render=function(data){if(['CONFLICT','UNAVAILABLE'].includes(data.assurance?.state))", FINANCIAL_FRIDAY_HTML)
+        self.assertIn('engineering.open=true;return;}simplerRender(data);', FINANCIAL_FRIDAY_HTML)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node is optional for renderer execution validation')
+    def test_conflict_renderer_executes_only_the_attention_path(self):
+        wrapper = next(line.strip() for line in SIMPLE_JS.splitlines() if 'const simplerRender=render;' in line)
+        script = """
+        let calls=0,cleared=0,render=()=>{calls++};
+        const work={hidden:false},approvalArea={replaceChildren(){cleared++}},engineering={open:false};
+        const showWork=()=>{throw Error('Conflict cannot look completed')};
+        const summarize=()=>{throw Error('Conflict cannot receive success summary')};
+        """ + wrapper + """
+        for(const state of ['CONFLICT','UNAVAILABLE']){
+          render({status:'COMPLETED_SYNTHETIC',assurance:{state}});
+          if(!work.hidden||!engineering.open)throw Error('Attention evidence must be visible');
+        }
+        if(calls!==2||cleared!==2)throw Error('Wrong render calls');
+        """
+        result = subprocess.run(['node'], input=script, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     @unittest.skipUnless(shutil.which('node'), 'Node is optional for JavaScript syntax validation')
     def test_complete_page_javascript_parses(self):

@@ -44,7 +44,7 @@ review.
 
 ## Validation and audit
 
-Native application suite: 298 tests, 297 passed and one optional skip. Tooling:
+Native application suite: 301 tests, 300 passed and one optional skip. Tooling:
 eleven passed. New coverage includes changed goal/evidence/program/outcome/events,
 cross-tenant access, forged pass flags, missing/corrupt journal, re-signed wrong
 recipient, legacy runs, distinct holds/recovery and complete JavaScript parsing.
@@ -53,8 +53,9 @@ Firestore restart contract tests also require verified readback.
 The subsequent browser check found a historical-receipt mismatch between the
 planner and executor. Both now use the same local bill-identity resolver; a
 historical paid bill is not offered for payment again. A tenant-isolated regression
-test covers this migration case. Final native count: 299 tests, 298 passed and one
-optional skip.
+test covers this migration case. JavaScript execution tests also ensure a stored
+success label cannot override a failed independent verification in the simplified
+UI. The replay panel was moved into the visible evidence disclosure.
 
 The Product Design audit guided the scoped redesign. Fresh screenshots cover
 Home → bill plan → Activity → saved outcome. Initial cloud receipt loading showed

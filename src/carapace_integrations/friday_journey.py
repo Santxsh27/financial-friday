@@ -58,6 +58,7 @@ JOURNEY_CSS = r"""
 
 JOURNEY_JS = r"""
       // Selected layout; source records remain text, never executable HTML.
+      engineering.querySelector('div').append(replayPanel);
       function companion(className=''){const box=element('div',null,'journey-companion '+className);const image=makeFridayCore();const copy=element('div');copy.append(element('b','Friday is ready.'),element('p','Your bill. Your rules. Less work.'),element('small','Ready for a request · not monitoring your bank'));box.append(image,copy);box.dataset.state='idle';return box;}
       const top=document.querySelector('.topbar .shell');top.insertBefore(nav,top.querySelector('.top-spacer'));const brandMark=top.querySelector('.mark');const brandImage=makeFridayCore();brandMark.replaceChildren(brandImage);top.append(element('span','Artificial-money sandbox','journey-sandbox'));
       const homeAssistant=companion('journey-home-assistant');hero.append(homeAssistant);$('workspace-title').textContent='Less money admin. More room for life.';$('scenario-copy').textContent='Friday understands your bills, plans around your reserve and handles permitted sandbox tasks. You see the outcome, not a wall of steps.';

@@ -78,5 +78,6 @@ process.stdout.write(JSON.stringify({mode,played,sound:r.getSound()}));
         self.assertIn('prefers-reduced-motion:reduce', PREFERENCES_CSS)
         self.assertIn('html[data-motion="off"]', PREFERENCES_CSS)
         self.assertIn('.stage.blocked', PREFERENCES_CSS)
+        self.assertIn('input::file-selector-button{background:#34435c;color:#edf1fa', PREFERENCES_CSS)
         self.assertIn('friday-theme-toggle', FINANCIAL_FRIDAY_HTML)
         self.assertEqual(FINANCIAL_FRIDAY_HTML.count('<style'), 1)

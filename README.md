@@ -44,12 +44,13 @@ record and uses the original financial verifier/executor. Activity shows provide
 time and a labelled approved limit, not a misleading claim that the limit was
 paid. Recorded receipts still open read-only.
 
-**Live release: 0.16.0, October 11.** The `jade1011` API and web revisions
-serve the Money Journey and reviewed-bill action. Private candidate and stable
-API checks passed: transactional Firestore, reserve-aware planning, strict
-execution-consent rejection, unchanged read-only balance and rejected anonymous
-access. Live Vertex classified an artificial paid notice without preparing a
-payment. See [deployment evidence](docs/MONEY_JOURNEY_0160.md).
+**Live release: 0.17.0, October 11.** The `core1011b` API and web revisions
+serve the animated Friday core, Money Journey and independent saved-outcome replay.
+Zero-traffic candidate checks passed before promotion: transactional Firestore,
+reserve-aware planning, strict consent rejection and rejected anonymous access.
+Live Vertex generated a held plan (three model calls); independent replay returned
+`VERIFIED_HOLD`, with unchanged balance and zero payment requests. A paid-notice
+interpretation also passed without payment. See [deployment and audit evidence](docs/FRIDAY_CORE_0170.md).
 
 **Previous live release: 0.15.2.** The `clarity1011` API and web revisions
 passed zero-traffic checks and were promoted with private access unchanged.

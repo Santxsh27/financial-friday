@@ -70,3 +70,51 @@ or organizer-approved access. Real bank/SMS integration, external settlement,
 native voice, durable cloud monitoring and production source-code repair are not
 implemented. Video, deck, dashboard requirements and eligibility still require
 final submission work.
+
+## Verified release — October 11, 2026
+
+Source commit: `9a496981b823e63754d19ec5256340fab4832443` (includes
+`fd9d318`). Cloud Build `88588470-6fc7-40ca-8cb6-796e7be54e2e` succeeded.
+Both API and web now serve 100% from their `core1011b` revisions, using the
+same immutable container:
+
+```
+asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:0aee5796a98c9fb9019b6d2bab85cc963b85dc01caee504ef74763ac1d6b60fe
+```
+
+The candidate was deployed with zero traffic before verification and promotion.
+Existing IAP, service identities, secrets and private API access were retained.
+Stable private API verification then passed with version 0.17.0, transactional
+Firestore, consent rejection, anonymous access rejection, unchanged balance and
+zero payment requests. Cloud follow-through remains deliberately disabled.
+
+### Scoped journey audit
+
+1. **Home — healthy.** Live core frame count advanced from 457 to 722; it is
+   rendered by `PROJECTED_3D_CANVAS`, not an animated raster. Home says “Friday is
+   ready” rather than inheriting a prior outcome. Desktop and earlier 390 × 844
+   mobile checks retained readable navigation. Motion-off stopped rendering.
+2. **Fresh bill → allowed action — healthy in local sandbox.** A newly published
+   test-provider bill, CORE-1011-1743, used a live Vertex planning call and recorded
+   exactly one INR 1,783.41 artificial payment. Run
+   `ff_e495a500812b4d46a99e32593e009c9d` loaded read-only with `VERIFIED` replay:
+   signature, safety recomputation, recipient, separate journal and exact effect
+   checks. The replay panel is visibly reachable in the evidence disclosure.
+3. **Unsafe plan → hold — healthy on cloud.** Live Vertex proposed three unsafe
+   plans; the checker rejected all three. Run
+   `ff_e57fe2bea6b7477882fd02c726cf8c2a` returned `VERIFIED_HOLD`, unchanged
+   balance and no new payment. Its live browser view shows a red held core, three
+   rejected proposals, “No money moved” and signed read-only hold evidence.
+   A separate paid-notice interpretation also passed without payment requests.
+4. **Documents/spending — navigation healthy, not a new feature certification.**
+   Document upload shows format limits and raw-file privacy rules. Spending review
+   requires explicit CSV-processing consent and states that it cannot pay.
+5. **Activity/readback — healthy for checked runs.** Reopening evidence is a GET,
+   not another execution. Browser console checks returned no errors/warnings.
+   Legacy results remain unsealed; current replay conflicts suppress success UI.
+
+Native revalidation: 301 tests, 300 passed, one optional skip. Tooling: 11 passed.
+Existing local API, web and ledger containers remained healthy. Screenshot
+evidence is saved in the workspace's `audit-friday-core` directory: before/after
+Home, mobile, successful replay and live held replay. These targeted checks do
+not establish broad fraud accuracy, production bank access or exhaustive UX quality.

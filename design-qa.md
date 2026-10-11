@@ -1,5 +1,19 @@
 # Money Journey design QA — 0.16.0
 
+## Current update — 0.17.0
+
+The historical raster-orb limitation below is superseded: the companion and brand
+now use a live Canvas renderer with perspective-projected orbits, moving energy,
+pointer parallax and evidence-driven status colours. This is not WebGL, voice
+activity or a bank monitor. Motion-off and reduced-motion pause animation.
+
+Fresh scoped checks cover Home, bill planning, Activity and successful receipt
+replay. The independent replay panel is visible inside “How Friday checked this”.
+A returned evidence conflict cannot be overwritten by the outer success renderer.
+Document and spending navigation retain their input/privacy controls. Desktop and
+390 × 844 mobile were inspected; this is not full accessibility certification.
+Current implementation, test and cloud evidence: `docs/FRIDAY_CORE_0170.md`.
+
 Status: passed for the scoped Home → Bill plan → Run → Activity journey.
 Date: 11 October 2026. No claim of complete accessibility certification.
 

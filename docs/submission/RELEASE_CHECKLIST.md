@@ -2,6 +2,12 @@
 
 ## Implemented and verified
 
+- 0.17.0 deployed in `core1011b`: code-rendered moving Friday core and independent
+  signature, safety-rule and journal replay. Historical paid-bill planning and
+  conflict/success presentation bugs fixed. 301 native tests (300 passed, one
+  optional skip); eleven tooling tests. Live Vertex hold verified independently
+  without money movement. See ../FRIDAY_CORE_0170.md.
+
 - 0.16.0 deployed: selected Money Journey layout, visible Friday companion and
   reviewed-bill direct execution without retyping. Exact amount/payee/record and
   current financial rules remain gates. 287 native tests (286 passed, one skip),

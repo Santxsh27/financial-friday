@@ -86,7 +86,7 @@ EVERYDAY_JS = r"""
         finally{everydayPreviewBusy=false;}
       }
       const everydayShow=show;show=function(name,push=true){everydayShow(name,push);$('scenario-copy').textContent=everydayIntro;document.querySelectorAll('.friday-nav [data-screen-link]').forEach(button=>button.setAttribute('aria-current',button.dataset.screenLink===name||(name==='money'&&button===billsNav)?'page':'false'));if(name==='home')refreshEverydayHome();};
-      shortHeading(moneyView,'Your bills, clearly planned.','A plan based on your reserve. Check one bill at a time; only artificial funds can move.');
+      shortHeading(moneyView,'Your money, clearly organised.','Plan bills, review spending or explore saved inputs. Only artificial funds can move.');
       shortHeading(doc,'Let’s read your document.','Choose a bill photo or PDF. Gemini extracts the details; reading alone never authorizes payment.');
       shortHeading(bill,'Give Friday the request.','Paste the bill message. Friday checks trusted evidence and your saved permission before acting.');
       refreshEverydayHome();

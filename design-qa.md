@@ -17,7 +17,7 @@ Evidence folder:
 `/Users/santosh/Documents/Codex/2026-09-10/ok-this-fraudlens-replay-or-watever-3/friday-redesign-1011/`.
 Files: `everyday-desktop.png`, `everyday-mobile-final.png`, `everyday-tablet.png`,
 `everyday-documents.png`, `everyday-bills.png`, `everyday-rules.png`,
-`everyday-activity.png`, `everyday-success.png`.
+`everyday-activity.png`, `everyday-success.png`, `everyday-held.png`.
 
 ## Five fidelity surfaces
 
@@ -46,7 +46,10 @@ Inspected Home, bill review, document upload, rules, Activity filtering and save
 successful receipt reopening. The historical ₹1,783.41 receipt retains one live
 Gemini planning call, journal outcome and five recorded stages. Reopening does not
 pay again. Blank Home submission opens the request form without starting payment.
-Help opens/closes. Browser error log is empty in the inspected run.
+Help opens/closes. A historical provider-change hold displays a red stopped outcome
+and no new payment. Spending retains its temporary-processing consent. The shared
+money heading was made neutral so it accurately covers both bills and spending.
+Browser error log is empty in the inspected run.
 
 Loading/empty/unavailable states are explicit. No timer turns stages green. Tests
 cover preview failure, financial authority, asset traversal and cloud authentication.

@@ -83,7 +83,15 @@ class FirestoreFridayState:
         self._validate(kind, tenant, "list")
         if not 1 <= limit <= 100:
             raise ValueError("durable-state list limit is invalid")
-        return [snapshot.to_dict() for snapshot in self._documents(kind, tenant).limit(limit).stream()]
+        query = self._documents(kind, tenant)
+        # Firestore defaults to document-ID order. A random run/event ID is not
+        # chronology: order BEFORE limiting or the newest outcomes can disappear.
+        # These fields are written when the journal record is first created;
+        # payment/provider collections intentionally keep their existing order.
+        time_field = {"runs": "result.started_at", "signals": "created_at"}.get(kind)
+        if time_field:
+            query = query.order_by(time_field, direction="DESCENDING")
+        return [snapshot.to_dict() for snapshot in query.limit(limit).stream()]
 
     def _atomic(self, callback):
         from google.cloud import firestore

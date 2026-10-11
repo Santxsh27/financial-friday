@@ -522,11 +522,13 @@ class FinancialFridayService:
                 "SELECT receipt_json FROM friday_payments WHERE tenant_id=?", (tenant,)
             ).fetchall()
             rows = db.execute(
-                "SELECT result_json FROM friday_runs WHERE tenant_id=? ORDER BY rowid DESC LIMIT 10",
+                "SELECT result_json FROM friday_runs WHERE tenant_id=? "
+                "ORDER BY json_extract(result_json, '$.started_at') DESC, rowid DESC LIMIT 10",
                 (tenant,),
             ).fetchall()
             live_rows = db.execute(
-                "SELECT result_json FROM friday_live_signals WHERE tenant_id=? ORDER BY rowid DESC LIMIT 5",
+                "SELECT result_json FROM friday_live_signals WHERE tenant_id=? "
+                "ORDER BY created_at DESC, rowid DESC LIMIT 5",
                 (tenant,),
             ).fetchall()
         receipts = []

@@ -39,6 +39,12 @@ passed. Live Vertex interpreted an artificial paid notice without preparing a
 payment, and the cloud balance stayed unchanged. See [current release notes](docs/CLARITY_0152.md)
 and [readiness and UX notes](docs/JOURNEY_1011.md).
 
+**Latest local work (not deployed):** recent cloud journal queries now sort by
+time before limiting, and the local daily briefing preserves the same chronology.
+271 application tests ran (270 passed, one optional skip); eleven tooling tests
+passed. The next UI is being selected from three task-focused design directions,
+not claimed as shipped. See [redesign and journal-fix notes](docs/FRIDAY_REDESIGN_1011.md).
+
 ### Reserve-aware planning (0.15.0 live)
 
 **My money → Plan my bills** computes a personalised, read-only plan from current

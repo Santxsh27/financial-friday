@@ -12,7 +12,10 @@ currencies and arithmetic, and prepares verification messages. Uploaded receipts
 remain user claims, not bank proof. Review storage and routes cannot mutate
 financial permission or payment journals. See [the review specification](docs/FINANCIAL_REVIEW.md).
 The execution sections below describe the retained explicit artificial-money layer.
-The local Anthos account projection is separately provisioned and read-only;
+Anthos is retired from the customer interface and disabled in default local
+configuration. Its historical account projection remains an optional developer
+fixture, not a release dependency. Customer chat never queries it. The local
+Anthos account projection, when explicitly configured by a developer, is read-only;
 Google login is not bank authentication. Cloud visitors are not given a shared
 bank account. See [chat and bank architecture](docs/FRIDAY_CHAT_AND_BANK.md).
 

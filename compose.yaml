@@ -31,11 +31,8 @@ services:
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
       GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-global}
       CARAPACE_GEMINI_MODEL: ${CARAPACE_GEMINI_MODEL:-gemini-3.5-flash-lite}
-      CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED: "true"
-      BOA_DATABASE_URL: postgresql://admin:password@anthos-ledger:5432/postgresdb
-      # Local operator-provisioned sample account; public visitors are NOT mapped here.
-      FRIDAY_ANTHOS_DATABASE_URL: postgresql://admin:password@anthos-ledger:5432/postgresdb
-      FRIDAY_ANTHOS_ACCOUNTS_JSON: '{"demo-bank":"1011226111"}'
+      # Anthos is retained only as an opt-in historical developer fixture.
+      CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED: "false"
       PORT: "8080"
     ports:
       - "127.0.0.1:8080:8080"
@@ -108,7 +105,8 @@ services:
       retries: 20
 
   anthos-demo:
-    profiles: ["anthos", "anthos-full"]
+    # Historical service name retained for existing developer commands.
+    # Friday's website does not require any Bank of Anthos container.
     build:
       context: .
       target: runtime
@@ -119,15 +117,11 @@ services:
       CARAPACE_API_BASE_URL: http://api:8080
       CARAPACE_TENANT: demo-bank
       CARAPACE_API_KEY: local-demo-key-change-me
-      BOA_FRONTEND_URL: http://anthos-frontend:8080
-      BOA_PUBLIC_FRONTEND_URL: http://localhost:8081
       PORT: "8090"
     ports:
       - "127.0.0.1:8090:8090"
     depends_on:
       api:
-        condition: service_healthy
-      anthos-ledger:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health', timeout=2)"]

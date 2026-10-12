@@ -12,7 +12,7 @@ from carapace_api.factory import create_app
 from carapace_api.friday_bank import FridayAnthosBank
 from carapace_core.friday_access import permitted_friday_route
 from carapace_integrations.friday_cloud_web import WebSettings, create_cloud_web
-from carapace_integrations.friday_chat_ui import CHAT_JS
+from carapace_integrations.friday_chat_ui import CHAT_CSS, CHAT_JS
 from test_friday_review import facts
 
 
@@ -68,6 +68,18 @@ class FridayChatBankTests(unittest.TestCase):
         content=json.loads(self.model.models.generate_content.call_args.kwargs['contents'])
         self.assertEqual(content['workspace_evidence']['evidence'],[])
         self.assertNotIn('TN Power',json.dumps(content))
+
+    def test_workspace_chat_never_queries_retired_anthos_connector(self):
+        self.answer()
+        with patch.object(self.app.state.friday_bank, 'snapshot', side_effect=AssertionError('must not query Anthos')):
+            result=self.chat(include_workspace=True)
+        self.assertEqual(result.status_code,200,result.text)
+        content=json.loads(self.model.models.generate_content.call_args.kwargs['contents'])
+        self.assertEqual(content['workspace_evidence']['bank']['scope'],'NO_REAL_BANK_ACCESS')
+
+    def test_retired_bank_navigation_is_not_an_ai_task(self):
+        self.answer(next_screen='bank')
+        self.assertEqual(self.chat().status_code,503)
 
     def test_credentials_are_minimised_and_output_scrubbed(self):
         self.answer(reply='Your OTP is 765432. Do not share it.')
@@ -158,6 +170,24 @@ class FridayChatBankTests(unittest.TestCase):
         self.assertIn("chatConsent.addEventListener('change',clearChat)",CHAT_JS)
         self.assertIn('actions_executed.length',CHAT_JS)
         self.assertIn('No canned financial answer was substituted',CHAT_JS)
+
+    def test_home_has_guided_starts_without_seeding_or_automatic_model_calls(self):
+        self.assertNotIn('/api/friday/bank',CHAT_JS)
+        self.assertNotIn('Bank of Anthos',CHAT_JS)
+        self.assertNotIn("view('bank'",CHAT_JS)
+        self.assertIn("name==='bank'?'money':name",CHAT_JS)
+        self.assertIn('What can I help you with?',CHAT_JS)
+        self.assertIn('ARTIFICIAL EXAMPLE',CHAT_JS)
+        self.assertIn('sandboxMode.checked=false',CHAT_JS)
+        self.assertIn('Expected:',CHAT_JS)
+        example_handlers=CHAT_JS.split("[['1. Load bill'",1)[1].split('const startHelp',1)[0]
+        self.assertNotIn('jsonRequest',example_handlers)
+        self.assertNotIn('checkLive()',example_handlers)
+        self.assertIn("$('live-input').value=text",example_handlers)
+        self.assertIn("Question ready. Choose Ask Friday",CHAT_JS)
+        self.assertIn('max-height:210px',CHAT_CSS)
+        self.assertIn('height:72px',CHAT_CSS)
+        self.assertIn('grid-template-columns:1fr',CHAT_CSS)
 
 
 if __name__=='__main__':

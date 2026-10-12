@@ -1,4 +1,4 @@
-"""Conversational right panel plus an explicit read-only sample-bank page."""
+"""Compact conversational panel and guided, non-executing task entry."""
 CHAT_CSS = """
 .friday-chat-log{display:grid;gap:10px;max-height:310px;overflow-y:auto;margin:16px 0;overscroll-behavior:contain}
 .friday-chat-message{border-radius:15px;padding:12px 14px;background:#273854;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
@@ -8,28 +8,20 @@ CHAT_CSS = """
 .friday-chat-consent input{width:18px;height:18px;flex:none;accent-color:#f08869}
 .friday-chat-tools{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.friday-chat-tools button{font-size:11px;min-height:36px;border:1px solid #74839c;color:#f3f6ff;background:transparent;border-radius:12px;padding:7px 10px}
 .friday-chat-tools button:hover{background:#314364}.friday-chat-message button{display:block;margin-top:10px;font-size:11px;min-height:36px;background:#e5edfa;color:#1a3158;border-radius:10px}
-.friday-chat-status{color:#cfdbef;font-size:11px;line-height:1.6;min-height:24px}.bank-ledger-list{display:grid;gap:10px;margin-top:20px}.bank-ledger-row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid var(--line);padding:14px 0}.bank-ledger-row small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.friday-chat-status{color:#cfdbef;font-size:11px;line-height:1.6;min-height:24px}
+.everyday-assistant{padding:22px}.everyday-assistant-label{padding-right:88px;min-height:62px}.everyday-assistant{position:relative}.everyday-assistant .everyday-orb{position:absolute;right:16px;top:10px;width:86px;height:86px;margin:0}.everyday-assistant h2{font-size:23px;margin:10px 0 8px}.everyday-assistant>p{font-size:13px;margin-bottom:10px}.everyday-assistant textarea{min-height:72px;height:72px;max-height:130px;resize:vertical}.everyday-assistant .home-command{gap:8px}.everyday-assistant .run{min-height:42px}.friday-chat-log{min-height:96px;max-height:210px;margin:10px 0}.friday-chat-message{line-height:1.55}.friday-chat-consent{margin:10px 0}.friday-chat-tools{margin:8px 0}.friday-chat-privacy{font-size:11px;line-height:1.6;color:#d4dcef;margin-top:10px}.friday-chat-privacy summary{cursor:pointer;min-height:30px}.friday-chat-privacy .permission-note{margin:5px 0}.everyday-assistant-state{margin-top:12px;padding-top:10px}.friday-starter{margin:0 0 24px;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--paper,#fff)}.friday-starter h2{font-size:21px;margin:0 0 6px;letter-spacing:-.035em}.friday-starter>p{font-size:13px;color:var(--muted);line-height:1.65;margin:0 0 16px}.friday-start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.friday-start-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;padding:16px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--ink)}.friday-start-card b{font-size:13px;line-height:1.4}.friday-start-card small{font-size:12px;color:var(--muted);line-height:1.6}.friday-start-card:hover{transform:translateY(-2px);border-color:#a8b9d8}.friday-start-card .everyday-icon-tile{width:38px;height:38px;border-radius:12px}.friday-starter details{margin-top:16px;font-size:13px}.friday-starter summary{cursor:pointer;min-height:36px;display:flex;align-items:center;color:var(--blue)}.friday-starter details p{font-size:12px;color:var(--muted);line-height:1.7}.friday-example-actions{display:flex;gap:8px;flex-wrap:wrap}.friday-example-actions button{font-size:12px;min-height:40px}.friday-starter ol{padding-left:20px;font-size:12px;color:var(--muted);line-height:1.9}.everyday-side{position:static}
+@media(max-width:950px){.friday-start-grid{grid-template-columns:1fr}.friday-start-card{display:grid;grid-template-columns:38px 1fr;column-gap:12px}.friday-start-card .everyday-icon-tile{grid-row:span 2}.friday-start-card small{grid-column:2}.friday-start-card{row-gap:4px}}
+@media(prefers-reduced-motion:reduce){.friday-start-card:hover{transform:none}}
 """
 
 CHAT_JS = r"""
+    {
+      hero.querySelector('.everyday-illustration')?.remove();
+      everydayRecent.remove(); // Activity has its own live, read-only page.
+      inboxHead.append(inboxLink); // Avoid a large, duplicate navigation tile.
       // Navigation suggestions never execute a financial action.
-      titles.bank='Your sandbox bank';
-      const bankView=view('bank','Live read-only records from a provisioned Bank of Anthos sample account.');
-      const bankStatus=element('p','No account is assumed until the connector responds.','screen-note');bankStatus.setAttribute('role','status');
-      const bankRefresh=element('button','Refresh sandbox bank','planner');bankRefresh.type='button';
-      const bankContents=element('div');bankView.append(bankStatus,bankRefresh,bankContents);
-      const bankNav=element('button','Sandbox bank');bankNav.type='button';bankNav.dataset.screenLink='bank';nav.append(bankNav);
-      let bankBusy=false;
-      async function refreshBank(){if(bankBusy)return;bankBusy=true;bankRefresh.disabled=true;bankStatus.textContent='Reading your provisioned sample account. No money is being moved.';bankContents.replaceChildren();
-        try{const data=await jsonRequest('/api/friday/bank');if(data.scope!=='BANK_OF_ANTHOS_ARTIFICIAL_MONEY'||data.read_only!==true||data.money_moved!==false)throw new Error('Unexpected bank scope');
-          bankStatus.textContent=data.status+' · '+data.reason;
-          if(data.status==='CONNECTED'){const summary=element('article',null,'money-section');summary.append(element('h2','Sample account ending '+data.account_last4),element('p','Ledger balance: '+data.balance_minor.toLocaleString('en-IN')+' minor ledger units'),element('p','Currency is not recorded by Anthos. These are not your Friday INR sandbox funds.'),element('small','Snapshot: '+data.as_of+' · Last '+data.transactions.length+' of '+data.total_records+' records'));bankContents.append(summary);
-            const rows=element('div',null,'bank-ledger-list');data.transactions.forEach(t=>{const row=element('article',null,'bank-ledger-row');const detail=element('div');detail.append(element('b',t.direction+' · transaction '+t.transaction_id),element('small','Other account ending '+t.counterparty_last4+' · '+t.timestamp));row.append(detail,element('span',t.amount_minor.toLocaleString('en-IN')+' minor units'));rows.append(row);});bankContents.append(rows);
-          }else bankContents.append(element('p','Google sign-in opens your private Friday workspace. It does not authenticate a bank account. An operator must provision a separate artificial account; no shared visitor account is used.','screen-note'));
-          data.limits.forEach(line=>bankContents.append(element('p',line,'screen-note')));
-        }catch(error){bankStatus.textContent='Bank snapshot unavailable. No balance or successful payment is assumed.';}finally{bankBusy=false;bankRefresh.disabled=false;}}
-      bankRefresh.addEventListener('click',refreshBank);
-      const priorChatShow=show;show=function(name,push=true){priorChatShow(name,push);if(name==='bank')refreshBank();};
+      // Retired customer bank route resolves to the existing artificial-money overview.
+      const priorChatShow=show;show=function(name,push=true){priorChatShow(name==='bank'?'money':name,push);};
       const chatLog=element('div',null,'friday-chat-log');chatLog.id='friday-chat-log';chatLog.setAttribute('role','log');chatLog.setAttribute('aria-label','Conversation with Friday');chatLog.setAttribute('aria-live','polite');
       const chatConsent=element('input');chatConsent.type='checkbox';chatConsent.id='friday-chat-workspace';
       const chatConsentLabel=element('label',' Include my recent financial inbox and sandbox summary in Gemini’s answer','friday-chat-consent');chatConsentLabel.prepend(chatConsent);
@@ -40,19 +32,35 @@ CHAT_JS = r"""
       chatConsent.addEventListener('change',clearChat);
       const chatTools=element('div',null,'friday-chat-tools');const chatClear=element('button','Clear chat');chatClear.type='button';chatClear.addEventListener('click',clearChat);
       const reviewFromChat=element('button','Review a bill or receipt');reviewFromChat.type='button';reviewFromChat.dataset.screenLink='bill';
-      const bankFromChat=element('button','My sandbox bank');bankFromChat.type='button';bankFromChat.dataset.screenLink='bank';chatTools.append(reviewFromChat,bankFromChat,chatClear);
+      chatTools.append(reviewFromChat,chatClear);
       everydayAssistant.querySelector('h2').textContent='Ask Friday.';
-      everydayAssistant.querySelector('h2').nextElementSibling.textContent='Ask about a bill, an unfamiliar charge or what to check next. I’ll guide you through the evidence.';
+      everydayAssistant.querySelector('h2').nextElementSibling.textContent='Ask a money question, understand a bill or draft a message. No bank connection needed.';
       everydayAssistant.insertBefore(chatLog,command);everydayAssistant.insertBefore(chatConsentLabel,command);command.after(chatStatus,chatTools);
-      $('home-command').placeholder='Why does this bill need checking? What should I do next?';$('home-command').maxLength=1600;
+      $('home-command').placeholder='Ask about a charge, a bill or a money concept…';$('home-command').maxLength=1600;$('home-command').rows=2;
+      command.querySelector('label').textContent='Your question';
       $('home-command').setAttribute('aria-label','Message Friday');command.querySelector('button[type=submit]').textContent='Ask Friday';
       permissionNote.textContent='Chat text goes to Gemini on Google Cloud. Messages are not saved by Friday; replies may be wrong. Never enter a PIN, OTP or password.';
+      const chatPrivacy=element('details',null,'friday-chat-privacy');chatPrivacy.append(element('summary','Privacy & limits'),permissionNote);everydayAssistant.append(chatPrivacy);
+      separator.remove();docAction.remove();
+      const chatWelcome=element('p','Try: “How do I check an unfamiliar charge?” Or ask your own question.','friday-chat-status');chatLog.append(chatWelcome);
+      function prepareChat(message){show('home');$('home-command').value=message;$('home-command').focus();chatStatus.textContent='Question ready. Choose Ask Friday to send it to Gemini.';}
+      const starter=element('section',null,'friday-starter');starter.setAttribute('aria-label','Start with Friday');starter.append(element('h2','What can I help you with?'),element('p','Start with a question, your own document or a guided example. You don’t need to connect a bank.'));
+      const startGrid=element('div',null,'friday-start-grid');
+      [['book-open','rose','Understand a charge','Get a practical checklist and a message you can send.',()=>prepareChat('I see an unfamiliar charge. What should I check, and can you draft a short message to ask about it?')],['file-text','peach','Check a bill','Read a photo or PDF. Compare totals and recipient claims.',()=>show('document')],['shield','sage','Try a guided example','See how Friday spots conflicting bill and receipt details.',()=>{examples.open=true;examples.scrollIntoView({block:'nearest'});}]].forEach(([icon,tint,title,copy,action])=>{const button=element('button',null,'friday-start-card');button.type='button';button.append(everydayTile(icon,tint),element('b',title),element('small',copy));button.addEventListener('click',action);startGrid.append(button);});starter.append(startGrid);
+      const examples=element('details');examples.append(element('summary','Guided example · artificial documents, real Gemini review'),element('p','Load the bill first, then choose Review this financial input. Return here and load the matching or changed-recipient receipt. Each check runs Gemini and stores the extracted claims in your private inbox. No money moves. You can edit every input before checking.'));
+      const exampleButtons=element('div',null,'friday-example-actions');
+      const exampleBill='ARTIFICIAL EXAMPLE — not a real bill. Unpaid invoice FRIDAY-DEMO-101. Supplier: Example Electricity. Total: INR 1780.00. Payee: example-electricity@upi. Line item: Electricity, quantity 1, unit price INR 1780.00, line total INR 1780.00.';
+      const exampleReceipt='ARTIFICIAL EXAMPLE — not a real payment. Payment receipt for invoice FRIDAY-DEMO-101. Supplier: Example Electricity. Amount paid: INR 1780.00. Payee: example-electricity@upi. Transaction reference: DEMO-RECEIPT-101.';
+      [['1. Load bill',exampleBill],['2. Load matching receipt',exampleReceipt],['3. Load changed recipient',exampleReceipt.replace('example-electricity@upi','different-recipient@upi')]].forEach(([label,text])=>{const button=element('button',label,'planner');button.type='button';button.addEventListener('click',()=>{sandboxMode.checked=false;$('check-live').textContent='Review this financial input';$('live-input').value=text;show('bill');$('live-input').focus();toast('Artificial example loaded. Review it before sending to Gemini.');});exampleButtons.append(button);});examples.append(exampleButtons,element('p','Expected: a bill awaiting confirmation; matching document claims for step 2; a recipient conflict for step 3. These are expected checks, not precomputed results or proof of fraud.'));starter.append(examples);
+      const startHelp=element('details');const steps=element('ol');['Choose an input. Nothing is sent or paid just by opening a page.','Review with Gemini. Friday extracts claims; exact checks compare amounts and recipients.','Open Financial inbox for evidence and a prepared verification message.','For artificial payment execution only, use Bills and your saved rules. Real bank payments are not supported.'].forEach(text=>steps.append(element('li',text)));startHelp.append(element('summary','How Friday works · four steps'),steps);starter.append(startHelp);everydayMain.insertBefore(starter,everydayInbox);
+      everydayIntroCopy.textContent='Less financial admin. Clearer next steps. Ask Friday, check a bill or explore a safe demonstration.';
+      scopeCopy.querySelector('p').textContent='Questions and document checks work without bank access. Only the separate payment demo uses artificial funds.';
       async function sendFridayChat(){const field=$('home-command');const message=field.value.trim();if(!message)return;if(chatBusy){toast('Friday is still replying.');return;}
         chatBusy=true;const button=command.querySelector('button[type=submit]');button.disabled=true;chatClear.disabled=true;chatConsent.disabled=true;chatMessage('user',message);field.value='';chatStatus.textContent='Friday is thinking with Gemini… No financial action is being performed.';
         try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked});
           if(result.read_only!==true||result.money_moved!==false||result.payment_authorized!==false||!Array.isArray(result.actions_executed)||result.actions_executed.length)throw new Error('Unexpected chat authority');
           const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited inbox case(s) · user-supplied evidence'));
-          const screenLabels={review:'Open financial inbox',document:'Read a document',money:'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules',bank:'Open sandbox bank'};
+          const screenLabels={review:'Open financial inbox',document:'Read a document',money:'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules'};
           if(screenLabels[result.next_screen]){const next=element('button',screenLabels[result.next_screen]);next.type='button';next.dataset.screenLink=result.next_screen;card.append(next);}
           chatHistory.push({role:'user',text:message},{role:'assistant',text:result.reply});chatHistory=chatHistory.slice(-8);
           chatStatus.textContent=result.mode+' · '+result.model+' · Guidance only; no action executed.';
@@ -62,4 +70,5 @@ CHAT_JS = r"""
       command.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();sendFridayChat();},true);
       $('home-command').addEventListener('keydown',event=>{if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();sendFridayChat();}});
       assistantState.replaceChildren(element('span','Chat on request · no background bank monitoring'));
+    }
 """

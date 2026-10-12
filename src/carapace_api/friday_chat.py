@@ -15,17 +15,15 @@ def chat_context(service, review, bank, tenant: str) -> dict:
             "currency": item["currency"], "amount_minor": item["amount_minor"],
             "due_date": item["due_date"], "next_action": item["next_action"][:400]})
     rules = service.mandate(tenant)
-    bank_record = bank.snapshot(tenant)
-    # Never expose bank rows to the model or invent a link to uploaded documents.
-    bank_summary = {key: bank_record.get(key) for key in
-                    ("status", "scope", "currency", "balance_minor", "reason", "as_of")}
+    # Anthos is a retired optional developer integration, not customer context.
+    # Do not query a separate bank when someone opts into their Friday inbox.
     return {"evidence": evidence, "coverage": "At most 10 cases from the latest 50 review inputs, not a complete statement",
             "unconfirmed_bill_totals": board["unconfirmed_bill_totals"],
             "currency_scales": board["currency_scales"],
             "friday_sandbox": {"scope": "ARTIFICIAL_MONEY", "currency": "INR",
                 "balance_minor": rules["sandbox_balance_minor"],
                 "protected_balance_minor": rules["mandate"]["protected_balance_minor"]},
-            "bank": bank_summary}
+            "bank": {"status": "NOT_CONNECTED", "scope": "NO_REAL_BANK_ACCESS"}}
 
 
 def reply_to_user(service, review, bank, tenant, request):

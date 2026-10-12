@@ -1,9 +1,19 @@
-# Friday chat and sandbox bank
+# Friday chat and optional historical bank tools
 
 Friday's right panel accepts natural questions and returns live Gemini guidance.
-The separate Sandbox bank page reads a provisioned artificial account from Google's
-Bank of Anthos ledger. Chat, document reconciliation and sandbox execution remain
-different operations with visible permissions.
+The customer Sandbox bank page has been removed. The application does not require
+Bank of Anthos. Its historical read-only connector is retained for developer tests
+only and is disabled by default. Chat, document reconciliation and Friday's own
+artificial-money execution remain different operations with visible permissions.
+
+## Current first-use experience
+
+Overview offers useful questions, document upload and a guided bill/receipt example
+even before records exist. Example buttons load editable artificial text; only an
+explicit Review sends it to Gemini and stores extracted claims. There are no fake
+balances, precomputed green results or automatic account seeding. The assistant
+has a small companion, a bounded scrolling conversation and a compact composer;
+privacy details are expandable. Old `#bank` links resolve to the money overview.
 
 ## Ask Friday
 
@@ -27,7 +37,8 @@ exhaustive secret detection. Never enter PINs, OTPs, passwords or card details.
 
 Workspace context is off by default. When enabled, the server selects at most ten
 cases from the latest fifty review inputs, separate currency totals, the Friday
-INR sandbox balance/reserve and Anthos connection status. It does not send raw
+INR sandbox balance/reserve and an explicit no-real-bank-access marker. It never
+queries the Anthos connector. It does not send raw
 uploads, signing keys, database credentials or ledger account numbers. Every
 citation must reference a case supplied by the server. Context is a bounded
 snapshot, not a complete statement or current market feed.
@@ -39,9 +50,16 @@ Replies may still be incorrect. Local offline mode returns unavailable rather
 than a simulated Gemini answer. Personalized trading recommendations are outside
 scope.
 
-## Inspect the Anthos account
+## Historical developer-only Anthos account experiment
 
-Open **Sandbox bank**. Local Docker provisions the demonstration tenant against
+The following describes the retired customer projection for engineering reference,
+not a feature visible in the current site. No new Cloud SQL trial or bank hosting
+is required to finish Financial Friday. Default local startup is
+`docker compose up -d --build api anthos-demo`; the historical service name is
+retained, but it has no Anthos database dependency. Existing sample-bank volumes
+are preserved rather than deleted.
+
+With explicit operator configuration, the historical API can map a tenant against
 sample account ending 6111 and retrieves its balance plus the latest twenty ledger
 rows in a repeatable-read, read-only PostgreSQL transaction. This reads actual
 sample-bank data rather than generating a balance in the browser.
@@ -68,7 +86,7 @@ It runs at `http://localhost:8081`; the published sample login is `testuser` /
 `bankofanthos`. This is separate from Friday's Google authentication. Use only
 artificial funds. Friday itself remains at `http://localhost:8090`.
 
-## Cloud boundary and remaining connection work
+## Cloud boundary
 
 Chat uses the existing Vertex AI client, authenticated Cloud Run gateway and
 tenant admission limits. No new IAM access or banking credentials are given to
@@ -78,7 +96,8 @@ tenant-to-sample-account mappings. Deployment secrets must stay in Secret Manage
 not source control. Use a dedicated read-only database role for a hosted connector.
 
 The present public Cloud Run deployment does not host Anthos's full PostgreSQL
-and user-service stack. It must show NOT_LINKED for public visitors. Hosting the
+and user-service stack. The retained historical endpoint returns NOT_LINKED for
+unmapped visitors, but the customer interface does not call or display it. Hosting the
 bank, provisioning separate accounts, authenticating bank identity and binding
 verified payments to exact ledger references are still required before promising
 cloud bank execution. There is no public tunnel to the developer's database.

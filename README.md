@@ -7,6 +7,23 @@ and the difference between cloud features, local tools and historical experiment
 Repository: [Santxsh27/financial-friday](https://github.com/Santxsh27/financial-friday).
 The repository was renamed in place; history was retained, not copied into a new project.
 
+## Start with a question, a bill or a guided example
+
+Overview now offers three clear starting tasks: **Understand a charge**, **Check
+a bill**, and **Try a guided example**. Questions work without saved records or
+bank access. The compact Friday panel keeps the input and conversation together;
+privacy details are expandable rather than pushing the controls down the page.
+Guided examples load editable, explicitly artificial bill/receipt text. They do
+not send a prompt, seed an account, grant payment permission or display a fabricated
+result. Choose Review to run live Gemini, then inspect the actual saved evidence.
+
+**Bank of Anthos is no longer part of the customer product.** No Anthos page,
+navigation button or database lookup is used by chat. The historical connector and
+Docker fixtures are retained only for optional developer experiments, disabled in
+the default API configuration. Friday's payment demonstration uses its own
+persistent, tenant-isolated artificial-money ledger (Firestore in the cloud,
+SQLite locally). No real bank, biller account or payment rail is connected.
+
 ## Ask Friday and reconcile your financial records
 
 The right-hand Friday panel now supports natural conversation through Gemini.
@@ -18,9 +35,8 @@ See [chat and the sandbox bank connection](docs/FRIDAY_CHAT_AND_BANK.md).
 Vertex replies were verified through the main website; local chat uses the
 configured Gemini API. Context is opt-in, no chat action executes, and cloud
 visitors' Anthos accounts remain NOT_LINKED rather than sharing an owner account.
-The official local [Bank of Anthos account page](http://127.0.0.1:8081/home) is
-running too. Its sample balance/history were checked against Friday's read-only
-ledger screen; these are artificial funds, not a real bank connection.
+Earlier Anthos checks are historical engineering evidence, not a customer feature
+or a prerequisite for the deployed application.
 
 Bring an unfamiliar bill, invoice, receipt or transaction notice. Friday reads it
 with Gemini on Vertex AI and builds a private financial inbox without requiring
@@ -100,9 +116,9 @@ provider record before review. The existing explicit sandbox execution action,
 permission checks, reserve, exact recipient/amount binding and independent outcome
 replay are unchanged. The interface clearly warns that checking a bill message can
 execute an artificial payment under saved rules. No email connector, real bank
-connection or real-money payment has been added. Local **Sandbox bank** reads a
-separately provisioned official Anthos sample account; cloud visitors remain
-NOT_LINKED until accounts and hosting are provisioned. See [design verification](design-qa.md).
+connection or real-money payment has been added. The former **Sandbox bank** page
+is retired; old `#bank` links open Friday's artificial-money overview instead.
+See [design verification](design-qa.md).
 
 ### Independent outcome replay (0.17.0)
 

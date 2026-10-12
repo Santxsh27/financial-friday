@@ -24,9 +24,24 @@ receipts, conflicting evidence and prepared verification messages. No provider
 setup or saved automatic permission is required for review. Follow
 [the new click-by-click workflow](docs/FINANCIAL_REVIEW.md) first. The sandbox
 payment steps below apply only to the separate explicit artificial-payment mode.
-See [Ask Friday and Sandbox bank](docs/FRIDAY_CHAT_AND_BANK.md) for the current
-conversation, consent and local account walkthrough. Cloud bank accounts are not
-automatically linked by Google sign-in.
+See [Ask Friday and historical developer bank tools](docs/FRIDAY_CHAT_AND_BANK.md)
+for conversation and consent. Anthos is removed from customer navigation and is
+not required. Google sign-in identifies your private workspace, not a bank account.
+
+### First visit: choose one task on Overview
+
+- **Understand a charge:** prepares a useful question in the compact chat panel.
+  Edit it, then click **Ask Friday**. Expect live guidance or an unsent message,
+  not a fraud verdict, complaint submission or refund.
+- **Check a bill:** opens Documents. Choose your redacted image/PDF and click
+  **Read & reconcile — no payment**. Expect extracted claims and evidence checks.
+- **Try a guided example:** expands three labelled artificial inputs. Load the
+  bill, then click **Review this financial input**. Return to Overview and load
+  the matching receipt; repeat with the changed recipient. Expect a saved bill,
+  matching claims, then a recipient conflict. Gemini runs on each explicit review;
+  displayed results are not precomputed. No example button sends data or pays.
+- **How Friday works:** expands the four-step walkthrough. **Privacy & limits**
+  explains cloud processing. No bank integration is required for these tasks.
 
 
 1. [Before you begin](#before-you-begin)
@@ -62,7 +77,7 @@ automatically linked by Google sign-in.
 
 ```bash
 cd /Users/santosh/Desktop/CARAPACE
-docker compose --profile anthos up -d --build api anthos-demo
+docker compose up -d --build api anthos-demo
 ```
 
 The folder and internal Python names remain compatible with earlier installations.

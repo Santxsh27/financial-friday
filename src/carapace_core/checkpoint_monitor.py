@@ -1,4 +1,4 @@
-"""Independent client for pinning and checking CARAPACE witness checkpoints.
+"""Independent client for pinning and checking Financial Friday witness checkpoints.
 
 The monitor accepts a witness public key from a separate file, never from the
 checkpoint API. A local file is a demonstration of retained state; a real
@@ -132,8 +132,8 @@ def _save_state(path: Path, state: Mapping[str, Any]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Pin and verify CARAPACE witness history")
-    parser.add_argument("--url", required=True, help="CARAPACE API origin")
+    parser = argparse.ArgumentParser(description="Pin and verify Financial Friday witness history")
+    parser.add_argument("--url", required=True, help="Financial Friday API origin")
     parser.add_argument("--state-file", required=True, type=Path)
     parser.add_argument("--witness-public-key-file", required=True, type=Path,
                         help="separately pinned base64 raw Ed25519 public key")

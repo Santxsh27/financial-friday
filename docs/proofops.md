@@ -1,4 +1,4 @@
-# CARAPACE ProofOps and Counterfactual Safety Search
+# Financial Friday ProofOps and Counterfactual Safety Search
 
 ProofOps starts only after the deterministic verifier has preserved a real
 payment mismatch. It is not a chatbot and it does not edit a production bank.
@@ -15,7 +15,7 @@ are excluded. With strict structured output, Gemini must:
 4. create adversarial regression scenarios;
 5. describe a patch strategy without authorising it.
 
-The model cannot declare its own answer correct. CARAPACE runs **Counterfactual
+The model cannot declare its own answer correct. Financial Friday runs **Counterfactual
 Safety Search** over isolated copies of the failed evidence. It explores the
 smallest combinations of these allowlisted interventions:
 

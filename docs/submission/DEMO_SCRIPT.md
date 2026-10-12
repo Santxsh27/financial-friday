@@ -4,7 +4,8 @@
 
 Open the protected Cloud Run website using the enrolled owner's Google account. Do not show credentials, OAuth downloads, Secret Manager values or personal bills. This demo uses artificial funds and a development test provider. A real bank integration is not claimed.
 
-Start on **Friday** home. Open **Bills** for the fresh-input journey, **My rules**
+Start on **Overview**. Open the supported **#bill** message-editor route for fresh
+provider setup and typed input; **Bills** opens the saved-bill plan. Use **My rules**
 to inspect saved permission, and **Safety lab** for controlled scenarios. Each task
 opens a dedicated **Run** screen. Use **Activity** to view receipts without executing
 again; expand **Show how Friday verified this** only for technical evidence.
@@ -15,9 +16,9 @@ Use a fresh bill reference each time. In **Demo provider setup**, publish a TN P
 
 **0:00–0:25 — The problem.** “An assistant that understands a bill is useful only if it can complete the allowed task without treating the bill as permission to spend. Friday separates understanding, verified provider evidence, standing permission and execution.”
 
-**0:25–1:15 — New input, live AI.** Publish the fresh test bill on screen, then type: “Please handle my one-time TN Power electricity bill [fresh reference] for INR 2487.00. Payee: tnpower@upi. Check the provider record before paying and protect my reserve.” Click **Handle this safely**. Wait for the actual response. Show the extracted facts, stored run, model provenance, independent checks and signed receipt. Do not claim success before the response.
+**0:25–1:15 — New input, live AI.** Publish the fresh test bill on the **#bill** page, then type: “Please handle my one-time TN Power electricity bill [fresh reference] for INR 2487.00. Payee: tnpower@upi. Check the provider record before paying and protect my reserve.” Click **Check bill** on that page, or **Check my bill** if using Overview. Wait for the actual response. Show extracted facts, actual model provenance, independent checks and the recorded outcome. Do not claim success before the response; a safe hold is an honest outcome when no valid plan is obtained.
 
-**1:15–1:45 — No duplicate.** Submit the same bill again. Show **Already handled—nothing repeated**, zero new money effects and the original receipt. A cached/reconciled outcome is expected, not a new AI-generated payment.
+**1:15–1:45 — No duplicate.** Submit the same bill again. Show its returned already-handled/reconciled result, zero new money effects and the original receipt. A cached/reconciled outcome is expected, not a new AI-generated payment.
 
 **1:45–2:15 — A changed recipient.** Change only the payee in the message to `someoneelse@upi`, keeping the registered bill unchanged. Show the mismatch and no new payment. Friday must not silently replace the recipient or relax the standing permission.
 

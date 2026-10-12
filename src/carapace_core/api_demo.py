@@ -1,4 +1,4 @@
-"""Run a repeatable end-to-end demonstration against the CARAPACE API."""
+"""Run a repeatable end-to-end demonstration against the Financial Friday API."""
 
 from __future__ import annotations
 
@@ -99,7 +99,7 @@ def _call(
         raise RuntimeError(f"API returned HTTP {error.code}: {detail}") from error
     except URLError as error:
         raise RuntimeError(
-            f"cannot reach CARAPACE at {base_url}; start the API first"
+            f"cannot reach Financial Friday at {base_url}; start the API first"
         ) from error
 
 
@@ -172,7 +172,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
 
         print()
-        print("CARAPACE DEMO RESULT")
+        print("Financial Friday DEMO RESULT")
         print(f"  Correct payment: {valid_verdict}")
         print(f"  Duplicate debit: {duplicate_verdict}")
         print(f"  Incident: {incident['case_id']} ({incident['status']})")
@@ -180,7 +180,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"  Overall: {'PASS' if passed else 'FAIL'}")
         return 0 if passed else 1
     except (OSError, ValueError, KeyError, RuntimeError) as error:
-        print(f"CARAPACE demo failed: {error}", file=sys.stderr)
+        print(f"Financial Friday demo failed: {error}", file=sys.stderr)
         return 2
 
 

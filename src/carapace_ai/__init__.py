@@ -1,4 +1,4 @@
-"""Bounded AI adapters for CARAPACE."""
+"""Bounded AI adapters for Financial Friday."""
 
 from .gemini_api import GeminiApiIntentProvider
 from .incident_reasoning import IncidentHypothesis, LocalIncidentReasoningProvider

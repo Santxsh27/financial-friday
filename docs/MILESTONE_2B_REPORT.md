@@ -16,13 +16,13 @@ OK
 
 The added tests include missing choice, forged device signature, altered amount in a signed statement, HOLD override, signed CANCEL, immutable development enrollment, tampered acknowledgement record, and rollback when the witness is corrupt. Existing refund, bill, tenant-isolation and protection-proof tests still pass.
 
-The browser check used the local CARAPACE page with live Gemini Developer API: the genuine bill paused at `AWAITING_BROWSER_CONFIRMATION`; after browser signing `PROCEED` it returned `POSTED_SYNTHETIC` with a local witness checkpoint. Another bill signed `CANCEL` and returned `CANCELLED_NO_POSTING` with a choice receipt. The refund still returned `HOLD` / `BLOCKED` without a transfer. These are generated test scenarios and artificial money only.
+The browser check used the local Financial Friday page with live Gemini Developer API: the genuine bill paused at `AWAITING_BROWSER_CONFIRMATION`; after browser signing `PROCEED` it returned `POSTED_SYNTHETIC` with a local witness checkpoint. Another bill signed `CANCEL` and returned `CANCELLED_NO_POSTING` with a choice receipt. The refund still returned `HOLD` / `BLOCKED` without a transfer. These are generated test scenarios and artificial money only.
 
 ## What this does not prove
 
 - A human saw, understood or freely accepted the statement. The signature proves control of a browser key over bytes.
 - The test key belongs to a production-verified bank customer. Enrollment currently uses a local bank development API key, not real customer authentication, WebAuthn or a bank device lifecycle.
-- The separate Bank of Anthos site or any real bank/UPI rail is intercepted. The signed gate still controls only the CARAPACE synthetic ledger.
+- The separate Bank of Anthos site or any real bank/UPI rail is intercepted. The signed gate still controls only the Financial Friday synthetic ledger.
 - The local witness is independently operated, every bank payment is logged, or checkpoints are externally monitored for consistency.
 
 Next: production-grade device enrollment and identity binding, externally monitored witness checkpoints with consistency proofs, gateway-to-log coverage reconciliation, measured evaluation cases, then authorised cloud deployment.

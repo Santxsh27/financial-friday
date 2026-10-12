@@ -1,4 +1,4 @@
-"""Test-only bridge from an authorised CARAPACE posting to Anthos PostgreSQL.
+"""Test-only bridge from an authorised Financial Friday posting to Anthos PostgreSQL.
 
 This inserts artificial money directly into the sample ledger, not through
 Bank of Anthos's official LedgerWriter/payment API. The companion binding
@@ -57,7 +57,7 @@ def validate_bridge_input(
     if type(transfer.get("amount_minor")) is not int or transfer["amount_minor"] <= 0:
         raise BridgeRejected("amount must be a positive integer in minor units")
     if transfer.get("currency") != "INR":
-        raise BridgeRejected("this test bridge currently accepts INR-tagged CARAPACE orders only")
+        raise BridgeRejected("this test bridge currently accepts INR-tagged Financial Friday orders only")
     return sha256_hex({
         "transfer_id": transfer["transfer_id"],
         "order_id": transfer["order_id"],

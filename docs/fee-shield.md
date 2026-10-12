@@ -1,4 +1,4 @@
-# CARAPACE FeeShield — UPI MDR assurance
+# Financial Friday FeeShield — UPI MDR assurance
 
 ## Verified policy context
 
@@ -53,7 +53,7 @@ Expected merchant settlement: INR 9,960
 Policy: india-upi-mdr-2026-10-15-v1
 ```
 
-CARAPACE rejects or escalates:
+Financial Friday rejects or escalates:
 
 - an MDR or platform surcharge added to the customer's debit;
 - P2P QR codes used to disguise a merchant payment;

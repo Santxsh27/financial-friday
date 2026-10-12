@@ -1,4 +1,4 @@
-"""Cloud Run-compatible control plane for CARAPACE."""
+"""Cloud Run-compatible control plane for Financial Friday."""
 
 from .factory import create_app
 

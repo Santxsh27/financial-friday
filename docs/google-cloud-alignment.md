@@ -1,6 +1,6 @@
 # BFSI track and Google Cloud alignment
 
-CARAPACE addresses the track through one connected assurance loop rather than
+Financial Friday addresses the track through one connected assurance loop rather than
 independent AI demos:
 
 ```text
@@ -10,7 +10,7 @@ customer context -> payment promise -> bank execution -> anomaly/mismatch
 
 ## Track fit
 
-| Track direction | CARAPACE evidence |
+| Track direction | Financial Friday evidence |
 |---|---|
 | Fraud detection | Lens finds intent-versus-action contradictions before payment. |
 | Transaction anomaly analysis | Ledger Witness supplies exact contract violations; BigQuery adds population-level behavioural anomalies. |

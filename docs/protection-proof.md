@@ -12,13 +12,13 @@ The records are signed by the local bank development key. Their hashes become le
 
 `GET /v1/preflight/log/checkpoint?from_size=N` publishes only signed tree heads and an RFC 9162 consistency proof; it does not publish customer receipts. An independent client must retain its previous signed head, pin the witness public key through a separate trusted channel, and verify the proof before replacing its saved state. The included `carapace-witness-audit` CLI does this with `--url`, `--state-file` and `--witness-public-key-file` (the latter contains the base64 raw Ed25519 public key, not a private key). On first use it pins the current signed head; later runs request proof from that size and reject rollback, fork or bad signature without advancing the state. Run the monitor from a different operator/storage domain for real assurance; a local file beside the API is only a test.
 
-Authenticated `GET /v1/preflight/audit` checks every observed transfer in the CARAPACE synthetic ledger against a signed bank order and decision, registered-device `PROCEED`, and signed/included decision, choice and posting records. It reports `PASS`, `FAIL` or `NO_POSTINGS` and named issue codes. It is a coverage check over **this controlled gateway/database only**, not proof about an outside payment rail.
+Authenticated `GET /v1/preflight/audit` checks every observed transfer in the Financial Friday synthetic ledger against a signed bank order and decision, registered-device `PROCEED`, and signed/included decision, choice and posting records. It reports `PASS`, `FAIL` or `NO_POSTINGS` and named issue codes. It is a coverage check over **this controlled gateway/database only**, not proof about an outside payment rail.
 
 This establishes **integrity and inclusion in a signed checkpoint**, and lets a monitor verify append-only growth from a head it previously retained. It does not prove:
 
 - The customer actually saw, understood or freely accepted the warning. A browser signature establishes key control over bytes only.
 - The locally enrolled test key belongs to a verified customer. Production enrollment must be tied to strong bank authentication and device lifecycle controls.
-- Every payment at a real bank was logged. The current audit only sees CARAPACE synthetic transfers and records; a bank-owned, independent payment or settlement feed is required for wider coverage.
+- Every payment at a real bank was logged. The current audit only sees Financial Friday synthetic transfers and records; a bank-owned, independent payment or settlement feed is required for wider coverage.
 - The witness is independent. Both local keys are operated on the same development machine.
 - A monitor that did not previously save a trusted head can detect a historic fork. A first bootstrap accepts a valid signature from the pinned key; multiple isolated monitors need checkpoint sharing/gossip to detect split views.
 - A local database rollback cannot be hidden from everyone. The current key and checkpoint live with the same operator, so only separately retained trusted checkpoint history can expose a rollback or fork to that observer.

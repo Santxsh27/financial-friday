@@ -1,6 +1,6 @@
 # Trust Receipts
 
-A CARAPACE Trust Receipt is a customer-readable view of the exact assurance
+A Financial Friday Trust Receipt is a customer-readable view of the exact assurance
 that the deterministic verifier can prove for one payment execution. It is
 created for both matching and mismatching runs and stored inside the same
 tenant boundary as the underlying evidence.

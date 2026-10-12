@@ -1,6 +1,10 @@
 # Financial Friday — Start Here
 
-Working folder: `/Users/santosh/Desktop/CARAPACE`. The product is Financial Friday; Python module names retain CARAPACE for compatibility.
+Working folder: `/Users/santosh/Desktop/CARAPACE`. The product and repository are
+Financial Friday; installed module names retain their compatibility identifiers.
+
+For every button, example input and expected result, use the
+[complete user walkthrough](USER_GUIDE.md), including its downloadable sample files.
 
 ## What it does
 

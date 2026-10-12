@@ -2,7 +2,7 @@
 
 The upstream ledger stores a financial transaction, but it does not persist the
 request UUID used by LedgerWriter. For that reason this module requires a
-trusted, explicit binding from returned ledger transaction IDs to a CARAPACE
+trusted, explicit binding from returned ledger transaction IDs to a Financial Friday
 contract. It never guesses that relationship from amount, account, or time.
 """
 
@@ -125,8 +125,8 @@ class BankOfAnthosLedger:
     ) -> int:
         """Insert artificial money for the local test harness only.
 
-        A production CARAPACE deployment must use a read-only ledger adapter or
-        trusted processor events. CARAPACE itself never calls this method while
+        A production Financial Friday deployment must use a read-only ledger adapter or
+        trusted processor events. Financial Friday itself never calls this method while
         observing real funds.
         """
 

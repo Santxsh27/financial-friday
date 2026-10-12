@@ -1,4 +1,4 @@
-"""Deterministic UPI MDR policy checks for CARAPACE FeeShield.
+"""Deterministic UPI MDR policy checks for Financial Friday FeeShield.
 
 The policy is kept separate from AI reasoning. Production deployments must
 version and approve the applicable NPCI/bank policy before enabling it.

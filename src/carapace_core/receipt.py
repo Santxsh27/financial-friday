@@ -130,7 +130,7 @@ def build_trust_receipt(
 
     if not report_matched:
         assurance_level = "MISMATCH"
-        summary = "CARAPACE found a contradiction between the payment promise and the observed execution."
+        summary = "Financial Friday found a contradiction between the payment promise and the observed execution."
     elif settlement_confirmed:
         assurance_level = "SETTLEMENT_CONFIRMED"
         summary = "The confirmed payment fields, bank posting and final settlement evidence all match."
@@ -142,7 +142,7 @@ def build_trust_receipt(
         summary = "The submitted payment matches the confirmed fields, but bank posting evidence is not yet proven."
     else:
         assurance_level = "UNVERIFIED"
-        summary = "CARAPACE does not have enough matching evidence to verify this payment."
+        summary = "Financial Friday does not have enough matching evidence to verify this payment."
 
     evidence_digest = sha256_hex(
         {

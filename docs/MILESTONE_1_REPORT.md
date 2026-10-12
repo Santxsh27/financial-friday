@@ -21,7 +21,7 @@ Result: **zero matches** (exit status 1, no output). This search is intentionall
 1. The server creates an Ed25519-signed order with amount, currency, direction, recipient, tenant, expiry and nonce. The key is a local development key, not a bank HSM or Cloud KMS key.
 2. The browser demo shows the customer's supplied screenshot and the bank-signed fields side by side. It sends both an image and known fixture transcription text. The image is generated test material, not a captured real scam.
 3. The Gemini adapter requests structured claims with an evidence span. Deterministic checks compare the claims and supplied text with the signed fields. Model output cannot turn a definite receive-versus-send contradiction into `ALLOW`.
-4. The API signs the decision. The submit operation rechecks the signatures, expiry, tenant, order binding, verdict and replay state in a transaction. `HOLD` and `WARN` do not post in Milestone 1; `ALLOW` creates one row in the CARAPACE synthetic SQLite transfer ledger for that order.
+4. The API signs the decision. The submit operation rechecks the signatures, expiry, tenant, order binding, verdict and replay state in a transaction. `HOLD` and `WARN` do not post in Milestone 1; `ALLOW` creates one row in the Financial Friday synthetic SQLite transfer ledger for that order.
 5. The page shows the verdict, plain-English reason, whether a live model call completed, and the resulting synthetic transfer ID. A configured-but-failed provider cannot masquerade as successful live AI; provider failure holds the payment.
 
 ## Verification
@@ -45,11 +45,11 @@ The 3.6 Flash image call intermittently returned a provider 503, so the locally 
 
 ## Boundaries and open questions
 
-- The order, decision and transfer ledger are CARAPACE-controlled local development components. The new gate does **not** yet intercept Bank of Anthos's official transfer endpoint or a real bank/UPI payment. Bank of Anthos's separate sample UI and artificial ledger are not evidence of this gate being wired in-path.
+- The order, decision and transfer ledger are Financial Friday-controlled local development components. The new gate does **not** yet intercept Bank of Anthos's official transfer endpoint or a real bank/UPI payment. Bank of Anthos's separate sample UI and artificial ledger are not evidence of this gate being wired in-path.
 - The screenshot cases include fixture transcription text. There is no independent OCR or claim grounding for image-only amount/payee values yet; image-only context is treated conservatively and cannot auto-allow.
 - The visible warning/choice receipt, device acknowledgement, separately keyed witness, inclusion proof and reconciliation are Milestone 2. Do not claim Proof of Protection is complete.
 - The decision is a demo policy; a bank must own the production policy, keys, identity, data retention, and payment gateway enforcement. Local development authentication is not production-grade.
-- The optional full Bank of Anthos frontend showed `anthos-balance-reader:8080` connection refused on 24 September. The balance-reader log identified missing Google Application Default Credentials and then a Cloud Monitoring bean during local startup. Local-only settings now disable cloud core/tracing/metrics auto-configuration, and healthchecks prevent a started-but-unready Java service from being treated as ready. The full sample bank has **not yet passed an end-to-end readiness check** on this Apple Silicon Docker host. Use the smaller `anthos` profile for the Milestone 1 demonstration. This is a separate sample-bank issue, not a CARAPACE gate result.
+- The optional full Bank of Anthos frontend showed `anthos-balance-reader:8080` connection refused on 24 September. The balance-reader log identified missing Google Application Default Credentials and then a Cloud Monitoring bean during local startup. Local-only settings now disable cloud core/tracing/metrics auto-configuration, and healthchecks prevent a started-but-unready Java service from being treated as ready. The full sample bank has **not yet passed an end-to-end readiness check** on this Apple Silicon Docker host. Use the smaller `anthos` profile for the Milestone 1 demonstration. This is a separate sample-bank issue, not a Financial Friday gate result.
 - We could not confirm the team's private Hack2skill dashboard deadline because it required sign-in. The public event page currently gives **18 October 2026** for prototype submission; the team should check its dashboard for the binding date.
 
 ## Next build step

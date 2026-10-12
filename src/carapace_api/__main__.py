@@ -1,4 +1,4 @@
-"""Run the CARAPACE API using Cloud Run's PORT convention."""
+"""Run the Financial Friday API using Cloud Run's PORT convention."""
 
 from __future__ import annotations
 

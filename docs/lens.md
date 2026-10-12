@@ -1,4 +1,4 @@
-# CARAPACE Lens
+# Financial Friday Lens
 
 Lens is the consumer entry point for **Check before you pay**. It accepts the
 surrounding message and a decoded UPI payment URI, then separates two jobs:
@@ -9,7 +9,7 @@ surrounding message and a decoded UPI payment URI, then separates two jobs:
 
 This separation is the security boundary. Gemini can understand phrases such
 as “we are refunding you,” but it cannot rewrite the payee, amount, direction,
-or final CARAPACE decision.
+or final Financial Friday decision.
 
 ## Working example
 
@@ -76,7 +76,7 @@ if Gemini is unavailable; it does not silently label local rules as AI.
 
 ### Safe live setup
 
-CARAPACE is intentionally **local-first**: the running Docker demo stays on
+Financial Friday is intentionally **local-first**: the running Docker demo stays on
 the no-cost fallback until an operator deliberately configures a Google Cloud
 project. To enable live Gemini, the project owner must enable Vertex AI,
 ensure billing and model access are available, and authenticate using their own

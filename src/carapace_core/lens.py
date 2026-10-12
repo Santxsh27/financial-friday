@@ -1,4 +1,4 @@
-"""Deterministic payment-intent reconciliation for CARAPACE Lens.
+"""Deterministic payment-intent reconciliation for Financial Friday Lens.
 
 AI may extract what a message appears to promise.  This module independently
 parses the payment request and applies named, testable contradiction rules.
@@ -194,7 +194,7 @@ def reconcile_intent(
         result = "Stop. The story and the actual payment request contradict each other."
     elif intent.expected_direction == IntentDirection.UNKNOWN or payment.amount_minor is None:
         decision = LensDecision.UNVERIFIED
-        result = "CARAPACE does not have enough evidence to verify this payment."
+        result = "Financial Friday does not have enough evidence to verify this payment."
     elif findings:
         decision = LensDecision.CAUTION
         result = "Pause and independently confirm the request before paying."

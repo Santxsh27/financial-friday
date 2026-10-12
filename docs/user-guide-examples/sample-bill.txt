@@ -1,0 +1,11 @@
+ARTIFICIAL BILL FOR FINANCIAL FRIDAY PRACTICE
+Provider: TN Power
+Bill reference: GUIDE-POWER-001
+Amount: INR 1780.00
+Payment recipient: tnpower@upi
+Purpose: One-time electricity bill
+No additional fee. No subscription.
+
+This is not a real utility bill or instruction to pay real money.
+Publish the matching artificial provider record using the user guide first.
+The provider setup supplies the due date; no date is asserted by this sample.

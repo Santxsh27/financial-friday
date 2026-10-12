@@ -1,4 +1,4 @@
-"""FastAPI factory exposing the CARAPACE deterministic trust boundary."""
+"""FastAPI factory exposing the Financial Friday deterministic trust boundary."""
 
 from __future__ import annotations
 

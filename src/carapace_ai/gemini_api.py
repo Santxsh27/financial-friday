@@ -11,7 +11,7 @@ class GeminiApiIntentProvider(VertexGeminiIntentProvider):
     """Use the same hardened schema through the Gemini Developer API.
 
     The API key is supplied only to the Google Gen AI client. It is never
-    returned through CARAPACE status or provenance responses.
+    returned through Financial Friday status or provenance responses.
     """
 
     provider_name = "google-gemini-api"

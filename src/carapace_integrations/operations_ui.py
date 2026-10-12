@@ -2,7 +2,7 @@
 
 OPERATIONS_HTML = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CARAPACE · Financial operations guardian</title>
+<title>Financial Friday · Financial operations guardian</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f5f7fa;color:#17243a;font:16px/1.6 system-ui,sans-serif}
 header{background:white;border-bottom:1px solid #dde4ec}header>div,main{max-width:1100px;margin:auto;padding:20px 24px}
@@ -15,18 +15,18 @@ select,button{font:inherit;border:1px solid #b9c8d9;border-radius:8px;padding:9p
 .result{margin-top:28px;scroll-margin-top:24px}.metrics{display:flex;gap:24px;flex-wrap:wrap;padding:16px 0}.metrics div{min-width:140px}.metrics b{display:block;font-size:24px}.muted{color:#53657b;font-size:14px}.timeline{padding-left:24px}.timeline li{padding:8px 0}.timeline p{margin:4px 0;color:#53657b}.status{font-weight:800;color:#1c54ae}.next-step{border-left:3px solid #1856b2;background:#f1f6ff;padding:14px 18px;margin:20px 0}.next-step p{margin:5px 0}.outcomes{padding-left:22px}.outcomes li{padding:6px 0}.scope{font-size:13px;color:#53657b}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7fa;padding:16px;font:13px/1.6 ui-monospace,monospace}summary{cursor:pointer;color:#1c54ae;padding:12px 0}details{border-top:1px solid #e5eaf1} [hidden]{display:none!important}
 @media(max-width:800px){.cases{grid-template-columns:1fr 1fr}}@media(max-width:520px){.cases{grid-template-columns:1fr}header>div,main{padding-left:16px;padding-right:16px}}
 </style></head><body>
-<header><div><strong>CARAPACE</strong><nav><a href="#cases">Operations</a><a href="/payment-check">Payment check</a><a href="http://localhost:8080/docs" target="_blank" rel="noopener">API docs ↗</a></nav></div></header>
+<header><div><strong>Financial Friday</strong><nav><a href="#cases">Operations</a><a href="/payment-check">Payment check</a><a href="http://localhost:8080/docs" target="_blank" rel="noopener">API docs ↗</a></nav></div></header>
 <main><div class="eyebrow">Financial resolution agent · development workspace</div>
-<h1>Let CARAPACE resolve<br>the payment paperwork.</h1>
-<p class="lead">Choose an invoice. CARAPACE checks what was delivered, applies approved credits, prepares a resolution and completes the permitted test payment. You see the outcome and anything still needed.</p>
+<h1>Let Financial Friday resolve<br>the payment paperwork.</h1>
+<p class="lead">Choose an invoice. Financial Friday checks what was delivered, applies approved credits, prepares a resolution and completes the permitted test payment. You see the outcome and anything still needed.</p>
 <div class="notice"><strong>Try it with artificial money.</strong> These six examples use sample business records. Gemini can create the action plan; a separate verifier checks it before anything is recorded. No real account is connected.</div>
 <details><summary>What can it do today?</summary><p class="muted">Read five kinds of sample records, generate and verify a financial action plan, record delivery deferrals and credits, and post to the local test ledger under a pre-agreed spending policy. Real document uploads, business connectors and bank transfers are still being built. The earlier Anthos experiment is under Payment check.</p></details>
 <div class="controls"><label for="planner">Run with</label><select id="planner"><option value="configured">Google AI · configured provider</option><option value="local">Local demo · no AI call</option></select><span id="provider" class="muted">Checking provider…</span></div>
 <section id="cases" class="cases" aria-label="Financial resolution cases"></section>
-<section id="result" class="result" aria-live="polite"><span class="eyebrow">Your result</span><h2 id="headline" tabindex="-1">Start with “Partial delivery + credit”</h2><p id="progress">See how CARAPACE turns a ₹4.8 lakh invoice into a supported ₹3.6 lakh test payment, applies a credit and keeps undelivered goods out of the payment.</p>
+<section id="result" class="result" aria-live="polite"><span class="eyebrow">Your result</span><h2 id="headline" tabindex="-1">Start with “Partial delivery + credit”</h2><p id="progress">See how Financial Friday turns a ₹4.8 lakh invoice into a supported ₹3.6 lakh test payment, applies a credit and keeps undelivered goods out of the payment.</p>
 <div id="metrics" class="metrics" hidden></div><ul id="outcomes" class="outcomes" hidden></ul>
 <div id="next-step" class="next-step" hidden><strong id="next-title"></strong><p id="next-copy"></p></div>
-<details id="investigation-detail" hidden><summary>How CARAPACE reached this result</summary><p id="mode" class="muted"></p><p id="constraint" class="status"></p><ol id="timeline" class="timeline"></ol></details>
+<details id="investigation-detail" hidden><summary>How Financial Friday reached this result</summary><p id="mode" class="muted"></p><p id="constraint" class="status"></p><ol id="timeline" class="timeline"></ol></details>
 <details id="graph-detail" hidden><summary>Inspect retrieved records and their relationships</summary><pre id="graph"></pre></details>
 <details id="evidence-detail" hidden><summary>Inspect the complete saved run and signed result</summary><pre id="raw"></pre></details>
 </section><p class="muted">A blocked case stays stopped. An unavailable model does not silently become a successful AI run. Re-running a paid invoice reuses its existing verified test posting.</p></main>
@@ -43,17 +43,17 @@ function outcomeCopy(r){
  else if(r.status==='POSTED_SYNTHETIC')rows.push('A test payment was recorded by the earlier workflow. This saved run predates action-plan verification.');
  else rows.push('No new payment was made in this run.');
  const codes=r.assessment.conflicts.map(c=>c.code);
- let title='No action needed for this completed test',copy='CARAPACE recorded the permitted outcome and checked the stored result.';
+ let title='No action needed for this completed test',copy='Financial Friday recorded the permitted outcome and checked the stored result.';
  if(executed && r.resolution.verification.deferred_minor>0){title='Received goods are resolved; undelivered goods remain open';copy=money(r.resolution.verification.deferred_minor)+' is deferred, not forgiven. A later delivery record is needed before that amount can be reconsidered.';}
- else if(r.status==='HELD'){title='What must be resolved before payment';copy=codes.includes('BENEFICIARY_CHANGE_UNVERIFIED')?'The requested bank account differs from the enrolled supplier account. Your finance team needs independent supplier verification; CARAPACE did not replace the account.':codes.includes('SOURCE_UNAVAILABLE')?'The warehouse delivery record is unavailable. Payment stays stopped until a valid record is supplied.':codes.includes('CONFLICTING_DELIVERY_EVIDENCE')?'The delivery records disagree. A corrected authoritative record is needed before payment.':'The evidence or spending policy does not support this payment. Open the explanation below for the exact reason.';}
- else if(r.status==='UNRESOLVED'){title='A verified resolution could not be completed';copy='Retry the case, or choose Local demo to test without a model call. CARAPACE will reconcile an existing posting before creating another.';}
+ else if(r.status==='HELD'){title='What must be resolved before payment';copy=codes.includes('BENEFICIARY_CHANGE_UNVERIFIED')?'The requested bank account differs from the enrolled supplier account. Your finance team needs independent supplier verification; Financial Friday did not replace the account.':codes.includes('SOURCE_UNAVAILABLE')?'The warehouse delivery record is unavailable. Payment stays stopped until a valid record is supplied.':codes.includes('CONFLICTING_DELIVERY_EVIDENCE')?'The delivery records disagree. A corrected authoritative record is needed before payment.':'The evidence or spending policy does not support this payment. Open the explanation below for the exact reason.';}
+ else if(r.status==='UNRESOLVED'){title='A verified resolution could not be completed';copy='Retry the case, or choose Local demo to test without a model call. Financial Friday will reconcile an existing posting before creating another.';}
  else if(r.status==='NO_PAYMENT_DUE'){title='No payment needed';copy='The supported obligation is already covered by credits or prior payments.';}
  return {rows,title,copy};
 }
 function render(r){
  if(['INVESTIGATING','READY'].includes(r.status)){document.getElementById('headline').textContent='Saved resolution has not finished';document.getElementById('progress').textContent='This run has no completed result. Re-run its case to reconcile safely; an interrupted run is not automatically resumed yet.';return;}
  document.getElementById('headline').textContent=labels[r.status]||r.status;
- document.getElementById('progress').textContent=r.resolution?.executed?(r.resolution.reused_posting?'The plan passed independent checks. CARAPACE matched the existing payment and verified each recorded adjustment. No new payment was made.':'The action plan passed independent checks. Its effects are recorded and checked in the local test ledger.'):r.status==='ALREADY_POSTED'?'CARAPACE checked the previous payment instead of paying again.':r.status==='POSTED_SYNTHETIC'?'This saved run recorded a test payment before action-plan generation was added.':'CARAPACE kept the payment stopped where the evidence or a verified plan was incomplete.';
+ document.getElementById('progress').textContent=r.resolution?.executed?(r.resolution.reused_posting?'The plan passed independent checks. Financial Friday matched the existing payment and verified each recorded adjustment. No new payment was made.':'The action plan passed independent checks. Its effects are recorded and checked in the local test ledger.'):r.status==='ALREADY_POSTED'?'Financial Friday checked the previous payment instead of paying again.':r.status==='POSTED_SYNTHETIC'?'This saved run recorded a test payment before action-plan generation was added.':'Financial Friday kept the payment stopped where the evidence or a verified plan was incomplete.';
  document.getElementById('mode').textContent='Provider: '+r.provenance.mode+' · '+r.provenance.model+' · Successful model calls: '+r.provenance.successful_model_calls+' · Resolution-generation calls: '+(r.provenance.successful_resolution_calls||0)+' · Saved run: '+r.run_id;
  const metrics=document.getElementById('metrics');metrics.replaceChildren();metrics.hidden=false;
  [['Invoice requested',money(r.assessment.requested_minor)],['Supported payment',money(r.assessment.payable_minor)]].forEach(([k,v])=>{const box=node('div','');box.append(node('span',k),node('b',v));metrics.append(box);});
@@ -69,7 +69,7 @@ function render(r){
 }
 async function run(id){
  document.querySelectorAll('button,select').forEach(b=>b.disabled=true);
- document.getElementById('headline').textContent='CARAPACE is working on this case…';document.getElementById('progress').textContent='Checking business records, preparing a resolution and verifying its actions. This can take a little time; you do not need to confirm each step.';
+ document.getElementById('headline').textContent='Financial Friday is working on this case…';document.getElementById('progress').textContent='Checking business records, preparing a resolution and verifying its actions. This can take a little time; you do not need to confirm each step.';
  document.getElementById('result').scrollIntoView({behavior:'auto',block:'start'});document.getElementById('headline').focus({preventScroll:true});
  for(const id of ['outcomes','next-step','investigation-detail'])document.getElementById(id).hidden=true;
  document.getElementById('timeline').replaceChildren();document.getElementById('metrics').hidden=true;document.getElementById('constraint').textContent='';document.getElementById('mode').textContent='';document.getElementById('graph-detail').hidden=true;document.getElementById('evidence-detail').hidden=true;

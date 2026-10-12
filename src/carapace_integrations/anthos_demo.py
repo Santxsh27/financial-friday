@@ -57,9 +57,9 @@ def _api_call(
             return json.load(response)
     except HTTPError as error:
         detail = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"CARAPACE API returned HTTP {error.code}: {detail}") from error
+        raise RuntimeError(f"Financial Friday API returned HTTP {error.code}: {detail}") from error
     except URLError as error:
-        raise RuntimeError("cannot reach the CARAPACE API") from error
+        raise RuntimeError("cannot reach the Financial Friday API") from error
 
 
 def build_contract(
@@ -325,14 +325,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.json_output:
             print(json.dumps(result.as_dict(), indent=2))
         else:
-            print("BANK OF ANTHOS -> CARAPACE LIVE DEMO")
+            print("BANK OF ANTHOS -> Financial Friday LIVE DEMO")
             print(f"1. Payment Promise created: {result.contract_id}")
             print(
                 "2. Official ledger stored one artificial payment: "
                 f"transaction #{result.first_transaction_id}"
             )
             print(
-                "3. CARAPACE read that row: "
+                "3. Financial Friday read that row: "
                 f"{result.correct_payment_verdict}"
             )
             print(
@@ -340,7 +340,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"transaction #{result.duplicate_transaction_id}"
             )
             print(
-                "5. CARAPACE read both rows: "
+                "5. Financial Friday read both rows: "
                 f"{result.duplicate_payment_verdict}"
             )
             print(

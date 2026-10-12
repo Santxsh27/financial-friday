@@ -1,6 +1,6 @@
 # Security policy
 
-CARAPACE is currently a pre-release research and hackathon project. It must be
+Financial Friday is currently a pre-release research and hackathon project. It must be
 used only with synthetic data and systems that the operator is authorised to
 test.
 

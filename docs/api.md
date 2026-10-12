@@ -1,4 +1,4 @@
-# CARAPACE API
+# Financial Friday API
 
 The primary v3.1 path is pre-payment protection. A bank-authenticated local
 gateway signs the payment details, evaluates customer-supplied context, and
@@ -82,7 +82,7 @@ docker compose up --build api
 The first `data-init` container only grants UID `10001` ownership of the
 dedicated evidence volume and then exits. The API itself still runs as the
 unprivileged `carapace` user. This also repairs volumes created by older
-CARAPACE builds.
+Financial Friday builds.
 
 Wait for this line:
 
@@ -112,7 +112,7 @@ It creates new IDs on every run, so it can be repeated without database
 conflicts. Success ends with output similar to:
 
 ```text
-CARAPACE DEMO RESULT
+Financial Friday DEMO RESULT
   Correct payment: MATCH
   Duplicate debit: MISMATCH
   Incident: case_... (OPEN)

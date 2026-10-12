@@ -41,4 +41,4 @@ Native Gemini Live voice and extra analytics services remain optional. No real G
 
 ## Repository handoff
 
-Core changes are committed locally as `ae749ac` and `b51bfec`. Documentation updates remain to be committed and pushed. During final saving, iCloud marked repository files and `.git/HEAD` dataless; reads timed out and `brctl download` could not resolve those files. Do not overwrite the repository or its unrelated unfinished UI change to work around this. Download/keep the Desktop CARAPACE folder locally in Finder, then resume documentation commit and GitHub push.
+Core changes are committed locally as `ae749ac` and `b51bfec`. Documentation updates remain to be committed and pushed. During final saving, iCloud marked repository files and `.git/HEAD` dataless; reads timed out and `brctl download` could not resolve those files. Do not overwrite the repository or its unrelated unfinished UI change to work around this. Download/keep the Desktop Financial Friday folder locally in Finder, then resume documentation commit and GitHub push.

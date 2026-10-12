@@ -1,4 +1,4 @@
-"""Read-only coverage audit for CARAPACE's controlled synthetic postings only."""
+"""Read-only coverage audit for Financial Friday's controlled synthetic postings only."""
 
 from __future__ import annotations
 

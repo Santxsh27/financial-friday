@@ -1,8 +1,8 @@
-# CARAPACE architecture baseline
+# Financial Friday architecture baseline
 
 ## Product promise
 
-CARAPACE carries one verifiable payment promise from what a customer confirms,
+Financial Friday carries one verifiable payment promise from what a customer confirms,
 through what a bank submits and records, into the tests that future software
 releases must pass.
 
@@ -13,7 +13,7 @@ UNTRUSTED CONTEXT
 message / QR / invoice / webpage
               |
               v
-CARAPACE LENS
+Financial Friday LENS
 Gemini proposes structured context and contradictions
               |
               v

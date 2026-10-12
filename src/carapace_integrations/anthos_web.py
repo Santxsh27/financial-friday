@@ -1,4 +1,4 @@
-"""Plain-language workspace for the CARAPACE payment-intent product."""
+"""Plain-language workspace for the Financial Friday payment-intent product."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ HOME_HTML = """<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CARAPACE · Payment Intent Firewall</title>
+  <title>Financial Friday · Payment Intent Firewall</title>
   <style>
     :root{font-family:ui-sans-serif,system-ui,sans-serif;color:#162236;background:#f6f8fb}
     *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0}header{background:#fff;border-bottom:1px solid #dce3ed}
@@ -53,7 +53,7 @@ HOME_HTML = """<!doctype html>
   <main>
     <div class="eyebrow">Payment Intent Firewall · development workspace</div>
     <h1>Know what a payment will actually do.</h1>
-    <p class="lead">CARAPACE compares the message or bill that persuaded a person to pay with the amount and recipient supplied by the bank. It can stop a dangerous contradiction before an artificial-money transfer is submitted.</p>
+    <p class="lead">Financial Friday compares the message or bill that persuaded a person to pay with the amount and recipient supplied by the bank. It can stop a dangerous contradiction before an artificial-money transfer is submitted.</p>
     <div class="actions"><a class="button" href="#scenarios">See the two test cases</a></div>
     <div class="note"><strong>Working local path:</strong> a signed payment order, Gemini context check, enforced HOLD gate, browser-signed choice, and locally witnessed protection records. A valid PROCEED choice is required before a test posting. A saved delivery item lets the local worker retry if Bank of Anthos's artificial-money test ledger is temporarily unavailable. This does not use Anthos's official transfer service or real money.</div>
     <div id="how-it-works" class="grid">

@@ -29,6 +29,6 @@ class TenantAuthenticator:
         if expected is None or api_key is None or not hmac.compare_digest(expected, api_key):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="invalid CARAPACE credentials",
+                detail="invalid Financial Friday credentials",
             )
         return TenantContext(tenant_id=tenant_id or "")

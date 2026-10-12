@@ -1,5 +1,12 @@
 # Financial Friday
 
+**New here? Read the [complete click-by-click user guide](USER_GUIDE.md).**
+It covers every current screen, example inputs, expected results, safety boundaries,
+and the difference between cloud features, local tools and historical experiments.
+
+Repository: [Santxsh27/financial-friday](https://github.com/Santxsh27/financial-friday).
+The repository was renamed in place; history was retained, not copied into a new project.
+
 **Readiness pass, October 12:** the selected Everyday interface uses the
 Vaultkeepers team mark. Activity badges and saved task results require independent
 outcome assurance; older unsealed receipts remain amber rather than certified green.
@@ -196,7 +203,9 @@ Financial Friday is not a financial chatbot and it is not an AI with unrestricte
 
 The working slice now accepts a saved standing instruction plus a previously unseen message, QR text, voice transcript, bill image or PDF. Gemini extracts a typed financial request and proposed source quotations, Friday retrieves a separate enrolled test-provider record, and the deterministic kernel decides whether an artificial-money action is allowed. Text quotations are checked against the original input and unsupported quotations discarded; document quotations are model-produced, not independently OCR-verified. A verified task can execute automatically inside the saved limit; changed amounts, recipients, recurring requests, embedded instructions, unusual bill increases above a saved review threshold and protected-balance violations stop before execution. The bill-increase comparison uses a previous amount supplied by the artificial test provider, not a real utility history.
 
-The existing Python package names still use `carapace_*` to preserve compatibility while the product transitions from CARAPACE to Financial Friday.
+The product and repository are Financial Friday. Internal `carapace_*` package names,
+existing CLI commands, authentication headers and configuration keys remain stable
+for compatibility with the deployed service; they are not a second product.
 
 ## What works now
 
@@ -409,7 +418,7 @@ An earlier 16-case pass exposed two invented quotations; the subsequent filter
 fix and both limitations are retained in the final handoff report.
 The evaluator and nine offline tooling tests are included in CI.
 
-## What is retained from CARAPACE
+## Retained engineering components
 
 The repository still contains useful earlier foundations: signed payment envelopes, intent-versus-action checks, transaction evidence, tamper-evident witness logs, Bank of Anthos experiments, exact obligation resolution, counterfactual repair search and release passports. They are reusable modules, not separate claims that every feature is already one production product.
 

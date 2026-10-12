@@ -1,6 +1,6 @@
 """Recoverable, test-only delivery of signed postings to the Anthos sample DB.
 
-The CARAPACE posting and its outbox entry commit together in SQLite. This
+The Financial Friday posting and its outbox entry commit together in SQLite. This
 worker can be restarted or run twice; the Anthos bridge binds one exact row
 idempotently in PostgreSQL. It is not an official bank processor adapter.
 """

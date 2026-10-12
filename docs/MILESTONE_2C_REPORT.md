@@ -7,7 +7,7 @@
 - Added RFC 9162-style consistency proof generation and verification to the existing domain-separated Merkle tree. Tests exercise every pair of tree sizes through 33 leaves and reject altered roots and shortened proofs.
 - Added public, hash-only `GET /v1/preflight/log/checkpoint?from_size=N`. The API validates both signed heads against its local leaves and returns the proof that the newer head extends the requested older size. Customer receipts, account numbers and messages are not on this endpoint.
 - Added `carapace-witness-audit`, a separate client that uses an independently pinned public key and a retained state file. It verifies the next head and proof before atomically replacing that file. It rejects rollback, a conflicting prior head, invalid signature and forged proof.
-- Added authenticated, read-only `GET /v1/preflight/audit`. It checks each **observed CARAPACE synthetic transfer** against the signed bank order and decision, registered-device `PROCEED` statement, and bank-signed decision, choice and posting receipts with witness inclusion proofs. `NO_POSTINGS` is distinct from `PASS`; missing or altered evidence is `FAIL`.
+- Added authenticated, read-only `GET /v1/preflight/audit`. It checks each **observed Financial Friday synthetic transfer** against the signed bank order and decision, registered-device `PROCEED` statement, and bank-signed decision, choice and posting receipts with witness inclusion proofs. `NO_POSTINGS` is distinct from `PASS`; missing or altered evidence is `FAIL`.
 
 ## Verification
 
@@ -19,7 +19,7 @@ The persisted local development database currently has **five older synthetic tr
 
 - The local bank and witness keys are distinct but still controlled by the same operator. The monitor is runnable separately; **it has not been deployed under an independent operator**.
 - A first checkpoint is only as trustworthy as the separately pinned public key and the operator's initial trust decision. A later proof detects a fork or rollback only relative to a checkpoint the monitor retained. Isolated monitors need checkpoint sharing/gossip to detect different views.
-- The local audit observes only transfers and evidence in CARAPACE's controlled synthetic database. It cannot detect payments outside this gate, or prove that a transfer and every related record were never jointly deleted from the same operator's database. Authoritative bank-rail/settlement reconciliation is still required.
+- The local audit observes only transfers and evidence in Financial Friday's controlled synthetic database. It cannot detect payments outside this gate, or prove that a transfer and every related record were never jointly deleted from the same operator's database. Authoritative bank-rail/settlement reconciliation is still required.
 - The current Merkle implementation recomputes roots and proofs from all local leaves. It is adequate for a small hackathon demonstration, not a production-scale log.
 - Browser-device enrollment is still a development mechanism; its key signature does not prove customer identity, sight or comprehension.
 

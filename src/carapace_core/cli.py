@@ -1,4 +1,4 @@
-"""Command-line entry point for the deterministic CARAPACE verifier."""
+"""Command-line entry point for the deterministic Financial Friday verifier."""
 
 from __future__ import annotations
 

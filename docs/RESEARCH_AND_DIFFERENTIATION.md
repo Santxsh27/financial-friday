@@ -2,7 +2,7 @@
 
 ## Problem evidence
 
-FBI IC3's 2025 highlights report approximately $3 billion of reported business-email-compromise losses. This establishes a material problem, not an addressable-market estimate or a CARAPACE prevention rate.
+FBI IC3's 2025 highlights report approximately $3 billion of reported business-email-compromise losses. This establishes a material problem, not an addressable-market estimate or a Financial Friday prevention rate.
 
 Source: https://www.ic3.gov/Outreach/Brochures/ic3-brochure.pdf
 
@@ -14,7 +14,7 @@ Source: https://www.ic3.gov/Outreach/Brochures/ic3-brochure.pdf
 - Google AP2 addresses agent-payment mandates and authority: https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol
 - Temporal supplies durable execution and idempotent recovery patterns: https://temporal.io/blog/idempotency-and-durable-execution
 
-Supplier verification, invoice matching, typed graphs, early stopping, signatures and agent planning are not claimed as CARAPACE inventions. We have not established an exclusive feature gap or conducted a patent search.
+Supplier verification, invoice matching, typed graphs, early stopping, signatures and agent planning are not claimed as Financial Friday inventions. We have not established an exclusive feature gap or conducted a patent search.
 
 ## Experimental contribution
 

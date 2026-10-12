@@ -58,7 +58,7 @@ This is the short execution checklist for the existing repository. Each stage en
 - [x] Refund and bill flows are run from a plain-language browser page.
 - [x] Full Docker regression suite passes, including new gate tests.
 
-Milestone 1 stops at a **CARAPACE local synthetic ledger**. The sample Bank of Anthos site can run beside it, but its official payment path is not yet controlled by this gate. The browser supplies generated test screenshots plus their text transcription. Independent OCR is not yet present.
+Milestone 1 stops at a **Financial Friday local synthetic ledger**. The sample Bank of Anthos site can run beside it, but its official payment path is not yet controlled by this gate. The browser supplies generated test screenshots plus their text transcription. Independent OCR is not yet present.
 
 ## 2. Evidence protocol — local integrity and audit slice implemented; independent assurance next
 
@@ -66,7 +66,7 @@ Milestone 1 stops at a **CARAPACE local synthetic ledger**. The sample Bank of A
 2. [x] Add a separately keyed **local** witness tree and inclusion proof. Verify bundles using externally supplied public keys; corrupt latest witness history fails the next write closed.
 3. [x] Add a browser-signed test-device `PROCEED`/`CANCEL` record, bound to the exact payment and warning. HOLD remains non-overridable; posting now requires signed PROCEED. Development bank-key enrollment does not prove production customer identity or human understanding.
 4. [x] Add RFC 9162 consistency proofs and a separate monitor that retains its last signed checkpoint with a pinned witness key. This is runnable local monitoring, not yet separately operated or gossiped across monitors.
-5. [x] Audit every observed CARAPACE synthetic posting against its signed decision, browser choice, posting receipt and inclusion proof. Missing or altered records fail the audit. This cannot see an outside bank payment or detect a transfer and all of its records deleted from the same database.
+5. [x] Audit every observed Financial Friday synthetic posting against its signed decision, browser choice, posting receipt and inclusion proof. Missing or altered records fail the audit. This cannot see an outside bank payment or detect a transfer and all of its records deleted from the same database.
 6. [ ] Operate the witness/monitor under separate control, share checkpoints between observers, and reconcile with a bank-owned payment rail or settlement feed.
 
 Current acceptance: warning, choice and receipt tampering or a corrupted current witness head is detected in tests, and the relevant local write rolls back. Retained-head consistency and synthetic posting coverage are also tested. Full milestone acceptance still requires production-grade device enrollment, independent operations and outside-rail coverage. See [Milestone 2A](MILESTONE_2A_REPORT.md), [Milestone 2B](MILESTONE_2B_REPORT.md) and [Milestone 2C](MILESTONE_2C_REPORT.md).
@@ -74,9 +74,9 @@ Current acceptance: warning, choice and receipt tampering or a corrupted current
 ## 3. Stronger bank and document integration
 
 1. Add independent image OCR (Google Cloud Vision or Document AI after project access) and ground model-extracted values against OCR spans.
-2. [x] Add a **test-only** bridge after the CARAPACE gate: exact-bind the confirmed synthetic transfer to one direct-insert row in Bank of Anthos's artificial-money PostgreSQL ledger. Verify the amount and account fields and make retries idempotent. This is not the official transfer service and not a production bank-owned feed.
+2. [x] Add a **test-only** bridge after the Financial Friday gate: exact-bind the confirmed synthetic transfer to one direct-insert row in Bank of Anthos's artificial-money PostgreSQL ledger. Verify the amount and account fields and make retries idempotent. This is not the official transfer service and not a production bank-owned feed.
 3. [x] Commit a local delivery outbox with each synthetic posting, retry the test bridge after failure, and re-read its exact row before displaying a recovered match. This is a same-operator development recovery mechanism, not settlement assurance.
-4. [ ] Put the gate in front of an authorised Bank of Anthos LedgerWriter/payment path, or a bank-controlled processor adapter, with a durable request-to-ledger reference that is not created solely by CARAPACE's test harness.
+4. [ ] Put the gate in front of an authorised Bank of Anthos LedgerWriter/payment path, or a bank-controlled processor adapter, with a durable request-to-ledger reference that is not created solely by Financial Friday's test harness.
 5. Replace local API keys and signing files with bank identity and managed KMS keys; define privacy retention, consent and failure policies.
 6. Build a labelled adversarial corpus including mismatched payee, amount, refund direction, low-quality images, prompt injection and benign lookalikes. Measure detection and false holds.
 

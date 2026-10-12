@@ -139,8 +139,8 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     if settings.public_demo_secret:
         html = html.replace('<main class="shell layout">',
             '<div class="shell" role="note" style="padding-top:12px;font-size:13px">'
-            'Your private artificial-money demo. New here? Save My rules, then try Safety Lab '
-            'or add a test bill. <a href="/about">Access, privacy &amp; demo limits</a></div>'
+            'Your private financial review. Upload bills and receipts - no provider setup or payment permission needed. '
+            '<a href="/about">Access, privacy &amp; demo limits</a></div>'
             '<main class="shell layout">')
     app = FastAPI(title="Financial Friday private pilot", docs_url=None, redoc_url=None, openapi_url=None)
 
@@ -192,7 +192,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
             raise HTTPException(404, "Unsupported pilot action")
         query = ""
         if request.query_params:
-            if path != "documents" or set(request.query_params) != {"filename"} or len(request.query_params.getlist("filename")) != 1:
+            if path not in {"documents", "reviews/documents"} or set(request.query_params) != {"filename"} or len(request.query_params.getlist("filename")) != 1:
                 raise HTTPException(400, "Unsupported query")
             name = request.query_params["filename"]
             if not name or len(name) > 180 or any(c in name for c in "/\\\x00\r\n"):
@@ -205,7 +205,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
             body.extend(chunk)
         mime = request.headers.get("content-type", "application/json").split(";", 1)[0].lower()
         if request.method != "GET":
-            supported = {"image/png", "image/jpeg", "image/webp", "application/pdf"} if path == "documents" else {"application/json"}
+            supported = {"image/png", "image/jpeg", "image/webp", "application/pdf"} if path in {"documents", "reviews/documents"} else {"application/json"}
             if mime not in supported:
                 raise HTTPException(415, "Unsupported content type")
         status, result = await run_in_threadpool(transport, settings, request.state.tenant,

@@ -212,10 +212,11 @@ def _api_call(base_url: str, path: str, method: str, body: dict | None = None, t
 
 
 def _api_document(
-    base_url: str, data: bytes, mime_type: str, filename: str, timeout: int = 120
+    base_url: str, data: bytes, mime_type: str, filename: str, timeout: int = 120,
+    endpoint: str = "/v1/friday/documents",
 ) -> tuple[int, dict]:
     request = Request(
-        base_url + "/v1/friday/documents?" + urlencode({"filename": filename}),
+        base_url + endpoint + "?" + urlencode({"filename": filename}),
         data=data,
         method="POST",
         headers={
@@ -419,6 +420,32 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code, result.get("detail", "Statement could not be analyzed"))
         return result
 
+    @application.get("/api/friday/reviews")
+    async def friday_reviews():
+        code, result = await run_in_threadpool(_api_call, api_base_url, "/v1/friday/reviews", "GET")
+        if code != 200:
+            raise HTTPException(code, "Financial review unavailable")
+        return result
+
+    @application.post("/api/friday/reviews")
+    @application.post("/api/friday/reviews/statement")
+    async def friday_review_text(request: StarletteRequest):
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 2 * 1024 * 1024:
+                raise HTTPException(413, "Review request exceeds 2 MB")
+            data.extend(chunk)
+        try:
+            payload = json.loads(bytes(data))
+        except ValueError as error:
+            raise HTTPException(422, "Invalid JSON") from error
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            "/v1/friday/reviews/statement" if request.url.path.endswith("/statement") else "/v1/friday/reviews", "POST", payload, 120)
+        if code != 200:
+            raise HTTPException(code, result.get("detail", "Read-only understanding unavailable"))
+        return result
+
+    @application.post("/api/friday/reviews/documents")
     @application.post("/api/friday/documents")
     async def friday_document(request: StarletteRequest, filename: str):
         mime_type = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
@@ -430,7 +457,8 @@ def create_demo_app() -> FastAPI:
             chunks.append(chunk)
         data = b"".join(chunks)
         code, result = await run_in_threadpool(
-            _api_document, api_base_url, data, mime_type, filename, 120
+            _api_document, api_base_url, data, mime_type, filename, 120,
+            "/v1/friday/reviews/documents" if request.url.path.endswith("reviews/documents") else "/v1/friday/documents"
         )
         if code != 200:
             raise HTTPException(code, result.get("detail", "Document could not be checked"))

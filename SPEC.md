@@ -1,6 +1,16 @@
 # Financial Friday — Product and Engineering Specification
 
-Version 1.3 · 9 October 2026 · broader workspace increment, not yet cloud deployed
+Updated 12 October 2026 · read-only financial review plus retained bounded execution layer
+
+## Default customer workflow
+
+Home and Documents perform read-only reconciliation of unfamiliar bills, receipts
+and transaction claims without provider setup. Gemini extracts a general typed
+document schema. Separate deterministic code groups evidence, checks amounts,
+currencies and arithmetic, and prepares verification messages. Uploaded receipts
+remain user claims, not bank proof. Review storage and routes cannot mutate
+financial permission or payment journals. See [the review specification](docs/FINANCIAL_REVIEW.md).
+The execution sections below describe the retained explicit artificial-money layer.
 
 ## Product statement
 
@@ -234,3 +244,13 @@ It never invokes a payment executor or edits account balances. Cloud mode return
 UNAVAILABLE without using local state. This is local bookkeeping, not external
 biller reconciliation, bank settlement proof, or refund execution. Gemini's
 existing interpretation remains separate from this deterministic trust gate.
+# Current customer workflow update
+
+The default home-command and document-upload flow is now read-only bill, receipt
+and transaction-claim reconciliation. It uses a separate general document schema
+and review store; it cannot mutate permission or payment journals. Gemini extracts
+facts; exact code groups evidence, checks arithmetic and conflicts, and prepares
+verification messages. Uploaded receipts remain user claims, not bank proof.
+The artificial payment executor remains a separate explicit workflow. See
+[the current review specification](docs/FINANCIAL_REVIEW.md). Older payment-model
+sections below describe that retained execution layer, not the new default UI.

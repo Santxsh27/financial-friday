@@ -16,6 +16,14 @@ and AI responses can vary. A stopped or unverified task can be the correct resul
 
 ## Contents
 
+**Current default:** Home and Documents now perform read-only financial review.
+They do not execute payments. Open **Financial inbox** to see related bills,
+receipts, conflicting evidence and prepared verification messages. No provider
+setup or saved automatic permission is required for review. Follow
+[the new click-by-click workflow](docs/FINANCIAL_REVIEW.md) first. The sandbox
+payment steps below apply only to the separate explicit artificial-payment mode.
+
+
 1. [Before you begin](#before-you-begin)
 2. [A first visit without making a payment](#a-first-visit-without-making-a-payment)
 3. [Every top bar and Overview control](#every-top-bar-and-overview-control)
@@ -39,9 +47,9 @@ and AI responses can vary. A stopped or unverified task can be the correct resul
 - **Cloud website:** [Open Financial Friday](https://financial-friday-web-171681243260.asia-south1.run.app/#home).
   Sign in with Google. The public-demo release gives each new Google user an
   isolated artificial-money workspace; the owner's existing records are not shared.
-  New visitors start with no saved bills. Save **My rules**, then try **Safety Lab**
-  or publish a fresh test bill using the instructions below. Automatic permission
-  starts off. A school/company Google administrator may restrict sign-in.
+  New visitors start with no saved documents. Open **Documents** or paste a
+  financial notice at Home, then review **Financial inbox**. No provider setup is
+  needed for this read-only flow. A school/company Google administrator may restrict sign-in.
 - **Local website:** [Open local Friday](http://localhost:8090/#home), after starting
   Docker Desktop and running the command below from the project folder.
 - **API reference:** [Local API docs](http://localhost:8080/docs). This is an
@@ -62,7 +70,8 @@ folder or replace environment variables just to change its display name.
 | --- | --- | --- |
 | Read-only | Overview, Review bill, Refresh, Activity, opening receipts | Loads or displays existing evidence. Does not pay. |
 | Settings or preparation | Save instruction, Publish test bill, Routine bill, sound/theme controls | Changes saved permission, artificial provider records, or this browser's preferences. Does not itself pay. |
-| Execution capable | Check my bill, Check bill, Check document & apply my rules, Check & handle in sandbox, Approve this artificial-money task, Run this demo | Can run checks and record an artificial-money effect when the specific task is allowed. |
+| Review and storage | Review with Friday, Read & reconcile, Import transaction claims | Runs understanding/reconciliation and saves extracted claims; never submits a payment. CSV storage requires explicit consent. |
+| Execution capable | Explicit original artificial-payment mode, Check & handle in sandbox, Approve this artificial-money task, Run this demo | Can run checks and record an artificial-money effect when the specific task is allowed. |
 
 **Important:** “Check” is not always a read-only action. A matching bill can execute
 under your saved automatic permission. Inspect **My rules** first. No real money
@@ -253,18 +262,19 @@ verification. These are outside the supported task vocabulary.
 
 ## Bill photos and PDFs
 
-1. Prepare the artificial bill above, or choose a redacted document for understanding only.
-2. For a reproducible sample, open [sample bill text](docs/user-guide-examples/sample-bill.txt),
-   make a screenshot saved as PNG/JPEG, or print the text to a PDF. If you change
-   its reference/amount, update the artificial provider record to match before testing payment.
-3. Click **Documents** or **Read a document**.
-4. Click the file picker labelled **Upload a bill image or PDF**. Select PNG, JPEG,
-   WebP or PDF, at most 8 MB. Selecting does not upload.
-5. Read the cloud-processing and automatic-permission disclosure.
-6. Click **Check document & apply my rules** once.
-7. Follow the result page. An eligible matching document can execute under saved
-   automatic permission, or wait for manual approval. Otherwise it remains understood
-   but unverified/held. See Saved inputs for extracted facts and source quotations.
+1. Click **Documents** or **Read a document**. No artificial provider setup is required.
+2. Choose a bill, invoice, receipt or transaction notice as PNG, JPEG, WebP or PDF,
+   at most 8 MB. Selecting does not upload.
+3. Read the cloud-processing disclosure and click **Read & reconcile - no payment**.
+4. **Financial inbox** displays the saved claim and what needs verification.
+5. Add a related receipt or a consented transaction CSV. Friday groups matching
+   evidence, highlights contradictions and checks extracted arithmetic.
+6. Expand **Prepare a verification message** for a ready-to-copy draft. It is
+   prepared only; send through a known official channel yourself.
+
+This review flow never executes a payment, even if automatic permission is on.
+Matching claims are not externally verified settlement. An unsupported or
+ambiguous currency is shown as unknown, not converted to rupees.
 
 Gemini performs document understanding directly. Extracted quotations are not
 independently OCR-verified, and the document is not itself trusted provider evidence.

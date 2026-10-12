@@ -23,7 +23,7 @@ def _money(value: str) -> int:
     return int(Decimal(value) * 100)
 
 
-def analyze_statement(text: str) -> dict:
+def analyze_statement(text: str, *, include_entries: bool = False) -> dict:
     if not text or len(text.encode("utf-8")) > 1024 * 1024:
         raise ValueError("Use a non-empty CSV of at most 1 MB")
     reader = csv.DictReader(io.StringIO(text.lstrip("\ufeff")), strict=True)
@@ -74,6 +74,7 @@ def analyze_statement(text: str) -> dict:
     outgoing = sum(e["debit_minor"] for e in entries)
     incoming = sum(e["credit_minor"] for e in entries)
     return {
+        **({"entries": entries} if include_entries else {}),
         "scope": "USER_SUPPLIED_STATEMENT", "currency": "INR", "read_only": True,
         "money_moved": False, "raw_file_stored": False, "sent_to_ai": False,
         "statement_sha256": sha256(text.encode()).hexdigest(), "transaction_count": len(entries),

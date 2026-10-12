@@ -7,6 +7,20 @@ and the difference between cloud features, local tools and historical experiment
 Repository: [Santxsh27/financial-friday](https://github.com/Santxsh27/financial-friday).
 The repository was renamed in place; history was retained, not copied into a new project.
 
+## Default customer workflow: review and reconcile
+
+Bring an unfamiliar bill, invoice, receipt or transaction notice. Friday reads it
+with Gemini on Vertex AI and builds a private financial inbox without requiring
+artificial provider setup. Exact code reconciles related claims, detects conflicting
+amounts/recipients, checks extracted arithmetic, keeps currencies separate and
+prepares a verification message. Add a receipt or consented transaction CSV to
+review whether the same bill already has supporting payment claims.
+
+**The home command and Documents are now read-only. They never pay**, even when
+automatic sandbox permission is enabled. Sandbox execution is a separate explicit
+workflow. A matching uploaded receipt is not confirmed bank settlement, and missing
+provider evidence is not a fraud verdict. See [the financial review workflow](docs/FINANCIAL_REVIEW.md).
+
 ## Google-sign-in demo access
 
 The public-demo release retains IAP Google authentication and a private API.

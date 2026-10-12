@@ -96,9 +96,9 @@ EVERYDAY_JS = r"""
       }
       const everydayShow=show;show=function(name,push=true){everydayShow(name,push);root.setAttribute('aria-label','Financial Friday workspace');$('scenario-copy').textContent=everydayIntro;document.querySelectorAll('.friday-nav [data-screen-link]').forEach(button=>button.setAttribute('aria-current',button.dataset.screenLink===name&&(name!=='money'||button===billsNav)?'page':'false'));if(name==='home')refreshEverydayHome();};
       shortHeading(moneyView,'Your money, clearly organised.','Plan bills, review spending or explore saved inputs. Only artificial funds can move.');
-      shortHeading(doc,'Let’s check your document.','Choose a bill photo or PDF. With automatic permission enabled, a verified bill can be paid using artificial funds within your saved rules.');
+      shortHeading(doc,'Let’s understand your document.','Choose a bill, invoice or payment receipt. Read-only review compares your saved documents without moving money.');
       $('check-document').textContent='Check document & apply my rules';
-      const documentDisclosure=element('p','Uses Gemini on Google Cloud. Raw file is discarded after analysis; extracted facts and evidence references are saved. Never upload payment secrets.','screen-note');doc.append(documentDisclosure);
+      const documentDisclosure=element('p','Never upload PINs, OTPs or banking passwords. Document facts are claims, not verified settlement.','screen-note');doc.append(documentDisclosure);
       shortHeading(bill,'Give Friday the request.','Paste the bill message. Friday checks trusted evidence and your saved permission before acting.');
       refreshEverydayHome();
 """

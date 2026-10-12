@@ -23,6 +23,10 @@ class StatementRequest(BaseModel):
     csv_text: str = Field(min_length=1, max_length=1024 * 1024)
 
 
+class ReviewStatementRequest(StatementRequest):
+    confirm_store_claims: bool = Field(default=False, strict=True)
+
+
 class FollowThroughRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     bill_reference: str = Field(min_length=1, max_length=120)
@@ -70,6 +74,51 @@ async def _read_bounded_document(request: Request) -> bytes:
 
 
 def register_financial_friday_routes(application, service, authenticate):
+    from .friday_review import FridayReviewService
+    review = FridayReviewService(service)
+    application.state.friday_reviews = review
+
+    class ReviewTextRequest(BaseModel):
+        model_config = ConfigDict(extra="forbid")
+        text: str = Field(min_length=5, max_length=12000)
+
+    @application.get("/v1/friday/reviews", tags=["financial-review"])
+    def review_board(tenant: TenantContext = Depends(authenticate)):
+        return review.board(tenant.tenant_id)
+
+    @application.post("/v1/friday/reviews/statement", tags=["financial-review"])
+    async def review_statement(payload: ReviewStatementRequest, tenant: TenantContext = Depends(authenticate)):
+        if not payload.confirm_store_claims:
+            raise HTTPException(422,"Confirm storage of parsed transaction claims first")
+        try:
+            return await run_in_threadpool(review.import_statement,tenant.tenant_id,payload.csv_text)
+        except ValueError as error:
+            raise HTTPException(422,str(error)) from error
+
+    @application.post("/v1/friday/reviews", tags=["financial-review"])
+    async def review_text(payload: ReviewTextRequest, tenant: TenantContext = Depends(authenticate)):
+        try:
+            return await run_in_threadpool(review.ingest, tenant.tenant_id, text=payload.text)
+        except Exception as error:
+            raise HTTPException(503, "Read-only understanding unavailable; no payment was requested") from error
+
+    @application.post("/v1/friday/reviews/documents", tags=["financial-review"])
+    async def review_document(request: Request, filename: str = Query(min_length=1, max_length=160),
+                              tenant: TenantContext = Depends(authenticate)):
+        mime = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+        if mime not in DOCUMENT_TYPES:
+            raise HTTPException(415, "Use PNG, JPEG, WebP or PDF")
+        data = await _read_bounded_document(request)
+        if not _valid_document_signature(mime, data):
+            raise HTTPException(422, "File signature does not match document type")
+        name = filename.rsplit("/", 1)[-1].rsplit("\\", 1)[-1].strip()
+        if not name:
+            raise HTTPException(422, "Invalid filename")
+        try:
+            return await run_in_threadpool(review.ingest, tenant.tenant_id, data=data, mime=mime, filename=name)
+        except Exception as error:
+            raise HTTPException(503, "Read-only document understanding unavailable; no payment was requested") from error
+
     inbox = FridayInbox(service)
     application.state.friday_inbox = inbox
 

@@ -57,11 +57,13 @@ process.stdout.write(JSON.stringify(['VERIFIED','LEGACY_UNSEALED','CONFLICT','UN
         self.assertTrue(all(item['tone'] == 'review' for item in result[1:]))
         self.assertIn('Older record', result[1]['status'])
 
-    def test_document_action_discloses_existing_authority_and_cloud_processing(self):
-        self.assertIn('automatic permission enabled', EVERYDAY_JS)
-        self.assertIn('Check document & apply my rules', EVERYDAY_JS)
-        self.assertIn('extracted facts and evidence references are saved', EVERYDAY_JS)
-        self.assertNotIn('reading alone never authorizes payment', EVERYDAY_JS)
+    def test_document_default_is_read_only_and_sandbox_authority_is_separate(self):
+        from carapace_integrations.friday_review_ui import REVIEW_JS
+        self.assertIn('Read-only review compares your saved documents without moving money', EVERYDAY_JS)
+        self.assertIn('Read & reconcile - no payment', REVIEW_JS)
+        self.assertIn('extracted facts remain private', REVIEW_JS)
+        self.assertIn('requires provider setup; may execute under saved rules', REVIEW_JS)
+        self.assertIn("if(sandboxMode.checked)return originalPaymentCheck()", REVIEW_JS)
 
     def test_detached_previews_disabled_without_replacing_financial_handlers(self):
         self.assertIn('refreshBriefing=async()=>{}', EVERYDAY_JS)

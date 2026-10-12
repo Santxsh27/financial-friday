@@ -9,7 +9,7 @@ from carapace_core.friday_live import FridayMandate, TestProviderBill, bill_incr
 from carapace_core.friday_assurance import seal_friday_run
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews"}
 
 
 class FridayDurableState(Protocol):
@@ -89,7 +89,7 @@ class FirestoreFridayState:
         # chronology: order BEFORE limiting or the newest outcomes can disappear.
         # These fields are written when the journal record is first created;
         # payment/provider collections intentionally keep their existing order.
-        time_field = {"runs": "result.started_at", "signals": "created_at"}.get(kind)
+        time_field = {"runs": "result.started_at", "signals": "created_at", "reviews": "created_at"}.get(kind)
         if time_field:
             query = query.order_by(time_field, direction="DESCENDING")
         return [snapshot.to_dict() for snapshot in query.limit(limit).stream()]

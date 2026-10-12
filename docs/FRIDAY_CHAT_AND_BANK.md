@@ -122,6 +122,10 @@ cloud bank credentials were added. Existing owner release checks passed with
 thirteen bill records, unchanged test balance, independent outcome assurance and
 rejection of unconfirmed execution.
 
-The optional official bank frontend is separate from the verified read-only
-ledger projection. Its x86 Java services may need several minutes on a Mac;
-Friday must not label them ready until their health checks pass.
+The optional official bank frontend also passed readiness and browser login.
+The sample account ending 6111 displayed $7,705.89 and thirty transactions;
+Friday's independent projection returned 770589 minor ledger units and the same
+thirty records. No deposit or payment was submitted. The reader needed one
+restart after a stalled Java startup, and the first account load timed out while
+x86 services warmed up. A subsequent read-only reload displayed balance/history
+successfully. Cold startup under Mac emulation is not a production latency result.

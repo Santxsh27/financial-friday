@@ -1,6 +1,24 @@
 # Bank of Anthos integration
 
-## Current v3.1 test bridge
+## Current Friday chat and account view
+
+Friday's home page is now a bounded Gemini chat beside a read-only financial
+review inbox. **Sandbox bank** reads a uniquely provisioned artificial Anthos
+account, its ledger balance and twenty recent rows directly from PostgreSQL.
+This connection is independent of Friday's INR payment sandbox and does not
+automatically bind uploaded bills to ledger rows. Google sign-in is not bank
+authentication, and public visitors do not share the local sample account.
+
+The official local Anthos site at `http://127.0.0.1:8081/home` is running. The
+sample `testuser` account ending 6111 was checked in the browser, with balance
+and history matching the read-only projection. Its first cold account load timed
+out under Mac emulation; the subsequent read-only reload succeeded. See
+[the current chat and bank walkthrough](FRIDAY_CHAT_AND_BANK.md) for permissions,
+setup, currency limitations and the cloud hosting gap. The Payment Intent
+Firewall below is historical; its retained local route is `/payment-check`,
+not Friday's current homepage.
+
+## Earlier v3.1 test bridge
 
 The primary page at `http://localhost:8090/` runs the Payment Intent Firewall. A fake refund is held before either ledger receives a posting. A genuine bill must receive an `ALLOW` decision and browser-signed `PROCEED` choice before Financial Friday writes its own synthetic transfer. That SQLite transaction also saves a durable pending delivery item. The development API worker verifies the posting receipt, inserts one artificial-money row directly into Bank of Anthos's PostgreSQL `transactions` table, stores the exact returned ID in `carapace_test.preflight_bindings` in the same PostgreSQL transaction, and reads that exact row back. Repeating the same transfer ID with the same evidence returns the existing row; changed evidence is rejected. The worker retries after a local outage, and the status API rechecks a recorded match against PostgreSQL.
 

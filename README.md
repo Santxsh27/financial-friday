@@ -18,6 +18,9 @@ See [chat and the sandbox bank connection](docs/FRIDAY_CHAT_AND_BANK.md).
 Vertex replies were verified through the main website; local chat uses the
 configured Gemini API. Context is opt-in, no chat action executes, and cloud
 visitors' Anthos accounts remain NOT_LINKED rather than sharing an owner account.
+The official local [Bank of Anthos account page](http://127.0.0.1:8081/home) is
+running too. Its sample balance/history were checked against Friday's read-only
+ledger screen; these are artificial funds, not a real bank connection.
 
 Bring an unfamiliar bill, invoice, receipt or transaction notice. Friday reads it
 with Gemini on Vertex AI and builds a private financial inbox without requiring

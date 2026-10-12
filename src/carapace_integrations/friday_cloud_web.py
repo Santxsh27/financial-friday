@@ -1,7 +1,7 @@
 """IAP-protected Friday pilot gateway. Never exposes backend credentials.
 
-This is an invited-user sandbox, not open consumer enrollment. Cloud deployment
-must enable IAP, configure its OAuth client, and grant individual users access.
+IAP verifies Google identity. Optional open demo enrollment derives isolated
+visitor credentials server-side; the private API applies durable usage limits.
 """
 from __future__ import annotations
 
@@ -18,13 +18,10 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.responses import FileResponse
 from pathlib import Path
 from starlette.concurrency import run_in_threadpool
+from carapace_core.friday_access import FRIDAY_ROUTES, validate_enrollment_secret, visitor_tenant, visitor_key
 
 MAX_BODY = 8 * 1024 * 1024
-ROUTES = {
-    "GET": r"(?:scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100})",
-    "PUT": r"mandate",
-    "POST": r"(?:bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
-}
+ROUTES = FRIDAY_ROUTES
 
 
 def origin(value: str) -> str:
@@ -43,6 +40,7 @@ class WebSettings:
     iap_audience: str
     users: dict[str, str]
     tenant_keys: dict[str, str]
+    public_demo_secret: str | None = None
 
     def __post_init__(self):
         origin(self.public_origin)
@@ -55,13 +53,25 @@ class WebSettings:
             raise ValueError("Every invited user needs an enrolled tenant")
         if len(set(self.users.values())) != len(self.users):
             raise ValueError("Pilot users must have separate tenants")
+        if self.public_demo_secret:
+            validate_enrollment_secret(self.public_demo_secret)
+            if any(tenant.startswith("visitor-") for tenant in self.tenant_keys):
+                raise ValueError("Visitor namespace is reserved")
 
     @classmethod
     def from_env(cls):
         return cls(os.environ["FRIDAY_WEB_BACKEND_URL"], os.environ["FRIDAY_WEB_ORIGIN"],
                    os.environ["FRIDAY_WEB_IAP_AUDIENCE"],
                    json.loads(os.environ["FRIDAY_WEB_USERS_JSON"]),
-                   json.loads(os.environ["CARAPACE_TENANT_KEYS_JSON"]))
+                   json.loads(os.environ["CARAPACE_TENANT_KEYS_JSON"]),
+                   os.getenv("FRIDAY_PUBLIC_DEMO_SECRET"))
+
+    def key_for(self, tenant: str) -> str:
+        if tenant in self.tenant_keys:
+            return self.tenant_keys[tenant]
+        if not self.public_demo_secret:
+            raise ValueError("Visitor enrollment is disabled")
+        return visitor_key(self.public_demo_secret, tenant)
 
 
 def verify_iap(token: str, audience: str) -> dict:
@@ -87,7 +97,7 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
     request = URLRequest(settings.backend_url + path, data=body, method=method, headers={
         "Authorization": "Bearer " + token,
         "X-Carapace-Tenant": tenant,
-        "X-Carapace-API-Key": settings.tenant_keys[tenant],
+        "X-Carapace-API-Key": settings.key_for(tenant),
         "Content-Type": content_type,
     })
     try:
@@ -95,6 +105,8 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
             return response.status, json.load(response)
     except HTTPError as error:
         # Do not reflect arbitrary upstream errors, tokens or stack traces.
+        if error.code == 429:
+            return 429, {"detail": "Demo allowance reached. Read saved results or try again later. Daily limits reset at midnight UTC."}
         return error.code, {"detail": "Friday could not complete this request. Check activity before retrying a payment."}
     except (URLError, TimeoutError, ValueError):
         return 502, {"detail": "Connection interrupted. The outcome may be unknown; check activity before retrying."}
@@ -124,6 +136,12 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     html = re.sub(r"let watching=false;.*?(?=\$\('save-mandate'\))", "", html, flags=re.S)
     html = html.replace("setInterval(refreshInbox,5000);refreshInbox();", "")
     html = html.replace("'Local protected sandbox'", "'Cloud-backed protected sandbox'")
+    if settings.public_demo_secret:
+        html = html.replace('<main class="shell layout">',
+            '<div class="shell" role="note" style="padding-top:12px;font-size:13px">'
+            'Your private artificial-money demo. New here? Save My rules, then try Safety Lab '
+            'or add a test bill. <a href="/about">Access, privacy &amp; demo limits</a></div>'
+            '<main class="shell layout">')
     app = FastAPI(title="Financial Friday private pilot", docs_url=None, redoc_url=None, openapi_url=None)
 
     @app.middleware("http")
@@ -135,6 +153,11 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
             try:
                 claims = await run_in_threadpool(verifier, token, settings.iap_audience)
                 tenant = settings.users.get(claims.get("email", ""))
+                if tenant is None and settings.public_demo_secret:
+                    email = claims.get("email", "")
+                    if not isinstance(email, str) or "@" not in email or email.endswith(".gserviceaccount.com"):
+                        raise ValueError("Google user identity required")
+                    tenant = visitor_tenant(settings.public_demo_secret, claims.get("sub", ""))
                 if tenant is None:
                     return secure_response(JSONResponse({"detail": "This account is not enrolled in the pilot"}, status_code=403))
                 request.state.tenant = tenant
@@ -148,7 +171,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
 
     @app.get("/health")
     async def health():
-        return {"status": "ok", "service": "friday-cloud-web", "scope": "INVITED_ARTIFICIAL_MONEY_PILOT"}
+        return {"status": "ok", "service": "friday-cloud-web", "scope": "GOOGLE_SIGNIN_ARTIFICIAL_MONEY_DEMO" if settings.public_demo_secret else "INVITED_ARTIFICIAL_MONEY_PILOT"}
 
     @app.get("/")
     async def home():
@@ -161,7 +184,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
 
     @app.get("/about")
     async def about():
-        return HTMLResponse("<h1>Financial Friday cloud pilot</h1><p>Vertex AI understands bills. Independent rules control artificial payments. No real bank account is connected. Continuous monitoring and native voice are not enabled.</p><a href='/'>Return to Friday</a>")
+        return HTMLResponse("<h1>Financial Friday demo</h1><p>Sign in with Google to use your own artificial-money workspace. New visitors start with no saved bills; save My rules before executing a live-input payment. Automatic permission is off by default. Try Safety Lab or add a test-provider bill. No real bank account is connected.</p><p>Visitor limits: 20 action requests per account per UTC day, 200 across visitors, plus burst and read limits. Failed requests may consume allowance. These are request limits, not a guarantee of zero cloud costs. Continuous monitoring and native voice are not enabled.</p><p>Only Google identity is used: no Gmail, Drive, phone messages or banking passwords are accessed. Extracted bill facts and outcomes remain in your private demo workspace. Use artificial documents, not real financial secrets.</p><p><a href='https://github.com/Santxsh27/financial-friday/blob/main/USER_GUIDE.md'>Step-by-step user guide</a></p><a href='/'>Return to Friday</a>")
 
     @app.api_route("/api/friday/{path:path}", methods=["GET", "PUT", "POST", "DELETE", "PATCH"])
     async def proxy(path: str, request: Request):

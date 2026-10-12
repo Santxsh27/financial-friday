@@ -37,9 +37,11 @@ and AI responses can vary. A stopped or unverified task can be the correct resul
 ### Choose the website
 
 - **Cloud website:** [Open Financial Friday](https://financial-friday-web-171681243260.asia-south1.run.app/#home).
-  Sign in with an enrolled Google account. Owner-only access is intentional;
-  another account can receive an access-denied screen. A judge needs authorized
-  access, not just the URL.
+  Sign in with Google. The public-demo release gives each new Google user an
+  isolated artificial-money workspace; the owner's existing records are not shared.
+  New visitors start with no saved bills. Save **My rules**, then try **Safety Lab**
+  or publish a fresh test bill using the instructions below. Automatic permission
+  starts off. A school/company Google administrator may restrict sign-in.
 - **Local website:** [Open local Friday](http://localhost:8090/#home), after starting
   Docker Desktop and running the command below from the project folder.
 - **API reference:** [Local API docs](http://localhost:8080/docs). This is an
@@ -70,6 +72,14 @@ Use artificial examples or redacted documents. Never enter an OTP, UPI PIN, CVV,
 password, account credential or identity document. Gemini requests may consume
 the project owner's API quota or cloud credit; repeated demos are not guaranteed
 to be free simply because the interface is a prototype.
+
+Public visitors have **20 action requests per account per UTC day**, and **200
+action requests shared across visitors**. Saving rules, publishing bills and
+analyzing inputs count, even if a later step fails. Burst limits allow four actions
+per account per minute and twenty globally. Separate read limits preserve normal
+navigation. When you see an allowance message, read existing results or try later;
+do not repeatedly retry payments. Limits reset daily at midnight UTC (5:30 AM IST).
+These are request limits—not a hard rupee spending cap on Google Cloud charges.
 
 ## A first visit without making a payment
 
@@ -485,7 +495,8 @@ archived lab as a current everyday consumer capability.
 
 | What you see | Meaning and next step |
 | --- | --- |
-| Google access denied | Use an enrolled identity. Do not remove IAP or share credentials to let someone test. |
+| Google access denied | Sign in with a Google user account. A managed school/company account may have restrictions. Do not remove IAP or share owner credentials. |
+| Demo allowance reached | Wait for the burst or UTC-day reset; do not repeatedly retry a payment. Each visitor has an isolated allowance, with a shared project-wide action cap. |
 | Local website unavailable | Start Docker Desktop, run the startup command, inspect `docker compose ps` and service logs. Building does not automatically open a browser. |
 | No eligible unpaid bills | All available rows may be paid, above limits or deferred. Inspect evidence; optionally prepare a genuine fresh artificial test record. |
 | Bill not found / not verified | Your uploaded/message claim lacks a matching enrolled provider record. Extraction can still appear in Saved inputs. |

@@ -28,6 +28,7 @@ class Settings:
     friday_durable_store: str = "sqlite"
     firestore_database: str = "(default)"
     firestore_collection: str = "financial_friday_v1"
+    public_demo_secret: str | None = None
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -101,6 +102,7 @@ class Settings:
             friday_durable_store=friday_durable_store,
             firestore_database=os.getenv("CARAPACE_FIRESTORE_DATABASE", "(default)"),
             firestore_collection=os.getenv("CARAPACE_FIRESTORE_COLLECTION", "financial_friday_v1"),
+            public_demo_secret=os.getenv("FRIDAY_PUBLIC_DEMO_SECRET"),
         )
 
     def passport_signing_key(self, tenant_id: str) -> str:

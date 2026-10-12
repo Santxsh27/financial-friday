@@ -7,6 +7,24 @@ and the difference between cloud features, local tools and historical experiment
 Repository: [Santxsh27/financial-friday](https://github.com/Santxsh27/financial-friday).
 The repository was renamed in place; history was retained, not copied into a new project.
 
+## Google-sign-in demo access
+
+The public-demo release retains IAP Google authentication and a private API.
+New Google visitors are assigned stable, isolated artificial-money workspaces;
+they cannot read the owner's bills, rules or receipts. Start with **My rules** and
+**Safety Lab**, or publish a new test bill using [the user guide](USER_GUIDE.md).
+Automatic permission is off for a new workspace. No real financial account is linked.
+
+Server-only visitor credentials are domain-separated HMAC derivations from a
+Secret Manager secret and the verified IAP Google subject. Browser headers cannot
+select a tenant. Visitor credentials can invoke only supported Friday routes.
+Transactional Firestore admission counters enforce 20 action requests per visitor
+per UTC day and 200 globally, with burst/read limits and fail-closed behavior.
+These limits bound admitted requests, not cloud dollars; model subcalls, storage,
+hosting and identity traffic can still cost credits. Managed Google accounts may
+be restricted by their organization's administrator.
+See [access design and verification](docs/FRIDAY_PUBLIC_ACCESS.md).
+
 **Readiness pass, October 12:** the selected Everyday interface uses the
 Vaultkeepers team mark. Activity badges and saved task results require independent
 outcome assurance; older unsealed receipts remain amber rather than certified green.
@@ -330,8 +348,8 @@ Gemini has no payment credentials or generic network, code, SQL, shell, or URL t
 
 ## Next steps
 
-1. Arrange explicitly authorized judge access and confirm dashboard deadline/eligibility; record the live journey using [the demo script](docs/submission/DEMO_SCRIPT.md).
-2. Expand unseen message/document/image checks and explicitly enroll a second identity; the targeted false-hold repair and owner PDF-to-payment journey are verified.
+1. Confirm a second Google-account sign-in, dashboard deadline/eligibility and remaining submission media; record the live journey using [the demo script](docs/submission/DEMO_SCRIPT.md).
+2. Expand unseen message/document/image checks; the targeted false-hold repair and owner PDF-to-payment journey are verified.
 3. Add Cloud Tasks for durable claims, bounded retries and reconciliation.
 4. Add authorised provider/account connectors; do not claim real bank or SMS access without an approved integration.
 5. Run the labelled adversarial evaluation set and publish accuracy, false-hold, latency and per-run cost measurements.

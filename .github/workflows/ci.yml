@@ -74,8 +74,8 @@ jobs:
       - name: Wait for the local integration page
         run: |
           for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8090/api/status > status.json \
-              && jq -e '.api == true and .ledger == true' status.json > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:8090/health > status.json \
+              && jq -e '.status == "ok"' status.json > /dev/null; then
               break
             fi
             if [ "$attempt" = "30" ]; then
@@ -84,11 +84,14 @@ jobs:
             fi
             sleep 2
           done
-          jq -e '.api == true and .ledger == true' status.json
-      - name: Verify a real ledger row and duplicate-debit incident
+          jq -e '.status == "ok"' status.json
+      - name: Verify an artificial ledger row and duplicate-debit incident
         run: |
-          curl --fail-with-body --silent --request POST \
-            http://127.0.0.1:8090/api/run > result.json
+          # Compose waits for the API and official PostgreSQL slice to be healthy.
+          # The current web UI no longer exposes the earlier /api/run route.
+          docker compose --profile anthos exec -T api carapace-anthos-demo \
+            --database-url postgresql://admin:password@anthos-ledger:5432/postgresdb \
+            --api-base-url http://127.0.0.1:8080 --json > result.json
           jq . result.json
           jq -e '.correct_payment_verdict == "MATCH" and
                  .duplicate_payment_verdict == "MISMATCH" and

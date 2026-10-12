@@ -25,8 +25,9 @@ provider evidence is not a fraud verdict. See [the financial review workflow](do
 
 The public-demo release retains IAP Google authentication and a private API.
 New Google visitors are assigned stable, isolated artificial-money workspaces;
-they cannot read the owner's bills, rules or receipts. Start with **My rules** and
-**Safety Lab**, or publish a new test bill using [the user guide](USER_GUIDE.md).
+they cannot read the owner's bills, rules or receipts. Start with **Documents** or
+the home command, then open **Financial inbox**. Sandbox execution is a separate
+explicit workflow described in [the user guide](USER_GUIDE.md).
 Automatic permission is off for a new workspace. No real financial account is linked.
 
 Server-only visitor credentials are domain-separated HMAC derivations from a
@@ -45,11 +46,13 @@ outcome assurance; older unsealed receipts remain amber rather than certified gr
 Bill warnings explain the actual limit/reserve/evidence reason. Document actions
 disclose cloud processing and existing automatic-payment permission. See
 [submission readiness](docs/submission/READINESS_1012.md) for the rollout record.
-**Live now:** API `financial-friday-api-google1012` and web
-`financial-friday-web-google1012` each serve 100% of their service traffic.
+**Review release:** API `financial-friday-api-reviewfinal1012` passed live Vertex
+bill/receipt matching, changed-recipient review and the originally failing dollar
+invoice. Its balance remained unchanged with zero payment requests. The web rollout
+is recorded in [financial review](docs/FINANCIAL_REVIEW.md).
 The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
 has the updated logo, bill explanations and evidence-based outcome badges.
-Latest native verification: **329 tests ran, 328 passed, one optional integration
+Latest native verification: **351 tests ran, 350 passed, one optional integration
 skipped**, plus **11 tooling tests passed**. Docker: **319 ran, 301 passed,
 18 skipped** (including JavaScript checks exercised by the native suite).
 Post-promotion cloud checks passed with unchanged balance and zero payment requests.

@@ -92,3 +92,31 @@ deployment evidence are recorded after verification, not inferred from mocks.
 This addresses document intelligence, risk review, process automation and customer
 experience in one BFSI workflow. It does not certify fraud, recover funds,
 authenticate external payees or guarantee a hackathon outcome.
+
+## Verified release evidence
+
+Native tests: 351 ran, 350 passed and one optional local Anthos integration skipped.
+Twenty-two tests added to the existing suite exercise the new review boundaries.
+These are engineering tests, not population-level fraud-detection accuracy.
+
+Live Vertex checks passed through the staged Cloud Run API and actual Firestore:
+
+- A previously unseen generated bill and a matching supplied receipt were joined.
+- A changed recipient was surfaced as conflicting evidence, with no payment.
+- The user's previously failing WebP invoice was extracted with total 755; its
+  bare dollar symbol stayed UNKNOWN rather than becoming INR or assumed USD.
+- The test workspace balance stayed unchanged, with no execution journal runs.
+- Existing owner release checks retained 13 artificial bill records, unchanged
+  balance, signed outcome replay and rejection of unconfirmed execution.
+
+The first model-facing schema returned Vertex INVALID_ARGUMENT. Simplified
+generation hints passed a direct live check; full server constraints were retained
+and tested against invalid output. API image
+`sha256:7375754df85e86ea4c14bca0ee717b4e82064f536a8e178384b28a2f136bba62`
+contains the correction. No mock result is labelled as a live model success.
+
+Remaining submission work includes a broader held-out input evaluation, a second
+human-account sign-in check, organizer eligibility/deadline confirmation and final
+submission media. Authorised bank/biller connectors are required for a real payment
+product. The review feature alone is not proof the entire hackathon submission is
+complete or award-winning.

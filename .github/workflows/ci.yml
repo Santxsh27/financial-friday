@@ -74,7 +74,8 @@ jobs:
       - name: Wait for the local integration page
         run: |
           for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8090/api/status > status.json; then
+            if curl --fail --silent http://127.0.0.1:8090/api/status > status.json \
+              && jq -e '.api == true and .ledger == true' status.json > /dev/null; then
               break
             fi
             if [ "$attempt" = "30" ]; then

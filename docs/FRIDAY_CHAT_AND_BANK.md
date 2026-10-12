@@ -109,8 +109,8 @@ validation, credential minimisation, invalid citations and authority fields,
 model outages, local fallback, read-only parameterized account queries, unique
 mapping, authenticated proxy routes and non-executing UI navigation.
 
-Native suite: 361 tests ran, 360 passed and one optional integration skipped.
-Docker suite: 361 ran, 343 passed and eighteen optional checks skipped; native
+Native suite: 364 tests ran, 363 passed and one optional integration skipped.
+Docker suite: 364 ran, 346 passed and eighteen optional checks skipped; native
 checks exercise JavaScript syntax/presentation. The live local bank endpoint read
 thirty existing sample ledger rows with no money moved. These are engineering
 results, not a real-bank security certification or guaranteed fraud accuracy.
@@ -118,7 +118,7 @@ results, not a real-bank security certification or guaranteed fraud accuracy.
 `tools/verify_chat_cloud.py` performs a synthetic live Vertex check without
 requesting payments. Live deployment results are recorded after execution.
 
-## Live release on October 12
+## Earlier chat1012 release on October 12 (historical)
 
 Commit `66c59c1` passed GitHub CI. Both existing protected Cloud Run services now
 serve their `chat1012` revisions at one hundred percent traffic. API build
@@ -148,3 +148,46 @@ thirty records. No deposit or payment was submitted. The reader needed one
 restart after a stalled Java startup, and the first account load timed out while
 x86 services warmed up. A subsequent read-only reload displayed balance/history
 successfully. Cold startup under Mac emulation is not a production latency result.
+
+## Current customer-cleanup release, October 12
+
+Source commit `719c7bb` is deployed to the existing protected services:
+
+- API `financial-friday-api-cleandraft1012`, image digest
+  `sha256:fadba7b7c3b346f995ac95026595af2e1d9c97551b22d5fcfa924b230c68df4d`,
+  build `416b2f58-2554-4e60-a057-3591fb222f00`.
+- Web `financial-friday-web-cleantheme1012`, image digest
+  `sha256:5003924b2accf960383bbda573550f68bdcb21e03318e1510390f7dc10091bba`,
+  build `f4d2de41-fe27-4773-9aa1-ced8a5981200`.
+
+Both revisions have one hundred percent production traffic. No authentication,
+IAM, origin restrictions or payment permission was weakened. No Cloud SQL trial,
+new project or hosted bank stack was provisioned. The two running local services
+are Friday's API and website; the latter retains the historical Compose name
+`anthos-demo`, but no Bank of Anthos service is required or running. Existing bank
+volumes were preserved. Unrelated local source edits were excluded from cloud
+builds by archiving only committed source.
+
+Verified flow:
+
+1. Overview has three starting tasks and expandable instructions; there is no
+   customer bank navigation or bank database request from chat.
+2. The guide loads editable artificial inputs with sandbox execution unchecked.
+   Loading alone does not call Gemini or authorize a payment.
+3. The local bill and explicit customer-debit receipt went through real Gemini
+   extraction and produced matching **claims**, not verified bank settlement.
+   Changing the recipient produced `RECIPIENT_CONFLICT` and a verification draft.
+   An earlier ambiguous receipt was interpreted as an incoming amount; the guide
+   was corrected to state the customer's outgoing direction, not to force a match.
+4. Live staged Vertex checks passed for general guidance, opt-in context, valid
+   evidence references, unchanged sandbox balance and no executed actions. The
+   canonical browser also returned live Vertex guidance.
+5. Light and dark starter cards were visually inspected. Conversation scrolling,
+   privacy details and composer sizing keep the panel compact. Full screen-reader
+   and mobile-device certification are not claimed.
+
+The next substantive product milestone is a prepare-only conversation tool that
+creates an evidence-bound task for explicit approval through the existing safety
+kernel. Chat currently provides guidance and unsent drafts, not execution tools.
+Cloud provider follow-through, real bank/utility connections and real settlement
+are still unsupported; this cleanup is not a claim that the entire roadmap is done.

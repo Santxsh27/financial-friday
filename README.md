@@ -31,7 +31,7 @@ Ask a financial question, or opt in to let the assistant explain your recent
 inbox and sandbox summary. Chat suggests next screens but has no payment or bank
 write tools. Documents and the read-only Bills input perform structured review.
 See [chat and the sandbox bank connection](docs/FRIDAY_CHAT_AND_BANK.md).
-**Live chat release:** both `chat1012` Cloud Run revisions are promoted. Real
+**Live chat:** real
 Vertex replies were verified through the main website; local chat uses the
 configured Gemini API. Context is opt-in, no chat action executes, and cloud
 visitors' Anthos accounts remain NOT_LINKED rather than sharing an owner account.
@@ -81,10 +81,14 @@ invoice. Its balance remained unchanged with zero payment requests. The web roll
 is recorded in [financial review](docs/FINANCIAL_REVIEW.md).
 The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
 has the updated logo, bill explanations and evidence-based outcome badges.
-Latest native verification: **361 tests ran, 360 passed, one optional integration
-skipped**. Docker: **361 ran, 343 passed,
+Latest native verification: **364 tests ran, 363 passed, one optional integration
+skipped**. Docker: **364 ran, 346 passed,
 18 skipped** (including JavaScript checks exercised by the native suite).
-Post-promotion cloud checks passed with unchanged balance and zero payment requests.
+Live checks on the customer-cleanup API passed with unchanged sandbox balance,
+valid evidence citations and zero executed actions. The local guided example
+produced a bill claim, matching receipt claims and a changed-recipient conflict
+through real Gemini calls. See the current release section in
+[chat and developer bank tools](docs/FRIDAY_CHAT_AND_BANK.md).
 Tests do not guarantee zero defects,
 fraud-detection accuracy or real-world banking readiness.
 

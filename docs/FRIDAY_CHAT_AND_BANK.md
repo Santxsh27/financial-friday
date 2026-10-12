@@ -98,3 +98,30 @@ results, not a real-bank security certification or guaranteed fraud accuracy.
 
 `tools/verify_chat_cloud.py` performs a synthetic live Vertex check without
 requesting payments. Live deployment results are recorded after execution.
+
+## Live release on October 12
+
+Commit `66c59c1` passed GitHub CI. Both existing protected Cloud Run services now
+serve their `chat1012` revisions at one hundred percent traffic. API build
+`cb51b859-32c7-4d63-b64b-dec05785f99e` produced digest
+`sha256:94e19c0671cfb1e80b95e023405b658808a5764f81afb238be9a49d4e4730b84`;
+web build `426bcbeb-aa8c-4ac4-84e8-3edf0b2a049b` produced digest
+`sha256:d00e168352f2a5174147012365dab501af954d34d30423917f73fab87aac8e5f`.
+Builds used a clean Git archive and did not include unrelated local edits.
+
+Live synthetic checks passed for a general Vertex reply, a consented reply over
+a fresh financial inbox, valid case citations, NOT_LINKED for an unmapped visitor,
+no execution runs and unchanged sandbox balance. The actual main-site browser
+also returned a `VERTEX_AI` reply from `gemini-3.5-flash-lite`. Local browser chat
+returned `GEMINI_API` from the same configured model.
+
+The staging web address rejected a chat POST with HTTP 403 because writes are
+locked to the canonical origin. That restriction was retained; the normal website
+was verified after promotion. No IAM grants, origin exemptions, signing keys or
+cloud bank credentials were added. Existing owner release checks passed with
+thirteen bill records, unchanged test balance, independent outcome assurance and
+rejection of unconfirmed execution.
+
+The optional official bank frontend is separate from the verified read-only
+ledger projection. Its x86 Java services may need several minutes on a Mac;
+Friday must not label them ready until their health checks pass.

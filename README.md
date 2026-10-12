@@ -14,6 +14,10 @@ Ask a financial question, or opt in to let the assistant explain your recent
 inbox and sandbox summary. Chat suggests next screens but has no payment or bank
 write tools. Documents and the read-only Bills input perform structured review.
 See [chat and the sandbox bank connection](docs/FRIDAY_CHAT_AND_BANK.md).
+**Live chat release:** both `chat1012` Cloud Run revisions are promoted. Real
+Vertex replies were verified through the main website; local chat uses the
+configured Gemini API. Context is opt-in, no chat action executes, and cloud
+visitors' Anthos accounts remain NOT_LINKED rather than sharing an owner account.
 
 Bring an unfamiliar bill, invoice, receipt or transaction notice. Friday reads it
 with Gemini on Vertex AI and builds a private financial inbox without requiring

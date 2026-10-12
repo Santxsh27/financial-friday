@@ -188,6 +188,7 @@ class FridayChatBankTests(unittest.TestCase):
         self.assertIn('max-height:210px',CHAT_CSS)
         self.assertIn('height:72px',CHAT_CSS)
         self.assertIn('grid-template-columns:1fr',CHAT_CSS)
+        self.assertIn('.friday-starter{background:var(--panel);color:var(--ink)}',CHAT_CSS)
 
 
 if __name__=='__main__':

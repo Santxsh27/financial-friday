@@ -1,5 +1,6 @@
 """Consumer read-only financial review flow, separate from sandbox execution."""
 REVIEW_JS = r"""
+      titles.review='Your financial inbox';
       const reviewView=view('review','Your bills, receipts and payment claims - reconciled without moving money.');
       const reviewHeading=element('h2','Your financial inbox');
       const reviewStatus=element('p','Upload a bill and its receipt, or paste a payment notice. No provider setup is needed for review.','screen-note');

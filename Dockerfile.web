@@ -1,7 +1,7 @@
 # Small, reproducible web layer over the verified API release.
 # The immutable normal Cloud Build below contains all verified dependencies.
 # Copy the complete UI package, including imported presentation modules/assets.
-FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:2b5bab8b5caa65cc0c56372b1f6c2b7974f67e77ada691eeeb7bcdd32ac54116
+FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:7375754df85e86ea4c14bca0ee717b4e82064f536a8e178384b28a2f136bba62
 COPY src/carapace_integrations /app/src/carapace_integrations
 COPY src/carapace_core /app/src/carapace_core
 ENV PYTHONPATH=/app/src

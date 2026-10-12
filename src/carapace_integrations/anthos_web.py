@@ -427,6 +427,31 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code, "Financial review unavailable")
         return result
 
+    @application.get("/api/friday/bank")
+    async def friday_bank():
+        code, result = await run_in_threadpool(_api_call,api_base_url,"/v1/friday/bank","GET")
+        if code != 200:
+            raise HTTPException(code,"Sandbox bank information unavailable")
+        return result
+
+    @application.post("/api/friday/chat")
+    async def friday_chat(request: StarletteRequest):
+        from carapace_ai.friday_chat import FridayChatRequest
+        from pydantic import ValidationError
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 32 * 1024:
+                raise HTTPException(413,"Chat request exceeds 32 KB")
+            data.extend(chunk)
+        try:
+            payload = FridayChatRequest.model_validate_json(bytes(data))
+        except ValidationError as error:
+            raise HTTPException(422,"Invalid chat request") from error
+        code,result = await run_in_threadpool(_api_call,api_base_url,"/v1/friday/chat","POST",payload.model_dump(),120)
+        if code != 200:
+            raise HTTPException(code,"Friday chat unavailable. No payment or action was performed.")
+        return result
+
     @application.post("/api/friday/reviews")
     @application.post("/api/friday/reviews/statement")
     async def friday_review_text(request: StarletteRequest):

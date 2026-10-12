@@ -16,12 +16,17 @@ and AI responses can vary. A stopped or unverified task can be the correct resul
 
 ## Contents
 
-**Current default:** Home and Documents now perform read-only financial review.
-They do not execute payments. Open **Financial inbox** to see related bills,
+**Current default:** Home's Friday panel is a live Gemini chat. Ask a question;
+enable workspace context only if you want Gemini to use your recent records.
+Documents and the read-only Bills input perform structured financial review.
+Neither chat nor document review executes payments. Open **Financial inbox** to see related bills,
 receipts, conflicting evidence and prepared verification messages. No provider
 setup or saved automatic permission is required for review. Follow
 [the new click-by-click workflow](docs/FINANCIAL_REVIEW.md) first. The sandbox
 payment steps below apply only to the separate explicit artificial-payment mode.
+See [Ask Friday and Sandbox bank](docs/FRIDAY_CHAT_AND_BANK.md) for the current
+conversation, consent and local account walkthrough. Cloud bank accounts are not
+automatically linked by Google sign-in.
 
 
 1. [Before you begin](#before-you-begin)
@@ -48,7 +53,7 @@ payment steps below apply only to the separate explicit artificial-payment mode.
   Sign in with Google. The public-demo release gives each new Google user an
   isolated artificial-money workspace; the owner's existing records are not shared.
   New visitors start with no saved documents. Open **Documents** or paste a
-  financial notice at Home, then review **Financial inbox**. No provider setup is
+  financial notice in the read-only Bills input, then review **Financial inbox**. No provider setup is
   needed for this read-only flow. A school/company Google administrator may restrict sign-in.
 - **Local website:** [Open local Friday](http://localhost:8090/#home), after starting
   Docker Desktop and running the command below from the project folder.
@@ -70,7 +75,8 @@ folder or replace environment variables just to change its display name.
 | --- | --- | --- |
 | Read-only | Overview, Review bill, Refresh, Activity, opening receipts | Loads or displays existing evidence. Does not pay. |
 | Settings or preparation | Save instruction, Publish test bill, Routine bill, sound/theme controls | Changes saved permission, artificial provider records, or this browser's preferences. Does not itself pay. |
-| Review and storage | Review with Friday, Read & reconcile, Import transaction claims | Runs understanding/reconciliation and saves extracted claims; never submits a payment. CSV storage requires explicit consent. |
+| Chat | Ask Friday | Runs live Gemini guidance; workspace context is opt-in, no payment or bank write. |
+| Review and storage | Review this financial input, Read & reconcile, Import transaction claims | Runs understanding/reconciliation and saves extracted claims; never submits a payment. CSV storage requires explicit consent. |
 | Execution capable | Explicit original artificial-payment mode, Check & handle in sandbox, Approve this artificial-money task, Run this demo | Can run checks and record an artificial-money effect when the specific task is allowed. |
 
 **Important:** “Check” is not always a read-only action. A matching bill can execute

@@ -10,7 +10,8 @@ verification messages when evidence is incomplete or contradictory.
 
 1. Sign in with Google. Use your private workspace; never upload PINs or OTPs.
 2. Open Documents and select a PNG, JPEG, WebP or PDF, at most 8 MB. Or paste a
-   financial message into the home command and choose Review with Friday.
+   financial message into the read-only Bills input and choose Review this
+   financial input. Home's Friday panel is now conversational guidance.
 3. The Financial inbox shows the document's classification, amount, recipient
    claim, deadline and suggested next step. No payment is submitted.
 4. Add a related receipt. Matching requires supported supplier, bill reference,
@@ -65,7 +66,7 @@ not authentication, fuzzy merchant ownership or a fraud classifier.
 
 ## Execution remains separate
 
-The home command and document review cannot pay, even if automatic sandbox
+Home chat and document review cannot pay, even if automatic sandbox
 permission is enabled. The original artificial-payment workflow is available
 only through its explicit mode/controls and still requires a separate provider
 record, saved permission and deterministic checks. Neither flow accesses real

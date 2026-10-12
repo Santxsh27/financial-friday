@@ -7,7 +7,13 @@ and the difference between cloud features, local tools and historical experiment
 Repository: [Santxsh27/financial-friday](https://github.com/Santxsh27/financial-friday).
 The repository was renamed in place; history was retained, not copied into a new project.
 
-## Default customer workflow: review and reconcile
+## Ask Friday and reconcile your financial records
+
+The right-hand Friday panel now supports natural conversation through Gemini.
+Ask a financial question, or opt in to let the assistant explain your recent
+inbox and sandbox summary. Chat suggests next screens but has no payment or bank
+write tools. Documents and the read-only Bills input perform structured review.
+See [chat and the sandbox bank connection](docs/FRIDAY_CHAT_AND_BANK.md).
 
 Bring an unfamiliar bill, invoice, receipt or transaction notice. Friday reads it
 with Gemini on Vertex AI and builds a private financial inbox without requiring
@@ -16,7 +22,7 @@ amounts/recipients, checks extracted arithmetic, keeps currencies separate and
 prepares a verification message. Add a receipt or consented transaction CSV to
 review whether the same bill already has supporting payment claims.
 
-**The home command and Documents are now read-only. They never pay**, even when
+**Home chat and Documents are read-only. They never pay**, even when
 automatic sandbox permission is enabled. Sandbox execution is a separate explicit
 workflow. A matching uploaded receipt is not confirmed bank settlement, and missing
 provider evidence is not a fraud verdict. See [the financial review workflow](docs/FINANCIAL_REVIEW.md).
@@ -26,7 +32,7 @@ provider evidence is not a fraud verdict. See [the financial review workflow](do
 The public-demo release retains IAP Google authentication and a private API.
 New Google visitors are assigned stable, isolated artificial-money workspaces;
 they cannot read the owner's bills, rules or receipts. Start with **Documents** or
-the home command, then open **Financial inbox**. Sandbox execution is a separate
+the read-only Bills input, then open **Financial inbox**. Sandbox execution is a separate
 explicit workflow described in [the user guide](USER_GUIDE.md).
 Automatic permission is off for a new workspace. No real financial account is linked.
 
@@ -52,8 +58,8 @@ invoice. Its balance remained unchanged with zero payment requests. The web roll
 is recorded in [financial review](docs/FINANCIAL_REVIEW.md).
 The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
 has the updated logo, bill explanations and evidence-based outcome badges.
-Latest native verification: **351 tests ran, 350 passed, one optional integration
-skipped**, plus **11 tooling tests passed**. Docker: **319 ran, 301 passed,
+Latest native verification: **361 tests ran, 360 passed, one optional integration
+skipped**. Docker: **361 ran, 343 passed,
 18 skipped** (including JavaScript checks exercised by the native suite).
 Post-promotion cloud checks passed with unchanged balance and zero payment requests.
 Tests do not guarantee zero defects,
@@ -75,8 +81,8 @@ payment confirmation. Hover/focus feedback is restrained and respects reduced mo
 ### Current interface: the selected Everyday design
 
 The complete interface now uses warm ivory, peach actions and navy Friday panels.
-Home is a **bill inbox beside a financial co-pilot**, with current sandbox records,
-verification warnings, safety rules and recent receipts. Bills, documents, spending,
+Home is a **financial review inbox beside a conversational co-pilot**, with saved
+claims and their actual evidence status. Bills, documents, spending,
 activity and task results share the same design system, not stacked theme overrides.
 An original generated companion has gentle cosmetic motion; it is not a microphone
 or a claim of continuous bank monitoring. Reduced motion and keyboard focus remain
@@ -87,7 +93,9 @@ provider record before review. The existing explicit sandbox execution action,
 permission checks, reserve, exact recipient/amount binding and independent outcome
 replay are unchanged. The interface clearly warns that checking a bill message can
 execute an artificial payment under saved rules. No email connector, real bank
-connection or real-money payment has been added. See [design verification](design-qa.md).
+connection or real-money payment has been added. Local **Sandbox bank** reads a
+separately provisioned official Anthos sample account; cloud visitors remain
+NOT_LINKED until accounts and hosting are provisioned. See [design verification](design-qa.md).
 
 ### Independent outcome replay (0.17.0)
 

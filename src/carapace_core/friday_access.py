@@ -4,9 +4,9 @@ import re
 
 VISITOR_PATTERN = r"visitor-[a-f0-9]{64}"
 FRIDAY_ROUTES = {
-    "GET": r"(?:reviews|scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100})",
+    "GET": r"(?:bank|reviews|scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100})",
     "PUT": r"mandate",
-    "POST": r"(?:reviews|reviews/documents|reviews/statement|bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
+    "POST": r"(?:chat|reviews|reviews/documents|reviews/statement|bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
 }
 
 

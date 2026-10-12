@@ -33,6 +33,9 @@ services:
       CARAPACE_GEMINI_MODEL: ${CARAPACE_GEMINI_MODEL:-gemini-3.5-flash-lite}
       CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED: "true"
       BOA_DATABASE_URL: postgresql://admin:password@anthos-ledger:5432/postgresdb
+      # Local operator-provisioned sample account; public visitors are NOT mapped here.
+      FRIDAY_ANTHOS_DATABASE_URL: postgresql://admin:password@anthos-ledger:5432/postgresdb
+      FRIDAY_ANTHOS_ACCOUNTS_JSON: '{"demo-bank":"1011226111"}'
       PORT: "8080"
     ports:
       - "127.0.0.1:8080:8080"

@@ -11,6 +11,7 @@ from carapace_integrations.financial_friday_fixtures import CASES
 from .auth import TenantContext
 from .friday_inbox import FridayInbox
 from .financial_friday import FridayUnderstandingUnavailable
+from carapace_ai.friday_chat import FridayChatRequest
 
 
 class WatchRequest(BaseModel):
@@ -77,6 +78,21 @@ def register_financial_friday_routes(application, service, authenticate):
     from .friday_review import FridayReviewService
     review = FridayReviewService(service)
     application.state.friday_reviews = review
+    from .friday_bank import FridayAnthosBank
+    from .friday_chat import reply_to_user
+    bank = FridayAnthosBank.from_env()
+    application.state.friday_bank = bank
+
+    @application.get("/v1/friday/bank", tags=["sandbox-bank"])
+    async def bank_snapshot(tenant: TenantContext = Depends(authenticate)):
+        return await run_in_threadpool(bank.snapshot, tenant.tenant_id)
+
+    @application.post("/v1/friday/chat", tags=["friday-assistant"])
+    async def chat(payload: FridayChatRequest, tenant: TenantContext = Depends(authenticate)):
+        try:
+            return await run_in_threadpool(reply_to_user,service,review,bank,tenant.tenant_id,payload)
+        except Exception as error:
+            raise HTTPException(503,"Friday chat is unavailable. No payment or other action was performed.") from error
 
     class ReviewTextRequest(BaseModel):
         model_config = ConfigDict(extra="forbid")

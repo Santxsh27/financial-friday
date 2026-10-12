@@ -4,13 +4,17 @@ Updated 12 October 2026 · read-only financial review plus retained bounded exec
 
 ## Default customer workflow
 
-Home and Documents perform read-only reconciliation of unfamiliar bills, receipts
+Home provides bounded Gemini conversation with opt-in tenant-scoped context.
+Documents and the read-only Bills input perform reconciliation of unfamiliar bills, receipts
 and transaction claims without provider setup. Gemini extracts a general typed
 document schema. Separate deterministic code groups evidence, checks amounts,
 currencies and arithmetic, and prepares verification messages. Uploaded receipts
 remain user claims, not bank proof. Review storage and routes cannot mutate
 financial permission or payment journals. See [the review specification](docs/FINANCIAL_REVIEW.md).
 The execution sections below describe the retained explicit artificial-money layer.
+The local Anthos account projection is separately provisioned and read-only;
+Google login is not bank authentication. Cloud visitors are not given a shared
+bank account. See [chat and bank architecture](docs/FRIDAY_CHAT_AND_BANK.md).
 
 ## Product statement
 

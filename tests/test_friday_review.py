@@ -85,6 +85,14 @@ class ReviewKernelTests(unittest.TestCase):
     def test_duplicate_bill_records_not_counted_twice(self):
         self.assertEqual(self.board(record("a"),record("b"))["unconfirmed_bill_totals"],{"INR":178000})
 
+    def test_latest_receipt_does_not_hide_bill_deadline(self):
+        receipt=record("receipt",document_kind="RECEIPT",due_date=None)
+        self.assertEqual(self.board(receipt,record("bill"))["cases"][0]["due_date"],"2026-10-15")
+
+    def test_unquoted_recipient_cannot_establish_matching_receipt(self):
+        receipt=record("receipt",document_kind="RECEIPT",quotes=[{"field":q.field,"quote":q.quote} for q in facts().quotes if q.field!='payee'])
+        self.assertNotEqual(self.board(record("bill"),receipt)["cases"][0]["state"],"RECEIPT_MATCHED_CLAIM")
+
 
 class ReviewApiTests(unittest.TestCase):
     def setUp(self):
@@ -149,6 +157,16 @@ class ReviewApiTests(unittest.TestCase):
         result=self.client.post('/v1/friday/reviews',headers=self.headers,json={"text":"TN Power BILL-1234 1780.00 tnpower@upi 2026-10-15"})
         self.assertEqual(result.status_code,200,result.text)
         self.assertEqual(result.json()["document"]["provenance"]["model_calls"],2)
+
+    def test_simplified_generation_schema_does_not_relax_server_validation(self):
+        from carapace_ai.friday_review import generation_schema
+        schema=generation_schema(ReviewedFinancialDocument.model_json_schema())
+        self.assertNotIn('"pattern"',json.dumps(schema))
+        bad=facts().model_dump();bad['total']='1e20'
+        self.model.models.generate_content.return_value=SimpleNamespace(text=json.dumps(bad))
+        response=self.client.post('/v1/friday/reviews',headers=self.headers,json={"text":"TN Power bill"})
+        self.assertEqual(response.status_code,503)
+        self.assertEqual(self.model.models.generate_content.call_count,2)
 
     def test_statement_matching_and_duplicate_import_without_ai(self):
         self.output(facts())

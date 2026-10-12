@@ -124,13 +124,16 @@ def reconcile_reviews(records: list[dict], *, today=None) -> dict:
         receipts = [r for r in members if r["analysis"]["facts"]["document_kind"] in {"RECEIPT", "TRANSACTION_ALERT"}
                     and r["analysis"]["facts"]["money_direction"] == "SEND"]
         bills = [r for r in members if r["analysis"]["facts"]["document_kind"] == "BILL"]
+        if bills:
+            first=bills[0]["analysis"]
+            f=first["facts"]
         transaction_ids = {normalize(r["analysis"]["facts"]["transaction_reference"]) for r in receipts
                            if r["analysis"]["facts"]["transaction_reference"]}
         if bills and len(transaction_ids) > 1:
             checks.append("POSSIBLE_REPEATED_PAYMENT")
         if checks and any(code in checks for code in ("RECIPIENT_CONFLICT", "AMOUNT_CONFLICT", "EMBEDDED_INSTRUCTION", "LINE_ARITHMETIC_MISMATCH", "TOTAL_ARITHMETIC_MISMATCH", "POSSIBLE_REPEATED_PAYMENT")):
             state, action = "CONFLICT_REVIEW", "Verify the conflicting details with the provider before paying."
-        elif bills and receipts and len(amounts) == 1 and all(r["analysis"]["amount_minor"] in amounts for r in members) and len(payees) == 1 and all(r["analysis"]["facts"]["payee"] for r in members):
+        elif bills and receipts and len(amounts) == 1 and all(r["analysis"]["amount_minor"] in amounts for r in members) and len(payees) == 1 and all(r["analysis"]["facts"]["payee"] and "payee" in {q["field"] for q in r["analysis"]["facts"]["quotes"]} for r in members):
             state, action = "RECEIPT_MATCHED_CLAIM", "A supplied receipt matches this bill. Check provider/bank status before making another payment."
         elif receipts or all(r["analysis"]["facts"]["document_kind"] in {"RECEIPT", "TRANSACTION_ALERT"} for r in members):
             state, action = "RECORDED_PAYMENT_CLAIM", "Keep this receipt; it is not independently confirmed settlement."

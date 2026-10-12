@@ -31,11 +31,11 @@ outcome assurance; older unsealed receipts remain amber rather than certified gr
 Bill warnings explain the actual limit/reserve/evidence reason. Document actions
 disclose cloud processing and existing automatic-payment permission. See
 [submission readiness](docs/submission/READINESS_1012.md) for the rollout record.
-**Live now:** API `financial-friday-api-ready1012` and web
-`financial-friday-web-prefs1012` each serve 100% of their service traffic.
+**Live now:** API `financial-friday-api-google1012` and web
+`financial-friday-web-google1012` each serve 100% of their service traffic.
 The protected [Cloud Run app](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
 has the updated logo, bill explanations and evidence-based outcome badges.
-Latest native verification: **319 tests ran, 318 passed, one optional integration
+Latest native verification: **329 tests ran, 328 passed, one optional integration
 skipped**, plus **11 tooling tests passed**. Docker: **319 ran, 301 passed,
 18 skipped** (including JavaScript checks exercised by the native suite).
 Post-promotion cloud checks passed with unchanged balance and zero payment requests.
@@ -448,7 +448,7 @@ understand → plan → prove → execute → reconcile → remember
 
 ## Honest limits
 
-This prototype uses an enrolled test-provider API, retained regression fixtures and artificial money. Browser speech recognition supplies an optional transcript; Gemini Live native audio is not connected yet. The atomic Firestore journal and persistent signing keys are provisioned; cloud release checks are documented separately. Public user authentication and durable cloud scheduling remain unfinished. It does not access GPay, phone SMS, a real bank account, UPI credentials, OTPs or production funds. A real launch requires authorised bank/biller connectors, security review, regulated partner controls, customer support and formal compliance work. Financial Friday does not promise zero fraud, guaranteed savings, guaranteed reimbursement, investment returns, patentability or a hackathon prize.
+This prototype uses an enrolled test-provider API, retained regression fixtures and artificial money. Browser speech recognition supplies an optional transcript; Gemini Live native audio is not connected yet. The atomic Firestore journal and persistent signing keys are provisioned; cloud release checks are documented separately. Public Google-sign-in demo access now has isolated visitor workspaces and durable request limits; a second human account's browser sign-in remains to be independently checked. Durable cloud scheduling remains unfinished. It does not access GPay, phone SMS, a real bank account, UPI credentials, OTPs or production funds. A real launch requires authorised bank/biller connectors, security review, regulated partner controls, customer support and formal compliance work. Financial Friday does not promise zero fraud, guaranteed savings, guaranteed reimbursement, investment returns, patentability or a hackathon prize.
 
 See [SPEC.md](SPEC.md) for the product contract, trust model and roadmap, and [docs/CLOUD_RUN.md](docs/CLOUD_RUN.md) for the cloud deployment boundary.
 

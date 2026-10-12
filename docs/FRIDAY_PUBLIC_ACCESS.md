@@ -54,8 +54,39 @@ concurrent admission, daily/global caps, day reset, and fail-closed storage.
 Existing private-pilot tests still verify owner access and no request retries.
 
 Native suite: 329 tests ran, 328 passed, one optional Anthos integration skipped.
-Cloud rollout and second-account browser verification are recorded below after
-deployment; unit mocks alone are not proof of external Google login.
+Unit mocks alone are not proof of external Google login.
+
+## Live rollout, October 12
+
+- Clean source commit `7525c15` built successfully by Cloud Build
+  `5d6e2b64-66af-4d47-9fde-912924092b55`.
+- Immutable API/web image:
+  `sha256:c71dcb552bfb37b526d1c3a508b7b5e5c736802a142a1b02861830b9b82b40e8`.
+- `financial-friday-api-google1012` and `financial-friday-web-google1012`
+  each promoted to 100% only after zero-traffic candidate checks.
+- Web resource's IAP accessor policy includes `allAuthenticatedUsers` and owner.
+  Cloud Run web invocation remains IAP-service-agent only. Cloud Run API invocation
+  remains web-service-account only. No anonymous Invoker binding was added.
+- Inherited custom OAuth client confirmed; unauthenticated website requests
+  redirect to `accounts.google.com` requesting only `openid email`.
+- Actual Firestore/API test with two fresh synthetic visitor fixtures: separate
+  empty workspaces, one private provider bill invisible to the other, invalid key
+  rejected, background route rejected, fifth burst action returned 429, both
+  artificial balances unchanged. No Gemini calls or payment requests.
+- First provider test fixture was correctly rejected (422) for uppercase provider
+  ID. Fixed to the required lowercase schema; rerun passed. No production code
+  validation was weakened.
+- Owner workspace read-only checks passed: 13 bill records, unchanged balance,
+  unconfirmed execution rejected, assurance readable, anonymous access rejected.
+- Live owner browser renders the access/privacy/limits link and protected app.
+- **Not yet verified:** a second human Google account completing the browser OAuth
+  flow. Ask a friend to use the public link; managed-account policies can interfere.
+  Backend synthetic identities are not represented as real human sign-in tests.
+
+Reproduce the no-AI/no-payment integration probe using
+`tools/verify_public_demo_cloud.py` with an authorized owner CLI identity. It writes
+only isolated artificial test rules/bills and consumes visitor request allowance;
+it never provisions a Google account or verifies human login by itself.
 
 ## Google configuration
 

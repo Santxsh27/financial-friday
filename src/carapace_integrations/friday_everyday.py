@@ -100,6 +100,6 @@ EVERYDAY_JS = r"""
       $('check-document').textContent='Check document & apply my rules';
       const documentDisclosure=element('p','Never upload PINs, OTPs or banking passwords. Document facts are claims, not verified settlement.','screen-note');doc.append(documentDisclosure);
       shortHeading(bill,'Give Friday the request.','Paste the bill message. Friday checks trusted evidence and your saved permission before acting.');
-      refreshEverydayHome();
+      // The composed experience routes after all workflow modules are installed.
 """
 EVERYDAY_JS += PREFERENCES_JS

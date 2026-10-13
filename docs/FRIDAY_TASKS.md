@@ -33,6 +33,9 @@ payment executor. It is not a newly trained fraud model or bank integration.
 An editable artificial bill must be published through Bills for the execution
 demonstration. Uploaded invoices/receipts alone are not payable provider records.
 For ordinary documents Friday can prepare a verification message without a bank.
+Fresh cloud workspaces must first save My rules to initialise the artificial
+account and explicit limits. Missing setup produces a HOLD with a My rules link,
+not a ready-to-pay task using a merely displayed default balance.
 
 ## Model and deterministic boundaries
 

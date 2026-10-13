@@ -61,6 +61,18 @@ class CloudWebTests(unittest.TestCase):
             self.assertEqual(self.client.post("/api/friday/live-input", headers=headers, json={}).status_code, 403)
         self.assertEqual(self.calls, [])
 
+    def test_task_routes_use_authenticated_tenant_and_same_origin(self):
+        task="task_"+"a"*32
+        body={"message":"Prepare my artificial bill", "include_workspace":True}
+        self.assertEqual(self.client.post('/api/friday/tasks',headers=self.headers,json=body).status_code,200)
+        self.assertEqual(self.calls[-1][0:3],('one','/v1/friday/tasks','POST'))
+        self.assertEqual(self.client.get('/api/friday/tasks/'+task,headers=self.headers).status_code,200)
+        self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/confirm',headers=self.headers,
+            json={"expected_task_sha256":"a"*64,"confirm_sandbox_execution":True}).status_code,200)
+        untrusted=dict(self.headers,Origin='https://evil.example')
+        self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/confirm',headers=untrusted,json={}).status_code,403)
+        self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/override',headers=self.headers,json={}).status_code,403)
+
     def test_permitted_json_forwarded_once(self):
         response = self.client.post("/api/friday/live-input", headers=self.headers, json={"content_text": "new bill"})
         self.assertEqual(response.status_code, 200)

@@ -8,7 +8,9 @@ For example: `Prepare a verification message about the changed recipient in my
 financial inbox. Do not pay.` Friday uses live Gemini, validates quoted risks,
 and opens a separate task page. A message is **not sent** automatically.
 
-To test execution, first create an artificial provider bill through the existing
+To test execution in a fresh cloud workspace, first open **My rules** and save your
+artificial-money limits, with automatic execution off. This creates only a test
+account, not a bank connection. Then create an artificial provider bill through the existing
 Bills test-provider setup. Then request `Prepare a one-time artificial payment
 for BILL-1234` using your actual reference. Review the exact amount and recipient.
 Only a **Ready for your confirmation** task offers **Confirm artificial payment**.

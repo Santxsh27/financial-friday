@@ -7,6 +7,7 @@ import argparse
 import json
 import ssl
 import subprocess
+import time
 from urllib.request import Request, urlopen
 from uuid import uuid4
 from carapace_core.friday_access import visitor_key, visitor_tenant
@@ -28,11 +29,27 @@ def main():
     headers={'Authorization':'Bearer '+token,'X-Carapace-Tenant':tenant,
         'X-Carapace-API-Key':visitor_key(secret,tenant),'Content-Type':'application/json'}
     context=ssl.create_default_context(cafile=args.ca_file)
+    bucket, writes = int(time.time()//60), 0
     def call(path,body=None):
+        nonlocal bucket, writes
+        current = int(time.time()//60)
+        if current != bucket:
+            bucket, writes = current, 0
+        if body is not None and writes >= 3:
+            delay = min(60, max(0, (bucket+1)*60-time.time()+0.05))
+            print(json.dumps({'waiting_for_demo_admission_seconds':round(delay,1)}),flush=True)
+            time.sleep(delay)
+            bucket, writes = int(time.time()//60), 0
+        if body is not None:
+            writes += 1
         data=json.dumps(body).encode() if body is not None else None
         with urlopen(Request(args.url+path,data=data,headers=headers),context=context,timeout=180) as response:
             return json.load(response)
-    balance=call('/v1/friday/mandate')['sandbox_balance_minor']
+    initial=call('/v1/friday/mandate')
+    balance=initial['sandbox_balance_minor']
+    # Persist explicit artificial rules/account before asking for an executable
+    # task. Never enable standing automatic execution in this live test.
+    call('/v1/friday/mandate',initial['mandate'] | {'automatic_sandbox_execution':False})
     ref='TASK-'+uuid4().hex[:8].upper()
     call('/v1/friday/test-provider/bills',{'bill_reference':ref,'provider_name':'Friday Test Electricity',
         'provider_id':'friday-test-electricity','payee_id':'example-electricity@upi',
@@ -52,7 +69,8 @@ def main():
     if args.execute_artificial_payment:
         body={'expected_task_sha256':task['task_sha256'],'confirm_sandbox_execution':True}
         first=call('/v1/friday/tasks/'+task['task_id']+'/confirm',body)
-        assert first['run']['status']=='COMPLETED_SYNTHETIC',json.dumps(first)
+        assert first['run']['status']=='COMPLETED_SYNTHETIC',json.dumps({
+            'status':first['run']['status'],'outcome':first['run']['outcome']})
         replay=call('/v1/friday/runs/'+first['run']['run_id'])
         assert replay['assurance']['state']=='VERIFIED',json.dumps(replay['assurance'])
         second=call('/v1/friday/tasks/'+task['task_id']+'/confirm',body)

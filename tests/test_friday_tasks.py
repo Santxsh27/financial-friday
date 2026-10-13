@@ -228,6 +228,12 @@ class FridayTaskTests(unittest.TestCase):
         cloud.put("provider_bills","one",self.bill.bill_reference,self.bill.model_dump())
         self.service.durable=cloud
         task=self.prepare().json()
+        self.assertEqual(task["state"],"HOLD")
+        self.assertIn("SANDBOX_SETUP_REQUIRED",task["gate_reasons"])
+        cloud.put("mandates","one","current",{"mandate":self.service._default_mandate().model_dump()})
+        cloud.put("accounts","one","current",{"balance_minor":5000000})
+        task=self.prepare().json()
+        self.assertEqual(task["state"],"READY_FOR_CONFIRMATION")
         reopened=FridayTaskService(self.service,self.app.state.friday_reviews).get("one",task["task_id"])
         self.assertEqual(reopened["task_sha256"],task["task_sha256"])
         with self.assertRaises(KeyError): self.tasks.get("two",task["task_id"])

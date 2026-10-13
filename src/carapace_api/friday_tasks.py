@@ -73,6 +73,7 @@ class FridayTaskService:
         if not request.include_workspace:
             raise ValueError("Allow Friday to read your saved financial evidence before preparing a task.")
         workspace = financial_workspace(self.service, tenant)
+        rules = self.service.mandate(tenant)["mandate"]
         board = self.reviews.board(tenant)
         sources = [{"source_id": "request", "source_text": request.message}]
         for bill in workspace["bills"][:20]:
@@ -96,6 +97,10 @@ class FridayTaskService:
             row["bill_reference"] == bill["bill_reference"] for row in plan["selected"] + plan["already_recorded"])
         if proposal["action"] == "PREPARE_PAYMENT" and not eligible:
             gate_reasons.append("PAYMENT_NOT_ELIGIBLE")
+        if proposal["action"] == "PREPARE_PAYMENT" and self.service.durable.mode == "FIRESTORE_TRANSACTIONAL" and (
+                not self.service.durable.get("mandates", tenant, "current")
+                or not self.service.durable.get("accounts", tenant, "current")):
+            gate_reasons.append("SANDBOX_SETUP_REQUIRED")
         state = "HOLD" if gate_reasons else {
             "PREPARE_PAYMENT": "READY_FOR_CONFIRMATION", "PREPARE_VERIFICATION": "PREPARED_MESSAGE",
             "EXPLAIN": "GUIDANCE_ONLY"}[proposal["action"]]
@@ -104,7 +109,7 @@ class FridayTaskService:
             "created_at": created.isoformat(), "expires_at": (created + timedelta(minutes=10)).isoformat(),
             "state": state, "proposal": proposal, "gate_reasons": gate_reasons,
             "bill": bill, "related_evidence_sha256": sha256_hex(related),
-            "mandate_sha256": sha256_hex(self.service.mandate(tenant)["mandate"]),
+            "mandate_sha256": sha256_hex(rules),
             "provenance": answer["provenance"], "coverage": {
                 "provider_records_sent": min(20, len(workspace["bills"])),
                 "review_cases_sent": min(10, len(board["cases"])),

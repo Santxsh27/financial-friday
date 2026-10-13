@@ -81,7 +81,7 @@ def main():
         replay=call('/v1/friday/runs/'+first['run']['run_id'])
         assert replay['assurance']['state']=='VERIFIED',json.dumps(replay['assurance'])
         second=call('/v1/friday/tasks/'+task['task_id']+'/confirm',body)
-        assert second['run']['status'] in {'ALREADY_COMPLETED','RECONCILED_COMPLETED'}
+        assert second.get('read_only_replay') is True or second['run']['status'] in {'ALREADY_COMPLETED','RECONCILED_COMPLETED'}
         assert call('/v1/friday/mandate')['sandbox_balance_minor']==balance-10000
         result.update(artificial_payment_executed=True,repeated_confirmation_one_debit=True,
             independent_replay='VERIFIED',run_id=first['run']['run_id'])

@@ -160,6 +160,12 @@ class FridayTaskService:
         record=self._record(tenant,identity)
         if not confirmation.confirm_sandbox_execution or sha256_hex(record["payload"])!=confirmation.expected_task_sha256:
             raise ValueError("Explicit confirmation of the displayed task is required")
+        prior=self.executions.get(tenant,identity)
+        if prior.get('state')=='COMPLETED' and prior.get('run_id'):
+            stored=self.service.get(tenant,prior['run_id'])
+            if stored.get('assurance',{}).get('state')=='VERIFIED':
+                return {'run':stored,'signal':None,'read_only_replay':True,'money_moved':False}
+            raise ValueError('Stored outcome could not be independently verified. No retry was submitted.')
         lease=self.executions.claim(tenant,identity,confirmation.expected_task_sha256)
         try:
             result=self._confirm_now(tenant,identity,confirmation)

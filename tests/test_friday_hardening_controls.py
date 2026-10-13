@@ -30,6 +30,10 @@ class TaskLifecycleTests(unittest.TestCase):
         recovered=self.base.tasks.reconcile('one',task['task_id'])
         self.assertEqual(recovered['state'],'RECORDED_PAYMENT_VERIFIED')
         self.assertFalse(recovered['new_payment_created'])
+        with patch.object(self.base.service.planner,'interpret_signal',side_effect=AssertionError('No AI needed for completed replay')):
+            repeated=self.base.confirm(task)
+        self.assertTrue(repeated.json()['read_only_replay'])
+        self.assertFalse(repeated.json()['money_moved'])
 
     def test_active_lease_and_expired_lease_are_not_success(self):
         task=self.base.prepare().json()

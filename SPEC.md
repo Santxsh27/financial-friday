@@ -69,7 +69,7 @@ review never use it to create an executable task.
 
 ### D. Evidence-bound AI task preparation
 
-Explicit workspace consent + free-text request -> Gemini typed task selection and
+Free-text request + optional explicit workspace consent -> Gemini typed task selection and
 quoted semantic-risk findings -> independent related-claim/provider/reserve checks
 -> signed ten-minute task -> exact customer confirmation -> existing restricted
 executor -> signed outcome and independent replay.
@@ -81,7 +81,10 @@ verbatim quotation from an available source. These are potential risk indication
 not authenticated fraud verdicts or calibrated probabilities. Model misses and
 false warnings remain possible; no fraud classifier has been trained.
 
-Preparation never calls execution intake, even if automatic authority is enabled.
+Without workspace consent, only the current request is sent; no saved financial
+records are read and no provider bill can be selected for payment. Risk checks
+and unsent verification messages still work. Preparation never calls execution
+intake, even if automatic authority is enabled.
 A task binds tenant, canonical artificial bill, related claim snapshot and rule
 digest. Confirmation checks signature, digest, expiry, tenant and fresh evidence;
 the existing executor rechecks provider/rules and enforces atomic idempotency.

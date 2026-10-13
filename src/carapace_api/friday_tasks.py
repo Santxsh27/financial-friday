@@ -70,20 +70,19 @@ class FridayTaskService:
         return self._public(self._record(tenant, identity))
 
     def prepare(self, tenant, request: TaskRequest):
-        if not request.include_workspace:
-            raise ValueError("Allow Friday to read your saved financial evidence before preparing a task.")
-        workspace = financial_workspace(self.service, tenant)
-        rules = self.service.mandate(tenant)["mandate"]
-        board = self.reviews.board(tenant)
+        workspace = financial_workspace(self.service, tenant) if request.include_workspace else None
+        rules = self.service.mandate(tenant)["mandate"] if request.include_workspace else None
+        board = self.reviews.board(tenant) if request.include_workspace else {"cases": [], "documents": []}
+        bills = workspace["bills"] if workspace else []
         sources = [{"source_id": "request", "source_text": request.message}]
-        for bill in workspace["bills"][:20]:
+        for bill in bills[:20]:
             sources.append({"source_id": "bill:" + bill["bill_reference"],
                             "source_text": json.dumps(bill, ensure_ascii=False)})
         for case in board["cases"][:10]:
             sources.append({"source_id": case["case_id"], "source_text": json.dumps(case, ensure_ascii=False)})
         answer = propose_task(self.service.planner, request, sources)
         proposal = answer["proposal"]
-        bill = next((b for b in workspace["bills"][:20] if b["bill_reference"] == proposal["bill_reference"]), None)
+        bill = next((b for b in bills[:20] if b["bill_reference"] == proposal["bill_reference"]), None)
         if proposal["bill_reference"] and bill is None:
             raise ValueError("AI selected a bill unavailable in this workspace. No action was performed.")
         related = _related(board, proposal["bill_reference"])
@@ -92,7 +91,7 @@ class FridayTaskService:
             gate_reasons.append("SEMANTIC_RISK_REVIEW")
         gate_reasons.extend(claim_gate_reasons(related, bill))
         from carapace_core.friday_bill_plan import plan_bills
-        plan = plan_bills(workspace)
+        plan = plan_bills(workspace) if workspace else {"state":"NO_WORKSPACE", "selected":[], "already_recorded":[]}
         eligible = plan["state"] == "PLANNED" and bill and any(
             row["bill_reference"] == bill["bill_reference"] for row in plan["selected"] + plan["already_recorded"])
         if proposal["action"] == "PREPARE_PAYMENT" and not eligible:
@@ -111,7 +110,8 @@ class FridayTaskService:
             "bill": bill, "related_evidence_sha256": sha256_hex(related),
             "mandate_sha256": sha256_hex(rules),
             "provenance": answer["provenance"], "coverage": {
-                "provider_records_sent": min(20, len(workspace["bills"])),
+                "workspace_included": request.include_workspace,
+                "provider_records_sent": min(20, len(bills)),
                 "review_cases_sent": min(10, len(board["cases"])),
                 "related_cases_checked": len(related["cases"]),
                 "limits": "Latest 50 reviewed documents; not a complete bank history. No account ownership verification."}}

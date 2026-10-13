@@ -71,7 +71,7 @@ class CloudWebTests(unittest.TestCase):
             json={"expected_task_sha256":"a"*64,"confirm_sandbox_execution":True}).status_code,200)
         untrusted=dict(self.headers,Origin='https://evil.example')
         self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/confirm',headers=untrusted,json={}).status_code,403)
-        self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/override',headers=self.headers,json={}).status_code,403)
+        self.assertEqual(self.client.post('/api/friday/tasks/'+task+'/override',headers=self.headers,json={}).status_code,404)
 
     def test_permitted_json_forwarded_once(self):
         response = self.client.post("/api/friday/live-input", headers=self.headers, json={"content_text": "new bill"})

@@ -2,8 +2,10 @@
 
 ## New: ask Friday to prepare a task
 
-On Overview, tick **Include my recent financial inbox and artificial bills**.
-Enter your own request and choose **Prepare next step** (not Ask Friday).
+On Overview, enter your own request and choose **Prepare next step** (not Ask Friday).
+Leave saved-workspace consent off for a request-only risk check or verification
+message. Tick **Include my recent financial inbox and artificial bills** only
+when your task needs those records or an artificial payment.
 For example: `Prepare a verification message about the changed recipient in my
 financial inbox. Do not pay.` Friday uses live Gemini, validates quoted risks,
 and opens a separate task page. A message is **not sent** automatically.

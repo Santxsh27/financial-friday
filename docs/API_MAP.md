@@ -36,7 +36,7 @@ path/string is an uploaded image. Read each schema before sending a request.
 
 | Method and path | Authority |
 | --- | --- |
-| POST `/v1/friday/tasks` | `message`, strict `include_workspace:true`; live Gemini prepares a signed task and quoted risk findings. Never pays. |
+| POST `/v1/friday/tasks` | `message`, optional strict `include_workspace`; live Gemini prepares a signed task and quoted risk findings. Saved-record payment tasks require consent. Never pays during preparation. |
 | GET `/v1/friday/tasks/{task_id}` | Tenant-scoped signed draft readback; expired tasks remain non-executable. |
 | POST `/v1/friday/tasks/{task_id}/confirm` | Exact `expected_task_sha256` and strict `confirm_sandbox_execution:true`; rechecks and calls the existing artificial-money executor. A HOLD cannot be overridden. |
 

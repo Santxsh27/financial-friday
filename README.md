@@ -95,7 +95,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 Current native verification, 13 October 2026; previous container/live baseline
 remains dated separately until the new release checks complete:
 
-- Native: 382 tests ran; 381 passed and one optional integration was skipped.
+- Native: 384 tests ran; 383 passed and one optional integration was skipped.
 - Previous Docker baseline: 364 ran; 346 passed and eighteen optional checks were skipped.
 - Eleven offline tooling tests passed.
 - Live checks confirmed Vertex replies, opt-in context, valid citations, unchanged

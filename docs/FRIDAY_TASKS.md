@@ -21,7 +21,8 @@ payment executor. It is not a newly trained fraud model or bank integration.
 
 ## User flow
 
-1. Start on Overview. Grant optional saved-workspace context.
+1. Start on Overview. Leave workspace consent off for a new message-only risk
+   check; grant it only when your task needs saved records or an artificial bill.
 2. Enter a request and choose **Prepare next step**.
 3. Review the separate task page: exact bill fields, risk quotations, gate reasons
    and any unsent verification message.
@@ -45,7 +46,7 @@ the existing Gemini interpreter/planner proposes the restricted financial progra
 The independent verifier—not Gemini—checks identities, fields, ordering, reserve,
 permission and idempotency. No arbitrary new tool can be generated.
 
-Each risk quotation must occur in its supplied source; this proves provenance,
+Each risk quotation must occur in its supplied, best-effort redacted source; this proves provenance,
 not that the model's interpretation is correct. All uploaded financial claims
 remain unverified externally. No fake numeric confidence or calibrated fraud
 accuracy is displayed. Fixed semantic categories do not constitute a trained ML
@@ -56,6 +57,8 @@ held-out evaluation, including false positives.
 
 - Context: twenty provider bills and ten reconciled cases; gate: latest fifty
   reviewed inputs with exact invoice identity. Coverage is visible.
+  With workspace consent off, neither provider bills nor review records are read;
+  only the current request is supplied to Gemini and payment preparation is unavailable.
 - Review evidence and posting are separate bounded snapshots, not one transaction.
   A new claim arriving during final execution may not be included. Financial
   idempotency/balance/rule gates retain their existing atomic transaction boundary.

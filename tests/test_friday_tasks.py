@@ -81,7 +81,8 @@ class FridayTaskTests(unittest.TestCase):
 
     def test_explicit_consent_auth_and_strict_confirmation(self):
         self.assertEqual(self.prepare(include_workspace=False).status_code, 409)
-        self.model.models.generate_content.assert_not_called()
+        content=json.loads(self.model.models.generate_content.call_args.kwargs["contents"])
+        self.assertEqual(len(content["sources"]),1)
         self.assertEqual(self.prepare(include_workspace="true").status_code, 422)
         self.assertEqual(self.client.post("/v1/friday/tasks",json={"message":"Please help"}).status_code,401)
         task = self.prepare().json()
@@ -187,6 +188,17 @@ class FridayTaskTests(unittest.TestCase):
         self.assertEqual(self.prepare().status_code,503)
         self.assertEqual(self.service.daily_brief("one")["recent_runs"],[])
 
+    def test_request_only_risk_draft_does_not_read_workspace(self):
+        self.answer(action="PREPARE_VERIFICATION",bill_reference=None,evidence_ids=["request"],
+            verification_message="Please confirm this refund through the official channel.")
+        with patch.object(self.app.state.friday_reviews,"board",side_effect=AssertionError("no consent")), \
+             patch("carapace_api.friday_tasks.financial_workspace",side_effect=AssertionError("no consent")):
+            task=self.prepare(message="Check a refund request; do not pay",include_workspace=False).json()
+        self.assertEqual(task["state"],"PREPARED_MESSAGE")
+        self.assertFalse(task["coverage"]["workspace_included"])
+        self.assertIsNone(task["bill"])
+        self.assertEqual(self.confirm(task).status_code,409)
+
     def test_existing_executor_moves_one_artificial_debit_on_repeated_confirmation(self):
         task = self.prepare().json()
         self.service.planner=LocalFinancialFridayPlanner()
@@ -242,7 +254,9 @@ class FridayTaskTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.tasks.get("one",task["task_id"])
 
     def test_secrets_and_raw_request_are_not_saved_in_task(self):
-        self.answer(explanation="Never share OTP is 765432.")
+        self.answer(explanation="Never share OTP is 765432.", findings=[{
+            "kind":"SECRET_REQUEST", "source_id":"request", "quote":"[REDACTED_PIN]",
+            "reason":"A payment secret was present; do not share it."}])
         result=self.prepare(message="Prepare BILL-1234. My UPI PIN is 1234.")
         self.assertEqual(result.status_code,200,result.text)
         self.assertNotIn("765432",result.text)

@@ -59,9 +59,10 @@ def main():
     assert task['state']=='READY_FOR_CONFIRMATION',json.dumps(task)
     assert not task['money_moved'] and not task['payment_authorized']
     assert call('/v1/friday/tasks/'+task['task_id'])['task_sha256']==task['task_sha256']
-    held=call('/v1/friday/tasks',{'message':f'I was told to RECEIVE a refund for {ref}, but the sender says I must PAY this bill first to get the refund. Prepare a verification message instead of paying.','include_workspace':True})
+    held=call('/v1/friday/tasks',{'message':f'I was told to RECEIVE a refund for {ref}, but the sender says I must PAY this bill first to get the refund. Prepare a verification message instead of paying.','include_workspace':False})
     assert held['state']=='HOLD' and held['proposal']['findings'],json.dumps(held)
     assert 'SEMANTIC_RISK_REVIEW' in held['gate_reasons']
+    assert not held['coverage']['workspace_included']
     assert call('/v1/friday/mandate')['sandbox_balance_minor']==balance
     result={'live_vertex_task':True,'semantic_refund_contradiction_held':True,
         'firestore_signed_task_readback':True,'preparation_balance_unchanged':True,

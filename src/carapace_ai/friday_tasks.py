@@ -46,7 +46,10 @@ claims are NOT bank settlement. Never invent a bank connection or account owners
 PREPARE_PAYMENT selects only an exact artificial provider bill reference present
 in the workspace and requested by the user. Never derive a payable bill from an
 uploaded receipt or pick a substitute recipient. If ambiguous, EXPLAIN and ask a
-specific clarification. Any risk/conflicting evidence means PREPARE_VERIFICATION.
+specific clarification. If no provider bill was supplied, leave bill_reference
+null, even if a reference was mentioned in the user's message. You can still assess
+the request and prepare a verification message without reading any saved workspace.
+Any risk/conflicting evidence means PREPARE_VERIFICATION.
 For verification prepare a short useful UNSENT message with known details or explicit
 placeholders. Do not claim it was sent or funds recovered. No stock recommendations,
 market feeds, complaints submission, production code changes or external payments.
@@ -66,7 +69,7 @@ def propose_task(planner, request: TaskRequest, sources: list[dict]) -> dict:
             response_mime_type="application/json",
             response_json_schema=generation_schema(TaskProposal.model_json_schema())))
     proposal = TaskProposal.model_validate_json(response.text or "")
-    available = {source["source_id"]: source["source_text"] for source in sources}
+    available = {source["source_id"]: redact_for_model(source["source_text"]).text for source in sources}
     if any(identity not in available for identity in proposal.evidence_ids):
         raise ValueError("Unavailable evidence citation")
     for finding in proposal.findings:

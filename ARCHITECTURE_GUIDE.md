@@ -6,7 +6,7 @@ Read the trust boundaries before using execution-capable APIs.
 Do not describe every historical CARAPACE idea as part of today's product. This
 repository evolved substantially; current documents take precedence over old pitches.
 
-## 2. Links and what to read
+## 1. Links and what to read
 
 - Repository: <https://github.com/Santxsh27/financial-friday>
 - Live app: <https://financial-friday-web-171681243260.asia-south1.run.app/#home>
@@ -22,7 +22,7 @@ the owner's records are not the visitor's starting data. Some managed accounts
 may be blocked by their organisation. A second real-human access test remains a
 team acceptance task; do not claim all possible accounts were tested.
 
-## 3. Why Google AI, and what the competition actually asks
+## 2. Why Google AI, and what the competition actually asks
 
 The chosen theme concerns financial risk, fraud, useful financial experiences and
 process automation. Friday addresses evidence discrepancies, safer delegation,
@@ -50,7 +50,7 @@ PDF, English materials and a public approximately three-minute demo video link.
 The dashboard is the authority for its precise fields. Selection, awards and
 patentability cannot be guaranteed by a specification or test count.
 
-## 4. Product scope: three different trust levels
+## 3. Product scope: three different trust levels
 
 | Level | Evidence | Permitted outcome |
 | --- | --- | --- |
@@ -63,7 +63,7 @@ false. The same-operator test provider is more structured than uploaded text,
 yet is not an independently authenticated utility or bank. Never merge these
 levels silently.
 
-## 5. Complete architecture
+## 4. Complete architecture
 
 ```text
 Google user
@@ -103,7 +103,7 @@ deployment. Gemini requests use the configured `global` model location; do not
 claim every data-processing operation stays in India. We are India-oriented in
 currency/examples, not certified as legally compliant in every financial setting.
 
-## 6. Workflow A — useful chat without records
+## 5. Workflow A — useful chat without records
 
 1. User clicks **Understand a charge**. Only the question field changes.
 2. **Ask Friday** calls the web proxy, then `POST /v1/friday/chat`.
@@ -125,7 +125,7 @@ Limits: 1,600-character messages/replies, schema-validated output, one generatio
 per chat request. Recognisable secret patterns are scrubbed best-effort, not full DLP.
 No current-news browsing, stock feed, trading recommendation or continuous monitoring.
 
-## 7. Workflow B — bill, receipt and discrepancy review
+## 6. Workflow B — bill, receipt and discrepancy review
 
 1. User loads editable example text or explicitly uploads a redacted document.
 2. Text review uses `/v1/friday/reviews`; files use `/reviews/documents`.
@@ -158,7 +158,7 @@ INR rows below 1 MB, parses claims deterministically and does not call Gemini.
 Spending analysis is a distinct read-only flow; use its coverage limits rather
 than assuming it represents all the customer's money.
 
-## 8. Workflow C — bounded artificial-money execution
+## 7. Workflow C — bounded artificial-money execution
 
 1. An operator/user publishes a fresh test-provider bill with a reference, payee,
    amount and date. Its record is not an actual utility balance.
@@ -184,7 +184,7 @@ an intake path that may automatically execute merely to create a conversational
 draft. The new task preparation path respects this constraint; only its explicit
 confirmation endpoint can enter the existing executor. See [FRIDAY_TASKS](docs/FRIDAY_TASKS.md).
 
-## 9. Algorithms and what the “security” actually is
+## 8. Algorithms and what the “security” actually is
 
 - **Restricted program language:** normal payment order is
   `VERIFY_PROVIDER -> LOAD_OBLIGATION -> CREATE_ONE_TIME_PAYMENT -> CONFIRM_RESULT`.
@@ -211,7 +211,7 @@ The implementation combination is our differentiator. Schemas, signatures,
 dynamic programming, idempotency and AI-plus-checker designs are known techniques.
 World-first novelty or patent approval requires evidence we do not currently have.
 
-## 10. Storage, identity and deployment
+## 9. Storage, identity and deployment
 
 Cloud state is `FIRESTORE_TRANSACTIONAL`, local state `SQLITE_LOCAL`. Firestore
 collections under each tenant store mandates, accounts, provider bills, signals,
@@ -230,8 +230,8 @@ Public visitor quotas: 20 write/action requests per user/day and 200 globally;
 admitted requests, not dollars or model tokens; failed downstream calls still use
 admission. UTC daily reset is 5:30 AM India time. Budget alerts do not stop billing.
 
-Verified deployed code `719c7bb`: API `financial-friday-api-cleandraft1012`, web
-`financial-friday-web-cleantheme1012`, each at 100% traffic in the last recorded
+Verified deployed code `a248997`: API `financial-friday-api-tasksfinal1013`, web
+`financial-friday-web-tasksfinal1013`, each at 100% traffic in the last recorded
 release. Later docs/CI commits do not change those images. Local/cloud state is
 separate. Do not copy owner credentials, private data or local SQLite into a pilot.
 
@@ -239,7 +239,7 @@ No auto-deployment from GitHub is configured by this handover. Cloud builds and
 revision promotion are deliberate steps; preserve IAM, origin restrictions,
 secrets and rollback revisions. Finite trial credits are not free hosting forever.
 
-## 11. Implementation status and limitations
+## 10. Implementation status and limitations
 
 | Area | Status |
 | --- | --- |
@@ -263,12 +263,14 @@ supported, every fault repaired, production autonomous patching or legal complia
 Protecting signing keys, external provider authentication, account deletion/retention,
 operational resilience and regulatory review remain production concerns.
 
-## 12. Verification and what it proves
+## 11. Verification and what it proves
 
-Last source baseline: 364 native application tests (363 pass/one optional skip),
-364 Docker tests (346 pass/eighteen skips), eleven tooling tests. Live checks used
-synthetic data and verified Vertex responses, context/citations, no executed
-actions and unchanged test balance. Browser evidence is recorded in feature docs.
+Current task release: 384 native tests (383 pass/one skip), 384 Docker tests
+(366 pass/eighteen skips), twelve tooling tests. Live tests used a fresh synthetic
+visitor with saved artificial rules: Vertex prepared a task, held a refund
+contradiction, moved artificial funds only after confirmation, prevented a second
+debit and independently verified the outcome. See the
+[release record](docs/FRIDAY_TASK_RELEASE_1013.md).
 
 Tests include auth/tenant isolation, schemas, currency/arithmetic, tampered evidence,
 reserve/permissions, concurrency/idempotency, signatures, replay, model outages,
@@ -282,7 +284,7 @@ standalone page check and makes that historical fixture manually selectable.
 Check [Actions](https://github.com/Santxsh27/financial-friday/actions) for the actual
 new run result rather than inferring a remote pass from local tests.
 
-## 13. Engineering priorities and acceptance criteria
+## 12. Engineering priorities and acceptance criteria
 
 **Implemented task milestone:** a prepare-only conversation tool creates
 an expiring tenant-bound task from an exact provider record and reviewed digest;
@@ -298,7 +300,7 @@ Do not pivot the idea or add extra services merely to make the diagram larger.
 Use a branch and reviewed changes in this repository. Never share cloud secrets
 or grant owner-level access merely to review the application.
 
-## 14. File map for a developer
+## 13. File map for a developer
 
 | Responsibility | Main source |
 | --- | --- |

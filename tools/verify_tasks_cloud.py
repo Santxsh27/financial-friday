@@ -13,6 +13,12 @@ from uuid import uuid4
 from carapace_core.friday_access import visitor_key, visitor_tenant
 
 
+def api_request(origin, path, headers, body=None, method=None):
+    data=json.dumps(body).encode() if body is not None else None
+    return Request(origin+path,data=data,headers=headers,
+                   method=method or ('POST' if body is not None else 'GET'))
+
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--url',required=True);parser.add_argument('--project',required=True)
@@ -30,7 +36,7 @@ def main():
         'X-Carapace-API-Key':visitor_key(secret,tenant),'Content-Type':'application/json'}
     context=ssl.create_default_context(cafile=args.ca_file)
     bucket, writes = int(time.time()//60), 0
-    def call(path,body=None):
+    def call(path,body=None,method=None):
         nonlocal bucket, writes
         current = int(time.time()//60)
         if current != bucket:
@@ -42,14 +48,13 @@ def main():
             bucket, writes = int(time.time()//60), 0
         if body is not None:
             writes += 1
-        data=json.dumps(body).encode() if body is not None else None
-        with urlopen(Request(args.url+path,data=data,headers=headers),context=context,timeout=180) as response:
+        with urlopen(api_request(args.url,path,headers,body,method),context=context,timeout=180) as response:
             return json.load(response)
     initial=call('/v1/friday/mandate')
     balance=initial['sandbox_balance_minor']
     # Persist explicit artificial rules/account before asking for an executable
     # task. Never enable standing automatic execution in this live test.
-    call('/v1/friday/mandate',initial['mandate'] | {'automatic_sandbox_execution':False})
+    call('/v1/friday/mandate',initial['mandate'] | {'automatic_sandbox_execution':False},method='PUT')
     ref='TASK-'+uuid4().hex[:8].upper()
     call('/v1/friday/test-provider/bills',{'bill_reference':ref,'provider_name':'Friday Test Electricity',
         'provider_id':'friday-test-electricity','payee_id':'example-electricity@upi',

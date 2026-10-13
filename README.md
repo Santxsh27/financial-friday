@@ -92,14 +92,14 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Current native verification, 13 October 2026; previous container/live baseline
-remains dated separately until the new release checks complete:
+Verified task release, 13 October 2026:
 
 - Native: 384 tests ran; 383 passed and one optional integration was skipped.
-- Previous Docker baseline: 364 ran; 346 passed and eighteen optional checks were skipped.
-- Eleven offline tooling tests passed.
-- Live checks confirmed Vertex replies, opt-in context, valid citations, unchanged
-  synthetic test balance and no executed actions.
+- Docker: 384 ran; 366 passed and eighteen optional checks were skipped.
+- Twelve offline tooling tests passed.
+- Live Vertex/Firestore checks confirmed quoted refund-risk holds, signed task
+  readback, unchanged balance during preparation, one confirmed artificial payment,
+  no second debit on repeated confirmation and independently verified replay.
 - Browser checks covered bill/receipt claims, changed recipients, guided starts,
   compact chat and readable light/dark starting cards.
 
@@ -116,10 +116,10 @@ fixture is an explicit manual option, not a customer-product requirement.
 See [GitHub Actions](https://github.com/Santxsh27/financial-friday/actions) for the
 actual current run status; local passes do not imply a remote CI pass.
 
-Deployed source: `719c7bb`; API `financial-friday-api-cleandraft1012`, web
-`financial-friday-web-cleantheme1012`. Later documentation/CI commits do not
+Deployed source: `a248997`; API `financial-friday-api-tasksfinal1013`, web
+`financial-friday-web-tasksfinal1013`. Later documentation/tooling commits do not
 redeploy the application. Digests and live checks are in
-[FRIDAY_CHAT_AND_BANK.md](docs/FRIDAY_CHAT_AND_BANK.md). Tests do not establish
+[the task release record](docs/FRIDAY_TASK_RELEASE_1013.md). Tests do not establish
 fraud accuracy, production-bank certification, patentability or a winning guarantee.
 
 ## Hackathon alignment

@@ -12,6 +12,15 @@ wallets, utility accounts, Gmail and SMS are not connected.
 
 ## First tour: no payment required
 
+New live task flow: enter `Someone says I must PAY INR 100 first to RECEIVE a
+refund. Prepare a verification message, not a payment.` on Overview and choose
+**Prepare next step**. Leave workspace consent off. Expect a quoted risk indication,
+hold and unsent message; no money moves. Try your own wording too. Gemini can miss
+risks or raise false warnings, so this is not a bank-backed fraud guarantee.
+For exact artificial-bill execution, save My rules, publish a fresh test-provider
+bill, grant saved-workspace consent, prepare it, then explicitly confirm eligible
+details. See [the task guide](docs/FRIDAY_TASKS.md).
+
 1. Open [the live site](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
    and sign in with Google. A new visitor starts with a private workspace, not the
    owner's records or a real account.

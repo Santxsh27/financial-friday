@@ -79,6 +79,8 @@ provider/rules/evidence, expiry, tamper, repeat-confirmation idempotency, unavai
 models, cloud storage selection and safe rendering. These tests mock inference;
 they measure code behavior, not real-world fraud accuracy.
 
+Verified deployment and live results: [task release record](FRIDAY_TASK_RELEASE_1013.md).
+
 `tools/verify_tasks_cloud.py` separately tests real Vertex inference and Firestore
 in a fresh synthetic visitor workspace. Its optional explicit execution flag uses
 only artificial funds. Release evidence must distinguish mocked unit tests from

@@ -2,7 +2,8 @@
 
 Updated **13 October 2026**. This document replaces the mixed historical product
 specifications. Deployed package version remains `0.17.0`; verified runtime source
-is `719c7bb`. Documentation/CI updates are not a new deployment.
+is `a248997`, API/web revisions `tasksfinal1013`. Documentation/tooling updates
+after that source do not change the deployed runtime image.
 For the detailed rationale, algorithms and trust boundaries, read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md).
 
@@ -143,6 +144,7 @@ nor accounts for real external accounts, criticality or all personal-finance nee
 - Local: SQLite, `SQLITE_LOCAL`; cloud: tenant-scoped Firestore,
   `FIRESTORE_TRANSACTIONAL`.
 - State kinds: mandates, accounts, provider bills, signals, dynamic cases, runs,
+  signed assistant tasks,
   payments, idempotency and reviews.
 - New artificial balance ₹50,000; default reserve ₹10,000, automatic single-payment
   ceiling ₹5,000, zero fee, automatic execution disabled. Rules are not balance resets.
@@ -215,9 +217,12 @@ and privacy details. Home examples do not submit automatically. Theme, optional
 sound and motion preferences affect presentation only. Evidence states reflect
 actual results; insufficient information does not produce a universal safe badge.
 
-Recorded source baseline: 364 native tests (363 pass/one skip), 364 Docker tests
-(346 pass/eighteen skips), eleven tooling tests. Live Vertex and browser checks
-are recorded in feature/release docs. Current remote CI must be checked separately.
+Current task release: 384 native tests (383 pass/one skip), 384 Docker tests
+(366 pass/eighteen skips), twelve tooling tests. Live Vertex/Firestore verified
+preparation without debit, a quoted refund-risk hold, confirmed artificial payment,
+repeat-confirmation idempotency and independent replay. Details are in
+[the release record](docs/FRIDAY_TASK_RELEASE_1013.md). Remote CI for runtime source
+`a248997` passed; later documentation CI must be checked separately.
 Test passes do not measure fraud accuracy or certify every feature/device.
 
 ## 8. Priorities and non-goals

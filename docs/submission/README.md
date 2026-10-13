@@ -3,7 +3,7 @@
 Use this folder for the final demo script, evaluation results, slides and submission links. Current build status is in [Start Here](../../START_HERE.md), [README](../../README.md) and [SPEC](../../SPEC.md).
 
 **Current handover, 13 October:** read [the architecture guide](../../ARCHITECTURE_GUIDE.md)
-and [current release evidence](../FRIDAY_CHAT_AND_BANK.md) first. The default
+and [current release evidence](../FRIDAY_TASK_RELEASE_1013.md) first. The default
 customer journey is live chat and read-only claim review; artificial execution is
 separate. Earlier scripts/materials need review before being used as final artifacts.
 
@@ -22,6 +22,10 @@ and show an evidence discrepancy. Demonstrate the **separate** execution layer:
 save a sandbox instruction → supply a fresh test-provider bill → Gemini interprets
 it → independent checks enforce permission → one artificial payment → signed
 outcome/replay. Do not imply chat or an uploaded receipt paid through a real bank.
+The connected **Prepare next step** workflow now uses live Gemini risk analysis,
+an expiring evidence-bound task, explicit confirmation and the same execution
+gate. A request-only risk check needs no saved-record access. See the task release
+record for actual live results; do not present these few probes as fraud accuracy.
 
 Official [requirements](https://aibuildercup.com/themes.html) specify a working
 Google-AI/cloud prototype, proposal deck/PDF and public short demo-video link.

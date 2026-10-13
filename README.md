@@ -128,10 +128,12 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 Verified task release, 13 October 2026:
 
-- The preceding hardening release ran 405 native tests (404 passed, one optional
-  skip) and 405 Docker tests (386 passed, nineteen optional skips).
-- The obligation update adds seventeen outcome/identity/consent regression tests;
-  final release counts and live checks are recorded in the deployment manifest.
+- Native: 422 tests ran; 421 passed, one optional skip.
+- Docker: 422 tests ran; 403 passed, nineteen optional skips.
+- The obligation update adds seventeen outcome/identity/consent regression tests.
+  Live Vertex/Firestore additionally extracted a newly generated synthetic bill,
+  bound the selected obligation and verified its transition to a recorded outcome.
+  This is end-to-end acceptance evidence, not independent fraud-accuracy validation.
 - Fifteen offline tooling tests passed.
 - Live Vertex/Firestore checks confirmed quoted refund-risk holds, signed task
   readback, unchanged balance during preparation, one confirmed artificial payment,

@@ -77,3 +77,22 @@ reconciliation and synthetic draft cleanup preserving the receipt all passed.
 The Developer API paired-risk smoke comparison was stopped after repeated server
 errors; no independent accuracy number is available. Runtime identities are in
 [CURRENT_RELEASE](CURRENT_RELEASE.json).
+
+## Outcome-focused follow-up, 13 October
+
+The obligation inbox now joins complete bounded document claims, exact artificial
+supplier/reference provider matches, reserve/limit planning and journal outcomes.
+Selected Gemini preparation includes relevant facts and saved rules, binds the
+evidence version, and rejects bill substitution or excessive document context
+before execution (oversized context is refused before a model call).
+
+Seventeen new regression tests cover those boundaries. Native 422 ran (421 passed,
+one skip), Docker 422 ran (403 passed, nineteen skips), and fifteen tooling checks
+passed. A new synthetic bill was extracted live with Vertex AI, prepared as an
+exact selected obligation, executed once and read back as recorded complete.
+Read-only recorded-outcome lookup creates no new payment and calls no Gemini.
+The source is `f1966f7`; GitHub CI passed for that commit.
+
+Contradictions are not fraud verdicts. Missing providers lead to verification
+assistance; uploaded receipts remain claims. Customer impact, adoption, real-bank
+settlement and independent model-quality validation still require outside evidence.

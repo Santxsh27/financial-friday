@@ -4,7 +4,7 @@
 
 On Overview, enter your own request and choose **Prepare next step** (not Ask Friday).
 Leave saved-workspace consent off for a request-only risk check or verification
-message. Tick **Include my recent financial inbox and artificial bills** only
+message. Tick **Include my saved inbox and artificial bills** only
 when your task needs those records or an artificial payment.
 For example: `Prepare a verification message about the changed recipient in my
 financial inbox. Do not pay.` Friday uses live Gemini, validates quoted risks,
@@ -15,7 +15,7 @@ artificial-money limits, with automatic execution off. This creates only a test
 account, not a bank connection. Then create an artificial provider bill through the existing
 Bills test-provider setup. Then request `Prepare a one-time artificial payment
 for BILL-1234` using your actual reference. Review the exact amount and recipient.
-Only a **Ready for your confirmation** task offers **Confirm artificial payment**.
+Only a **Prepared · not paid** task offers **Confirm artificial payment**.
 It rechecks saved evidence and rules, executes through the existing safety engine,
 and opens the signed result. A HOLD cannot be clicked through. Tasks expire after
 ten minutes; changed evidence or rules require a new task.
@@ -25,6 +25,14 @@ to RECEIVE a refund. Prepare a verification message.` Expect quoted risk evidenc
 and a hold, not a fraud guarantee. Gemini can miss risks or over-warn. No real-bank
 payment, refund, account freeze, stock trade or production-code repair is supported.
 See [the full task guide](docs/FRIDAY_TASKS.md).
+
+The two assistant buttons sit together: **Ask Friday** returns an answer in the
+conversation; **Prepare next step** opens a separate result. Its **Why Friday
+paused**, **A message you can use** and **What happens next** sections explain the
+outcome. **Copy verification message** copies a draft only; nothing is sent.
+Open **How this was checked · evidence & limits** for model and context details.
+Blue is working/prepared, amber is review/expired, red is held/conflicting, and
+green is reserved for verified artificial-payment results—not document authenticity.
 
 This guide explains what to click, what to enter, what Financial Friday does, and
 what result to expect. Start with the read-only tour, then try an artificial-money
@@ -38,7 +46,7 @@ Firestore stores cloud rules, records and receipts, while local Docker uses SQLi
 Exact code—not Gemini—calculates rupee totals and the reserve-aware bill plan.
 
 Updated for the current handover on October 13, 2026. Start with
-[TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md) for the technical explanation.
+[ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) for the technical explanation.
 Records, balances, wording
 and AI responses can vary. A stopped or unverified task can be the correct result.
 

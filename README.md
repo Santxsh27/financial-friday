@@ -17,6 +17,20 @@ or an unrestricted agent controlling real accounts.
 
 [Open the live Google-sign-in demo](https://financial-friday-web-171681243260.asia-south1.run.app/#home).
 
+## Using the interface
+
+Start on **Overview**. **Ask Friday** gives a read-only answer; **Prepare next
+step** opens a checked task or unsent verification draft. Neither prepares a
+payment automatically. Include saved workspace context only when you want those
+records used. **Documents** explains the upload/review/inbox flow, and the
+**Financial inbox** separates status, reference, claimed amount and next steps.
+
+Blue means working or prepared—not paid. Amber means incomplete or needing
+verification. Red means held/conflicting. Green is reserved for independently
+confirmed artificial-money outcomes. Status text accompanies colour. Light/dark
+themes, reduced motion, keyboard focus and phone-width navigation are supported.
+Detailed quotes, model provenance and limits remain available in expandable panels.
+
 ## Problem and implemented solution
 
 Bills, receipts and payment notices are difficult to reconcile. Giving an AI
@@ -94,14 +108,18 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 Verified task release, 13 October 2026:
 
-- Native: 384 tests ran; 383 passed and one optional integration was skipped.
-- Docker: 384 ran; 366 passed and eighteen optional checks were skipped.
+- Native: 388 tests ran; 387 passed and one optional integration was skipped.
+- Docker: 388 ran; 369 passed and nineteen optional checks were skipped.
 - Twelve offline tooling tests passed.
 - Live Vertex/Firestore checks confirmed quoted refund-risk holds, signed task
   readback, unchanged balance during preparation, one confirmed artificial payment,
   no second debit on repeated confirmation and independently verified replay.
 - Browser checks covered bill/receipt claims, changed recipients, guided starts,
   compact chat and readable light/dark starting cards.
+- The October 13 clarity update additionally checks structured task outcomes,
+  unsent-draft copy feedback, expired/unknown status labels and request-only
+  coverage. All six primary pages were checked at 390px width without horizontal
+  page overflow; these checks are not a full accessibility certification.
 
 ```bash
 python3 -m venv .venv

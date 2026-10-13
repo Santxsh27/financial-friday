@@ -65,6 +65,8 @@ def review_facts(facts: ReviewedFinancialDocument) -> dict:
     quoted = {q.field for q in facts.quotes}
     if not {"supplier", "reference", "total"}.issubset(quoted):
         reasons.append("MISSING_CORE_EVIDENCE")
+    if data['payee'] and 'payee' not in quoted:
+        reasons.append('UNSUPPORTED_PAYEE_CLAIM')
     # A bare dollar sign cannot distinguish USD/AUD/SGD, even if the model guesses.
     if (data["currency_label"] or "").strip() in {"$", "dollars", "Dollar", "dollar"}:
         data["currency"] = "UNKNOWN"

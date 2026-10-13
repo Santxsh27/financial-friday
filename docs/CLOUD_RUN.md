@@ -2,8 +2,8 @@
 
 ## Current release — 13 October 2026
 
-Current deployed package is `0.17.0`, source `a248997`: API
-`financial-friday-api-tasksfinal1013`, web `financial-friday-web-tasksfinal1013`.
+Current code package is `0.18.0`; actual deployed revisions/source and digests are
+in [CURRENT_RELEASE](CURRENT_RELEASE.json), with [hardening notes](HARDENING_0180.md).
 The app has Google-sign-in visitor isolation, a private API, live Vertex chat and
 review, and transactional Firestore artificial-money state. It is not the
 owner-only deployment described in older entries below. Anthos is retired from

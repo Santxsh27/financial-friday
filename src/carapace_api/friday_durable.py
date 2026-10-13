@@ -7,9 +7,10 @@ from hashlib import sha256
 
 from carapace_core.friday_live import FridayMandate, TestProviderBill, bill_increase_requires_review, provider_bill_matches
 from carapace_core.friday_assurance import seal_friday_run
+from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy"}
 
 
 class FridayDurableState(Protocol):
@@ -73,6 +74,9 @@ class FirestoreFridayState:
 
     def put(self, kind: str, tenant: str, record_id: str, value: dict[str, Any]) -> None:
         self._validate(kind, tenant, record_id)
+        if kind=='reviews':
+            self.put_review(tenant,record_id,value)
+            return
         self._documents(kind, tenant).document(record_id).set(value)
 
     def get(self, kind: str, tenant: str, record_id: str) -> dict[str, Any] | None:
@@ -97,6 +101,112 @@ class FirestoreFridayState:
     def _atomic(self, callback):
         from google.cloud import firestore
         return firestore.transactional(callback)(self._client.transaction())
+
+    def put_review(self, tenant, record_id, record):
+        """Every admitted review write changes the epoch in the same transaction."""
+        self._validate("reviews", tenant, record_id)
+        review = self._documents("reviews", tenant).document(record_id)
+        version = self._documents("evidence_versions", tenant).document("current")
+        privacy=self._documents('privacy',tenant).document('current')
+        def commit(transaction):
+            old = review.get(transaction=transaction)
+            epoch = version.get(transaction=transaction)
+            policy=privacy.get(transaction=transaction)
+            generation=policy.to_dict().get('generation',0) if policy.exists else 0
+            if record.get('privacy_generation',generation)!=generation:
+                raise ValueError('Privacy cleanup occurred during analysis. Pending input was not saved.')
+            if old.exists:
+                return False
+            transaction.set(review, record)
+            transaction.set(version, {"epoch": (epoch.to_dict().get("epoch", 0) if epoch.exists else 0) + 1})
+            return True
+        return self._atomic(commit)
+
+    def save_privacy_policy(self,tenant,value):
+        self._validate('privacy',tenant,'current')
+        ref=self._documents('privacy',tenant).document('current')
+        def commit(transaction):
+            old=ref.get(transaction=transaction)
+            transaction.set(ref,{**value,'generation':old.to_dict().get('generation',0) if old.exists else 0})
+        self._atomic(commit)
+
+    def put_task(self,tenant,task_id,record):
+        self._validate('assistant_tasks',tenant,task_id)
+        ref=self._documents('assistant_tasks',tenant).document(task_id)
+        privacy=self._documents('privacy',tenant).document('current')
+        def commit(transaction):
+            old=privacy.get(transaction=transaction)
+            if record['payload'].get('privacy_generation',0)!=(old.to_dict().get('generation',0) if old.exists else 0):
+                raise ValueError('Privacy cleanup occurred during task preparation. The draft was not saved.')
+            transaction.set(ref,record)
+        self._atomic(commit)
+
+    def claim_task_execution(self, tenant, task_id, record, check):
+        self._validate("task_executions",tenant,task_id)
+        ref=self._documents("task_executions",tenant).document(task_id)
+        def commit(transaction):
+            old=ref.get(transaction=transaction)
+            check(old.to_dict() if old.exists else None)
+            transaction.set(ref,record)
+        self._atomic(commit)
+
+    def finish_task_execution(self, tenant, task_id, record):
+        self._validate("task_executions",tenant,task_id)
+        ref=self._documents("task_executions",tenant).document(task_id)
+        def commit(transaction):
+            old=ref.get(transaction=transaction)
+            if old.exists and old.to_dict()["payload"]["lease_id"]==record["payload"]["lease_id"]:
+                transaction.set(ref,record)
+        self._atomic(commit)
+
+    def delete_private_inputs(self, tenant, cutoff=None):
+        """Bounded batches: erase claims/drafts, never the payment journal."""
+        self._validate('privacy',tenant,'current')
+        privacy=self._documents('privacy',tenant).document('current')
+        version=self._documents('evidence_versions',tenant).document('current')
+        def barrier(transaction):
+            policy=privacy.get(transaction=transaction)
+            epoch=version.get(transaction=transaction)
+            from uuid import uuid4
+            transaction.set(privacy,{**(policy.to_dict() if policy.exists else {}),'generation':uuid4().hex})
+            transaction.set(version,{'epoch':(epoch.to_dict().get('epoch',0) if epoch.exists else 0)+1})
+        self._atomic(barrier)
+        counts={}
+        for kind,label in [('reviews','reviews'),('assistant_tasks','drafts')]:
+            self._validate(kind,tenant,'delete')
+            query=self._documents(kind,tenant)
+            if cutoff:
+                from google.cloud.firestore_v1.base_query import FieldFilter
+                query=query.where(filter=FieldFilter('created_at','<',cutoff))
+            total=0
+            for _ in range(25):
+                documents=list(query.limit(200).stream())
+                if not documents:break
+                version=self._documents('evidence_versions',tenant).document('current')
+                def commit(transaction):
+                    old=version.get(transaction=transaction)
+                    privacy=self._documents('privacy',tenant).document('current')
+                    policy=privacy.get(transaction=transaction)
+                    for snapshot in documents:transaction.delete(snapshot.reference)
+                    transaction.set(version,{'epoch':(old.to_dict().get('epoch',0) if old.exists else 0)+1})
+                    from uuid import uuid4
+                    transaction.set(privacy,{**(policy.to_dict() if policy.exists else {}),'generation':uuid4().hex})
+                self._atomic(commit)
+                total+=len(documents)
+            else:raise ValueError('Cleanup reached its bound. Repeat the explicit cleanup to finish; payment journal is untouched.')
+            counts[label]=total
+        return counts
+
+    def evidence_snapshot(self, tenant):
+        """Never silently replace financial memory with a recent activity window."""
+        self._validate("reviews", tenant, "snapshot")
+        for _ in range(2):
+            before = self.get("evidence_versions", tenant, "current") or {"epoch": 0}
+            records = [s.to_dict() for s in self._documents("reviews", tenant).limit(MAX_SAFETY_DOCUMENTS + 1).stream()]
+            after = self.get("evidence_versions", tenant, "current") or {"epoch": 0}
+            if before == after:
+                return {"version": str(before["epoch"]), "documents": expand_records(records), "complete": True}
+        raise ValueError("Financial evidence changed during reading. Prepare again.")
 
     def save_mandate(self, tenant: str, mandate: dict, now: str) -> None:
         self._validate("mandates", tenant, "current")
@@ -127,6 +237,7 @@ class FirestoreFridayState:
         mandate = self._documents("mandates", tenant).document("current")
         run = self._documents("runs", tenant).document(result["run_id"])
         bill = self._documents("provider_bills", tenant).document(live["authoritative_bill"]["bill_reference"]) if live else None
+        evidence_version = self._documents("evidence_versions", tenant).document("current")
 
         def commit(transaction):
             prior = payment.get(transaction=transaction)
@@ -134,6 +245,7 @@ class FirestoreFridayState:
             balance_record = account.get(transaction=transaction)
             mandate_record = mandate.get(transaction=transaction)
             bill_record = bill.get(transaction=transaction) if bill else None
+            epoch_record = evidence_version.get(transaction=transaction) if live else None
             output = deepcopy(result)
             reason = []
             balance = None
@@ -149,7 +261,10 @@ class FirestoreFridayState:
             elif prior_idem.exists:
                 reason = ["IDEMPOTENCY_CONFLICT"]
             elif live:
-                if not bill_record.exists or not provider_bill_matches(bill_record.to_dict(), live["authoritative_bill"]):
+                current_epoch = str(epoch_record.to_dict().get("epoch", 0) if epoch_record.exists else 0)
+                if live.get("safety_evidence_version") != current_epoch:
+                    reason = ["FINANCIAL_EVIDENCE_CHANGED"]
+                elif not bill_record.exists or not provider_bill_matches(bill_record.to_dict(), live["authoritative_bill"]):
                     reason = ["PROVIDER_CHANGED"]
                 elif not mandate_record.exists or not balance_record.exists:
                     reason = ["MANDATE_OR_ACCOUNT_MISSING"]

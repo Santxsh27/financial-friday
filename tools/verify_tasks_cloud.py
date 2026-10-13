@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--url',required=True);parser.add_argument('--project',required=True)
     parser.add_argument('--gcloud',default='gcloud');parser.add_argument('--ca-file')
     parser.add_argument('--execute-artificial-payment',action='store_true')
+    parser.add_argument('--check-hardening',action='store_true',help='Check lifecycle, journal-only reconciliation and deletion in this disposable synthetic workspace')
     args=parser.parse_args()
     if not args.url.startswith('https://') or not args.url.endswith('.run.app'):
         parser.error('Use the private Cloud Run API origin')
@@ -84,6 +85,20 @@ def main():
         assert call('/v1/friday/mandate')['sandbox_balance_minor']==balance-10000
         result.update(artificial_payment_executed=True,repeated_confirmation_one_debit=True,
             independent_replay='VERIFIED',run_id=first['run']['run_id'])
+        if args.check_hardening:
+            status=call('/v1/friday/tasks/'+task['task_id'])
+            assert status['execution']['state']=='COMPLETED'
+            assert status['execution']['assurance_state']=='VERIFIED'
+            recovered=call('/v1/friday/tasks/'+task['task_id']+'/reconcile',{})
+            assert recovered['state']=='RECORDED_PAYMENT_VERIFIED' and not recovered['new_payment_created']
+            privacy=call('/v1/friday/privacy',{'retention_days':30},method='PUT')
+            assert not privacy['automatic_deletion_enabled']
+            deleted=call('/v1/friday/privacy/reviews/delete',{'confirm_delete_reviews':True})
+            assert deleted['payment_journal_retained'] and not deleted['money_moved']
+            assert call('/v1/friday/mandate')['sandbox_balance_minor']==balance-10000
+            assert call('/v1/friday/runs/'+first['run']['run_id'])['assurance']['state']=='VERIFIED'
+            result.update(durable_lifecycle=True,journal_only_reconciliation=True,
+                synthetic_drafts_deleted=True,receipt_retained_after_cleanup=True)
     print(json.dumps(result,indent=2))
 
 

@@ -63,7 +63,8 @@ def propose_task(planner, request: TaskRequest, sources: list[dict]) -> dict:
     envelope = {"request": request.message, "scope": "ARTIFICIAL_MONEY_ONLY",
                 "sources": sources}
     redacted = redact_for_model(json.dumps(envelope, ensure_ascii=False))
-    response = planner._client.models.generate_content(model=planner.model_name,
+    from .friday_observability import generate
+    response = generate(planner._client,purpose="task_prepare",model=planner.model_name,
         contents=redacted.text, config=types.GenerateContentConfig(temperature=0,
             max_output_tokens=2200, system_instruction=TASK_INSTRUCTION,
             response_mime_type="application/json",

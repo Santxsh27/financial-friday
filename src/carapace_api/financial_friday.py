@@ -308,6 +308,11 @@ class FinancialFridayService:
             result.update(message="This is not a new bill payment request. No payment was prepared.",
                           reason=["NOT_A_PAYMENT_REQUEST"])
         if bill is not None and payment_request:
+            from .friday_review import FridayReviewService
+            from carapace_core.friday_task_guard import related_claims, claim_gate_reasons
+            safety = FridayReviewService(self).safety_snapshot(tenant)
+            related = related_claims(safety["board"], bill.bill_reference)
+            claim_reasons = claim_gate_reasons(related, bill.model_dump())
             mandate_data = self.mandate(tenant)
             mandate = FridayMandate.model_validate(mandate_data["mandate"])
             case_id = "live-" + sha256_hex({"tenant": tenant, "event": event_id, "bill": bill.model_dump()})[:24]
@@ -352,9 +357,10 @@ class FinancialFridayService:
                         "test-provider:" + bill.bill_reference,
                     ],
                 },
-                "live": {"event_id": event_id, "authoritative_bill": bill.model_dump()},
+                "live": {"event_id": event_id, "authoritative_bill": bill.model_dump(),
+                         "safety_evidence_version": safety["version"]},
             }
-            mismatch = []
+            mismatch = list(claim_reasons)
             increase_percent = None
             if bill.previous_amount_minor is not None:
                 increase_percent = round(
@@ -837,6 +843,16 @@ class FinancialFridayService:
             else:
                 remaining_balance = None
                 if fresh.get("live"):
+                    from carapace_core.friday_evidence_snapshot import local_snapshot
+                    current_evidence = local_snapshot(db, tenant)
+                    if fresh["live"].get("safety_evidence_version") != current_evidence["version"]:
+                        result["status"] = "HELD"
+                        result["outcome"] = {"money_moved": False, "new_payment_created": False,
+                                             "reason": ["FINANCIAL_EVIDENCE_CHANGED"]}
+                        seal_friday_run(tenant, result, self.signer)
+                        db.execute("UPDATE friday_runs SET result_json=? WHERE tenant_id=? AND run_id=?",
+                                   (json.dumps(result), tenant, result["run_id"]))
+                        return
                     mandate_row = db.execute(
                         "SELECT mandate_json FROM friday_mandates WHERE tenant_id=?", (tenant,)
                     ).fetchone()

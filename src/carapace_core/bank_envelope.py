@@ -10,6 +10,7 @@ from __future__ import annotations
 import base64
 import binascii
 import os
+import json
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -21,7 +22,7 @@ from .canonical import canonical_json, sha256_hex
 
 
 class BankEnvelopeSigner:
-    def __init__(self, key_path: Path, *, allow_generate: bool) -> None:
+    def __init__(self, key_path: Path, *, allow_generate: bool, verification_keys_path: Path | None = None) -> None:
         key_path.parent.mkdir(parents=True, exist_ok=True)
         try:
             encoded = key_path.read_bytes()
@@ -50,13 +51,27 @@ class BankEnvelopeSigner:
             format=serialization.PublicFormat.Raw,
         )
         self.key_id = sha256_hex(base64.b64encode(self.public_key_bytes).decode())[:16]
+        self._verification_keys = {self.key_id:self.public_key_bytes}
+        if verification_keys_path:
+            keys=json.loads(verification_keys_path.read_text())
+            if not isinstance(keys,dict) or len(keys)>20:
+                raise RuntimeError("Verification keyring must contain at most 20 public keys")
+            for identity,value in keys.items():
+                raw=base64.b64decode(value,validate=True)
+                if len(raw)!=32 or identity!=sha256_hex(base64.b64encode(raw).decode())[:16]:
+                    raise RuntimeError("Verification keyring identity mismatch")
+                self._verification_keys[identity]=raw
 
     def sign(self, envelope: Mapping[str, Any]) -> str:
         data = canonical_json(envelope).encode("utf-8")
         return base64.urlsafe_b64encode(self._private.sign(data)).decode("ascii")
 
     def verify(self, envelope: Mapping[str, Any], signature: str) -> bool:
-        return self.verify_with_public_key(envelope, signature, self.public_key_bytes)
+        return any(self.verify_with_public_key(envelope,signature,key) for key in self._verification_keys.values())
+
+    def verify_for_key(self, envelope, signature, key_id):
+        key=self._verification_keys.get(key_id)
+        return bool(key and self.verify_with_public_key(envelope,signature,key))
 
     @staticmethod
     def verify_with_public_key(

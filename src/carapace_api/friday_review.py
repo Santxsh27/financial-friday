@@ -27,6 +27,8 @@ class FridayReviewService:
         return expanded[:50]
 
     def import_statement(self, tenant, text):
+        from .friday_privacy import privacy_generation
+        generation=privacy_generation(self.service,tenant)
         parsed = analyze_statement(text, include_entries=True)
         if parsed["transaction_count"] > 20:
             raise ValueError("For matching, export at most 20 rows; larger CSVs can use Spending review")
@@ -47,11 +49,17 @@ class FridayReviewService:
             records.append({"review_id": identity+'-'+str(entry["row"]),"created_at":now,"filename":"Statement row "+str(entry["row"]),
                 "source_sha256":digest,"raw_file_stored":False,"analysis":review_facts(facts),
                 "provenance":{"mode":"LOCAL_CSV_VALIDATION","model":"none","model_calls":0,"quote_validation":"USER_SUPPLIED_CSV_FIELDS"}})
-        batch = {"review_id":identity,"created_at":now,"entries":records}
+        batch = {"review_id":identity,"created_at":now,"entries":records,"privacy_generation":generation}
         if self.service.durable.mode == "FIRESTORE_TRANSACTIONAL":
-            self.service.durable.put("reviews",tenant,identity,batch)
+            if hasattr(self.service.durable, "put_review"):
+                self.service.durable.put_review(tenant,identity,batch)
+            else:
+                self.service.durable.put("reviews",tenant,identity,batch)
         else:
             with self.service.connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                if privacy_generation(self.service,tenant,db)!=generation:
+                    raise ValueError('Privacy cleanup occurred during import. The pending input was not saved.')
                 db.execute("INSERT OR IGNORE INTO friday_reviews VALUES (?,?,?,?)",(tenant,identity,json.dumps(batch),now))
         return {"read_only":True,"money_moved":False,"payment_authorized":False,"imported_rows":len(records),"sent_to_ai":False}
 
@@ -59,7 +67,26 @@ class FridayReviewService:
         records = self.list(tenant)
         return {**reconcile_reviews(records), "documents": records}
 
+    def safety_snapshot(self, tenant):
+        if self.service.durable.mode == "FIRESTORE_TRANSACTIONAL":
+            if hasattr(self.service.durable, "evidence_snapshot"):
+                snapshot = self.service.durable.evidence_snapshot(tenant)
+            else:  # Small test adapters must also fail closed at their read bound.
+                from carapace_core.friday_evidence_snapshot import expand_records
+                records = self.service.durable.list("reviews", tenant, 100)
+                if len(records) == 100:
+                    raise ValueError("Complete financial evidence unavailable")
+                snapshot = {"version": "0", "documents": expand_records(records), "complete": True}
+        else:
+            from carapace_core.friday_evidence_snapshot import local_snapshot
+            with self.service.connect() as db:
+                db.execute("BEGIN")
+                snapshot = local_snapshot(db, tenant)
+        return {**snapshot, "board": {**reconcile_reviews(snapshot["documents"]), "documents": snapshot["documents"]}}
+
     def ingest(self, tenant, *, text=None, data=None, mime=None, filename=None):
+        from .friday_privacy import privacy_generation
+        generation=privacy_generation(self.service,tenant)
         raw = text.encode() if text is not None else data
         digest = hashlib.sha256(("TEXT:" if text is not None else mime + ":").encode() + raw).hexdigest()
         review_id = "review-" + digest[:32]
@@ -71,15 +98,44 @@ class FridayReviewService:
                 existing = json.loads(row[0]) if row else None
         if existing:
             return {"document": existing, "reused": True, "read_only": True, "money_moved": False, "payment_authorized": False}
-        facts, attempts = extract_review(self.service.planner, text=text, data=data, mime=mime, filename=filename)
+        grounding=None
+        if data is not None:
+            from carapace_ai.friday_document_grounding import configured_grounder, ground_facts
+            grounder=configured_grounder()
+            if grounder:
+                ocr=grounder.read(data,mime)
+                from carapace_ai.redaction import redact_for_model
+                facts,attempts=extract_review(self.service.planner,text=redact_for_model(ocr['text']).text)
+                grounding=ground_facts(facts,ocr)
+            else:
+                facts,attempts=extract_review(self.service.planner,data=data,mime=mime,filename=filename)
+                grounding={'mode':'UNAVAILABLE','field_anchors':[],'unsupported_fields':[],
+                    'authenticity_verified':False,'raw_ocr_stored':False}
+        else:
+            from carapace_ai.redaction import redact_for_model
+            text=redact_for_model(text).text
+            facts,attempts=extract_review(self.service.planner,text=text)
+        from carapace_ai.redaction import redact_for_model
+        facts=ReviewedFinancialDocument.model_validate_json(redact_for_model(facts.model_dump_json()).text)
+        analysis=review_facts(facts)
+        if grounding and (grounding['mode']=='UNAVAILABLE' or grounding['unsupported_fields']):
+            analysis['checks']=sorted(set(analysis['checks']+['DOCUMENT_OCR_NOT_VERIFIED']))
         record = {"review_id": review_id, "created_at": datetime.now(timezone.utc).isoformat(),
                   "filename": filename or "Pasted financial text", "source_sha256": digest,
-                  "raw_file_stored": False, "analysis": review_facts(facts),
+                  "raw_file_stored": False, "analysis": analysis,
+                  "grounding":grounding,
+                  "privacy_generation":generation,
                   "provenance": {"mode": self.service.planner.mode, "model": self.service.planner.model_name,
-                                 "model_calls": attempts, "quote_validation": "VERBATIM_TEXT" if text is not None else "MODEL_EXTRACTED_NOT_OCR_VERIFIED"}}
+                                 "model_calls": attempts, "quote_validation": "VERBATIM_TEXT" if data is None else "DOCUMENT_AI_ANCHORED" if grounding['mode']=='DOCUMENT_AI_OCR' and not grounding['unsupported_fields'] else "MODEL_EXTRACTED_NOT_OCR_VERIFIED"}}
         if self.service.durable.mode == "FIRESTORE_TRANSACTIONAL":
-            self.service.durable.put("reviews", tenant, review_id, record)
+            if hasattr(self.service.durable, "put_review"):
+                self.service.durable.put_review(tenant,review_id,record)
+            else:
+                self.service.durable.put("reviews", tenant, review_id, record)
         else:
             with self.service.connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                if privacy_generation(self.service,tenant,db)!=generation:
+                    raise ValueError('Privacy cleanup occurred during analysis. The pending input was not saved.')
                 db.execute("INSERT OR IGNORE INTO friday_reviews VALUES (?,?,?,?)", (tenant, review_id, json.dumps(record),record["created_at"]))
         return {"document": record, "reused": False, "read_only": True, "money_moved": False, "payment_authorized": False}

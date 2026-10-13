@@ -48,8 +48,9 @@ def extract_review(planner, *, text=None, data=None, mime=None, filename=None):
         json.dumps({"filename": filename}), types.Part.from_bytes(data=data, mime_type=mime)]
     # One bounded schema-repair retry. No executor, no production code edit.
     for attempt in range(2):
-        response = planner._client.models.generate_content(model=planner.model_name, contents=contents,
-            config=types.GenerateContentConfig(temperature=0,
+        from .friday_observability import generate
+        response = generate(planner._client,purpose="document_review",model=planner.model_name, contents=contents,
+            config=types.GenerateContentConfig(temperature=0,max_output_tokens=4500,
                 system_instruction=INSTRUCTION + (" Ensure all enum values and decimal strings conform exactly to the schema." if attempt else ""),
                 response_mime_type="application/json", response_json_schema=generation_schema(ReviewedFinancialDocument.model_json_schema())))
         try:

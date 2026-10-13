@@ -1,0 +1,70 @@
+"""Optional independent Google OCR. Configuration never implies it ran."""
+import base64
+import os
+import re
+from decimal import Decimal, InvalidOperation
+
+
+class GoogleDocumentGrounder:
+    def __init__(self, processor, session=None):
+        if not re.fullmatch(r"projects/[A-Za-z0-9_-]+/locations/(us|eu)/processors/[A-Za-z0-9_-]+",processor):
+            raise ValueError("Use an exact Document AI processor resource in an approved US/EU location")
+        self.processor=processor
+        self.location=processor.split('/')[3]
+        if session is None:
+            import google.auth
+            from google.auth.transport.requests import AuthorizedSession
+            credentials,_=google.auth.default(scopes=['https://www.googleapis.com/auth/cloud-platform'])
+            session=AuthorizedSession(credentials)
+        self.session=session
+
+    def read(self, data, mime):
+        response=self.session.post(f'https://{self.location}-documentai.googleapis.com/v1/{self.processor}:process',
+            json={"rawDocument":{"content":base64.b64encode(data).decode(),"mimeType":mime}},timeout=60)
+        response.raise_for_status()
+        doc=response.json()['document']
+        text=doc.get('text','')
+        if not text or len(text)>60000 or len(doc.get('pages',[]))>15:
+            raise ValueError("OCR is empty or exceeds the bounded 15-page/60,000-character review limit")
+        lines=[]
+        for number,page in enumerate(doc.get('pages',[]),1):
+            for line in page.get('lines',[]):
+                layout=line.get('layout',{})
+                segments=layout.get('textAnchor',{}).get('textSegments',[])
+                for span in segments:
+                    start,end=int(span.get('startIndex',0)),int(span['endIndex'])
+                    if not 0<=start<end<=len(text):raise ValueError('Invalid OCR text anchors')
+                    lines.append({'page':number,'start':start,'end':end,
+                        'box':layout.get('boundingPoly',{}).get('normalizedVertices',[]),
+                        'confidence':layout.get('confidence')})
+        return {'text':text,'lines':lines,'mode':'DOCUMENT_AI_OCR','processor':self.processor}
+
+
+def configured_grounder():
+    processor=os.getenv('FRIDAY_DOCUMENT_AI_PROCESSOR')
+    return GoogleDocumentGrounder(processor) if processor else None
+
+
+def value_supported(field, value, quote):
+    if field=='total':
+        try:
+            return any(Decimal(raw.replace(',',''))==Decimal(value) for raw in re.findall(r'\d[\d,]*(?:\.\d+)?',quote))
+        except InvalidOperation:return False
+    if field=='currency':
+        return value=='UNKNOWN' or value.lower() in quote.lower() or value=='INR' and '₹' in quote
+    return re.sub(r'\W','',str(value).lower()) in re.sub(r'\W','',quote.lower())
+
+
+def ground_facts(facts, ocr):
+    anchors=[];unsupported=[]
+    for q in facts.quotes:
+        start=ocr['text'].find(q.quote)
+        value=getattr(facts,q.field,None)
+        if start<0 or value is None or not value_supported(q.field,value,q.quote):
+            unsupported.append(q.field);continue
+        relevant=[line for line in ocr['lines'] if line['start']<start+len(q.quote) and line['end']>start]
+        if not relevant or any(type(line.get('confidence')) not in {int,float} or line['confidence']<0.8 for line in relevant):
+            unsupported.append(q.field)
+        anchors.append({'field':q.field,'quote':q.quote,'start':start,'end':start+len(q.quote),'locations':relevant})
+    return {'mode':ocr['mode'],'field_anchors':anchors,'unsupported_fields':sorted(set(unsupported)),
+        'authenticity_verified':False,'processor':ocr.get('processor'),'raw_ocr_stored':False}

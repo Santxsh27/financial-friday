@@ -230,9 +230,10 @@ Public visitor quotas: 20 write/action requests per user/day and 200 globally;
 admitted requests, not dollars or model tokens; failed downstream calls still use
 admission. UTC daily reset is 5:30 AM India time. Budget alerts do not stop billing.
 
-Verified deployed code `a248997`: API `financial-friday-api-tasksfinal1013`, web
-`financial-friday-web-tasksfinal1013`, each at 100% traffic in the last recorded
-release. Later docs/CI commits do not change those images. Local/cloud state is
+Actual deployed source, revisions and image digests are in
+[CURRENT_RELEASE](docs/CURRENT_RELEASE.json). Code version `0.18.0` adds the
+[hardening boundaries](docs/HARDENING_0180.md). Docs/CI commits do not automatically
+change images. Local/cloud state is
 separate. Do not copy owner credentials, private data or local SQLite into a pilot.
 
 No auto-deployment from GitHub is configured by this handover. Cloud builds and
@@ -256,7 +257,10 @@ secrets and rollback revisions. Finite trial credits are not free hosting foreve
 | Background inbox | Existing bounded sandbox mechanism, not production always-on Cloud Tasks orchestration. |
 | Voice | Earlier browser/transcript experiments; no native Gemini Live/Agora voice product. |
 | Real banking, wallets, utilities, Gmail/SMS | Not connected. Requires authorised APIs, consent and provider onboarding. |
-| ADK, BigQuery, Document AI, Cloud Tasks, Model Armor, Cloud KMS signing | Not implemented; add only for a specific demonstrable need. |
+| Independent OCR | Document AI adapter implemented/tested; live processor activation pending authorization. Ungrounded image evidence remains limited. |
+| Durable task lifecycle | Signed leases, state/run reference and journal-only reconciliation implemented; not automatic cloud crash resumption. |
+| Privacy / key rotation | Manual review/draft cleanup, in-flight cancellation and trusted historical public-key ring support. Payment journal retained. |
+| ADK, BigQuery, Cloud Tasks, Model Armor, Cloud KMS signing | Not implemented; add only for a specific demonstrable need. |
 
 Never claim guaranteed fraud detection/reimbursement, safe merchants, all banks
 supported, every fault repaired, production autonomous patching or legal compliance.
@@ -265,8 +269,8 @@ operational resilience and regulatory review remain production concerns.
 
 ## 11. Verification and what it proves
 
-Current task release: 384 native tests (383 pass/one skip), 384 Docker tests
-(366 pass/eighteen skips), twelve tooling tests. Live tests used a fresh synthetic
+Current hardening code: 405 native tests (404 pass/one skip), 405 Docker tests
+(386 pass/nineteen skips), fifteen tooling tests. Earlier live tests used a fresh synthetic
 visitor with saved artificial rules: Vertex prepared a task, held a refund
 contradiction, moved artificial funds only after confirmation, prevented a second
 debit and independently verified the outcome. See the

@@ -82,6 +82,22 @@ def register_financial_friday_routes(application, service, authenticate):
     application.state.friday_reviews = review
     tasks = FridayTaskService(service, review)
     application.state.friday_tasks = tasks
+    from .friday_privacy import FridayPrivacyService, PrivacyPolicy, DeleteReviews
+    privacy=FridayPrivacyService(service)
+    application.state.friday_privacy=privacy
+
+    @application.get('/v1/friday/privacy',tags=['friday-privacy'])
+    def privacy_read(tenant:TenantContext=Depends(authenticate)):
+        return privacy.policy(tenant.tenant_id)
+
+    @application.put('/v1/friday/privacy',tags=['friday-privacy'])
+    def privacy_save(payload:PrivacyPolicy,tenant:TenantContext=Depends(authenticate)):
+        return privacy.save(tenant.tenant_id,payload)
+
+    @application.post('/v1/friday/privacy/reviews/delete',tags=['friday-privacy'])
+    def privacy_delete(payload:DeleteReviews,tenant:TenantContext=Depends(authenticate)):
+        try:return privacy.delete(tenant.tenant_id,payload)
+        except ValueError as error:raise HTTPException(409,str(error)) from error
 
     @application.post("/v1/friday/tasks", tags=["friday-assistant"])
     async def prepare_task(payload: TaskRequest, tenant: TenantContext = Depends(authenticate)):
@@ -113,6 +129,12 @@ def register_financial_friday_routes(application, service, authenticate):
             raise HTTPException(409, str(error)) from error
         except Exception as error:
             raise HTTPException(503, "Confirmation unavailable. Check Activity before trying again; do not assume success or failure.") from error
+
+    @application.post('/v1/friday/tasks/{task_id}/reconcile',tags=['friday-assistant'])
+    def reconcile_task(task_id:str,tenant:TenantContext=Depends(authenticate)):
+        try:return tasks.reconcile(tenant.tenant_id,task_id)
+        except KeyError as error:raise HTTPException(404,'Task not found in this workspace') from error
+        except ValueError as error:raise HTTPException(409,str(error)) from error
     from .friday_bank import FridayAnthosBank
     from .friday_chat import reply_to_user
     bank = FridayAnthosBank.from_env()

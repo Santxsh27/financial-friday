@@ -29,6 +29,8 @@ def _now():
 class FridayTaskService:
     def __init__(self, service, reviews):
         self.service, self.reviews = service, reviews
+        from .friday_execution import TaskExecutionJournal
+        self.executions=TaskExecutionJournal(service)
         with service.connect() as db:
             db.execute("""CREATE TABLE IF NOT EXISTS friday_assistant_tasks (
                 tenant_id TEXT NOT NULL, task_id TEXT NOT NULL, task_json TEXT NOT NULL,
@@ -37,9 +39,14 @@ class FridayTaskService:
     def _save(self, tenant, record):
         identity = record["payload"]["task_id"]
         if self.service.durable.mode == "FIRESTORE_TRANSACTIONAL":
-            self.service.durable.put("assistant_tasks", tenant, identity, record)
+            if hasattr(self.service.durable,'put_task'):self.service.durable.put_task(tenant,identity,record)
+            else:self.service.durable.put("assistant_tasks", tenant, identity, record)
         else:
             with self.service.connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                from .friday_privacy import privacy_generation
+                if privacy_generation(self.service,tenant,db)!=record['payload'].get('privacy_generation',0):
+                    raise ValueError('Privacy cleanup occurred during task preparation. The draft was not saved.')
                 db.execute("INSERT INTO friday_assistant_tasks VALUES (?,?,?,?)",
                     (tenant, identity, json.dumps(record), record["created_at"]))
 
@@ -53,7 +60,7 @@ class FridayTaskService:
             record = json.loads(row[0]) if row else None
         if record is None:
             raise KeyError(identity)
-        if not self.service.signer.verify(record["payload"], record["signature"]) or record["payload"]["tenant_id"] != tenant:
+        if not self.service.signer.verify_for_key(record["payload"],record["signature"],record["key_id"]) or record["payload"]["tenant_id"] != tenant:
             raise ValueError("Task integrity failed. Prepare a new task.")
         return record
 
@@ -67,12 +74,22 @@ class FridayTaskService:
             "scope": "ARTIFICIAL_MONEY_ONLY"}
 
     def get(self, tenant, identity):
-        return self._public(self._record(tenant, identity))
+        task=self._public(self._record(tenant, identity))
+        task["execution"]=self.executions.get(tenant,identity)
+        if task["execution"].get("run_id"):
+            run=self.service.get(tenant,task["execution"]["run_id"])
+            task["execution"]["assurance_state"]=run.get("assurance",{}).get("state","UNVERIFIED")
+            if task["execution"]["state"]=="COMPLETED" and task["execution"]["assurance_state"]!="VERIFIED":
+                task["execution"]["state"]="REVIEW_REQUIRED"
+        return task
 
     def prepare(self, tenant, request: TaskRequest):
+        from .friday_privacy import privacy_generation
+        generation=privacy_generation(self.service,tenant)
         workspace = financial_workspace(self.service, tenant) if request.include_workspace else None
         rules = self.service.mandate(tenant)["mandate"] if request.include_workspace else None
-        board = self.reviews.board(tenant) if request.include_workspace else {"cases": [], "documents": []}
+        snapshot = self.reviews.safety_snapshot(tenant) if request.include_workspace else None
+        board = snapshot["board"] if snapshot else {"cases": [], "documents": []}
         bills = workspace["bills"] if workspace else []
         sources = [{"source_id": "request", "source_text": request.message}]
         for bill in bills[:20]:
@@ -109,18 +126,55 @@ class FridayTaskService:
             "state": state, "proposal": proposal, "gate_reasons": gate_reasons,
             "bill": bill, "related_evidence_sha256": sha256_hex(related),
             "mandate_sha256": sha256_hex(rules),
+            "safety_evidence_version": snapshot["version"] if snapshot else None,
+            "privacy_generation":generation,
             "provenance": answer["provenance"], "coverage": {
                 "workspace_included": request.include_workspace,
                 "provider_records_sent": min(20, len(bills)),
                 "review_cases_sent": min(10, len(board["cases"])),
                 "related_cases_checked": len(related["cases"]),
-                "limits": "Latest 50 reviewed documents; not a complete bank history. No account ownership verification."}}
+                "limits": "Safety checks cover the complete stored evidence up to 1,000 entries; excess coverage fails closed. Gemini receives at most 10 cases. No account ownership verification."}}
         record = {"payload": payload, "signature": self.service.signer.sign(payload),
                   "key_id": self.service.signer.key_id, "created_at": created.isoformat()}
         self._save(tenant, record)
         return self._public(record)
 
+    def reconcile(self, tenant, identity):
+        """Read authoritative journal only. This endpoint cannot submit a payment."""
+        payload=self._record(tenant,identity)['payload']
+        bill=payload.get('bill')
+        if not bill:return {'state':'NO_PAYMENT_TASK','money_moved':False,'new_payment_created':False}
+        goal_id='goal-bill-'+sha256_hex({'tenant':tenant,'provider':bill['provider_id'],'bill':bill['bill_reference']})[:24]
+        receipt=self.service._receipt_by_identity(tenant,goal_id,{'authoritative_bill':bill})
+        if not receipt:
+            return {'state':'OUTCOME_UNKNOWN','money_moved':False,'new_payment_created':False,
+                'message':'No matching recorded payment found. This is not proof that an external payment failed. No retry was submitted.'}
+        valid=self.service.signer.verify_for_key(receipt['payload'],receipt['signature'],receipt['key_id']) and all(
+            receipt['payload'].get(key)==value for key,value in {'tenant_id':tenant,'provider_id':bill['provider_id'],
+                'payee_id':bill['payee_id'],'amount_minor':bill['amount_minor'],'currency':bill['currency']}.items())
+        return {'state':'RECORDED_PAYMENT_VERIFIED' if valid else 'EVIDENCE_CONFLICT','money_moved':False,
+            'new_payment_created':False,'receipt':receipt if valid else None,
+            'message':'An existing artificial payment matches the signed journal. No new payment was created.' if valid else 'Stored receipt conflicts with this task. No action performed.'}
+
     def confirm(self, tenant, identity, confirmation: TaskConfirmation):
+        record=self._record(tenant,identity)
+        if not confirmation.confirm_sandbox_execution or sha256_hex(record["payload"])!=confirmation.expected_task_sha256:
+            raise ValueError("Explicit confirmation of the displayed task is required")
+        lease=self.executions.claim(tenant,identity,confirmation.expected_task_sha256)
+        try:
+            result=self._confirm_now(tenant,identity,confirmation)
+            run=result.get("run") or {}
+            status="COMPLETED" if run.get("status") in {"COMPLETED_SYNTHETIC","ALREADY_COMPLETED","RECONCILED_COMPLETED"} else "HELD" if run.get("status")=="HELD" else "REVIEW_REQUIRED"
+            self.executions.finish(lease,status,run.get("run_id"),"Read the recorded outcome; no real bank is connected.")
+            return result
+        except ValueError:
+            self.executions.finish(lease,"HELD",message="Checks did not permit this task. Prepare again.")
+            raise
+        except Exception:
+            self.executions.finish(lease,"OUTCOME_UNKNOWN",message="Outcome uncertain. Review Activity before resuming; no success or failure is assumed.")
+            raise
+
+    def _confirm_now(self, tenant, identity, confirmation: TaskConfirmation):
         if not confirmation.confirm_sandbox_execution:
             raise ValueError("Explicit artificial-money confirmation is required.")
         record = self._record(tenant, identity)
@@ -133,7 +187,10 @@ class FridayTaskService:
             raise ValueError("This task is held or read-only. No payment can be submitted.")
         if sha256_hex(self.service.mandate(tenant)["mandate"]) != payload["mandate_sha256"]:
             raise ValueError("Your rules changed. Prepare a new task.")
-        related = _related(self.reviews.board(tenant), payload["bill"]["bill_reference"])
+        snapshot = self.reviews.safety_snapshot(tenant)
+        if payload.get("safety_evidence_version") != snapshot["version"]:
+            raise ValueError("Financial evidence changed. Prepare a new task.")
+        related = _related(snapshot["board"], payload["bill"]["bill_reference"])
         if sha256_hex(related) != payload["related_evidence_sha256"]:
             raise ValueError("Related financial evidence changed. Prepare a new task.")
         # Existing executor rechecks current provider/rules/reserve and atomically

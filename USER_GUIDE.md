@@ -2,6 +2,22 @@
 
 ## New: ask Friday to prepare a task
 
+### New safety and privacy controls
+
+Prepared tasks now have a separate execution status. Reopening a completed task
+offers **Open recorded result** rather than another payment button. If the outcome
+is uncertain, **Check existing payment · no retry** reads the journal without paying.
+
+Under **My rules → Your documents. Your choice**, save a cleanup age, explicitly
+clean expired reviews, or delete uploaded reviews and assistant drafts. Deletion
+is permanent and asks for confirmation. Recorded payment receipts and duplicate
+payment protection are kept. This is not a complete account-erasure service.
+
+Image/PDF review distinguishes model extraction from independent OCR. If OCR is
+not enabled or a field cannot be grounded, Friday explains that limitation and
+requires review; it never promises document authenticity. See
+[the hardening notes](docs/HARDENING_0180.md) for configuration and remaining limits.
+
 On Overview, enter your own request and choose **Prepare next step** (not Ask Friday).
 Leave saved-workspace consent off for a request-only risk check or verification
 message. Tick **Include my saved inbox and artificial bills** only

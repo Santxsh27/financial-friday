@@ -1,0 +1,7 @@
+{
+  "code_version": "0.18.0",
+  "deployment_status": "BUILD_PENDING",
+  "last_verified_api_revision": "financial-friday-api-tasksfinal1013",
+  "last_verified_web_revision": "financial-friday-web-ui-clarity1013",
+  "note": "Hardening deployment identities will replace this pending status after successful rollout. GitHub alone is not deployment evidence."
+}

@@ -31,7 +31,7 @@ def handle_reviewed_bill(service, tenant, reference, expected_digest):
     from .friday_review import FridayReviewService
     from carapace_core.friday_task_guard import related_claims, claim_gate_reasons
     def check_claims():
-        related = related_claims(FridayReviewService(service).board(tenant), reference)
+        related = related_claims(FridayReviewService(service).safety_snapshot(tenant)["board"], reference)
         if claim_gate_reasons(related, bill.model_dump()):
             raise ValueError("Related documents require verification before another artificial payment. No payment was submitted.")
     check_claims()
@@ -44,7 +44,8 @@ def handle_reviewed_bill(service, tenant, reference, expected_digest):
     amount = f"{bill.amount_minor // 100}.{bill.amount_minor % 100:02d}"
     signal = IncomingFinancialSignal(source_type="BILL_TEXT",
         content_text=f"Please check this one-time bill {reference}\nAmount: INR {amount}\nPayee: {bill.payee_id}\nProvider: {bill.provider_name}",
-        event_id="review-" + sha256_hex({"tenant": tenant, "bill": bill.model_dump()})[:32])
+        event_id="review-" + sha256_hex({"tenant": tenant, "bill": bill.model_dump(),
+            "evidence_version": FridayReviewService(service).safety_snapshot(tenant)["version"]})[:32])
     facts, attempts = service._understand(service.planner.interpret_signal, signal.source_type, signal.content_text)
     # Gemini may not silently switch the customer-selected bill or invent a fee.
     if (facts.request_kind not in {"BILL", "PAYMENT_REQUEST"} or facts.bill_reference != reference

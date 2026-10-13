@@ -32,7 +32,7 @@ def replay_friday_run(tenant, result, signer, journal_receipt):
         expected = {"domain": "FRIDAY_RUN_V1", "tenant_id": tenant,
                     "run_id": result["run_id"], "result_digest": sha256_hex(body)}
         if not check("Run signature and tenant binding", seal["payload"] == expected and
-                     seal["key_id"] == signer.key_id and signer.verify(expected, seal["signature"])):
+                     signer.verify_for_key(expected,seal["signature"],seal["key_id"])):
             report["state"] = "CONFLICT"
             return report
         goal = FinancialGoal.model_validate(result["goal"])
@@ -60,8 +60,7 @@ def replay_friday_run(tenant, result, signer, journal_receipt):
             check("Signed payment receipt exists", False)
         else:
             p = receipt["payload"]
-            check("Payment signature and approved recipient", signer.verify(p, receipt["signature"]) and
-                  receipt["key_id"] == signer.key_id and
+            check("Payment signature and approved recipient", signer.verify_for_key(p,receipt["signature"],receipt["key_id"]) and
                   p.get("scope") == "FINANCIAL_FRIDAY_ARTIFICIAL_MONEY" and
                   all(p.get(k) == v for k, v in {"tenant_id": tenant, "provider_id": goal.provider_id,
                       "payee_id": goal.payee_id, "currency": goal.currency}.items()) and

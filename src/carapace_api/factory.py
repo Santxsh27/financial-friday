@@ -69,7 +69,7 @@ from .financial_friday_routes import register_financial_friday_routes
 from carapace_integrations.anthos_preflight_bridge import AnthosPreflightBridge
 
 
-VERSION = "0.17.0"
+VERSION = "0.18.0"
 LOGGER = logging.getLogger(__name__)
 
 
@@ -139,6 +139,7 @@ def create_app(
     signer = BankEnvelopeSigner(
         resolved_settings.bank_signing_key_path or resolved_settings.database_path.parent / "bank-dev-ed25519.pem",
         allow_generate=resolved_settings.environment in {"development", "test"} and resolved_settings.friday_durable_store != "firestore",
+        verification_keys_path=resolved_settings.verification_keys_path,
     )
     witness_key_path = resolved_settings.witness_signing_key_path or resolved_settings.database_path.parent / "witness-dev-ed25519.pem"
     bank_key_path = resolved_settings.bank_signing_key_path or resolved_settings.database_path.parent / "bank-dev-ed25519.pem"

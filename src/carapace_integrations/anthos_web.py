@@ -486,6 +486,28 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code, "Task unavailable in this workspace")
         return result
 
+    @application.post('/api/friday/tasks/{task_id}/reconcile')
+    async def friday_task_reconcile(task_id:str):
+        import re
+        if not re.fullmatch(r'task_[a-f0-9]{32}',task_id):raise HTTPException(422,'Invalid task identity')
+        code,result=await run_in_threadpool(_api_call,api_base_url,'/v1/friday/tasks/'+task_id+'/reconcile','POST',{})
+        if code!=200:raise HTTPException(code,'Task reconciliation unavailable')
+        return result
+
+    @application.api_route('/api/friday/privacy',methods=['GET','PUT'])
+    @application.post('/api/friday/privacy/reviews/delete')
+    async def friday_privacy(request:StarletteRequest):
+        payload=None
+        if request.method!='GET':
+            data=await request.body()
+            if len(data)>4096:raise HTTPException(413,'Privacy request too large')
+            try:payload=json.loads(data)
+            except ValueError as error:raise HTTPException(422,'Invalid privacy request') from error
+        path='/v1/friday/privacy'+('/reviews/delete' if request.url.path.endswith('/delete') else '')
+        code,result=await run_in_threadpool(_api_call,api_base_url,path,request.method,payload)
+        if code!=200:raise HTTPException(code,result.get('detail','Privacy operation unavailable'))
+        return result
+
     @application.post("/api/friday/reviews")
     @application.post("/api/friday/reviews/statement")
     async def friday_review_text(request: StarletteRequest):

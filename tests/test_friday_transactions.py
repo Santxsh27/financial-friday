@@ -13,9 +13,10 @@ from carapace_core.friday_live import FridayMandate, IncomingFinancialSignal, Te
 
 
 class Snapshot:
-    def __init__(self, value):
+    def __init__(self, value, reference=None):
         self.value = deepcopy(value)
         self.exists = value is not None
+        self.reference=reference
 
     def to_dict(self):
         return deepcopy(self.value)
@@ -40,6 +41,18 @@ class Reference:
     def set(self, value):
         self.client.records[self.path] = deepcopy(value)
 
+    def delete(self):
+        self.client.records.pop(self.path,None)
+
+    def limit(self, count):
+        ref = self
+        class Query:
+            def stream(self):
+                rows = [(path,value) for path, value in sorted(ref.client.records.items())
+                        if path[:-1] == ref.path]
+                return [Snapshot(row,Reference(ref.client,path)) for path,row in rows[:count]]
+        return Query()
+
 
 class MemoryClient:
     def __init__(self):
@@ -57,6 +70,9 @@ class Transaction:
     def set(self, ref, value):
         self.writes.append((ref, deepcopy(value)))
 
+    def delete(self,ref):
+        self.writes.append((ref,None))
+
 
 class TransactionalMemory(FirestoreFridayState):
     def __init__(self):
@@ -72,7 +88,7 @@ class TransactionalMemory(FirestoreFridayState):
             if self.fail_commit:
                 raise RuntimeError("injected commit failure")
             for ref, value in transaction.writes:
-                ref.set(value)
+                ref.delete() if value is None else ref.set(value)
             return result
 
 

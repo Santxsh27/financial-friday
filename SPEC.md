@@ -1,9 +1,9 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **13 October 2026**. This document replaces the mixed historical product
-specifications. Deployed package version remains `0.17.0`; verified runtime source
-is `a248997`, API/web revisions `tasksfinal1013`. Documentation/tooling updates
-after that source do not change the deployed runtime image.
+specifications. Current code version is `0.18.0`. Actual deployed source and
+image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
+not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md).
 
@@ -204,8 +204,9 @@ location is configured as `global`, not a promise of universal Indian residency.
 Local live development can use the Gemini Developer API. `LOCAL_RULES` is a labelled
 baseline; multimodal review/chat do not masquerade as live AI in that mode.
 
+Document AI OCR has a tested optional adapter; its live processor is not enabled.
 Not implemented: Cloud Tasks orchestration, native Gemini Live/Agora voice, ADK,
-Document AI, BigQuery, Vertex AI Search, Model Armor and Cloud KMS signing.
+BigQuery, Vertex AI Search, Model Armor and Cloud KMS signing.
 Bank of Anthos is retired from customer navigation/default configuration. Its
 optional historical fixtures and compatibility identifiers remain recoverable.
 
@@ -217,8 +218,8 @@ and privacy details. Home examples do not submit automatically. Theme, optional
 sound and motion preferences affect presentation only. Evidence states reflect
 actual results; insufficient information does not produce a universal safe badge.
 
-Current task release: 384 native tests (383 pass/one skip), 384 Docker tests
-(366 pass/eighteen skips), twelve tooling tests. Live Vertex/Firestore verified
+Current hardening code: 405 native tests (404 pass/one skip), 405 Docker tests
+(386 pass/nineteen skips), fifteen tooling tests. Earlier live Vertex/Firestore verified
 preparation without debit, a quoted refund-risk hold, confirmed artificial payment,
 repeat-confirmation idempotency and independent replay. Details are in
 [the release record](docs/FRIDAY_TASK_RELEASE_1013.md). Remote CI for runtime source
@@ -230,7 +231,10 @@ Test passes do not measure fraud accuracy or certify every feature/device.
 Before submission: confirm another human login/roster/deadline, evaluate the new
 conversation-to-approved-task bridge on varied unseen inputs
 and create required video/deck/materials. Preserve the existing safety boundary.
-Later: independently authorised providers, resumable workflows, privacy/retention
+Implemented hardening includes durable task lifecycle, journal-only recovery,
+complete bounded safety snapshots, atomic evidence-version checks and explicit
+review/draft retention/deletion. Later: independently authorised providers,
+automatic cloud workflow dispatch, complete account erasure and wider governance
 operations and native voice. No autonomous real-money access, trading calls,
 phone surveillance, production patching or guaranteed reimbursements.
 

@@ -56,7 +56,7 @@ class VertexGeminiIntentProvider:
             from google import genai
         except ImportError as error:
             raise RuntimeError("Install the google-genai dependency to use Vertex AI") from error
-        self._client = genai.Client(vertexai=True, project=project, location=location, http_options={"timeout": 20000})
+        self._client = genai.Client(vertexai=True, project=project, location=location, http_options={"timeout": 20000,"retry_options":{"attempts":1}})
 
     def extract_intent(self, message_text: str, locale: str) -> MessageIntent:
         from google.genai import types

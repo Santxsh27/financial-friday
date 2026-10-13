@@ -1,0 +1,16 @@
+"""Explicit privacy controls; never erase financial replay protection."""
+PRIVACY_JS=r"""
+    {
+      const privacyCard=element('section',null,'money-section');privacyCard.append(element('h2','Your documents. Your choice.'),element('p','Set a cleanup age or remove uploaded reviews and assistant drafts. Existing payment receipts and duplicate-payment protection are kept.'));
+      const retention=element('select');retention.setAttribute('aria-label','Review retention duration');[['','Keep until I delete'],['7','7 days'],['30','30 days'],['90','90 days'],['365','365 days']].forEach(([value,label])=>{const option=element('option',label);option.value=value;retention.append(option);});
+      const privacyStatus=element('p','No automatic deletion is enabled. Cleanup runs only when you request it.','screen-note');privacyStatus.setAttribute('role','status');
+      const savePrivacy=element('button','Save cleanup age','planner');savePrivacy.type='button';const clearReviews=element('button','Delete reviews & drafts');clearReviews.type='button';const clearExpired=element('button','Clean up expired reviews');clearExpired.type='button';
+      const controls=element('div',null,'inline-actions');controls.append(savePrivacy,clearExpired,clearReviews);privacyCard.append(retention,controls,privacyStatus);settings.append(privacyCard);
+      let privacyBusy=false;
+      async function privacyAction(fn){if(privacyBusy)return;privacyBusy=true;controls.querySelectorAll('button').forEach(b=>b.disabled=true);try{await fn();}catch{privacyStatus.textContent='Privacy operation unavailable. No deletion or success is assumed; refresh before repeating.';}finally{privacyBusy=false;controls.querySelectorAll('button').forEach(b=>b.disabled=false);}}
+      savePrivacy.addEventListener('click',()=>privacyAction(async()=>{await jsonRequest('/api/friday/privacy','PUT',{retention_days:retention.value?Number(retention.value):null});privacyStatus.textContent='Cleanup age saved. Automatic deletion remains off; use Clean up expired reviews when ready.';}));
+      function deleteInputs(expired){if(!window.confirm(expired?'Permanently remove expired uploaded reviews and assistant drafts? Payment receipts are kept.':'Permanently remove all uploaded reviews and assistant drafts? Comparison history will be lost. Payment receipts are kept.'))return;privacyAction(async()=>{const result=await jsonRequest('/api/friday/privacy/reviews/delete','POST',{confirm_delete_reviews:true,expired_only:expired});privacyStatus.textContent=result.message;});}
+      clearReviews.addEventListener('click',()=>deleteInputs(false));clearExpired.addEventListener('click',()=>deleteInputs(true));
+      const priorPrivacyShow=show;show=function(name,push=true){priorPrivacyShow(name,push);if(name==='settings')jsonRequest('/api/friday/privacy').then(policy=>{retention.value=policy.retention_days?String(policy.retention_days):'';}).catch(()=>{privacyStatus.textContent='Privacy settings unavailable. No changes assumed.';});};
+    }
+"""

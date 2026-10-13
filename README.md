@@ -51,6 +51,9 @@ The model's confidence is never payment authority or proof of settlement.
 | Sandbox execution | Typed Gemini program, independent safety checks, bounded repair, adversarial mutations and atomic artificial-money posting. |
 | Outcome assurance | Signed receipts, idempotency, receipt-first replay and independent journal checks. Not external banking proof. |
 | Cloud access | Google authentication, private API, isolated visitor workspaces, request limits and persistent Firestore state. |
+| Evidence hardening | Recent inbox is separate from complete bounded safety evidence; late changes are checked inside the financial commit. |
+| Task recovery | Signed execution lifecycle and journal-only reconciliation; unknown outcomes never trigger a blind retry. |
+| Privacy and keys | Explicit review/draft cleanup, manual retention age, in-flight save cancellation and historical public-key verification support. |
 
 **Bank of Anthos is retired from the customer product.** Historical fixtures are
 optional developer tools, disabled by default. The Compose service `anthos-demo`
@@ -78,7 +81,8 @@ Google IAP -> Cloud Run web gateway -> private Python/FastAPI API
 Google Gen AI SDK performs model calls, Pydantic validates schemas, and
 `cryptography` supplies Ed25519 signing. Cloud Build and Artifact Registry build
 and store images. IAM, IAP and Secret Manager keep credentials server-side.
-Cloud Tasks, native Gemini Live voice, ADK, Document AI, BigQuery, Agora and Cloud
+Document AI has a tested optional OCR adapter, but no live processor is enabled.
+Cloud Tasks automatic dispatch, native Gemini Live voice, ADK, BigQuery, Agora and
 KMS signing are **not implemented**. The model configured in the verified release
 is `gemini-3.5-flash-lite`; local live calls use the Gemini Developer API and cloud
 calls use Vertex AI. Model availability and quota must be checked before changing it.
@@ -108,9 +112,9 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 Verified task release, 13 October 2026:
 
-- Native: 388 tests ran; 387 passed and one optional integration was skipped.
-- Docker: 388 ran; 369 passed and nineteen optional checks were skipped.
-- Twelve offline tooling tests passed.
+- Native: 405 tests ran; 404 passed and one optional integration was skipped.
+- Docker: 405 ran; 386 passed and nineteen optional checks were skipped.
+- Fifteen offline tooling tests passed.
 - Live Vertex/Firestore checks confirmed quoted refund-risk holds, signed task
   readback, unchanged balance during preparation, one confirmed artificial payment,
   no second debit on repeated confirmation and independently verified replay.
@@ -134,11 +138,17 @@ fixture is an explicit manual option, not a customer-product requirement.
 See [GitHub Actions](https://github.com/Santxsh27/financial-friday/actions) for the
 actual current run status; local passes do not imply a remote CI pass.
 
-Deployed source: `a248997`; API `financial-friday-api-tasksfinal1013`, web
-`financial-friday-web-tasksfinal1013`. Later documentation/tooling commits do not
-redeploy the application. Digests and live checks are in
-[the task release record](docs/FRIDAY_TASK_RELEASE_1013.md). Tests do not establish
+Latest deployment state and image identities are recorded in
+[the current release manifest](docs/CURRENT_RELEASE.json). Code commits do not
+automatically redeploy the application. Hardening behavior and activation limits
+are documented in [HARDENING_0180](docs/HARDENING_0180.md); the earlier task checks
+remain historical evidence in [the task release record](docs/FRIDAY_TASK_RELEASE_1013.md). Tests do not establish
 fraud accuracy, production-bank certification, patentability or a winning guarantee.
+
+The paired live evaluation runner accepts a frozen externally labelled corpus.
+Bundled cases are developer-authored, not independent validation. A Developer API
+smoke comparison was stopped after repeated server errors; no accuracy score was
+substituted. See [evaluation protocol](docs/INDEPENDENT_EVALUATION.md).
 
 ## Hackathon alignment
 

@@ -4,6 +4,12 @@ on:
   push:
     branches: ["main"]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      run_legacy_anthos:
+        description: "Run the optional historical Bank of Anthos fixture"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -61,16 +67,33 @@ jobs:
           done
           test "$(docker compose exec -T api id -u)" = "10001"
           test "$(docker compose exec -T api stat -c %u /data)" = "10001"
+      - name: Verify the standalone Friday website (no bank or AI credentials)
+        run: |
+          docker compose up --detach anthos-demo
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8090/health; then
+              break
+            fi
+            if [ "$attempt" = "30" ]; then
+              docker compose logs anthos-demo
+              exit 1
+            fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:8090/ > friday-home.html
+          python -c "from pathlib import Path; page=Path('friday-home.html').read_text(); assert 'What can I help you with?' in page; assert 'ARTIFICIAL EXAMPLE' in page; assert 'const bankNav=' not in page"
       - name: Clean up Compose services
         if: always()
         run: docker compose down --volumes
 
   bank-of-anthos-integration:
+    # Historical engineering fixture, never a dependency of the customer app.
+    if: github.event_name == 'workflow_dispatch' && inputs.run_legacy_anthos
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Start the official Bank of Anthos ledger slice
-        run: docker compose --profile anthos up --detach --build anthos-demo
+        run: docker compose --profile anthos up --detach --build api anthos-ledger anthos-demo
       - name: Wait for the local integration page
         run: |
           for attempt in {1..30}; do

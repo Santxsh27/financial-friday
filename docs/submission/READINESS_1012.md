@@ -1,5 +1,10 @@
 # Financial Friday — readiness pass, October 12
 
+**Historical release evidence:** this file records an earlier readiness pass,
+not today's full completion status. Read [the current teammate briefing](../../TEAMMATE_BRIEFING.md)
+and [latest release evidence](../FRIDAY_CHAT_AND_BANK.md) for current access,
+read-only review, Anthos retirement and remaining gaps.
+
 ## Scope and fixes
 
 This pass preserves the selected Everyday design and bounded artificial-money

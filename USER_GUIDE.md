@@ -11,7 +11,9 @@ execution, and checks the result. Cloud Run hosts the protected app; transaction
 Firestore stores cloud rules, records and receipts, while local Docker uses SQLite.
 Exact code—not Gemini—calculates rupee totals and the reserve-aware bill plan.
 
-Updated for the website available on October 12, 2026. Records, balances, wording
+Updated for the current handover on October 13, 2026. Start with
+[TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md) for the technical explanation.
+Records, balances, wording
 and AI responses can vary. A stopped or unverified task can be the correct result.
 
 ## Contents
@@ -113,7 +115,7 @@ These are request limits—not a hard rupee spending cap on Google Cloud charges
 
 ## A first visit without making a payment
 
-1. Open **Overview**. Read the bill inbox and the sentence beneath Friday's command box.
+1. Open **Overview** and try a starting task or the guided example described above.
 2. Click **My rules**. Inspect the existing settings without clicking Save.
 3. Click **Bills**. Read the selected amount, bill reference and recipient. Do **not**
    click **Check & handle in sandbox** yet.
@@ -134,7 +136,8 @@ change them; restore your chosen setting after the exercise.
 | Control | What to do | What it does and what to expect |
 | --- | --- | --- |
 | Team mark and Financial Friday name | No input required | Product branding, not a verified-bank seal or payment button. |
-| Overview | Click | Returns to the current bill inbox and command box. |
+| Overview | Click | Returns to starting tasks, the read-only financial inbox and compact chat. |
+| Financial inbox | Click | Opens saved claim comparisons, evidence and prepared verification messages; never pays. |
 | Bills | Click | Opens the read-only bill plan, not the message editor. |
 | Documents | Click | Opens the photo/PDF input page. Selecting a file alone does not submit it. |
 | Activity | Click | Loads the most recent recorded tasks and filters. |
@@ -150,10 +153,14 @@ change them; restore your chosen setting after the exercise.
 | Manage rules | Click | Same destination as My rules. |
 | Understand my money | Click | Opens the money workspace, initially the bill plan. Use **Back to My money** for spending, saved inputs and wallet choices. |
 | Review spending | Click | Opens statement CSV review. Read-only analysis; no payment. |
-| View all or a recent outcome label | Click | View all opens Activity; an outcome opens its saved receipt without executing again. |
-| What should Friday handle? | Paste a bill message | Text is not sent merely by typing. Use the examples below; this is not an unrestricted stock-market chatbot. |
-| Check my bill | Click after reviewing your input and rules | Sends the message to Gemini and the safety pipeline. Can handle a matching artificial bill automatically within saved rules. |
-| Read a document | Click | Same destination as Documents; it does not upload or pay by itself. |
+| Understand a charge | Click | Prepares an editable question; does not send or pay. |
+| Check a bill | Click | Opens Documents; file selection alone does not submit it. |
+| Try a guided example | Click | Opens labelled bill/receipt/changed-recipient examples; Load only fills the read-only editor. |
+| Your question / Ask Friday | Type, then click | Sends bounded chat to live Gemini. No execution tools, automatic payment or stock feed. |
+| Use workspace context | Check the consent box | Includes a bounded private inbox/sandbox summary; changing it clears chat history. |
+| Clear chat | Click | Clears page-memory conversation, not stored documents or bank records. |
+| Privacy & limits | Expand | Explains cloud processing, reply limitations and secrets to avoid. |
+| Review a bill or receipt | Click in chat | Opens read-only financial input; no payment. |
 | How Friday works | Click | Opens the help dialog with the main safety boundaries. Close/Escape dismisses it. |
 
 The cloud warning about **seven records above your limit** refers to existing
@@ -247,7 +254,8 @@ three days later; it does not submit a payment. Expect the provider-ready messag
 If this reference already exists or is paid, use a genuinely new bill reference
 for a new exercise, not to disguise or retry an uncertain previous payment.
 
-Paste this into the message editor or the Overview command box:
+For this **separate sandbox execution exercise**, open the message editor and
+explicitly select **Use original artificial-payment workflow**. Paste:
 
 ```text
 Please check my one-time TN Power bill GUIDE-POWER-001 for INR 1780.00.
@@ -255,8 +263,9 @@ Payee: tnpower@upi. Compare it with the enrolled provider record, protect
 my saved reserve, and do not create any subscription or extra fee.
 ```
 
-Click **Check bill** in the editor, or **Check my bill** on Overview. Both submit
-the input to the same pipeline. Expected path: Gemini extracts the facts, Friday
+Click **Check & handle artificial bill** in that explicitly selected mode.
+Overview's Ask Friday is conversational and does not enter this pipeline.
+Expected path: Gemini extracts the facts, Friday
 matches the separate provider record, checks your permission, and either waits
 for manual approval or handles one artificial payment. An unavailable model,
 invalid plan or changed evidence must stop execution rather than invent success.
@@ -455,7 +464,7 @@ and the local/cloud journal; missing evidence never becomes verified because it 
 
 ## Activity and reopening receipts
 
-1. Click **Activity** or Overview's **View all**.
+1. Click **Activity** in the top navigation. The empty home activity panel was removed.
 2. Use **Refresh activity** for a new read-only snapshot.
 3. Type a provider/status/reference phrase visible in a row into **Search recorded
    activity**. Search operates on the returned recent list, not all historical bank data.
@@ -514,8 +523,9 @@ routes are development/history surfaces, not the current consumer product or
 features guaranteed on the protected cloud website. Their specifications and
 commands live in the linked architecture/integration documents. The retained
 cinematic control-room module is not a separate supported `/control-room` URL.
-Bank of Anthos
-uses artificial money; it does not grant access to real banks.
+Bank of Anthos is retired from customer navigation and is not needed to run
+Friday. Its optional historical fixture uses artificial money and cannot grant
+access to real banks. No sample-bank services are required by default startup.
 
 The resolution kernel and regression-testing components are engineering work;
 the current website does not autonomously patch production code, correct a bank

@@ -1,6 +1,20 @@
 # Financial Friday on Google Cloud
 
-## Current cloud boundary
+## Current handover — 13 October 2026
+
+Current deployed package is `0.17.0`, source `719c7bb`: API
+`financial-friday-api-cleandraft1012`, web `financial-friday-web-cleantheme1012`.
+The app has Google-sign-in visitor isolation, a private API, live Vertex chat and
+review, and transactional Firestore artificial-money state. It is not the
+owner-only deployment described in older entries below. Anthos is retired from
+the customer UI; no bank stack or Cloud SQL trial is required.
+
+Read [the current release record](FRIDAY_CHAT_AND_BANK.md),
+[the teammate briefing](../TEAMMATE_BRIEFING.md), and [SPEC](../SPEC.md) first.
+Documentation/CI commits do not automatically redeploy Cloud Run. Preserve the
+existing IAP/IAM/origin/secret configuration when making a future release.
+
+## Historical cloud boundary and release log
 
 **Latest release: 0.15.1, October 11.** `financial-friday-api-journey1011` and
 `financial-friday-web-journey1011` serve the connected bill-planning journey.

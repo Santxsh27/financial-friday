@@ -1,263 +1,201 @@
-# Financial Friday — Product and Engineering Specification
+# Financial Friday — Current product and engineering contract
 
-Updated 12 October 2026 · read-only financial review plus retained bounded execution layer
+Updated **13 October 2026**. This document replaces the mixed historical product
+specifications. Deployed package version remains `0.17.0`; verified runtime source
+is `719c7bb`. Documentation/CI updates are not a new deployment.
+For the detailed rationale, algorithms and meeting explanation, read
+[TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md).
 
-## Default customer workflow
+## 1. Product definition
 
-Home provides bounded Gemini conversation with opt-in tenant-scoped context.
-Documents and the read-only Bills input perform reconciliation of unfamiliar bills, receipts
-and transaction claims without provider setup. Gemini extracts a general typed
-document schema. Separate deterministic code groups evidence, checks amounts,
-currencies and arithmetic, and prepares verification messages. Uploaded receipts
-remain user claims, not bank proof. Review storage and routes cannot mutate
-financial permission or payment journals. See [the review specification](docs/FINANCIAL_REVIEW.md).
-The execution sections below describe the retained explicit artificial-money layer.
-Anthos is retired from the customer interface and disabled in default local
-configuration. Its historical account projection remains an optional developer
-fixture, not a release dependency. Customer chat never queries it. The local
-Anthos account projection, when explicitly configured by a developer, is read-only;
-Google login is not bank authentication. Cloud visitors are not given a shared
-bank account. See [chat and bank architecture](docs/FRIDAY_CHAT_AND_BANK.md).
+Financial Friday is a financial assistant and bounded artificial-money operator.
+It makes financial records easier to understand while demonstrating how AI plans
+can execute without granting the model unrestricted financial authority.
 
-## Product statement
+The default consumer workflow is **read-only guidance and claim reconciliation**.
+The execution workflow is **separate and explicitly artificial**. Neither is a
+real-bank connector, investment adviser, SMS/Gmail agent or universal fraud shield.
 
-Financial Friday is a bounded AI operator for everyday financial tasks. A person delegates an outcome and constraints; Gemini creates or repairs a typed plan; an independent deterministic kernel proves the plan stays within those constraints; a restricted provider adapter performs the allowed action; and reconciliation verifies what actually happened.
+## 2. Three supported workflows
 
-The product removes routine work without asking a person to trust a chatbot or give an LLM unrestricted financial authority.
+### A. Conversational assistance
 
-## Shared consumer experience
+User question -> validated tenant request -> optional bounded private context ->
+Gemini response -> schema/citation/authority validation -> safely rendered text.
 
-The product covers four connected needs: understand available records, handle
-supported obligations, protect the user's constraints and resolve uncertain
-outcomes. They use the same tenant identity, mandate, evidence and receipt boundary.
-Bill payment is the first execution adapter, not a promise of universal bank access.
+- Message/reply limit 1,600 characters; up to eight prior user/assistant turns.
+- Context is opt-in and contains at most ten cases from the latest fifty review
+  inputs, currency-separated totals and artificial balance/reserve information.
+- No bank lookup, payment, code, SQL, shell, arbitrary URL or browsing tools.
+- Suggestions navigate to allowlisted screens; model text is not task completion.
+- Drafts remain unsent. History is page-memory only and clears when consent changes.
+- Known credential patterns are scrubbed best-effort; users must not enter secrets.
+- Model failure reports unavailable instead of substituting a pretend live answer.
 
-`GET /v1/friday/workspace` is read-only. It displays a bounded artificial-money
-snapshot: balance, protected reserve, recorded bills, conservative potential
-commitments, shortfall and recent outcomes. Totals use integer minor units, make
-missing history explicit and exclude a bill only if its signed internal receipt
-matches tenant, goal, provider, payee, amount and currency. External payment status
-remains unknown. The snapshot is not atomic and the execution gate rechecks state.
+### B. Document/transaction-claim review
 
-`friday_resolution.resolve_bill` provides a separate tested kernel for bank/biller
-disagreement. Connector trust is server-owned, never supplied by Gemini. Pending
-outcomes must not be retried blindly; multiple settled postings require review;
-paid confirmation requires a matching bank payment and biller reference. A ready
-reconciliation proposal is not a completed provider action. No resolution branch
-authorizes payment or refund. Source authentication, separate provider services,
-durable follow-up and live correction remain required before exposing execution.
+User-supplied text/image/PDF -> Gemini typed facts -> exact checks -> tenant review
+record -> related claims/conflicts -> verification message and evidence display.
 
-Transaction alerts, receipts and unknown interpretations must not create executable
-payment cases. Bill-increase review is a customer preference, not a fraud claim.
+- Default review cannot alter a mandate, payment journal or balance.
+- Supported files are PNG/JPEG/WebP/PDF below the 8 MB bound; text is bounded to
+  12,000 characters. File selection/example loading alone does not send data.
+- Matching fields require supporting quotations. Text quotes are checked verbatim;
+  image/PDF quotations are not independently OCR-verified.
+- Exact decimal/minor-unit checks cover line arithmetic and supported precision.
+- Currency is explicit; bare `$` remains unknown. No currency conversion/aggregation.
+- Incoming credits do not satisfy outgoing bills. Invoice and payment references
+  are separate. Exact supported identity groups, not fuzzy merchant authentication.
+- Content hashes deduplicate per tenant. Raw uploads are discarded, but extracted
+  facts, quoted evidence, provenance, filename and hash are retained privately.
+- CSV claim import requires consent and is bounded to twenty INR rows/1 MB; it
+  does not call AI. Statement spending analysis is a separate read-only operation.
 
-## The one problem
+Review states: `BILL_TO_VERIFY`, `RECEIPT_MATCHED_CLAIM`,
+`RECORDED_PAYMENT_CLAIM`, `CONFLICT_REVIEW`, `INCOMPLETE_REVIEW`.
+They do not prove fraud, a legitimate merchant, real ownership or settlement.
 
-Existing financial assistants can explain, classify or recommend. Existing payment systems can execute a precise instruction. The dangerous gap is between them: translating a human goal into reliable financial actions while preserving recipient, amount, fee, cadence, privacy and retry constraints.
+### C. Restricted artificial-money execution
 
-Financial Friday closes that gap with **proof-carrying financial programs**: the AI proposal cannot execute until ordinary code independently validates its effects against the user's immutable goal and authoritative provider evidence.
+Reviewed test-provider bill -> digest-bound interpretation -> immutable goal and
+separate provider evidence -> typed Gemini program -> deterministic verifier ->
+bounded plan repair/challenges -> current permission/state recheck -> atomic
+artificial effect -> signed receipt -> independent replay.
 
-## First complete journey
+Only an explicit sandbox action or previously granted automatic sandbox authority
+can enter this workflow. New users default to automatic execution off. The original
+execution-model intake is not a prepare-only conversation API. Chat/default
+review never use it to create an executable task.
 
-The user delegates:
+## 3. Contracts and algorithms
 
-> Pay this verified ₹1,999 electricity bill once, with no subscription or extra fee.
+`FinancialGoal` binds goal/provider/payee, INR, total/fee ceilings, one-time cadence,
+allowed data fields and an idempotency identity. `FinancialEvidence` contains the
+server-owned test-provider record, options, observations and prior outcome.
+`FinancialProgram` contains typed actions and an explanation, never generated code.
 
-Financial Friday:
-
-1. Resolves the enrolled biller and current obligation from an authorised connector.
-2. Gives Gemini only the bounded goal, connector evidence and typed action vocabulary.
-3. Receives a structured `FinancialProgram`, not prose or generated code.
-4. Checks provider, payee, amount, fee, currency, cadence, data disclosure, evidence and prior operation state.
-5. Feeds only safe validation error codes back for one repair attempt when the AI proposal is invalid.
-6. Runs adversarial mutations against the same guard.
-7. Executes through a provider sandbox with the original idempotency identity.
-8. Reads back or reconciles the provider outcome.
-9. Returns a signed receipt that says exactly what was proven and what remains outside scope.
-
-## Live unfamiliar-input journey
-
-The user saves a standing instruction containing a protected balance, an automatic
-payment ceiling and whether verified artificial-money tasks may execute without a
-second click. A test provider then publishes a fresh bill with a new reference,
-amount and recipient. The user speaks or pastes a message that Friday has not seen.
-
-Gemini extracts a typed interpretation from the untrusted content. That extraction
-does not authenticate anything. Friday uses the extracted reference to retrieve the
-separate provider record, compares amount and recipient, applies the standing
-instruction and creates a dynamic financial program. A matching bill can execute
-inside the saved sandbox authority. A changed amount, recipient, recurring request,
-embedded instruction or protected-balance violation produces ATTENTION with no
-payment. Repeating the same input resolves to the same event and payment identity.
-
-## Demonstration cases
-
-### Genuine bill
-
-A verified one-time obligation matches the goal. One artificial-money operation is created. Repeating the run returns the existing signed receipt rather than creating another payment.
-
-### Misleading subscription offer
-
-The provider highlights a cheaper recurring offer but also exposes an authenticated one-time option. Gemini selects the one-time route and the safety kernel verifies that choice. If only recurring options exist, no AI proposal can make the task executable without new customer authority.
-
-### Recipient swap
-
-The connector's recipient differs from the approved recipient. The kernel emits `EVIDENCE_PAYEE_MISMATCH`. AI explanation has no authority to override it.
-
-### Unknown network outcome
-
-An earlier provider call timed out after submission. The only valid plan is `RECONCILE_EXISTING → CONFIRM_RESULT`. If the provider reports success, Financial Friday completes without issuing a retry.
-
-## Technical layers
-
-### 1. Immutable goal contract
-
-The goal binds the task ID, instruction, enrolled provider, recipient, currency, total ceiling, fee ceiling, one-time cadence, allowed data fields and idempotency identity.
-
-### 2. Authoritative evidence
-
-Evidence comes from enrolled server-side connectors. Model text is never promoted to an authoritative amount, recipient, provider status or payment result.
-
-### 3. Gemini planner
-
-Gemini on Vertex AI maps the goal and evidence to a schema-constrained action program. It may explain the plan and repair a rejected candidate using fixed error codes. It has no executor or arbitrary tools.
-
-### 4. Deterministic safety kernel
-
-Pure code verifies the program and derives the authorised total. The model cannot change this verdict. The kernel fails closed on missing, contradictory or unknown evidence.
-
-### 5. Adversarial challenge stage
-
-Before execution, deterministic mutations test whether the same guard rejects an extra unit, changed recipient, excess data field, recurring mandate, duplicate financial action and missing confirmation.
-
-### 6. Restricted executor
-
-Only fixed verbs can reach the provider adapter. The current adapter uses SQLite and artificial money, signs the result, enforces tenant-scoped uniqueness and verifies the stored receipt.
-
-### 7. Reconciliation
-
-An unknown external result is not equivalent to failure. Financial Friday checks the original operation before retrying. This is essential because a local rollback cannot undo a provider-side payment.
-
-## Trust rules
-
-- Gemini proposes; deterministic code authorises.
-- No generated Python, JavaScript, SQL, shell command, URL or provider tool is executed.
-- No PIN, OTP, CVV, password or signing key enters the model context.
-- Authoritative evidence and user constraints remain separate from untrusted text.
-- Model failure never silently falls back while claiming a live AI result.
-- Unknown outcomes reconcile before retry.
-- Every money-moving operation is idempotent and tenant scoped.
-- A signed receipt proves bytes and checks, not universal financial safety.
-- Unsupported or unavailable evidence is shown as held/unverified, never green.
-
-## Google Cloud architecture
+Normal action order:
 
 ```text
-Web / future voice client
-          │
-          ▼
-Cloud Run API and orchestrator
-          │
-          ├── Vertex AI Gemini: structured planning and repair
-          ├── Safety kernel: deterministic financial verification
-          ├── Provider adapters: allowlisted operations only
-          ├── Firestore: atomic artificial-payment journal, state and evidence
-          ├── Cloud Tasks: future resumable execution and reconciliation
-          ├── Secret Manager + IAM: future connector credentials and keys
-          └── Cloud Logging: operational evidence without payment secrets
+VERIFY_PROVIDER -> LOAD_OBLIGATION -> CREATE_ONE_TIME_PAYMENT -> CONFIRM_RESULT
 ```
 
-The first deployment uses a Cloud Run service identity with `roles/aiplatform.user`; it does not use a Gemini API key. Version 0.13.0 implements tenant-scoped Firestore state and atomically commits artificial-money balance, receipt, bill-level payment identity, idempotency marker and run outcome. Restored tasks consult the same authoritative journal. Commit-time checks revalidate provider records, mandate instructions, automatic permission and protected balance. Local development retains its SQLite transaction and guards.
+Unknown prior outcome:
 
-Local mode is `SQLITE_LOCAL`; cloud mode is labelled `FIRESTORE_TRANSACTIONAL`. The default database is provisioned in Mumbai, with runtime permissions and persistent signing keys in Secret Manager. In-memory callback tests do not replace live Firestore restart/replay verification. The API exposes the active boundary at `GET /v1/friday/storage-status`, and the product surface displays the storage mode. Version 0.13.2 validates existing signed receipts before requesting an AI plan, so completed bills remain confirmable during an AI outage.
+```text
+RECONCILE_EXISTING -> CONFIRM_RESULT
+```
 
-Google ADK should be introduced when there are multiple durable agent stages requiring orchestration. It must not replace the safety kernel. Document AI should be added only when real consented bill/document ingestion is implemented. BigQuery/Vertex model evaluation should be added when there is a sufficiently large labelled evaluation set. Products are selected for real responsibilities, not logo count.
+The checker rejects changed identities, unobserved evidence, unauthenticated options,
+wrong amount/fee/cadence, excessive disclosure, repeated financial actions and
+unsafe ordering. A recurring verb exists in the schema for rejection tests; it is
+not authorised by the one-time product contract. One bounded planning repair can
+use safe validation error codes, never rewritten user permission.
 
-## Security algorithm
+Six normal-case mutations test amount, payee, disclosure, recurring obligation,
+duplicate action and missing confirmation. The unknown-outcome path tests retry
+before reconciliation. Mutation success is targeted robustness evidence, not an
+exhaustive proof or model accuracy benchmark.
 
-The differentiating mechanism is the combination of:
+The reserve planner uses exact deadline-prioritised Pareto-frontier dynamic
+programming: maximise bill count on earlier due dates, minimise spending for ties.
+Bounds are 32 candidates/10,000 frontier states. Incomplete/ambiguous records and
+limits fail closed. It previews artificial obligations; it neither reserves money
+nor accounts for real external accounts, criticality or all personal-finance needs.
 
-1. Immutable financial goal contract.
-2. Schema-constrained AI action program.
-3. Independent effect verification.
-4. Mutation-based pre-execution challenge.
-5. Restricted capability executor.
-6. Idempotent external operation identity.
-7. Reconciliation-before-retry.
-8. Signed outcome evidence.
+## 4. State, transactions and outcome assurance
 
-The project may describe this as a **Constraint-Carrying Financial Program** pattern. Novelty and patentability remain hypotheses requiring a professional prior-art search; they are not current claims.
+- Local: SQLite, `SQLITE_LOCAL`; cloud: tenant-scoped Firestore,
+  `FIRESTORE_TRANSACTIONAL`.
+- State kinds: mandates, accounts, provider bills, signals, dynamic cases, runs,
+  payments, idempotency and reviews.
+- New artificial balance ₹50,000; default reserve ₹10,000, automatic single-payment
+  ceiling ₹5,000, zero fee, automatic execution disabled. Rules are not balance resets.
+- Commit-time checks re-read relevant provider/mandate state. Preview is bounded
+  and non-atomic; it cannot substitute for those checks.
+- Atomic artificial commits bind balance, payment identity, signed receipt,
+  idempotency and run outcome. Receipt-first replay consults the journal before
+  requesting a new plan/payment, including during an AI outage.
+- Ed25519 signatures and canonical hashes protect internal evidence integrity;
+  reopening recomputes verifier/signature/journal checks rather than trusting
+  stored pass flags. Legacy unsealed outcomes remain explicitly uncertified.
+- These guarantees stop at the implemented transaction/trust boundary. A local
+  rollback cannot undo an external transfer; signatures cannot prove a truthful bank.
 
-## Evaluation
+Local follow-through checks a matching sandbox receipt and atomically stores a
+signed acknowledgement. Cloud returns `UNAVAILABLE / CLOUD_CONNECTOR_NOT_IMPLEMENTED`.
+Neither is an external biller update, settlement, refund or money recovery.
+The separate bank/biller resolution kernel is tested proposal logic without an
+authorised live correction adapter.
 
-Report measured results rather than promises:
+## 5. Identity, privacy and security
 
-- Valid-task completion rate.
-- Unsafe-program rejection rate.
-- False-hold rate.
-- Duplicate-effect rate under concurrent/repeated requests.
-- Unknown-outcome reconciliation accuracy.
-- Gemini schema-valid response rate and repair success rate.
-- Cost and latency per completed task.
-- Data minimisation violations blocked.
-- Difference between deterministic and Gemini planning on unseen scenarios.
+IAP authenticates the Google user. The Cloud Run gateway selects an owner mapping
+or stable isolated visitor tenant from verified identity; browser-supplied tenant
+headers are not authority. Domain-separated server HMACs derive visitor credentials.
+The API is private and the web service uses an authorised service identity.
+Secrets/signing keys stay server-side, with Secret Manager in the hosted setup.
 
-## Build status
+Public visitor admission limits: twenty write/action requests per user/day, two
+hundred globally, one thousand reads/user/day and ten thousand globally, plus
+burst limits. Daily windows reset at midnight UTC. Counts include admitted requests
+that fail downstream, and are not model-token or dollar spending caps.
 
-Implemented:
+Untrusted documents/history cannot redefine system permission. No model output
+is executed as source code or SQL. Structured task inputs exclude credentials;
+chat redaction is best-effort and arbitrary uploads are not guaranteed secret-free.
+Users must redact inputs before transmission. Retention/deletion, stronger DLP,
+external provider authentication and production operational review remain work.
 
-- Typed goal, evidence, action and program schemas.
-- Vertex-compatible Gemini planner and explicit local baseline.
-- Independent safety kernel.
-- Six mutation challenges.
-- One bounded repair loop.
-- Artificial-money executor, tenant isolation and idempotency.
-- Reconciliation-before-retry case.
-- Signed receipts and readback.
-- API endpoints and automated tests.
-- Persistent tenant-scoped standing instructions and artificial account balance.
-- Dynamic enrolled test-provider bills rather than only predefined scenarios.
-- Gemini structured interpretation of new message, QR and voice-transcript content.
-- Automatic artificial-money completion inside saved limits.
-- Recipient, amount, recurring-request, embedded-instruction and reserve protection.
-- Browser voice capture feeding the same live-input API.
-- Ephemeral Gemini document understanding for PNG, JPEG, WebP and PDF bills with model-produced source quotations and no raw-file persistence. Missing critical document quotations cause a hold; quotation accuracy is not independently OCR-verified.
-- Original text quotations are checked verbatim; unsupported quotations are discarded with a recorded count. This protects evidence display, not authenticity: the separate provider record and deterministic financial gate still decide whether an action is permitted.
-- Google Cloud project, enabled services, budget alerts and live Vertex smoke test.
-- Opt-in tenant-scoped Firestore transactions for artificial payments, balances, receipts, idempotency and run outcomes, with commit-time provider and mandate checks.
-- Restored tasks use the cloud journal before creating any payment effect; persistent signing keys are required in Firestore mode.
-- Bounded read-only understanding retries for transient provider failures; exhausted understanding fails closed with no submitted payment. Attempt and model provenance are retained.
+## 6. Deployment and technology roles
 
-Next:
+| Component | Actual responsibility |
+| --- | --- |
+| Python/FastAPI/Uvicorn | API, bounded service orchestration and local/cloud web hosting. |
+| HTML/CSS/JavaScript | Multi-page-like hash navigation, chat, uploads, evidence, rules and results. |
+| Pydantic | Strict inputs, typed model outputs and contract validation. |
+| Google Gen AI SDK / Gemini | Conversation, multimodal understanding, restricted planning and bounded repair. |
+| Vertex AI | Authenticated hosted model inference; verified model `gemini-3.5-flash-lite`. |
+| Firestore/SQLite | Cloud/local private records and implemented artificial transaction boundary. |
+| cryptography / Ed25519 | Internal receipt/run integrity, not real-bank certification. |
+| Cloud Run | Protected web gateway plus private API. |
+| IAP/IAM/Secret Manager | Identity, service invocation and server-held credentials. |
+| Cloud Build/Artifact Registry/Docker | Reproducible images and controlled revision deployment. |
 
-1. Arrange approved judge access and confirm dashboard rules. The owner-only IAP web surface and new-bill browser journey now work; see docs/FRIDAY_BROWSER_VERIFICATION_1008.md. The API remains private and tenant credentials stay server-side.
-2. Finish a second explicitly enrolled cloud identity, varied unseen-document evaluation and submission artifacts. Live PDF execution, repair and replay have been demonstrated; the hand-authored 16-case text evaluation is not a general fraud benchmark.
-3. Replace the same-operator test provider with an independently authenticated sandbox connector.
-4. Add durable Cloud Tasks orchestration and recovery.
-5. Replace browser transcription with Gemini Live API native audio using the same tools.
-6. Build an unseen-case evaluation, then prepare the video, deck and threat model.
+Cloud Run/Firestore use the Mumbai deployment configuration; Gemini's model
+location is configured as `global`, not a promise of universal Indian residency.
+Local live development can use the Gemini Developer API. `LOCAL_RULES` is a labelled
+baseline; multimodal review/chat do not masquerade as live AI in that mode.
 
-## Product boundaries
+Not implemented: Cloud Tasks orchestration, native Gemini Live/Agora voice, ADK,
+Document AI, BigQuery, Vertex AI Search, Model Armor and Cloud KMS signing.
+Bank of Anthos is retired from customer navigation/default configuration. Its
+optional historical fixtures and compatibility identifiers remain recoverable.
 
-The prototype is not a bank, UPI application, investment adviser or autonomous controller of real accounts. Production actions require authorised provider partnerships and their authentication/approval rules. Human review remains mandatory for ambiguous, high-impact or regulated actions. Financial Friday automates routine work inside explicit authority; it does not ask users to surrender control of all finances.
+## 7. Current experience and readiness
 
-## October 10 local follow-through boundary
+Overview has useful questions, document entry and editable guided examples, rather
+than fake personal activity. Chat is compact with bounded scrolling, opt-in context
+and privacy details. Home examples do not submit automatically. Theme, optional
+sound and motion preferences affect presentation only. Evidence states reflect
+actual results; insufficient information does not produce a universal safe badge.
 
-`POST /v1/friday/follow-through` accepts only a bill reference under tenant
-authentication. In SQLite mode it atomically re-reads the enrolled bill and
-signed artificial-payment receipt, checks exact identity/amount/currency/scope,
-and inserts a signed acknowledgement with a tenant/bill uniqueness constraint.
-Retries return the existing acknowledgement after validating it; conflicts HOLD.
-It never invokes a payment executor or edits account balances. Cloud mode returns
-UNAVAILABLE without using local state. This is local bookkeeping, not external
-biller reconciliation, bank settlement proof, or refund execution. Gemini's
-existing interpretation remains separate from this deterministic trust gate.
-# Current customer workflow update
+Recorded source baseline: 364 native tests (363 pass/one skip), 364 Docker tests
+(346 pass/eighteen skips), eleven tooling tests. Live Vertex and browser checks
+are recorded in feature/release docs. Current remote CI must be checked separately.
+Test passes do not measure fraud accuracy or certify every feature/device.
 
-The default home-command and document-upload flow is now read-only bill, receipt
-and transaction-claim reconciliation. It uses a separate general document schema
-and review store; it cannot mutate permission or payment journals. Gemini extracts
-facts; exact code groups evidence, checks arithmetic and conflicts, and prepares
-verification messages. Uploaded receipts remain user claims, not bank proof.
-The artificial payment executor remains a separate explicit workflow. See
-[the current review specification](docs/FINANCIAL_REVIEW.md). Older payment-model
-sections below describe that retained execution layer, not the new default UI.
+## 8. Priorities and non-goals
+
+Before submission: confirm another human login/roster/deadline, build a prepare-only
+conversation-to-approved-task bridge if feasible, evaluate varied unseen inputs
+and create required video/deck/materials. Preserve the existing safety boundary.
+Later: independently authorised providers, resumable workflows, privacy/retention
+operations and native voice. No autonomous real-money access, trading calls,
+phone surveillance, production patching or guaranteed reimbursements.
+
+Novelty/patentability and competition awards remain unproven. The BFSI submission
+is a functional AI-assisted financial experience and bounded-execution prototype,
+not a claimed replacement for banking infrastructure. Review the official
+[requirements](https://aibuildercup.com/themes.html) and
+[submission checklist](docs/submission/README.md).

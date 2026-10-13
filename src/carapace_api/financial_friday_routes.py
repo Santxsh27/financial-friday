@@ -82,6 +82,22 @@ def register_financial_friday_routes(application, service, authenticate):
     application.state.friday_reviews = review
     tasks = FridayTaskService(service, review)
     application.state.friday_tasks = tasks
+    @application.get('/v1/friday/obligations', tags=['financial-obligations'])
+    def obligation_inbox(tenant: TenantContext = Depends(authenticate)):
+        from .friday_obligations import financial_obligations
+        try:
+            return financial_obligations(service, review, tenant.tenant_id)
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+    @application.get('/v1/friday/obligations/{obligation_id}/result', tags=['financial-obligations'])
+    def obligation_result(obligation_id: str, tenant: TenantContext = Depends(authenticate)):
+        from .friday_obligations import recorded_obligation_result
+        try:
+            return recorded_obligation_result(service, review, tenant.tenant_id, obligation_id)
+        except KeyError as error:
+            raise HTTPException(404, 'Obligation not found in this workspace') from error
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
     from .friday_privacy import FridayPrivacyService, PrivacyPolicy, DeleteReviews
     privacy=FridayPrivacyService(service)
     application.state.friday_privacy=privacy

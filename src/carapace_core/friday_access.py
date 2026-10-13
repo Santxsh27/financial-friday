@@ -4,7 +4,7 @@ import re
 
 VISITOR_PATTERN = r"visitor-[a-f0-9]{64}"
 FRIDAY_ROUTES = {
-    "GET": r"(?:privacy|bank|reviews|scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100}|tasks/task_[a-f0-9]{32})",
+    "GET": r"(?:obligations|obligations/obligation_[a-f0-9]{32}/result|privacy|bank|reviews|scenarios|today|workspace|bill-plan|mandate|live-input|storage-status|test-provider/bills|runs/[A-Za-z0-9_-]{1,100}|tasks/task_[a-f0-9]{32})",
     "PUT": r"(?:mandate|privacy)",
     "POST": r"(?:privacy/reviews/delete|chat|tasks|tasks/task_[a-f0-9]{32}/(?:confirm|reconcile)|reviews|reviews/documents|reviews/statement|bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
 }

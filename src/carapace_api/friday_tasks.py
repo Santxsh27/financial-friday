@@ -91,14 +91,38 @@ class FridayTaskService:
         snapshot = self.reviews.safety_snapshot(tenant) if request.include_workspace else None
         board = snapshot["board"] if snapshot else {"cases": [], "documents": []}
         bills = workspace["bills"] if workspace else []
+        selected = None
+        if request.obligation_id:
+            if not request.include_workspace:
+                raise ValueError('Selecting an obligation requires explicit workspace consent.')
+            if request.expected_evidence_version != snapshot['version']:
+                raise ValueError('Financial evidence changed. Refresh the obligation inbox before preparing.')
+            from carapace_core.friday_obligations import obligation_board
+            selected = next((item for item in obligation_board(board, workspace, snapshot['version'])['items']
+                             if item['obligation_id'] == request.obligation_id), None)
+            if selected is None:
+                raise ValueError('Selected obligation is unavailable in this workspace.')
+            if len(selected['document_ids']) > 10:
+                raise ValueError('Selected obligation exceeds the ten-document AI context bound. No model call or payment was made; verify through a known provider channel.')
+            bills = [bill for bill in bills if bill['bill_reference'] == selected['bill_reference']]
         sources = [{"source_id": "request", "source_text": request.message}]
+        if rules is not None:
+            sources.append({'source_id': 'saved_rules', 'source_text': json.dumps(rules, ensure_ascii=False)})
         for bill in bills[:20]:
             sources.append({"source_id": "bill:" + bill["bill_reference"],
                             "source_text": json.dumps(bill, ensure_ascii=False)})
-        for case in board["cases"][:10]:
+        model_cases = [case for case in board['cases'] if case['case_id'] == selected['source_case_id']] if selected else board['cases'][:10]
+        for case in model_cases:
             sources.append({"source_id": case["case_id"], "source_text": json.dumps(case, ensure_ascii=False)})
+        if selected:
+            sources.append({'source_id': 'selected_obligation', 'source_text': json.dumps(selected, ensure_ascii=False)})
+            for document in [doc for doc in board['documents'] if doc['review_id'] in selected['document_ids']][:10]:
+                sources.append({'source_id': document['review_id'] + ':facts',
+                                'source_text': json.dumps(document['analysis']['facts'], ensure_ascii=False)})
         answer = propose_task(self.service.planner, request, sources)
         proposal = answer["proposal"]
+        if selected and proposal['bill_reference'] not in {None, selected['bill_reference']}:
+            raise ValueError('AI tried to substitute another obligation. No action was performed.')
         bill = next((b for b in bills[:20] if b["bill_reference"] == proposal["bill_reference"]), None)
         if proposal["bill_reference"] and bill is None:
             raise ValueError("AI selected a bill unavailable in this workspace. No action was performed.")
@@ -107,6 +131,8 @@ class FridayTaskService:
         if proposal["findings"]:
             gate_reasons.append("SEMANTIC_RISK_REVIEW")
         gate_reasons.extend(claim_gate_reasons(related, bill))
+        if selected and selected['action'] != 'PREPARE_PAYMENT' and proposal['action'] == 'PREPARE_PAYMENT':
+            gate_reasons.append('SELECTED_OBLIGATION_NOT_PAYABLE')
         from carapace_core.friday_bill_plan import plan_bills
         plan = plan_bills(workspace) if workspace else {"state":"NO_WORKSPACE", "selected":[], "already_recorded":[]}
         eligible = plan["state"] == "PLANNED" and bill and any(
@@ -124,6 +150,7 @@ class FridayTaskService:
         payload = {"task_id": "task_" + uuid4().hex, "tenant_id": tenant,
             "created_at": created.isoformat(), "expires_at": (created + timedelta(minutes=10)).isoformat(),
             "state": state, "proposal": proposal, "gate_reasons": gate_reasons,
+            'selected_obligation': selected,
             "bill": bill, "related_evidence_sha256": sha256_hex(related),
             "mandate_sha256": sha256_hex(rules),
             "safety_evidence_version": snapshot["version"] if snapshot else None,
@@ -131,7 +158,7 @@ class FridayTaskService:
             "provenance": answer["provenance"], "coverage": {
                 "workspace_included": request.include_workspace,
                 "provider_records_sent": min(20, len(bills)),
-                "review_cases_sent": min(10, len(board["cases"])),
+                "review_cases_sent": len(model_cases),
                 "related_cases_checked": len(related["cases"]),
                 "limits": "Safety checks cover the complete stored evidence up to 1,000 entries; excess coverage fails closed. Gemini receives at most 10 cases. No account ownership verification."}}
         record = {"payload": payload, "signature": self.service.signer.sign(payload),

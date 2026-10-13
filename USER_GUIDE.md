@@ -1,5 +1,26 @@
 # Financial Friday complete user walkthrough
 
+## Start with one obligation, not several disconnected tools
+
+1. Add a financial request using **Bills** or **Documents**. Reading it never pays.
+2. Open **Financial inbox → What needs handling?** Friday connects complete bounded
+   saved claims, exact artificial provider identities and recorded outcomes.
+3. Read the short reason and next step. **Details disagree** means a contradiction,
+   not proven fraud; a correction, tax, partial payment or recipient change may explain it.
+4. Optionally enter what to focus on. Confirm selected-context sharing, then choose
+   **Prepare this bill** or **Prepare verification**. Gemini works on that exact
+   item—you need not upload it again or type its reference. Preparation cannot pay.
+5. Review the separate task. If independently eligible, explicitly confirm the
+   artificial payment. Otherwise copy the useful verification draft through a
+   contact you independently know. Friday never sends a complaint or changes rules silently.
+6. A recorded artificial payment offers **Review recorded outcome**, a read-only
+   journal check. This does not call Gemini or initiate another payment. Uploaded
+   receipts alone show **Check payment status first**, never confirmed settlement.
+
+No provider match means verification assistance only. No bank, Gmail or SMS source
+is automatically connected. The customer benefit to demonstrate is input once →
+prepare the right next step → verify the result, not a promise of universal fraud protection.
+
 ## New: ask Friday to prepare a task
 
 ### New safety and privacy controls

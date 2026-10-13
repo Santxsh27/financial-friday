@@ -9,13 +9,35 @@ For the detailed rationale, algorithms and trust boundaries, read
 
 ## 1. Product definition
 
-Financial Friday is a financial assistant and bounded artificial-money operator.
-It makes financial records easier to understand while demonstrating how AI plans
-can execute without granting the model unrestricted financial authority.
+Financial Friday helps users keep financial obligations on track with minimal
+repeat input. Its obligation inbox joins saved document claims, exact artificial
+provider identities, saved constraints and recorded outcomes. Gemini prepares the
+next step; independent checks determine what can proceed. The intended outcome
+is a completed allowed task or useful verification assistance, not just an alert.
 
 The default consumer workflow is **read-only guidance and claim reconciliation**.
 The execution workflow is **separate and explicitly artificial**. Neither is a
 real-bank connector, investment adviser, SMS/Gmail agent or universal fraud shield.
+
+### Primary customer journey
+
+Input once → obligation inbox → explicit selected-context sharing → Gemini prepares
+one exact obligation → signed task and independent gates → explicit artificial
+confirmation if eligible → journal-backed result. No provider connection means
+verification assistance only. No automatic external complaint, correction or refund.
+
+`GET /v1/friday/obligations` reads complete bounded safety evidence and joins only
+exact normalized supplier AND reference to a provider record. It does not call
+Gemini or move funds. States are `READY_TO_PREPARE`, `RECORDED_COMPLETE`,
+`DETAILS_CONFLICT`, `VERIFY_STATUS`, `NEEDS_DETAILS`, `VERIFY_PROVIDER`,
+`REVIEW_RULES`. These are workflow states, not fraud classifications.
+
+Selected preparation binds `obligation_id` and `expected_evidence_version` into
+the signed task. The planner sees only the selected provider bill, selected case,
+up to ten supporting document facts, saved rules and current instruction. Any
+attempt to select another bill is rejected; excess selected-document context
+is rejected before a model call. Full bounded evidence remains checked independently. Preparation
+does not authorize payment, and evidence/provider/rules are rechecked at execution.
 
 ## 2. Supported workflows
 

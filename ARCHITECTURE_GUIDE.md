@@ -3,6 +3,27 @@
 Current technical reference: **13 October 2026**. Public project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
+### Current product spine: financial obligation → checked next step → outcome
+
+The obligation projection joins complete bounded document evidence (up to 1,000
+entries) to exact normalized supplier-and-reference artificial provider records.
+It distinguishes missing details, conflicting claims, possible prior payment,
+rule-constrained tasks, eligible preparation and verified artificial journal outcomes.
+There is no fuzzy merchant authentication and no fraud probability.
+
+Gemini receives selected-obligation context only after explicit consent, prepares
+an explanation/verification draft or exact supported bill, and cannot substitute
+another financial obligation. Saved rules and an evidence-version binding accompany
+the signed task. Existing independent gates recheck full evidence, provider state,
+permission and balance during execution. Recorded outcome lookup is read-only,
+verifies the receipt against the current bill and signing key, and never calls
+Gemini or retries a payment. Uploaded receipts cannot satisfy this check.
+
+This is the central demonstrable benefit: less repeat input and a coherent next
+step, with a checked outcome. Real provider integration, recipient ownership,
+external settlement, customer adoption and independently measured accuracy remain
+unproven. New connectors require independent authorisation—not new UI badges.
+
 Do not describe every historical CARAPACE idea as part of today's product. This
 repository evolved substantially; current documents take precedence over old pitches.
 

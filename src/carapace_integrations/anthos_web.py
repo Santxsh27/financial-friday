@@ -452,6 +452,22 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code,"Friday chat unavailable. No payment or action was performed.")
         return result
 
+    @application.get('/api/friday/obligations')
+    async def friday_obligations():
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/obligations', 'GET')
+        if code != 200:
+            raise HTTPException(code, 'Complete obligation evidence unavailable. No payment was submitted.')
+        return result
+    @application.get('/api/friday/obligations/{obligation_id}/result')
+    async def friday_obligation_result(obligation_id: str):
+        import re
+        if not re.fullmatch(r'obligation_[a-f0-9]{32}', obligation_id):
+            raise HTTPException(422, 'Invalid obligation identity')
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/obligations/'+obligation_id+'/result', 'GET')
+        if code != 200:
+            raise HTTPException(code, 'Recorded outcome unavailable. No retry was submitted.')
+        return result
+
     @application.post("/api/friday/tasks")
     @application.post("/api/friday/tasks/{task_id}/confirm")
     async def friday_task_write(request: StarletteRequest, task_id: str | None = None):

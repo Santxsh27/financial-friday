@@ -11,6 +11,8 @@ class TaskRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     message: str = Field(min_length=5, max_length=1600)
     include_workspace: bool = Field(default=False, strict=True)
+    obligation_id: str | None = Field(default=None, pattern=r'^obligation_[a-f0-9]{32}$')
+    expected_evidence_version: str | None = Field(default=None, min_length=1, max_length=80)
 
 
 class RiskFinding(BaseModel):
@@ -50,6 +52,11 @@ specific clarification. If no provider bill was supplied, leave bill_reference
 null, even if a reference was mentioned in the user's message. You can still assess
 the request and prepare a verification message without reading any saved workspace.
 Any risk/conflicting evidence means PREPARE_VERIFICATION.
+If a selected_obligation source is present, work ONLY on that obligation. Never
+substitute a different bill or recipient. Use its verification_questions to make
+the draft useful: identify disagreements and ask whether corrections, partial
+payments, fees or recipient changes explain them. A contradiction is not proven
+fraud. No connected provider means verification only, never an invented payment.
 For verification prepare a short useful UNSENT message with known details or explicit
 placeholders. Do not claim it was sent or funds recovered. No stock recommendations,
 market feeds, complaints submission, production code changes or external payments.

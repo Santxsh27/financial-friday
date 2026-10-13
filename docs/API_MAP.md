@@ -13,6 +13,8 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 
 | Method and path | Purpose / authority |
 | --- | --- |
+| GET `/v1/friday/obligations` | Complete bounded claims, provider matches, constraints and next steps; no model call or payment. |
+| GET `/v1/friday/obligations/{id}/result` | Verify an existing artificial-payment journal record; never retry or claim external settlement. |
 | POST `/v1/friday/chat` | Message, bounded history, optional context; live guidance only. |
 | GET `/v1/friday/reviews` | Saved document claims and deterministic reconciliation; read-only. |
 | POST `/v1/friday/reviews` | Read supplied text and save extracted claims; never pay. |

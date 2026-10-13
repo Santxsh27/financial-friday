@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--gcloud',default='gcloud');parser.add_argument('--ca-file')
     parser.add_argument('--execute-artificial-payment',action='store_true')
     parser.add_argument('--check-hardening',action='store_true',help='Check lifecycle, journal-only reconciliation and deletion in this disposable synthetic workspace')
+    parser.add_argument('--check-obligations',action='store_true',help='Use a new synthetic document and selected-obligation workflow')
     args=parser.parse_args()
     if not args.url.startswith('https://') or not args.url.endswith('.run.app'):
         parser.error('Use the private Cloud Run API origin')
@@ -60,7 +61,14 @@ def main():
     call('/v1/friday/test-provider/bills',{'bill_reference':ref,'provider_name':'Friday Test Electricity',
         'provider_id':'friday-test-electricity','payee_id':'example-electricity@upi',
         'amount_minor':10000,'due_date':'2026-10-18','currency':'INR'})
-    task=call('/v1/friday/tasks',{'message':f'Prepare a one-time artificial payment for bill {ref}. I want to review the exact bill and recipient before confirming.','include_workspace':True})
+    preparation={'message':f'Prepare a one-time artificial payment for bill {ref}. I want to review the exact bill and recipient before confirming.','include_workspace':True}
+    if args.check_obligations:
+        call('/v1/friday/reviews',{'text':f'ARTIFICIAL unpaid electricity invoice. Supplier: Friday Test Electricity. Invoice reference: {ref}. Total: INR 100.00. Recipient: example-electricity@upi. Due date: 2026-10-18. This is a one-time outgoing payment, not a refund or recurring mandate.'})
+        board=call('/v1/friday/obligations')
+        selected=next(item for item in board['items'] if item['reference']==ref and item['source_case_id'])
+        assert selected['state']=='READY_TO_PREPARE',json.dumps(selected)
+        preparation.update(obligation_id=selected['obligation_id'],expected_evidence_version=board['evidence_version'])
+    task=call('/v1/friday/tasks',preparation)
     assert task['provenance']['mode']=='VERTEX_AI'
     assert task['state']=='READY_FOR_CONFIRMATION',json.dumps(task)
     assert not task['money_moved'] and not task['payment_authorized']
@@ -73,6 +81,9 @@ def main():
     result={'live_vertex_task':True,'semantic_refund_contradiction_held':True,
         'firestore_signed_task_readback':True,'preparation_balance_unchanged':True,
         'model':task['provenance']['model'],'artificial_payment_executed':False}
+    if args.check_obligations:
+        assert task['selected_obligation']['obligation_id']==selected['obligation_id']
+        result.update(unseen_synthetic_bill_extracted=True,selected_obligation_bound=True)
     if args.execute_artificial_payment:
         body={'expected_task_sha256':task['task_sha256'],'confirm_sandbox_execution':True}
         first=call('/v1/friday/tasks/'+task['task_id']+'/confirm',body)
@@ -85,6 +96,11 @@ def main():
         assert call('/v1/friday/mandate')['sandbox_balance_minor']==balance-10000
         result.update(artificial_payment_executed=True,repeated_confirmation_one_debit=True,
             independent_replay='VERIFIED',run_id=first['run']['run_id'])
+        if args.check_obligations:
+            completed=next(item for item in call('/v1/friday/obligations')['items'] if item['obligation_id']==selected['obligation_id'])
+            assert completed['state']=='RECORDED_COMPLETE' and completed['action']=='CHECK_RECORDED_RESULT'
+            assert not completed['external_settlement_verified']
+            result['obligation_outcome_reconciled']=True
         if args.check_hardening:
             status=call('/v1/friday/tasks/'+task['task_id'])
             assert status['execution']['state']=='COMPLETED'

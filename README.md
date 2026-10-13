@@ -1,10 +1,17 @@
 # Financial Friday
 
-**Understand financial records. Check the evidence. Handle allowed tasks safely.**
+**Keep financial obligations on track. Prepare the next safe step. Verify the outcome.**
 
 Financial Friday combines Google Gemini financial assistance with a separate,
 strictly bounded artificial-money executor. It is not a bank, a trading adviser,
 or an unrestricted agent controlling real accounts.
+
+The central workflow is an **obligation inbox**, not a collection of disconnected
+AI tools: give Friday a financial request once, see what is known versus missing,
+prepare one evidence-bound next step, and follow its actual outcome. Supplier and
+reference must match an artificial provider record before a document can join the
+payment workflow. No connected provider means useful verification assistance,
+not a fabricated payment. Matching uploaded receipts remain unconfirmed claims.
 
 ## Technical documentation
 
@@ -39,12 +46,21 @@ Friday uses Gemini to understand unfamiliar inputs and propose restricted plans;
 ordinary code checks arithmetic, identities, constraints and actual sandbox state.
 The model's confidence is never payment authority or proof of settlement.
 
+**Start-to-outcome flow:** Overview → Financial inbox → choose one obligation →
+confirm selected-context sharing → Prepare this bill / Prepare verification →
+review a signed task → confirm an eligible artificial payment → recorded outcome.
+No repeat upload or typed bill reference is needed for a saved item. Opening the
+inbox is read-only and makes no Gemini call. The model cannot substitute another
+obligation; changed evidence requires a fresh check. Corrections, partial payments,
+fees and recipient changes are verification questions, not automatic fraud labels.
+
 | Capability | What works and what it does not mean |
 | --- | --- |
 | Ask Friday | Live Gemini answers, explanations and unsent drafts. Optional private workspace context; no execution tools. |
 | Prepare next step | Live Gemini task selection and quoted risk analysis; signed ten-minute draft; independent claim/rule gates; explicit artificial-payment confirmation. No payment during preparation. |
 | Document intelligence | PNG/JPEG/WebP/PDF or text extraction, typed facts, quotations and exact arithmetic checks. Extracted facts are claims, not authenticity. |
 | Financial inbox | Compares related amount/payee claims, separates currencies and prepares verification messages. A matching receipt is not bank settlement. |
+| Obligation workflow | Complete bounded evidence joined to artificial provider records and journal outcomes; exact selected-item Gemini preparation, targeted verification questions and explicit outcome states. |
 | Guided first use | Editable artificial bill/receipt/conflict examples. Clicking Load does not send or pay; explicit review produces actual model results. |
 | Statement review | Consented INR CSV analysis; exact totals and bounded coverage, not a bank balance. |
 | Bill planning | Exact reserve-aware deadline prioritisation over test-provider bills. Preview does not authorise or reserve money. |
@@ -112,8 +128,10 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 Verified task release, 13 October 2026:
 
-- Native: 405 tests ran; 404 passed and one optional integration was skipped.
-- Docker: 405 ran; 386 passed and nineteen optional checks were skipped.
+- The preceding hardening release ran 405 native tests (404 passed, one optional
+  skip) and 405 Docker tests (386 passed, nineteen optional skips).
+- The obligation update adds seventeen outcome/identity/consent regression tests;
+  final release counts and live checks are recorded in the deployment manifest.
 - Fifteen offline tooling tests passed.
 - Live Vertex/Firestore checks confirmed quoted refund-risk holds, signed task
   readback, unchanged balance during preparation, one confirmed artificial payment,

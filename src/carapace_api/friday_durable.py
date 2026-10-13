@@ -10,7 +10,7 @@ from carapace_core.friday_assurance import seal_friday_run
 from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences"}
 
 
 class FridayDurableState(Protocol):

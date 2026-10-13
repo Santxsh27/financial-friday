@@ -1,5 +1,21 @@
 # Financial Friday complete user walkthrough
 
+## Your financial buddy
+
+On Overview, Friday shows a read-only summary of saved claims, not a pretend bank
+balance. Default artificial bills are not counted as your personal to-do list.
+Click **Make Friday yours** for an optional nickname, short/step-by-step replies
+and a preferred focus. **Save buddy preferences** stores those choices privately
+without changing payment rules. **Forget these preferences** resets them after
+confirmation; financial records and receipts remain.
+
+Style/focus go to Gemini only with your opt-in; your nickname does not. Sharing
+financial records needs the separate **Include my saved inbox** checkbox.
+**Friday, brief me** prepares a personalised briefing request after that consent;
+choose **Ask Friday** to send it. Neither button pays. **What AI actually did**
+shows returned model/call information. Animation means a request is in progress,
+not proof that a financial action succeeded or that Friday is monitoring your bank.
+
 ## Start with one obligation, not several disconnected tools
 
 1. Add a financial request using **Bills** or **Documents**. Reading it never pays.

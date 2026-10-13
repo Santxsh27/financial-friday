@@ -36,6 +36,7 @@ CHAT_JS = r"""
       function chatMessage(speaker,text){const card=element('article',null,'friday-chat-message');card.dataset.speaker=speaker;card.append(element('b',speaker==='user'?'You':'Friday'),element('div',text));chatLog.append(card);chatLog.scrollTop=chatLog.scrollHeight;return card;}
       function clearChat(){chatHistory=[];chatLog.replaceChildren();chatStatus.textContent='Conversation cleared from this page. No payment or bank action was performed.';}
       chatConsent.addEventListener('change',clearChat);
+      document.addEventListener('friday:preferences-changed',clearChat);
       const chatTools=element('div',null,'friday-chat-tools');const chatClear=element('button','Clear chat');chatClear.type='button';chatClear.addEventListener('click',clearChat);
       const reviewFromChat=element('button','Review a bill or receipt');reviewFromChat.type='button';reviewFromChat.dataset.screenLink='bill';
       chatTools.append(reviewFromChat,chatClear);
@@ -63,7 +64,7 @@ CHAT_JS = r"""
       scopeCopy.querySelector('p').textContent='Questions and document checks work without bank access. Only the separate payment demo uses artificial funds.';
       async function sendFridayChat(){const field=$('home-command');const message=field.value.trim();if(!message)return;if(chatBusy){toast('Friday is still replying.');return;}
         chatBusy=true;const button=command.querySelector('button[type=submit]');button.disabled=true;chatClear.disabled=true;chatConsent.disabled=true;chatMessage('user',message);field.value='';chatStatus.textContent='Friday is thinking with Gemini… No financial action is being performed.';
-        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked});
+        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked,include_preferences:$('buddy-use-style')?.checked===true});
           if(result.read_only!==true||result.money_moved!==false||result.payment_authorized!==false||!Array.isArray(result.actions_executed)||result.actions_executed.length)throw new Error('Unexpected chat authority');
           const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited inbox case(s) · user-supplied evidence'));
           const screenLabels={review:'Open financial inbox',document:'Read a document',money:'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules'};

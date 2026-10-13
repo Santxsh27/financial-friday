@@ -452,6 +452,26 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code,"Friday chat unavailable. No payment or action was performed.")
         return result
 
+    @application.get('/api/friday/buddy')
+    async def friday_buddy():
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/buddy', 'GET')
+        if code != 200: raise HTTPException(code, 'Buddy overview unavailable; no action performed.')
+        return result
+
+    @application.get('/api/friday/buddy/preferences')
+    async def friday_buddy_preferences():
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/buddy/preferences', 'GET')
+        if code != 200: raise HTTPException(code, 'Preferences unavailable.')
+        return result
+
+    from carapace_api.friday_buddy import BuddyPreferences
+
+    @application.put('/api/friday/buddy/preferences')
+    async def friday_buddy_save(payload: BuddyPreferences):
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/buddy/preferences', 'PUT', payload.model_dump())
+        if code != 200: raise HTTPException(code, 'Preferences were not saved.')
+        return result
+
     @application.get('/api/friday/obligations')
     async def friday_obligations():
         code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/obligations', 'GET')

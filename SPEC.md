@@ -240,6 +240,13 @@ optional historical fixtures and compatibility identifiers remain recoverable.
 
 ## 7. Current experience and readiness
 
+The financial-buddy surface adds tenant-isolated communication preferences and
+a read-only overview of the user's saved claims. Default provider examples are
+not personal obligations. The optional nickname stays out of model requests;
+style/focus require saved and per-request consent. These choices never change a
+mandate, reserve, verifier or execution authority. Animation and returned AI
+provenance indicate actual requests, not background bank surveillance.
+
 Overview has useful questions, document entry and editable guided examples, rather
 than fake personal activity. Chat is compact with bounded scrolling, opt-in context
 and privacy details. Home examples do not submit automatically. Theme, optional

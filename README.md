@@ -2,7 +2,10 @@
 
 **Keep financial obligations on track. Prepare the next safe step. Verify the outcome.**
 
-Financial Friday combines Google Gemini financial assistance with a separate,
+Financial Friday is a private **financial buddy**: understand the records you
+choose to share, organise next steps, and prepare useful guidance in your preferred
+style. It stores extracted facts and evidence—not an archive of your original PDFs.
+It combines Google Gemini financial assistance with a separate,
 strictly bounded artificial-money executor. It is not a bank, a trading adviser,
 or an unrestricted agent controlling real accounts.
 
@@ -57,6 +60,8 @@ fees and recipient changes are verification questions, not automatic fraud label
 | Capability | What works and what it does not mean |
 | --- | --- |
 | Ask Friday | Live Gemini answers, explanations and unsent drafts. Optional private workspace context; no execution tools. |
+| Make Friday yours | Private nickname, concise/step-by-step explanations and focus preferences. Opt-in presentation choices, never payment authority; nickname is not sent to Gemini. |
+| Visible AI companion | Animated request-driven presence, returned model/call provenance and a read-only saved-record overview. No invented background scanning or fake progress. |
 | Prepare next step | Live Gemini task selection and quoted risk analysis; signed ten-minute draft; independent claim/rule gates; explicit artificial-payment confirmation. No payment during preparation. |
 | Document intelligence | PNG/JPEG/WebP/PDF or text extraction, typed facts, quotations and exact arithmetic checks. Extracted facts are claims, not authenticity. |
 | Financial inbox | Compares related amount/payee claims, separates currencies and prepares verification messages. A matching receipt is not bank settlement. |

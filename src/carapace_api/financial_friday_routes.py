@@ -82,6 +82,22 @@ def register_financial_friday_routes(application, service, authenticate):
     application.state.friday_reviews = review
     tasks = FridayTaskService(service, review)
     application.state.friday_tasks = tasks
+    from .friday_buddy import FridayBuddy, BuddyPreferences
+    buddy = FridayBuddy(service)
+    application.state.friday_buddy = buddy
+
+    @application.get('/v1/friday/buddy', tags=['friday-buddy'])
+    def buddy_overview(tenant: TenantContext = Depends(authenticate)):
+        try: return buddy.snapshot(tenant.tenant_id, review)
+        except ValueError as error: raise HTTPException(409, str(error)) from error
+
+    @application.get('/v1/friday/buddy/preferences', tags=['friday-buddy'])
+    def buddy_preferences(tenant: TenantContext = Depends(authenticate)):
+        return {'preferences': buddy.preferences(tenant.tenant_id), 'scope':'COMMUNICATION_ONLY'}
+
+    @application.put('/v1/friday/buddy/preferences', tags=['friday-buddy'])
+    def buddy_save(payload: BuddyPreferences, tenant: TenantContext = Depends(authenticate)):
+        return buddy.save(tenant.tenant_id, payload)
     @application.post('/internal/friday/recover', include_in_schema=False)
     async def recover_task(request: Request):
         from .friday_recovery import verify_task_identity, recover_journal

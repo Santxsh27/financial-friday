@@ -1,6 +1,6 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **13 October 2026**. Public project name: Financial Friday.
+Current technical reference: **14 October 2026**. Public project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Current product spine: financial obligation → checked next step → outcome
@@ -153,7 +153,10 @@ No current-news browsing, stock feed, trading recommendation or continuous monit
 3. Gemini extracts document kind, money direction, issuer, invoice reference,
    transaction reference, totals, currency, payee, dates, line items and quotations.
 4. Pydantic validates facts. Text quotations must occur in the original text.
-   Image/PDF quotations are model-extracted, not independently OCR-verified.
+   The configured basic Mumbai Document AI processor independently anchors
+   image/PDF claims to OCR text and page/line evidence. One-to-three-page PDFs and
+   a shared daily admission limit bound use. Missing/unsupported fields stay
+   unverified; OCR does not authenticate an issuer or recipient.
 5. Exact code checks decimal precision and printed arithmetic, groups supported
    identities and detects conflicting totals/payees/payment references.
 6. Records are saved privately and the inbox shows evidence plus a verification

@@ -27,5 +27,7 @@ def chat_context(service, review, bank, tenant: str) -> dict:
 
 
 def reply_to_user(service, review, bank, tenant, request):
+    from .friday_buddy import FridayBuddy
     context = chat_context(service, review, bank, tenant) if request.include_workspace else {}
-    return answer_chat(service.planner, request, context)
+    preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
+    return answer_chat(service.planner, request, context, preferences)

@@ -82,6 +82,20 @@ def register_financial_friday_routes(application, service, authenticate):
     application.state.friday_reviews = review
     tasks = FridayTaskService(service, review)
     application.state.friday_tasks = tasks
+    @application.post('/internal/friday/recover', include_in_schema=False)
+    async def recover_task(request: Request):
+        from .friday_recovery import verify_task_identity, recover_journal
+        if not tasks.recovery.enabled:raise HTTPException(404,'Recovery worker is disabled')
+        try:
+            await run_in_threadpool(verify_task_identity,request.headers.get('Authorization'),tasks.recovery)
+        except Exception as error:raise HTTPException(403,'Recovery worker authentication failed') from error
+        import json
+        body=bytearray()
+        async for chunk in request.stream():
+            if len(body)+len(chunk)>8192:raise HTTPException(413,'Recovery envelope too large')
+            body.extend(chunk)
+        try:return await run_in_threadpool(recover_journal,tasks,json.loads(body))
+        except (ValueError,TypeError,KeyError) as error:raise HTTPException(409,'Recovery evidence rejected; no payment retry performed') from error
     @application.get('/v1/friday/obligations', tags=['financial-obligations'])
     def obligation_inbox(tenant: TenantContext = Depends(authenticate)):
         from .friday_obligations import financial_obligations

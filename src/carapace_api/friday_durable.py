@@ -102,6 +102,30 @@ class FirestoreFridayState:
         from google.cloud import firestore
         return firestore.transactional(callback)(self._client.transaction())
 
+    def reserve_resource(self, purpose, day, units, limit):
+        if purpose not in {'ocr_pages','recovery_jobs'} or type(units) is not int or units < 1:
+            raise ValueError('Invalid resource reservation')
+        ref = self._client.collection('friday_resource_limits_v1').document(day+'-'+purpose)
+        def commit(transaction):
+            record = ref.get(transaction=transaction)
+            used = record.to_dict().get('used',0) if record.exists else 0
+            if used + units > limit:
+                raise ValueError('Daily '+purpose.replace('_',' ')+' demo allowance reached. No additional cloud work was admitted.')
+            transaction.set(ref, {'used':used+units,'limit':limit,'day':day})
+            return {'used':used+units,'limit':limit,'day':day}
+        return self._atomic(commit)
+
+    def update_task_recovery(self, tenant, task_id, update):
+        self._validate('task_executions', tenant, task_id)
+        ref = self._documents('task_executions', tenant).document(task_id)
+        def commit(transaction):
+            old = ref.get(transaction=transaction)
+            replacement = update(old.to_dict() if old.exists else None)
+            if replacement is not None:
+                transaction.set(ref, replacement)
+            return replacement is not None
+        return self._atomic(commit)
+
     def put_review(self, tenant, record_id, record):
         """Every admitted review write changes the epoch in the same transaction."""
         self._validate("reviews", tenant, record_id)

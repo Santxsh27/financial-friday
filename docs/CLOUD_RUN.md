@@ -1,8 +1,8 @@
 # Financial Friday on Google Cloud
 
-## Current release — 13 October 2026
+## Current release
 
-Current code package is `0.18.0`; actual deployed revisions/source and digests are
+Current code package is `0.19.0`; actual deployed revisions/source and digests are
 in [CURRENT_RELEASE](CURRENT_RELEASE.json), with [hardening notes](HARDENING_0180.md).
 The app has Google-sign-in visitor isolation, a private API, live Vertex chat and
 review, and transactional Firestore artificial-money state. It is not the
@@ -13,6 +13,11 @@ Read [the current task release record](FRIDAY_TASK_RELEASE_1013.md),
 [the architecture guide](../ARCHITECTURE_GUIDE.md), and [SPEC](../SPEC.md) first.
 Documentation/CI commits do not automatically redeploy Cloud Run. Preserve the
 existing IAP/IAM/origin/secret configuration when making a future release.
+
+The 0.19 integration adds bounded basic Mumbai Document AI OCR and a signed
+journal-only recovery worker. Read [cloud extension limits](CLOUD_EXTENSIONS_0190.md)
+and the manifest before assuming activation. Cloud Tasks dispatch remains off
+until its exact dedicated identity, queue and permissions are separately approved.
 
 ## Historical cloud boundary and release log
 

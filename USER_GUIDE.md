@@ -365,7 +365,8 @@ verification. These are outside the supported task vocabulary.
 
 1. Click **Documents** or **Read a document**. No artificial provider setup is required.
 2. Choose a bill, invoice, receipt or transaction notice as PNG, JPEG, WebP or PDF,
-   at most 8 MB. Selecting does not upload.
+   at most 8 MB. For independent OCR, PDFs must be unencrypted and one to three
+   pages. Selecting does not upload.
 3. Read the cloud-processing disclosure and click **Read & reconcile - no payment**.
 4. **Financial inbox** displays the saved claim and what needs verification.
 5. Add a related receipt or a consented transaction CSV. Friday groups matching
@@ -377,8 +378,13 @@ This review flow never executes a payment, even if automatic permission is on.
 Matching claims are not externally verified settlement. An unsupported or
 ambiguous currency is shown as unknown, not converted to rupees.
 
-Gemini performs document understanding directly. Extracted quotations are not
-independently OCR-verified, and the document is not itself trusted provider evidence.
+When the live OCR processor is configured, Google Document AI reads the document
+first and Gemini interprets its text. Expand the source evidence to see matched
+quotations and page numbers. Unsupported fields stay unverified. Local operation
+without that processor uses explicitly ungrounded Gemini image/PDF extraction.
+Neither mode makes the document trusted provider evidence or verifies its issuer.
+The demo admits at most 100 OCR pages across all visitors per UTC day; when this
+allowance is reached, use pasted redacted text or return after the daily reset.
 Raw files are discarded after analysis; extracted facts, evidence references and
 run records can remain stored. This is **not** “nothing is retained.”
 

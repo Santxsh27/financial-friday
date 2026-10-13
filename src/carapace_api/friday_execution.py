@@ -76,3 +76,24 @@ class TaskExecutionJournal:
                 old=json.loads(row[0]) if row else None
                 if old and old["payload"]["lease_id"]==lease["lease_id"]:
                     db.execute("UPDATE friday_task_executions SET record=? WHERE tenant=? AND task_id=?",(json.dumps(record),lease["tenant_id"],lease["task_id"]))
+
+    def record_recovery(self, job, outcome):
+        def update(old):
+            payload=self.validate(old,job['tenant_id'],job['task_id'])
+            if not payload or payload['lease_id']!=job['lease_id'] or payload['task_sha256']!=job['task_sha256'] or payload['state'] not in {'EXECUTING','OUTCOME_UNKNOWN','REVIEW_REQUIRED'}:
+                return None
+            if payload['state']=='EXECUTING' and utcnow()<datetime.fromisoformat(payload['lease_until']):
+                return None
+            state='RECORDED_PAYMENT_VERIFIED' if outcome['state']=='RECORDED_PAYMENT_VERIFIED' else 'OUTCOME_UNKNOWN'
+            return self.seal({**payload,'state':state,'updated_at':utcnow().isoformat(),
+                'recovery':{'checked_at':utcnow().isoformat(),'state':outcome['state'],'new_payment_created':False},
+                'message':outcome.get('message','Existing journal checked; no payment retry submitted.')})
+        if self.service.durable.mode=='FIRESTORE_TRANSACTIONAL':
+            return self.service.durable.update_task_recovery(job['tenant_id'],job['task_id'],update)
+        with self.service.connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row=db.execute('SELECT record FROM friday_task_executions WHERE tenant=? AND task_id=?',(job['tenant_id'],job['task_id'])).fetchone()
+            record=update(json.loads(row[0]) if row else None)
+            if record is None:return False
+            db.execute('UPDATE friday_task_executions SET record=? WHERE tenant=? AND task_id=?',(json.dumps(record),job['tenant_id'],job['task_id']))
+            return True

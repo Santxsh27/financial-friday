@@ -7,8 +7,8 @@ from decimal import Decimal, InvalidOperation
 
 class GoogleDocumentGrounder:
     def __init__(self, processor, session=None):
-        if not re.fullmatch(r"projects/[A-Za-z0-9_-]+/locations/(us|eu)/processors/[A-Za-z0-9_-]+",processor):
-            raise ValueError("Use an exact Document AI processor resource in an approved US/EU location")
+        if not re.fullmatch(r"projects/[A-Za-z0-9_-]+/locations/(us|eu|asia-south1)/processors/[A-Za-z0-9_-]+",processor):
+            raise ValueError("Use an exact Document AI processor resource in an approved US/EU/Mumbai location")
         self.processor=processor
         self.location=processor.split('/')[3]
         if session is None:
@@ -18,14 +18,34 @@ class GoogleDocumentGrounder:
             session=AuthorizedSession(credentials)
         self.session=session
 
+    @staticmethod
+    def page_count(data, mime):
+        if mime == 'application/pdf':
+            from io import BytesIO
+            from pypdf import PdfReader
+            try:
+                reader = PdfReader(BytesIO(data), strict=True)
+                if reader.is_encrypted:
+                    raise ValueError('Encrypted PDFs are not admitted; never upload a document password')
+                count = len(reader.pages)
+            except Exception as error:
+                raise ValueError('The PDF could not be safely read before OCR') from error
+            if not 1 <= count <= 3:
+                raise ValueError('For the public demo, choose a PDF of one to three pages before OCR')
+            return count
+        if mime not in {'image/png','image/jpeg','image/webp'}:
+            raise ValueError('Unsupported OCR document type')
+        return 1
+
     def read(self, data, mime):
+        page_count = self.page_count(data, mime)
         response=self.session.post(f'https://{self.location}-documentai.googleapis.com/v1/{self.processor}:process',
             json={"rawDocument":{"content":base64.b64encode(data).decode(),"mimeType":mime}},timeout=60)
         response.raise_for_status()
         doc=response.json()['document']
         text=doc.get('text','')
-        if not text or len(text)>60000 or len(doc.get('pages',[]))>15:
-            raise ValueError("OCR is empty or exceeds the bounded 15-page/60,000-character review limit")
+        if not text or len(text)>60000 or len(doc.get('pages',[]))>page_count:
+            raise ValueError("OCR is empty or exceeds the admitted page/text bounds")
         lines=[]
         for number,page in enumerate(doc.get('pages',[]),1):
             for line in page.get('lines',[]):

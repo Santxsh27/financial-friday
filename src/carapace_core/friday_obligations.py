@@ -102,6 +102,11 @@ def _item(board, case, bill, eligible, plan_state):
             'due_date': case.get('due_date') if case else bill['due_date'],
             'state': state, 'action': action, 'why': why, 'next_step': next_step, 'checks': checks,
             'comparisons': _comparisons(related, bill),
+            'source_evidence': [{'document_id':document['review_id'],
+                'mode':document.get('provenance',{}).get('quote_validation','USER_SUPPLIED_CLAIM'),
+                'quotes':document['analysis']['facts']['quotes'],
+                'grounding':document.get('grounding')}
+                for document in board['documents'] if case and document['review_id'] in case['document_ids']][:10],
             'verification_questions': _questions(case),
             'document_ids': case['document_ids'] if case else [],
             'provider_evidence': 'ARTIFICIAL_RECORD_MATCH' if bill else 'NOT_CONNECTED',

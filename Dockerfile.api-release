@@ -1,7 +1,12 @@
 # Immutable verified 0.18.0 dependencies plus the final committed source.
 # Local development still uses the portable Dockerfile/Compose build.
 FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:edc7ee5ac3543b93af4b3f2e0bfcf0a48d21fd6b96423b09b4a024b2fd5e4ae3
+USER root
+COPY pyproject.toml README.md /app/
 COPY src /app/src
 COPY tests /app/tests
+RUN python -m pip install --no-cache-dir 'pypdf==6.20.1' \
+    && python -m pip install --no-cache-dir --no-deps --no-build-isolation .
+USER 10001:10001
 ENV PYTHONPATH=/app/src
 CMD ["python", "-m", "carapace_api"]

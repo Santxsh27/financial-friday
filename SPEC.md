@@ -64,7 +64,9 @@ record -> related claims/conflicts -> verification message and evidence display.
 - Supported files are PNG/JPEG/WebP/PDF below the 8 MB bound; text is bounded to
   12,000 characters. File selection/example loading alone does not send data.
 - Matching fields require supporting quotations. Text quotes are checked verbatim;
-  image/PDF quotations are not independently OCR-verified.
+  configured Document AI independently anchors image/PDF quotations to OCR text
+  and page/line evidence. Without that processor, they remain unverified.
+  OCR does not verify the issuer or payment recipient's ownership.
 - Exact decimal/minor-unit checks cover line arithmetic and supported precision.
 - Currency is explicit; bare `$` remains unknown. No currency conversion/aggregation.
 - Incoming credits do not satisfy outgoing bills. Invoice and payment references
@@ -226,8 +228,12 @@ location is configured as `global`, not a promise of universal Indian residency.
 Local live development can use the Gemini Developer API. `LOCAL_RULES` is a labelled
 baseline; multimodal review/chat do not masquerade as live AI in that mode.
 
-Document AI OCR has a tested optional adapter; its live processor is not enabled.
-Not implemented: Cloud Tasks orchestration, native Gemini Live/Agora voice, ADK,
+Document AI supports an approved basic Mumbai processor, preflight one-to-three
+page PDFs, and an app-wide 100-page daily admission limit. Deployment activation
+and actual live evidence are recorded in `docs/CURRENT_RELEASE.json`.
+Cloud Tasks journal-only recovery is implemented but disabled pending dedicated
+identity/queue approval and a real dispatch test. It cannot retry a payment.
+Not implemented: native Gemini Live/Agora voice, ADK,
 BigQuery, Vertex AI Search, Model Armor and Cloud KMS signing.
 Bank of Anthos is retired from customer navigation/default configuration. Its
 optional historical fixtures and compatibility identifiers remain recoverable.

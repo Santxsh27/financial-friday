@@ -97,8 +97,11 @@ Google IAP -> Cloud Run web gateway -> private Python/FastAPI API
 Google Gen AI SDK performs model calls, Pydantic validates schemas, and
 `cryptography` supplies Ed25519 signing. Cloud Build and Artifact Registry build
 and store images. IAM, IAP and Secret Manager keep credentials server-side.
-Document AI has a tested optional OCR adapter, but no live processor is enabled.
-Cloud Tasks automatic dispatch, native Gemini Live voice, ADK, BigQuery, Agora and
+Version 0.19 adds a basic Mumbai Document AI OCR integration with exact source
+anchors and a shared 100-page daily admission limit. Check the release manifest
+for actual live activation and verified results, not just configured resources.
+Cloud Tasks journal-only recovery is implemented but **disabled** pending separate
+dedicated-identity/queue approval and a real dispatch test. Native Gemini Live voice, ADK, BigQuery, Agora and
 KMS signing are **not implemented**. The model configured in the verified release
 is `gemini-3.5-flash-lite`; local live calls use the Gemini Developer API and cloud
 calls use Vertex AI. Model availability and quota must be checked before changing it.
@@ -126,7 +129,14 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Verified task release, 13 October 2026:
+Latest local checks, 14 October 2026: **435 tests ran, 434 passed, one optional
+skip; 15 tooling checks passed**. The thirteen new cloud-extension tests cover
+preflight document bounds, global usage limits, signed recovery jobs, actor
+validation, stale leases, scheduling failure and no-second-debit recovery.
+These do not establish actual Cloud Tasks dispatch. See
+[0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
+
+Previous verified task release, 13 October 2026:
 
 - Native: 422 tests ran; 421 passed, one optional skip.
 - Docker: 422 tests ran; 403 passed, nineteen optional skips.

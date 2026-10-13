@@ -3,6 +3,7 @@ import hashlib
 import csv
 import io
 import json
+import os
 from datetime import datetime, timezone
 from carapace_ai.friday_review import extract_review
 from carapace_core.friday_review import ReviewedFinancialDocument, ReviewQuote, review_facts, reconcile_reviews
@@ -89,7 +90,11 @@ class FridayReviewService:
         generation=privacy_generation(self.service,tenant)
         raw = text.encode() if text is not None else data
         digest = hashlib.sha256(("TEXT:" if text is not None else mime + ":").encode() + raw).hexdigest()
-        review_id = "review-" + digest[:32]
+        processor = os.getenv('FRIDAY_DOCUMENT_AI_PROCESSOR') if data is not None else None
+        pipeline_digest = hashlib.sha256((digest+'|OCR:'+processor).encode()).hexdigest() if processor else digest
+        # A new grounding pipeline never pretends that an older cached model-only
+        # extraction was independently OCR-checked. Keep the prior review intact.
+        review_id = "review-" + pipeline_digest[:32]
         if self.service.durable.mode == "FIRESTORE_TRANSACTIONAL":
             existing = self.service.durable.get("reviews", tenant, review_id)
         else:
@@ -103,10 +108,14 @@ class FridayReviewService:
             from carapace_ai.friday_document_grounding import configured_grounder, ground_facts
             grounder=configured_grounder()
             if grounder:
+                from .friday_resource_limits import reserve_resource
+                admitted_pages = grounder.page_count(data,mime)
+                reserve_resource(self.service,'ocr_pages',admitted_pages)
                 ocr=grounder.read(data,mime)
                 from carapace_ai.redaction import redact_for_model
                 facts,attempts=extract_review(self.service.planner,text=redact_for_model(ocr['text']).text)
                 grounding=ground_facts(facts,ocr)
+                grounding['admitted_pages']=admitted_pages
             else:
                 facts,attempts=extract_review(self.service.planner,data=data,mime=mime,filename=filename)
                 grounding={'mode':'UNAVAILABLE','field_anchors':[],'unsupported_fields':[],

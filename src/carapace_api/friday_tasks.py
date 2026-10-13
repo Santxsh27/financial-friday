@@ -20,6 +20,7 @@ class TaskConfirmation(BaseModel):
     model_config = ConfigDict(extra="forbid")
     expected_task_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
     confirm_sandbox_execution: bool = Field(strict=True)
+    simulate_response_loss: bool = Field(default=False, strict=True)
 
 
 def _now():
@@ -31,6 +32,8 @@ class FridayTaskService:
         self.service, self.reviews = service, reviews
         from .friday_execution import TaskExecutionJournal
         self.executions=TaskExecutionJournal(service)
+        from .friday_recovery import RecoveryScheduler
+        self.recovery=RecoveryScheduler.from_env()
         with service.connect() as db:
             db.execute("""CREATE TABLE IF NOT EXISTS friday_assistant_tasks (
                 tenant_id TEXT NOT NULL, task_id TEXT NOT NULL, task_json TEXT NOT NULL,
@@ -76,6 +79,11 @@ class FridayTaskService:
     def get(self, tenant, identity):
         task=self._public(self._record(tenant, identity))
         task["execution"]=self.executions.get(tenant,identity)
+        task['recovery_mode']='AUTOMATIC_JOURNAL_ONLY' if self.recovery.enabled else 'MANUAL_JOURNAL_ONLY'
+        if task['execution']['state']=='RECORDED_PAYMENT_VERIFIED':
+            recovery=self.reconcile(tenant,identity)
+            task['execution']['assurance_state']='VERIFIED' if recovery['state']=='RECORDED_PAYMENT_VERIFIED' else 'UNVERIFIED'
+            if task['execution']['assurance_state']!='VERIFIED':task['execution']['state']='REVIEW_REQUIRED'
         if task["execution"].get("run_id"):
             run=self.service.get(tenant,task["execution"]["run_id"])
             task["execution"]["assurance_state"]=run.get("assurance",{}).get("state","UNVERIFIED")
@@ -115,7 +123,8 @@ class FridayTaskService:
         for case in model_cases:
             sources.append({"source_id": case["case_id"], "source_text": json.dumps(case, ensure_ascii=False)})
         if selected:
-            sources.append({'source_id': 'selected_obligation', 'source_text': json.dumps(selected, ensure_ascii=False)})
+            model_selected={key:selected[key] for key in ('obligation_id','source_case_id','bill_reference','supplier','reference','amount_minor','currency','state','action','why','checks','verification_questions','provider_evidence')}
+            sources.append({'source_id': 'selected_obligation', 'source_text': json.dumps(model_selected, ensure_ascii=False)})
             for document in [doc for doc in board['documents'] if doc['review_id'] in selected['document_ids']][:10]:
                 sources.append({'source_id': document['review_id'] + ':facts',
                                 'source_text': json.dumps(document['analysis']['facts'], ensure_ascii=False)})
@@ -164,7 +173,7 @@ class FridayTaskService:
         record = {"payload": payload, "signature": self.service.signer.sign(payload),
                   "key_id": self.service.signer.key_id, "created_at": created.isoformat()}
         self._save(tenant, record)
-        return self._public(record)
+        return self._public(record) | {'recovery_mode':'AUTOMATIC_JOURNAL_ONLY' if self.recovery.enabled else 'MANUAL_JOURNAL_ONLY'}
 
     def reconcile(self, tenant, identity):
         """Read authoritative journal only. This endpoint cannot submit a payment."""
@@ -188,6 +197,11 @@ class FridayTaskService:
         if not confirmation.confirm_sandbox_execution or sha256_hex(record["payload"])!=confirmation.expected_task_sha256:
             raise ValueError("Explicit confirmation of the displayed task is required")
         prior=self.executions.get(tenant,identity)
+        if prior.get('state')=='RECORDED_PAYMENT_VERIFIED':
+            recovered=self.reconcile(tenant,identity)
+            if recovered['state']!='RECORDED_PAYMENT_VERIFIED':
+                raise ValueError('Recovered outcome no longer matches the journal. No retry was submitted.')
+            return {'run':None,'read_only_replay':True,'money_moved':False,'recovery':recovered}
         if prior.get('state')=='COMPLETED' and prior.get('run_id'):
             stored=self.service.get(tenant,prior['run_id'])
             if stored.get('assurance',{}).get('state')=='VERIFIED':
@@ -195,7 +209,9 @@ class FridayTaskService:
             raise ValueError('Stored outcome could not be independently verified. No retry was submitted.')
         lease=self.executions.claim(tenant,identity,confirmation.expected_task_sha256)
         try:
-            result=self._confirm_now(tenant,identity,confirmation)
+            result=self._confirm_now(tenant,identity,confirmation,lease)
+            if confirmation.simulate_response_loss and result.get('run',{}).get('status')=='COMPLETED_SYNTHETIC':
+                raise RuntimeError('Controlled artificial response loss after journal commit')
             run=result.get("run") or {}
             status="COMPLETED" if run.get("status") in {"COMPLETED_SYNTHETIC","ALREADY_COMPLETED","RECONCILED_COMPLETED"} else "HELD" if run.get("status")=="HELD" else "REVIEW_REQUIRED"
             self.executions.finish(lease,status,run.get("run_id"),"Read the recorded outcome; no real bank is connected.")
@@ -207,7 +223,7 @@ class FridayTaskService:
             self.executions.finish(lease,"OUTCOME_UNKNOWN",message="Outcome uncertain. Review Activity before resuming; no success or failure is assumed.")
             raise
 
-    def _confirm_now(self, tenant, identity, confirmation: TaskConfirmation):
+    def _confirm_now(self, tenant, identity, confirmation: TaskConfirmation, lease=None):
         if not confirmation.confirm_sandbox_execution:
             raise ValueError("Explicit artificial-money confirmation is required.")
         record = self._record(tenant, identity)
@@ -226,6 +242,11 @@ class FridayTaskService:
         related = _related(snapshot["board"], payload["bill"]["bill_reference"])
         if sha256_hex(related) != payload["related_evidence_sha256"]:
             raise ValueError("Related financial evidence changed. Prepare a new task.")
+        if self.recovery.enabled:
+            if lease is None:raise ValueError('Durable execution lease required for automatic recovery')
+            try:self.recovery.enqueue(self.service,lease)
+            except Exception as error:
+                raise ValueError('Recovery scheduling unavailable. No payment was submitted; prepare again later.') from error
         # Existing executor rechecks current provider/rules/reserve and atomically
         # enforces payment identity. A duplicate click cannot create a second debit.
         return handle_reviewed_bill(self.service, tenant, payload["bill"]["bill_reference"],

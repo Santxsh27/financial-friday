@@ -79,5 +79,18 @@ class BuddyTests(unittest.TestCase):
     def test_profile_layout_has_opt_in_and_real_ai_state(self):
         from carapace_integrations.financial_friday_ui import FINANCIAL_FRIDAY_HTML
         for text in ('Make Friday yours','What AI actually did','friday:preferences-changed','include_preferences',"data-motion=off"):
-            self.assertIn(text,FINANCIAL_FRIDAY_HTML)
+            self.assertTrue(text in FINANCIAL_FRIDAY_HTML,text)
 
+    def test_local_gateway_validates_preferences_as_json_body(self):
+        import importlib
+        from fastapi.testclient import TestClient
+        with patch.dict('os.environ',{'CARAPACE_DEMO_ENABLED':'true'}):
+            web=importlib.import_module('carapace_integrations.anthos_web')
+            client=TestClient(web.create_demo_app())
+            with patch.object(web,'_api_call',return_value=(200,{'scope':'COMMUNICATION_ONLY'})) as transport:
+                response=client.put('/api/friday/buddy/preferences',json=BuddyPreferences().model_dump())
+                self.assertEqual(response.status_code,200,response.text)
+                self.assertEqual(transport.call_args.args[2],'PUT')
+                self.assertEqual(transport.call_args.args[3],BuddyPreferences().model_dump())
+            self.assertEqual(client.put('/api/friday/buddy/preferences',json={'display_name':'<script>'}).status_code,422)
+            client.close()

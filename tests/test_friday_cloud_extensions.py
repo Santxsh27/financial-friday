@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from carapace_ai.friday_document_grounding import GoogleDocumentGrounder
+from carapace_ai.friday_document_grounding import GoogleDocumentGrounder, ground_facts
 from carapace_api.friday_recovery import RecoveryScheduler, recover_journal, verify_task_identity
 from carapace_api.friday_resource_limits import reserve_resource
 from carapace_ai.financial_friday import LocalFinancialFridayPlanner
@@ -14,6 +14,7 @@ from carapace_api.friday_tasks import TaskConfirmation
 from carapace_core.canonical import sha256_hex
 import test_friday_tasks
 import test_friday_transactions
+import test_friday_review
 
 
 class CloudExtensionTests(unittest.TestCase):
@@ -45,6 +46,34 @@ class CloudExtensionTests(unittest.TestCase):
         with patch('pypdf.PdfReader',return_value=SimpleNamespace(is_encrypted=True)):
             with self.assertRaises(ValueError):grounder.read(b'%PDF-test','application/pdf')
         grounder.session.post.assert_not_called()
+
+    def ocr(self,text):
+        return {'text':text,'mode':'DOCUMENT_AI_OCR','lines':[{'page':1,'start':0,'end':len(text),'confidence':.99,'box':[]}]}
+
+    def test_missing_currency_quote_grounded_only_by_explicit_total_line(self):
+        facts=test_friday_review.facts(total='100.00',quotes=[{'field':'total','quote':'100.00'}])
+        result=ground_facts(facts,self.ocr('INR 100.00\n'))
+        self.assertNotIn('currency',result['unsupported_fields'])
+        self.assertIn('supplier',result['unsupported_fields'])
+        self.assertEqual(next(a for a in result['field_anchors'] if a['field']=='currency')['quote'],'INR')
+
+    def test_missing_quotes_bare_dollar_or_mixed_currency_stay_unverified(self):
+        facts=test_friday_review.facts(total='100.00',quotes=[{'field':'total','quote':'100.00'}])
+        for text in ('$100.00','INR 100.00 USD','100.00'):
+            with self.subTest(text=text):
+                self.assertIn('currency',ground_facts(facts,self.ocr(text))['unsupported_fields'])
+        self.assertIn('payee',ground_facts(facts,self.ocr('INR 100.00'))['unsupported_fields'])
+
+    def test_currency_elsewhere_cannot_ground_total(self):
+        facts=test_friday_review.facts(total='100.00',quotes=[{'field':'total','quote':'100.00'}])
+        ocr=self.ocr('INR\n100.00');ocr['lines']=[{'page':1,'start':0,'end':3,'confidence':.99},
+            {'page':1,'start':4,'end':10,'confidence':.99}]
+        self.assertIn('currency',ground_facts(facts,ocr)['unsupported_fields'])
+
+    def test_low_readability_total_cannot_ground_currency(self):
+        facts=test_friday_review.facts(total='100.00',quotes=[{'field':'total','quote':'100.00'}])
+        ocr=self.ocr('INR 100.00');ocr['lines'][0]['confidence']=.5
+        self.assertIn('currency',ground_facts(facts,ocr)['unsupported_fields'])
 
     def test_atomic_global_resource_budget_counts_failures_and_blocks_excess(self):
         with patch.dict('os.environ',{'FRIDAY_OCR_PAGES_DAILY_LIMIT':'3'}):

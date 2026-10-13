@@ -86,5 +86,27 @@ def ground_facts(facts, ocr):
         if not relevant or any(type(line.get('confidence')) not in {int,float} or line['confidence']<0.8 for line in relevant):
             unsupported.append(q.field)
         anchors.append({'field':q.field,'quote':q.quote,'start':start,'end':start+len(q.quote),'locations':relevant})
+    # Model omissions must not turn an unquoted field into independent evidence.
+    supported = {anchor['field'] for anchor in anchors if anchor['field'] not in unsupported}
+    if facts.currency != 'UNKNOWN' and 'currency' not in supported:
+        # An explicit currency on the independently anchored total's SAME line
+        # can supply the missing currency quote. Never search the whole invoice
+        # for a convenient code, infer from a recipient, or interpret a bare "$".
+        totals = [anchor for anchor in anchors if anchor['field']=='total' and 'total' not in unsupported]
+        for anchor in totals:
+            for line in anchor['locations']:
+                text = ocr['text'][line['start']:line['end']]
+                labels = set(re.findall(r'\b(?:INR|USD|EUR|GBP|AUD|SGD|JPY)\b|₹',text))
+                codes = {'INR' if label=='₹' else label for label in labels}
+                if codes != {facts.currency}: continue
+                quote = next(label for label in labels if label==facts.currency or label=='₹' and facts.currency=='INR')
+                start = line['start'] + text.index(quote)
+                anchors.append({'field':'currency','quote':quote,'start':start,'end':start+len(quote),'locations':[line]})
+                supported.add('currency'); break
+            if 'currency' in supported: break
+    for field in ('supplier','reference','total','currency','payee'):
+        value = getattr(facts,field,None)
+        if value is not None and value != 'UNKNOWN' and field not in supported:
+            unsupported.append(field)
     return {'mode':ocr['mode'],'field_anchors':anchors,'unsupported_fields':sorted(set(unsupported)),
         'authenticity_verified':False,'processor':ocr.get('processor'),'raw_ocr_stored':False}

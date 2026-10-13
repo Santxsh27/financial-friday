@@ -129,8 +129,8 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **435 tests ran, 434 passed, one optional
-skip; 15 tooling checks passed**. The thirteen new cloud-extension tests cover
+Latest local checks, 14 October 2026: **439 tests ran, 438 passed, one optional
+skip; 15 tooling checks passed**. The seventeen new cloud-extension tests cover
 preflight document bounds, global usage limits, signed recovery jobs, actor
 validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See

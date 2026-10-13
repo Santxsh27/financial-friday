@@ -82,7 +82,7 @@ class GroundingTests(unittest.TestCase):
         self.assertFalse(value_supported('payee','attacker@upi','tnpower@upi'))
 
     def test_ocr_anchor_and_low_quality_are_not_authenticity(self):
-        text='TN Power BILL-1234 1780.00 tnpower@upi 2026-10-15'
+        text='TN Power BILL-1234 INR 1780.00 tnpower@upi 2026-10-15'
         ocr={'text':text,'mode':'DOCUMENT_AI_OCR','lines':[{'start':0,'end':len(text),'page':1,'box':[],'confidence':.99}]}
         report=ground_facts(facts(),ocr)
         self.assertEqual(report['unsupported_fields'],[])

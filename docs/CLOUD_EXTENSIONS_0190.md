@@ -41,8 +41,15 @@ an actual process crash, external settlement or recovery at a real bank.
 
 ## Verification and release
 
-Native checks: 435 ran, 434 passed and one optional skip. Tooling: 15 passed.
+Native checks: 439 ran, 438 passed and one optional skip. Tooling: 15 passed.
 See `CURRENT_RELEASE.json` for the actually deployed version and live evidence.
 The new OCR cloud acceptance probe uses one fresh synthetic visitor and artificial
 PDF, reads it back from Firestore and repeats the upload without any payment request.
 Never substitute these engineering checks for an independently labelled evaluation.
+
+The first live probe exposed an omitted currency quotation. The verifier now
+requires important fields to be grounded even when the model omits a quotation.
+An explicit unique currency on the anchored total's same OCR line can supply
+currency evidence; a bare dollar sign, different line, mixed codes or poor
+readability cannot. Four regressions cover these cases. No failed candidate was
+promoted to normal traffic.

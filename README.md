@@ -136,6 +136,13 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
+Docker: **439 ran, 420 passed, nineteen optional skips**. The deployed 0.19
+Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →
+Firestore readback check on an artificial PDF. Exact source anchors, cached
+upload replay, unchanged balance and zero payment requests were verified. The
+private API also rejected anonymous access and unconfirmed execution. This is
+acceptance evidence, not independent model accuracy or document authentication.
+
 Previous verified task release, 13 October 2026:
 
 - Native: 422 tests ran; 421 passed, one optional skip.

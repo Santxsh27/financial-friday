@@ -40,6 +40,11 @@ fraud-detection accuracy, legal compliance or full production readiness.
 
 ## Cloud activation still requires authorization
 
+Historical 0.18 activation status below is superseded by
+[the 0.19 cloud extensions](CLOUD_EXTENSIONS_0190.md). Basic Mumbai OCR is now
+active and verified; automatic Tasks dispatch still requires dedicated identity
+approval. The current adapter accepts US/EU/Mumbai processors, not only US/EU.
+
 - Set `FRIDAY_DOCUMENT_AI_PROCESSOR` to an exact approved processor only after
   enabling the API, choosing its processing region and granting the API service
   narrowly scoped processing access. The current adapter admits US/EU processors;

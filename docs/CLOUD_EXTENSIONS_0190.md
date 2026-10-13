@@ -42,6 +42,14 @@ an actual process crash, external settlement or recovery at a real bank.
 ## Verification and release
 
 Native checks: 439 ran, 438 passed and one optional skip. Tooling: 15 passed.
+Docker: 439 ran, 420 passed and nineteen optional skips. Both Cloud Run services
+now serve the tested `ocr0190b` revisions. The live artificial PDF passed OCR,
+Vertex extraction, exact anchors, Firestore readback and cached replay, with zero
+payment requests and unchanged balance. API anonymous access was rejected.
+The Google-sign-in browser journey also uploaded the artificial PDF, saved its
+claim, opened the obligation and displayed six independent page-one source
+anchors. Missing provider evidence correctly left it at verification needed;
+uploading did not create a payment. No browser console errors were captured.
 See `CURRENT_RELEASE.json` for the actually deployed version and live evidence.
 The new OCR cloud acceptance probe uses one fresh synthetic visitor and artificial
 PDF, reads it back from Firestore and repeats the upload without any payment request.

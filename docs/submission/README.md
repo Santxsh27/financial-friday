@@ -2,7 +2,7 @@
 
 Use this folder for the final demo script, evaluation results, slides and submission links. Current build status is in [Start Here](../../START_HERE.md), [README](../../README.md) and [SPEC](../../SPEC.md).
 
-**Current handover, 13 October:** read [the teammate briefing](../../TEAMMATE_BRIEFING.md)
+**Current handover, 13 October:** read [the architecture guide](../../ARCHITECTURE_GUIDE.md)
 and [current release evidence](../FRIDAY_CHAT_AND_BANK.md) first. The default
 customer journey is live chat and read-only claim review; artificial execution is
 separate. Earlier scripts/materials need review before being used as final artifacts.

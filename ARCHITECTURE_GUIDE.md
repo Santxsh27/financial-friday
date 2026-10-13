@@ -1,27 +1,7 @@
-# Financial Friday — Teammate briefing
+# Financial Friday — Architecture guide
 
-Current handover: **13 October 2026**. Read this before proposing a redesign or
-running execution-capable APIs. Public project name: Financial Friday. Team: Vaultkeepers.
-
-## 1. The explanation Santosh can use in the meeting
-
-> We are building Financial Friday for the Google Cloud AI Builder Cup's BFSI
-> theme. The problem is that people have financial information scattered across
-> bills, receipts and notices, while a normal chatbot cannot safely act on their
-> money. Friday uses Gemini to understand unfamiliar information, gives a useful
-> explanation or message draft, and compares supporting records using exact code.
-> A separate payment sandbox shows the more technical part: Gemini proposes a
-> small typed program, an independent checker rejects unsafe changes, and only an
-> allowed task can affect artificial funds. Friday then checks the actual stored
-> outcome instead of just telling the user it succeeded.
->
-> We already have a Cloud Run website, live Gemini on Vertex AI, private per-user
-> Firestore records, document review and the sandbox safety engine. We do not have
-> access to real banks, GPay, SMS or utility accounts, and we do not pretend that an
-> uploaded receipt proves settlement. The next important improvement is connecting
-> conversation to task preparation and approval without giving Gemini direct
-> payment authority. I would like your help reviewing that integration, evaluating
-> varied inputs and making the final demo clear and convincing.
+Current technical reference: **13 October 2026**. Public project name: Financial Friday.
+Read the trust boundaries before using execution-capable APIs.
 
 Do not describe every historical CARAPACE idea as part of today's product. This
 repository evolved substantially; current documents take precedence over old pitches.
@@ -300,7 +280,7 @@ standalone page check and makes that historical fixture manually selectable.
 Check [Actions](https://github.com/Santxsh27/financial-friday/actions) for the actual
 new run result rather than inferring a remote pass from local tests.
 
-## 13. Suggested work split and acceptance criteria
+## 13. Engineering priorities and acceptance criteria
 
 **Highest-value engineering milestone:** a prepare-only conversation tool creates
 an expiring tenant-bound task from an exact provider record and reviewed digest;
@@ -313,15 +293,8 @@ Other immediate tasks: second human sign-in, varied unseen-document evaluation,
 latency/cost measurement, a short coherent demo and required submission artifacts.
 Do not pivot the idea or add extra services merely to make the diagram larger.
 
-Possible teammate ownership: task bridge/API tests or evaluation/UX acceptance.
-Santosh can own customer story, visual review, realistic samples and submission.
-Agree one area and acceptance tests before coding. Use a branch/PR in this same
-repository; never share cloud secrets or grant owner-level access just to review it.
-
-For the meeting, ask: Can you run it? Which promise is unclear? Where are the trust
-boundaries weak? Can we complete one connected task safely before submission?
-What would you measure against a baseline? Which missing part is necessary now?
-Which part should stay on the roadmap?
+Use a branch and reviewed changes in this repository. Never share cloud secrets
+or grant owner-level access merely to review the application.
 
 ## 14. File map for a developer
 
@@ -342,6 +315,6 @@ Which part should stay on the roadmap?
 | UI composition | `src/carapace_integrations/friday_experience.py`, `friday_everyday.py`, `friday_review_ui.py`, `friday_chat_ui.py` |
 | Deployment/test configuration | `compose.yaml`, `Dockerfile`, `Dockerfile.web`, `cloudbuild*.yaml`, `.github/workflows/ci.yml` |
 
-Existing unrelated local edits may belong to Santosh; do not reset them. Historical
+Preserve unrelated local edits; do not reset them. Historical
 CARAPACE graph, release-passport and Anthos experiments are not the default Friday
 customer workflow. See CONTRIBUTING for the safest starting commands.

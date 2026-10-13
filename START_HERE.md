@@ -1,7 +1,7 @@
 # Financial Friday — Start Here
 
 Updated 13 October 2026. New teammates: read
-[TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md) too.
+[ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 
 ## What this application does
 

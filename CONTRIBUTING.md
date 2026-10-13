@@ -1,6 +1,6 @@
 # Developing Financial Friday
 
-Read [TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md), [SPEC.md](SPEC.md) and
+Read [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md), [SPEC.md](SPEC.md) and
 [docs/API_MAP.md](docs/API_MAP.md) first. Work in this repository; no new product
 repo, cloud project, bank stack or database trial is required.
 

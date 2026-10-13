@@ -6,9 +6,9 @@ Financial Friday combines Google Gemini financial assistance with a separate,
 strictly bounded artificial-money executor. It is not a bank, a trading adviser,
 or an unrestricted agent controlling real accounts.
 
-## New teammate? Read in this order
+## Technical documentation
 
-1. [TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md): purpose, meeting script, complete
+1. [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md): purpose, trust boundaries, complete
    technical architecture, algorithms, workflows, current gaps and review questions.
 2. [START_HERE.md](START_HERE.md): a short live-demo tour.
 3. [USER_GUIDE.md](USER_GUIDE.md): detailed controls and expected results.
@@ -160,6 +160,6 @@ independent checks and restricted execution, not a claimed world-first primitive
 - `tests/`, `tools/`, `examples/`, `schemas/`: verification and fixtures.
 - `docs/`: current feature guides plus dated historical evidence.
 
-This README, the teammate briefing and SPEC describe the current product. Dated
+This README, the architecture guide and SPEC describe the current product. Dated
 release documents describe their own historical scope; do not treat them as a
 promise that every earlier CARAPACE idea is part of today's application.

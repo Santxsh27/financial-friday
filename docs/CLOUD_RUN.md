@@ -10,7 +10,7 @@ owner-only deployment described in older entries below. Anthos is retired from
 the customer UI; no bank stack or Cloud SQL trial is required.
 
 Read [the current release record](FRIDAY_CHAT_AND_BANK.md),
-[the teammate briefing](../TEAMMATE_BRIEFING.md), and [SPEC](../SPEC.md) first.
+[the architecture guide](../ARCHITECTURE_GUIDE.md), and [SPEC](../SPEC.md) first.
 Documentation/CI commits do not automatically redeploy Cloud Run. Preserve the
 existing IAP/IAM/origin/secret configuration when making a future release.
 

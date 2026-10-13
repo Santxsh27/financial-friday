@@ -3,8 +3,8 @@
 Updated **13 October 2026**. This document replaces the mixed historical product
 specifications. Deployed package version remains `0.17.0`; verified runtime source
 is `719c7bb`. Documentation/CI updates are not a new deployment.
-For the detailed rationale, algorithms and meeting explanation, read
-[TEAMMATE_BRIEFING.md](TEAMMATE_BRIEFING.md).
+For the detailed rationale, algorithms and trust boundaries, read
+[ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md).
 
 ## 1. Product definition
 

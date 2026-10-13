@@ -69,3 +69,11 @@ Tests cover late SQLite/Firestore evidence changes, older-than-window conflicts,
 coverage overflow, leases, completed task readback, journal-only reconciliation,
 privacy isolation/confirmation/in-flight cancellation and public-key rotation.
 See README for the final verified counts and the latest deployment release record.
+
+The live Vertex/Firestore release probe used a fresh disposable synthetic visitor:
+preparation without debit, semantic refund hold, one confirmed artificial payment,
+completed-task replay without another debit, signed lifecycle readback, journal-only
+reconciliation and synthetic draft cleanup preserving the receipt all passed.
+The Developer API paired-risk smoke comparison was stopped after repeated server
+errors; no independent accuracy number is available. Runtime identities are in
+[CURRENT_RELEASE](CURRENT_RELEASE.json).

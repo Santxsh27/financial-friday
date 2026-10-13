@@ -1,7 +1,19 @@
 {
   "code_version": "0.18.0",
-  "deployment_status": "BUILD_PENDING",
-  "last_verified_api_revision": "financial-friday-api-tasksfinal1013",
-  "last_verified_web_revision": "financial-friday-web-ui-clarity1013",
-  "note": "Hardening deployment identities will replace this pending status after successful rollout. GitHub alone is not deployment evidence."
+  "deployment_status": "DEPLOYED_VERIFIED",
+  "runtime_source_commit": "85622030ed28835a10814d43c7a97b97e8dc0707",
+  "api_revision": "financial-friday-api-hardening0180",
+  "web_revision": "financial-friday-web-hardening0180",
+  "api_digest": "sha256:84ca75e7653837290b924d12cdc6d667e6093403da5333d92cb1805f2c9fc730",
+  "web_digest": "sha256:f0a7e007914fb16c6424c09459f56706d76588010afeada21967e20b033ca15e",
+  "api_build": "3486a1f6-10da-4ec7-87a6-e33a27bd34d5",
+  "web_build": "cc56fa1b-bad4-48b7-b3c0-e672667a21ee",
+  "native_tests": {"ran":405,"passed":404,"skipped":1},
+  "docker_tests": {"ran":405,"passed":386,"skipped":19},
+  "tool_tests_passed": 15,
+  "live_vertex_firestore": {"prepare_without_debit":true,"refund_risk_hold":true,"one_artificial_payment":true,"replay_without_new_debit":true,"durable_lifecycle":true,"journal_only_recovery":true,"synthetic_draft_deletion_preserves_receipt":true},
+  "document_ai_processor_enabled": false,
+  "cloud_tasks_dispatch_enabled": false,
+  "independent_accuracy_benchmark_completed": false,
+  "note": "New cloud-service activation requires approval. A Developer API probe encountered server failures; no accuracy score was fabricated. Real banks are not connected."
 }

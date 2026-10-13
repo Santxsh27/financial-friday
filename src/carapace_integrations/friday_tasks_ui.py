@@ -1,0 +1,39 @@
+"""An explicit prepare/review/confirm experience over signed server-owned tasks."""
+TASK_CSS = r"""
+.friday-task-panel{max-width:800px;margin:20px auto;padding:24px;border:1px solid var(--line);border-radius:24px;background:var(--panel);color:var(--ink)}
+.friday-task-panel p{line-height:1.7;overflow-wrap:anywhere}.friday-task-panel blockquote{margin:12px 0;padding:14px;border-left:3px solid var(--blue);background:var(--panel2);border-radius:10px;overflow-wrap:anywhere}
+.friday-task-state{display:inline-block;border-radius:20px;padding:8px 14px;background:#fff0d8;color:#714900;font-weight:700}
+.friday-task-state[data-state=READY_FOR_CONFIRMATION]{background:#dcf8e9;color:#135c3c}.friday-task-state[data-state=HOLD]{background:#ffe2e7;color:#8b1a32}
+.friday-task-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}.friday-task-detail{padding:14px;border:1px solid var(--line);border-radius:14px;margin:16px 0}.friday-task-detail dt{color:var(--muted);font-size:12px}.friday-task-detail dd{margin:4px 0 12px;overflow-wrap:anywhere;font-weight:600}
+"""
+
+TASK_JS = r"""
+    {
+      titles.assistant='Your next step. Prepared by Friday.';
+      const taskView=view('assistant','Gemini prepares; independent checks decide what may proceed. Real money is not connected.');
+      const taskPanel=element('section',null,'friday-task-panel');taskPanel.setAttribute('aria-live','polite');taskView.append(taskPanel);
+      const taskPrepare=element('button','Prepare next step');taskPrepare.type='button';
+      const taskTools=document.querySelector('.friday-chat-tools');taskTools.prepend(taskPrepare);
+      const taskHelp=element('p','Want Friday to do the preparation? Include your saved evidence, enter a request, then choose Prepare next step. Preparation never pays.','friday-chat-status');taskTools.after(taskHelp);
+      const consentLabel=document.querySelector('.friday-chat-consent');consentLabel.lastChild.textContent=' Include my recent financial inbox and artificial bills in Gemini’s answer or task preparation';
+      let taskBusy=false;
+      function taskError(text){taskPanel.replaceChildren(element('h2','We need to pause.'),element('p',text));const next=element('button','Review Activity');next.type='button';next.dataset.screenLink='activity';taskPanel.append(next);}
+      function taskAmount(minor){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(minor/100);}
+      function taskShow(task){
+        if(task.scope!=='ARTIFICIAL_MONEY_ONLY'||task.signature_verified!==true||task.money_moved!==false)throw new Error('Unexpected task authority');
+        taskPanel.replaceChildren();const badge=element('span',task.expired?'Expired':({HOLD:'On hold · no payment',READY_FOR_CONFIRMATION:'Ready for your confirmation',PREPARED_MESSAGE:'Draft prepared · not sent',GUIDANCE_ONLY:'Guidance · no payment'}[task.state]||'Review required'),'friday-task-state');badge.dataset.state=task.state;
+        taskPanel.append(badge,element('h2',task.proposal.action==='PREPARE_PAYMENT'?'One artificial payment. Clear limits.':'A useful next step, without moving money.'),element('p',task.proposal.explanation));
+        if(task.bill){const fields=element('dl',null,'friday-task-detail');[['Reference',task.bill.bill_reference],['Artificial amount',taskAmount(task.bill.amount_minor)],['Test provider',task.bill.provider_name],['Exact recipient',task.bill.payee_id]].forEach(([name,value])=>fields.append(element('dt',name),element('dd',value)));taskPanel.append(fields);}
+        task.gate_reasons.forEach(reason=>taskPanel.append(element('p',({SEMANTIC_RISK_REVIEW:'Gemini found a quoted risk indication. Verify before proceeding.',RELATED_CLAIM_REQUIRES_REVIEW:'Related documents report a conflict, missing detail or possible previous payment.',PROVIDER_CLAIM_CONFLICT:'Your document claims differ from the artificial provider record.',PAYMENT_NOT_ELIGIBLE:'The saved reserve, single-payment limit or bill status does not allow this task.'}[reason]||reason))));
+        task.proposal.findings.forEach(finding=>{const item=element('article');item.append(element('b',finding.kind.replaceAll('_',' ')),element('blockquote',finding.quote),element('p',finding.reason),element('small','Source: '+finding.source_id+' · potential risk, not a fraud verdict'));taskPanel.append(item);});
+        if(task.proposal.verification_message){taskPanel.append(element('h3','Ready-to-use verification message'),element('blockquote',task.proposal.verification_message),element('small','Not sent. Use a provider contact you independently know is genuine.'));}
+        const actions=element('div',null,'friday-task-actions');
+        if(task.state==='READY_FOR_CONFIRMATION'&&!task.expired){const confirm=element('button','Confirm artificial payment','planner');confirm.type='button';confirm.addEventListener('click',async()=>{if(taskBusy)return;taskBusy=true;confirm.disabled=true;confirm.textContent='Rechecking evidence and running…';try{const outcome=await jsonRequest('/api/friday/tasks/'+task.task_id+'/confirm','POST',{expected_task_sha256:task.task_sha256,confirm_sandbox_execution:true});if(outcome.run?.run_id){await openRun(outcome.run.run_id);}else{taskError('No completed run was returned. Review Activity and any hold before proceeding.');}}catch(error){taskError('Confirmation is unavailable or the evidence changed. Check Activity before attempting another payment. No success is assumed.');}finally{taskBusy=false;}});actions.append(confirm);}
+        const back=element('button','Ask Friday');back.type='button';back.dataset.screenLink='home';const evidence=element('button','Review financial inbox');evidence.type='button';evidence.dataset.screenLink='review';actions.append(back,evidence);taskPanel.append(actions);
+        const details=element('details');details.append(element('summary','Evidence, model & limits'),element('p',task.provenance.mode+' · '+task.provenance.model+' · '+task.provenance.model_calls+' planning call. Exact risk quotes checked; task signed by Friday, not by a bank.'),element('p','Expires '+new Date(task.expires_at).toLocaleTimeString()+'. Related evidence and rules are checked again on confirmation.'),element('p',task.coverage.limits),element('p','Risk analysis can miss scams or raise false warnings. Preparation reads bounded snapshots, not every account or document. No verified real bank is connected.'));taskPanel.append(details);
+      }
+      async function prepareFridayTask(){const message=$('home-command').value.trim();const consent=$('friday-chat-workspace');if(message.length<5){toast('Enter what you want Friday to prepare.');return;}if(!consent.checked){toast('First allow Friday to use your saved financial evidence.');consent.focus();return;}if(taskBusy)return;taskBusy=true;taskPrepare.disabled=true;show('assistant');taskPanel.replaceChildren(element('h2','Friday is preparing your next step…'),element('p','Understanding your request, checking quoted risks and binding the evidence. No payment is being performed.'));try{const task=await jsonRequest('/api/friday/tasks','POST',{message,include_workspace:true});taskShow(task);history.replaceState({},'','#task='+task.task_id);}catch(error){taskError('Live task preparation failed or the selected bill could not be grounded. No payment was submitted. Check your evidence and try a clearer request.');}finally{taskBusy=false;taskPrepare.disabled=false;}}
+      taskPrepare.addEventListener('click',prepareFridayTask);
+      const beforeTaskShow=show;show=function(name,push=true){if(/^task=task_[a-f0-9]{32}$/.test(name)){beforeTaskShow('assistant',false);taskPanel.replaceChildren(element('p','Loading your saved task. No financial action is being performed.'));jsonRequest('/api/friday/tasks/'+name.slice(5),'GET').then(taskShow).catch(()=>taskError('This task cannot be opened in your workspace. Ask Friday to prepare a new task.'));return;}beforeTaskShow(name,push);};
+    }
+"""

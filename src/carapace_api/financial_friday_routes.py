@@ -2,7 +2,7 @@
 from typing import Literal
 
 from fastapi import Depends, HTTPException, Query, Request
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from carapace_ai.financial_friday import LocalFinancialFridayPlanner
@@ -12,6 +12,8 @@ from .auth import TenantContext
 from .friday_inbox import FridayInbox
 from .financial_friday import FridayUnderstandingUnavailable
 from carapace_ai.friday_chat import FridayChatRequest
+from carapace_ai.friday_tasks import TaskRequest
+from .friday_tasks import FridayTaskService, TaskConfirmation
 
 
 class WatchRequest(BaseModel):
@@ -78,6 +80,39 @@ def register_financial_friday_routes(application, service, authenticate):
     from .friday_review import FridayReviewService
     review = FridayReviewService(service)
     application.state.friday_reviews = review
+    tasks = FridayTaskService(service, review)
+    application.state.friday_tasks = tasks
+
+    @application.post("/v1/friday/tasks", tags=["friday-assistant"])
+    async def prepare_task(payload: TaskRequest, tenant: TenantContext = Depends(authenticate)):
+        try:
+            return await run_in_threadpool(tasks.prepare, tenant.tenant_id, payload)
+        except ValidationError as error:
+            raise HTTPException(503, "AI task output failed validation. No payment was performed.") from error
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+        except Exception as error:
+            raise HTTPException(503, "Live task planning unavailable. No payment was performed.") from error
+
+    @application.get("/v1/friday/tasks/{task_id}", tags=["friday-assistant"])
+    def read_task(task_id: str, tenant: TenantContext = Depends(authenticate)):
+        try:
+            return tasks.get(tenant.tenant_id, task_id)
+        except KeyError as error:
+            raise HTTPException(404, "Task not found in this workspace") from error
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+
+    @application.post("/v1/friday/tasks/{task_id}/confirm", tags=["friday-assistant"])
+    async def confirm_task(task_id: str, payload: TaskConfirmation, tenant: TenantContext = Depends(authenticate)):
+        try:
+            return await run_in_threadpool(tasks.confirm, tenant.tenant_id, task_id, payload)
+        except KeyError as error:
+            raise HTTPException(404, "Task not found in this workspace") from error
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
+        except Exception as error:
+            raise HTTPException(503, "Confirmation unavailable. Check Activity before trying again; do not assume success or failure.") from error
     from .friday_bank import FridayAnthosBank
     from .friday_chat import reply_to_user
     bank = FridayAnthosBank.from_env()

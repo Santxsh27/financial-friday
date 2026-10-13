@@ -28,6 +28,13 @@ def handle_reviewed_bill(service, tenant, reference, expected_digest):
     bill = _bill(service, tenant, reference)
     if sha256_hex(bill.model_dump()) != expected_digest:
         raise ValueError("Bill details changed. Refresh and review the current amount and recipient.")
+    from .friday_review import FridayReviewService
+    from carapace_core.friday_task_guard import related_claims, claim_gate_reasons
+    def check_claims():
+        related = related_claims(FridayReviewService(service).board(tenant), reference)
+        if claim_gate_reasons(related, bill.model_dump()):
+            raise ValueError("Related documents require verification before another artificial payment. No payment was submitted.")
+    check_claims()
     plan = plan_bills(financial_workspace(service, tenant))
     # Replays are allowed to reach the receipt-first executor, never pay again.
     allowed = plan["selected"] + plan["already_recorded"]
@@ -46,6 +53,7 @@ def handle_reviewed_bill(service, tenant, reference, expected_digest):
         raise ValueError("AI interpretation did not exactly match the reviewed bill. No payment was submitted.")
     if _bill(service, tenant, reference) != bill:
         raise ValueError("Provider details changed during checking. Refresh before acting.")
+    check_claims()
     data = service._ingest_interpreted_signal(tenant, signal, facts, expected_bill_sha256=expected_digest, source_metadata={
         "reviewed_bill_sha256": expected_digest,
         "understanding": {"mode": service.planner.mode, "model": service.planner.model_name,

@@ -28,6 +28,7 @@ The model's confidence is never payment authority or proof of settlement.
 | Capability | What works and what it does not mean |
 | --- | --- |
 | Ask Friday | Live Gemini answers, explanations and unsent drafts. Optional private workspace context; no execution tools. |
+| Prepare next step | Live Gemini task selection and quoted risk analysis; signed ten-minute draft; independent claim/rule gates; explicit artificial-payment confirmation. No payment during preparation. |
 | Document intelligence | PNG/JPEG/WebP/PDF or text extraction, typed facts, quotations and exact arithmetic checks. Extracted facts are claims, not authenticity. |
 | Financial inbox | Compares related amount/payee claims, separates currencies and prepares verification messages. A matching receipt is not bank settlement. |
 | Guided first use | Editable artificial bill/receipt/conflict examples. Clicking Load does not send or pay; explicit review produces actual model results. |
@@ -91,10 +92,11 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest verified application baseline, 12 October 2026:
+Current native verification, 13 October 2026; previous container/live baseline
+remains dated separately until the new release checks complete:
 
-- Native: 364 tests ran; 363 passed and one optional integration was skipped.
-- Docker: 364 ran; 346 passed and eighteen optional checks were skipped.
+- Native: 382 tests ran; 381 passed and one optional integration was skipped.
+- Previous Docker baseline: 364 ran; 346 passed and eighteen optional checks were skipped.
 - Eleven offline tooling tests passed.
 - Live checks confirmed Vertex replies, opt-in context, valid citations, unchanged
   synthetic test balance and no executed actions.
@@ -138,8 +140,8 @@ budget alerts and request counts do not impose a hard spending cap.
 ## Next priorities and honest limits
 
 1. Confirm teammate/judge access with another human Google login and the dashboard.
-2. Add prepare-only conversational tasks bound to evidence and explicit approval;
-   chat must not gain direct payment authority.
+2. Validate the new evidence-bound task workflow with varied unseen inputs;
+   chat and model outputs must never gain direct payment authority.
 3. Evaluate unseen documents, false warnings, failure modes, latency and cost.
 4. Finish the deck/PDF, short video and final submission links.
 5. Later: independently authorised providers, durable orchestration and voice.

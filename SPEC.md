@@ -16,7 +16,7 @@ The default consumer workflow is **read-only guidance and claim reconciliation**
 The execution workflow is **separate and explicitly artificial**. Neither is a
 real-bank connector, investment adviser, SMS/Gmail agent or universal fraud shield.
 
-## 2. Three supported workflows
+## 2. Supported workflows
 
 ### A. Conversational assistance
 
@@ -66,6 +66,38 @@ Only an explicit sandbox action or previously granted automatic sandbox authorit
 can enter this workflow. New users default to automatic execution off. The original
 execution-model intake is not a prepare-only conversation API. Chat/default
 review never use it to create an executable task.
+
+### D. Evidence-bound AI task preparation
+
+Explicit workspace consent + free-text request -> Gemini typed task selection and
+quoted semantic-risk findings -> independent related-claim/provider/reserve checks
+-> signed ten-minute task -> exact customer confirmation -> existing restricted
+executor -> signed outcome and independent replay.
+
+The fixed model actions are `PREPARE_PAYMENT`, `PREPARE_VERIFICATION`, `EXPLAIN`.
+Findings include refund/send contradiction, recipient switch, coercion, secret
+requests, hidden recurring terms and prompt injection. Each finding needs a
+verbatim quotation from an available source. These are potential risk indications,
+not authenticated fraud verdicts or calibrated probabilities. Model misses and
+false warnings remain possible; no fraud classifier has been trained.
+
+Preparation never calls execution intake, even if automatic authority is enabled.
+A task binds tenant, canonical artificial bill, related claim snapshot and rule
+digest. Confirmation checks signature, digest, expiry, tenant and fresh evidence;
+the existing executor rechecks provider/rules and enforces atomic idempotency.
+Related recipient/amount/direction conflicts or claimed prior payments cannot be
+cleared by a favourable model answer. The reviewed-bill button uses that same
+claim gate. Historical execution intake routes remain separate developer paths.
+
+States: `READY_FOR_CONFIRMATION`, `HOLD`, `PREPARED_MESSAGE`, `GUIDANCE_ONLY`.
+Only the first permits explicit artificial-money execution. Verification messages
+are unsent drafts. Tasks persist privately in SQLite/Firestore; no raw question
+is stored, though redacted finding excerpts and proposed messages can be retained.
+Model context is bounded to twenty provider bills and ten review cases. Related
+claim gates inspect the latest fifty review documents. This is a bounded snapshot,
+not continuous surveillance; review reads and payment posting do not share an
+atomic transaction. It cannot guarantee rejection of a new claim arriving during
+the final execution window or detect scams outside the available context.
 
 ## 3. Contracts and algorithms
 
@@ -187,8 +219,8 @@ Test passes do not measure fraud accuracy or certify every feature/device.
 
 ## 8. Priorities and non-goals
 
-Before submission: confirm another human login/roster/deadline, build a prepare-only
-conversation-to-approved-task bridge if feasible, evaluate varied unseen inputs
+Before submission: confirm another human login/roster/deadline, evaluate the new
+conversation-to-approved-task bridge on varied unseen inputs
 and create required video/deck/materials. Preserve the existing safety boundary.
 Later: independently authorised providers, resumable workflows, privacy/retention
 operations and native voice. No autonomous real-money access, trading calls,

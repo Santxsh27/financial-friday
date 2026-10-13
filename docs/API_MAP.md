@@ -32,6 +32,19 @@ is unavailable, not a canned answer masquerading as Gemini. Text review takes a
 `text` field; file review uses its actual media type rather than pretending a file
 path/string is an uploaded image. Read each schema before sending a request.
 
+## Evidence-bound assistant tasks
+
+| Method and path | Authority |
+| --- | --- |
+| POST `/v1/friday/tasks` | `message`, strict `include_workspace:true`; live Gemini prepares a signed task and quoted risk findings. Never pays. |
+| GET `/v1/friday/tasks/{task_id}` | Tenant-scoped signed draft readback; expired tasks remain non-executable. |
+| POST `/v1/friday/tasks/{task_id}/confirm` | Exact `expected_task_sha256` and strict `confirm_sandbox_execution:true`; rechecks and calls the existing artificial-money executor. A HOLD cannot be overridden. |
+
+Unknown/invented bills or citations fail closed. Model failure is unavailable,
+not a fabricated task. No arbitrary tool names, account numbers, payment amount
+overrides, SQL or URLs are accepted from the model. See
+[the task guide](FRIDAY_TASKS.md) for scope and limitations.
+
 ## Sandbox preview/configuration: may change rules or test records, not pay directly
 
 | Method and path | Purpose |

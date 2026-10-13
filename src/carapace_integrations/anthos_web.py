@@ -452,6 +452,40 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code,"Friday chat unavailable. No payment or action was performed.")
         return result
 
+    @application.post("/api/friday/tasks")
+    @application.post("/api/friday/tasks/{task_id}/confirm")
+    async def friday_task_write(request: StarletteRequest, task_id: str | None = None):
+        from carapace_ai.friday_tasks import TaskRequest
+        from carapace_api.friday_tasks import TaskConfirmation
+        from pydantic import ValidationError
+        import re
+        if task_id and not re.fullmatch(r"task_[a-f0-9]{32}", task_id):
+            raise HTTPException(422, "Invalid task identity")
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 32 * 1024:
+                raise HTTPException(413, "Task request exceeds 32 KB")
+            data.extend(chunk)
+        try:
+            payload = (TaskConfirmation if task_id else TaskRequest).model_validate_json(bytes(data))
+        except ValidationError as error:
+            raise HTTPException(422, "Invalid task request") from error
+        path = "/v1/friday/tasks" + ("/" + task_id + "/confirm" if task_id else "")
+        code, result = await run_in_threadpool(_api_call, api_base_url, path, "POST", payload.model_dump(), 150)
+        if code != 200:
+            raise HTTPException(code, "Task unavailable or no longer eligible. Refresh the task; check Activity before retrying a payment.")
+        return result
+
+    @application.get("/api/friday/tasks/{task_id}")
+    async def friday_task_read(task_id: str):
+        import re
+        if not re.fullmatch(r"task_[a-f0-9]{32}", task_id):
+            raise HTTPException(422, "Invalid task identity")
+        code, result = await run_in_threadpool(_api_call, api_base_url, "/v1/friday/tasks/" + task_id, "GET")
+        if code != 200:
+            raise HTTPException(code, "Task unavailable in this workspace")
+        return result
+
     @application.post("/api/friday/reviews")
     @application.post("/api/friday/reviews/statement")
     async def friday_review_text(request: StarletteRequest):

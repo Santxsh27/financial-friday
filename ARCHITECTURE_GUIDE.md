@@ -181,7 +181,8 @@ than assuming it represents all the customer's money.
 Home chat and default review never call this executor. The alternate original
 artificial-payment mode and explicit handling/approval controls can. Do not call
 an intake path that may automatically execute merely to create a conversational
-draft. That is an important design constraint for the next milestone.
+draft. The new task preparation path respects this constraint; only its explicit
+confirmation endpoint can enter the existing executor. See [FRIDAY_TASKS](docs/FRIDAY_TASKS.md).
 
 ## 9. Algorithms and what the “security” actually is
 
@@ -246,7 +247,8 @@ secrets and rollback revisions. Finite trial credits are not free hosting foreve
 | Guided example and evidence inbox | Implemented; bill, matching claims and recipient conflict observed. |
 | Artificial ledger/permission/verifier/replay | Implemented; unit/integration and recorded live checks. |
 | Current UI | Compact assistant, task starters, separate pages, theme/sound/motion preferences. |
-| Conversation-to-approved-task bridge | Not implemented: chat has no action tools. |
+| Conversation-to-approved-task bridge | Implemented as a separate prepare/review/confirm workflow; plain chat remains guidance only. |
+| Semantic financial-risk analysis | Live Gemini quoted findings; exact source checks and separate claim/provider holds. Not a trained/calibrated fraud classifier. |
 | Cloud biller follow-through | Returns `UNAVAILABLE / CLOUD_CONNECTOR_NOT_IMPLEMENTED`. |
 | Local acknowledgement | Signed local bookkeeping only; not external biller correction. |
 | Bank/biller resolution kernel | Tested proposal logic; no live correction/refund provider connected. |
@@ -282,7 +284,7 @@ new run result rather than inferring a remote pass from local tests.
 
 ## 13. Engineering priorities and acceptance criteria
 
-**Highest-value engineering milestone:** a prepare-only conversation tool creates
+**Implemented task milestone:** a prepare-only conversation tool creates
 an expiring tenant-bound task from an exact provider record and reviewed digest;
 the customer confirms it through the existing gate; result readback uses the
 existing signed journal. No text response or model-provided boolean is authority.

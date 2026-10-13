@@ -281,9 +281,10 @@ def enhance_friday_html(html: str) -> str:
     from .friday_everyday import EVERYDAY_CSS, EVERYDAY_JS
     from .friday_review_ui import REVIEW_JS
     from .friday_chat_ui import CHAT_CSS, CHAT_JS
+    from .friday_tasks_ui import TASK_CSS, TASK_JS
     # One active design system, not another override over historical themes.
     html = re.sub(r"<style>.*?</style>", "", html, count=1, flags=re.S)
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + "route(false);", 1)
-    return (html.replace("</head>", EVERYDAY_CSS.replace("</style>", CHAT_CSS + "</style>") + "</head>", 1)
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + "route(false);", 1)
+    return (html.replace("</head>", EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + "</style>") + "</head>", 1)
             .replace('<main class="shell layout">', EXPERIENCE_NAV + '<main class="shell layout">', 1)
             .replace("    let watching=false;", compact_js + "\n    let watching=false;", 1))

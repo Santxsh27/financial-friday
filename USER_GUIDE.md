@@ -1,5 +1,27 @@
 # Financial Friday complete user walkthrough
 
+## New: ask Friday to prepare a task
+
+On Overview, tick **Include my recent financial inbox and artificial bills**.
+Enter your own request and choose **Prepare next step** (not Ask Friday).
+For example: `Prepare a verification message about the changed recipient in my
+financial inbox. Do not pay.` Friday uses live Gemini, validates quoted risks,
+and opens a separate task page. A message is **not sent** automatically.
+
+To test execution, first create an artificial provider bill through the existing
+Bills test-provider setup. Then request `Prepare a one-time artificial payment
+for BILL-1234` using your actual reference. Review the exact amount and recipient.
+Only a **Ready for your confirmation** task offers **Confirm artificial payment**.
+It rechecks saved evidence and rules, executes through the existing safety engine,
+and opens the signed result. A HOLD cannot be clicked through. Tasks expire after
+ten minutes; changed evidence or rules require a new task.
+
+A refund/send contradiction can be tested with `Someone says I must PAY first
+to RECEIVE a refund. Prepare a verification message.` Expect quoted risk evidence
+and a hold, not a fraud guarantee. Gemini can miss risks or over-warn. No real-bank
+payment, refund, account freeze, stock trade or production-code repair is supported.
+See [the full task guide](docs/FRIDAY_TASKS.md).
+
 This guide explains what to click, what to enter, what Financial Friday does, and
 what result to expect. Start with the read-only tour, then try an artificial-money
 task. Friday is a working Google Gemini assistant with a separate safety checker;

@@ -3,6 +3,14 @@
 Version 0.22.0, 14 October 2026. Actual activation/build identities and live checks
 are recorded in CURRENT_RELEASE.json. A code commit alone is not a deployment.
 
+The corrected API (`runway0220b`) and web (`runway0220`) are now serving 100% of
+their existing Cloud Run services. The public Google-authenticated page calculated
+the editable artificial example without saving or calling AI, with no browser
+console errors. A separate newly created synthetic workspace verified Firestore
+save/readback/cleanup and a real Vertex reply correctly quoting INR 100.00 and
+INR 68.18 with `cashflow:current`. Financial rules remained unchanged and no money
+moved. The private API still returned 403 to an anonymous request.
+
 ## What it solves
 
 A positive month-end total can hide a cash gap before income arrives. Money Runway

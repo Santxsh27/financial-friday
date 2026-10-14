@@ -181,3 +181,16 @@ class DiaryTests(unittest.TestCase):
         self.service.durable.put('privacy','one','current',{'generation':'cleared'})
         self.assertIsNone(self.service.diary.view('one')['summary'])
         self.assertEqual(self.post(body).status_code,409)
+
+    def test_amount_grouping_is_formatting_not_currency_or_unit_conversion(self):
+        self.model(entries=[{'direction':'IN','amount_text':'1000','source_quote':'Received ₹1,000 today','label':'Received'}],clarification='')
+        response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={'text':'Received ₹1,000 today','confirm_cloud_processing':True})
+        self.assertEqual(response.status_code,200,response.text)
+        self.assertEqual(response.json()['entries'][0]['amount_minor'],100000)
+
+    def test_rejection_diagnostics_never_log_source_text_or_provider_message(self):
+        from carapace_ai.friday_diary import diagnose_diary_error
+        with self.assertLogs('carapace_ai.friday_observability',level='WARNING') as logs:
+            diagnose_diary_error(ValueError('Entry amount is not in its source quote'))
+            diagnose_diary_error(RuntimeError('PRIVATE secret provider message'))
+        self.assertIn('AMOUNT_ANCHOR',str(logs.output));self.assertNotIn('PRIVATE',str(logs.output))

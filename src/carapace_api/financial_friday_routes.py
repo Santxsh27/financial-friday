@@ -92,7 +92,7 @@ def register_financial_friday_routes(application, service, authenticate):
     service.cashflow = FridayCashflow(service)
     from .friday_diary import FridayDiary
     from carapace_core.friday_diary import DiaryChange
-    from carapace_ai.friday_diary import DiaryParseRequest, parse_diary
+    from carapace_ai.friday_diary import DiaryParseRequest, parse_diary, diagnose_diary_error
     service.diary = FridayDiary(service)
 
     @application.get('/v1/friday/diary', tags=['friday-diary'])
@@ -110,6 +110,7 @@ def register_financial_friday_routes(application, service, authenticate):
             raise HTTPException(422, 'Permission to send this check-in to Gemini is required')
         try: return await run_in_threadpool(parse_diary, service.planner, payload)
         except Exception as error:
+            diagnose_diary_error(error)
             raise HTTPException(503, 'Friday could not reliably read that update. Use manual entry; nothing was saved.') from error
 
     @application.get('/v1/friday/cashflow', tags=['friday-cashflow'])

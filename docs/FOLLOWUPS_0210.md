@@ -45,3 +45,18 @@ inbox connector, complaint submission, refund, bank correction, scheduled alert,
 or proof that a merchant is genuine. Gemini continues to handle extraction and
 restricted preparation; exact code handles tracking and evidence changes.
 Current deployed identities and test counts are in `CURRENT_RELEASE.json`.
+
+## Verified release evidence — 14 October
+
+- Native suite: 466 ran, 465 passed, one optional skip. Docker: 466 ran,
+  447 passed, nineteen optional skips. Fifteen tooling checks also passed.
+- A fresh synthetic cloud workspace used two actual Vertex extractions and
+  transactional Firestore storage. Tracking, waiting, closing and rechecking
+  persisted; changed recipient evidence resurfaced the closed obligation.
+- Stale evidence was rejected; rechecking preserved the recipient conflict.
+  Rules and artificial balance were unchanged. Zero payment or message requests.
+- Local and public-site browser checks covered tracking, waiting, reload
+  persistence and no console errors. Anonymous private-API access returned 403.
+- API and web revisions `followups0210` serve 100 percent of normal traffic.
+  Source commit `c86374b1e50094f89419dc8e07c3c6165c497c19` is recorded separately
+  from subsequent documentation commits. This is not independent fraud accuracy.

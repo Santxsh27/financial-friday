@@ -1,6 +1,34 @@
 # Financial Friday build sequence
 
-## Current increment — bounded assistant sandbox
+## Current release — 0.21.0, 14 October 2026
+
+- [x] Live Gemini assistance and quoted document extraction on Vertex AI.
+- [x] Independent Mumbai Document AI OCR grounding with bounded usage.
+- [x] Private Google-login gateway, tenant isolation and transactional Firestore.
+- [x] Exact obligation selection, signed tasks and separate artificial execution.
+- [x] Receipt-first replay and approved Cloud Tasks journal-only recovery
+  (actual callback verified in 0.20; current worker is pinned to 0.21).
+- [x] Personal preferences, visible request-driven AI state and separate demo bills.
+- [x] Evidence-aware follow-up memory that cannot hide warnings or mark a bill paid.
+- [x] Tested and deployed matching 0.21 API/web; source and counts in
+  [CURRENT_RELEASE](CURRENT_RELEASE.json).
+- [ ] Independent, frozen labelled evaluation with false-warning and task-success
+  measures; developer examples are not independent accuracy evidence.
+- [ ] Check access using another human Google account and confirm the dashboard's
+  binding deadline/eligibility/roster.
+- [ ] Final submission assets and dashboard submission.
+
+Real provider access, authenticated settlement, external intake, voice and
+automatic messaging remain separately scoped future integrations—not completed
+capabilities or prerequisites for trying the current consented prototype.
+
+## Historical milestone notes — not the current backlog
+
+The notes below retain earlier experiments and their original acceptance tests.
+Unchecked configuration/deployment entries below are historical; use the current
+release above and SPEC for today's product and limits.
+
+### Historical: bounded assistant sandbox
 
 - [x] Make Financial Friday, rather than the earlier assurance dashboard, the local homepage.
 - [x] Present one locked financial goal with five controlled evidence conditions.
@@ -20,7 +48,7 @@
 
 See [Financial Friday sandbox milestone](FINANCIAL_FRIDAY_SANDBOX.md).
 
-## Current increment — autonomous financial operations
+### Historical: autonomous financial operations
 
 The 27 September direction extends the existing foundations into everyday investigation and resolution. Older checklists below describe retained components.
 

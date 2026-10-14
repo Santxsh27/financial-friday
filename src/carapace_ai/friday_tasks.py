@@ -63,6 +63,34 @@ market feeds, complaints submission, production code changes or external payment
 Do not request PINs, OTPs, passwords or CVVs. Respond only with schema-valid JSON."""
 
 
+class TaskEvidenceError(ValueError):
+    """An explicit admission failure, not a semantic fraud classification."""
+    def __init__(self, reason, message):
+        self.reason = reason
+        super().__init__(message)
+
+
+def validate_task_evidence(proposal: TaskProposal, sources: list[dict]) -> dict:
+    """Shared by production and same-output evaluation; no model or executor."""
+    available = {}
+    for source in sources:
+        if source['source_id'] in available:
+            raise TaskEvidenceError('DUPLICATE_SOURCE', 'Evidence source identity is ambiguous')
+        available[source['source_id']] = redact_for_model(source['source_text']).text
+    if any(identity not in available for identity in proposal.evidence_ids):
+        raise TaskEvidenceError('UNAVAILABLE_CITATION', 'Unavailable evidence citation')
+    for finding in proposal.findings:
+        if finding.source_id not in available or finding.quote not in available[finding.source_id]:
+            raise TaskEvidenceError('UNSUPPORTED_QUOTE', 'Risk finding has no exact supporting quote')
+    cleaned = proposal.model_dump()
+    for field in ('explanation', 'verification_message'):
+        cleaned[field] = redact_for_model(cleaned[field]).text
+    for finding in cleaned['findings']:
+        finding['quote'] = redact_for_model(finding['quote']).text
+        finding['reason'] = redact_for_model(finding['reason']).text
+    return cleaned
+
+
 def propose_task(planner, request: TaskRequest, sources: list[dict]) -> dict:
     if planner.mode == "LOCAL_RULES":
         raise RuntimeError("Live Gemini task planning is unavailable")
@@ -77,19 +105,7 @@ def propose_task(planner, request: TaskRequest, sources: list[dict]) -> dict:
             response_mime_type="application/json",
             response_json_schema=generation_schema(TaskProposal.model_json_schema())))
     proposal = TaskProposal.model_validate_json(response.text or "")
-    available = {source["source_id"]: redact_for_model(source["source_text"]).text for source in sources}
-    if any(identity not in available for identity in proposal.evidence_ids):
-        raise ValueError("Unavailable evidence citation")
-    for finding in proposal.findings:
-        if finding.source_id not in available or finding.quote not in available[finding.source_id]:
-            raise ValueError("Risk finding has no exact supporting quote")
-    # Never persist the raw request. Scrub model-generated text before saving.
-    cleaned = proposal.model_dump()
-    for field in ("explanation", "verification_message"):
-        cleaned[field] = redact_for_model(cleaned[field]).text
-    for finding in cleaned["findings"]:
-        finding["quote"] = redact_for_model(finding["quote"]).text
-        finding["reason"] = redact_for_model(finding["reason"]).text
+    cleaned = validate_task_evidence(proposal, sources)
     return {"proposal": cleaned, "provenance": {"mode": planner.mode,
         "model": planner.model_name, "model_calls": 1, "exact_quotes_checked": True,
         "redaction_applied": redacted.redaction_applied}}

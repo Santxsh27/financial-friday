@@ -278,13 +278,15 @@ secrets and rollback revisions. Finite trial credits are not free hosting foreve
 | Local acknowledgement | Signed local bookkeeping only; not external biller correction. |
 | Bank/biller resolution kernel | Tested proposal logic; no live correction/refund provider connected. |
 | Anthos | Removed from customer navigation; optional historical fixture only. |
-| Background inbox | Existing bounded sandbox mechanism, not production always-on Cloud Tasks orchestration. |
+| Background inbox | Local sample feed remains a demo. Cloud Tasks performs authenticated journal-only recovery; it is not continuous bank/bill intake. |
 | Voice | Earlier browser/transcript experiments; no native Gemini Live/Agora voice product. |
 | Real banking, wallets, utilities, Gmail/SMS | Not connected. Requires authorised APIs, consent and provider onboarding. |
-| Independent OCR | Document AI adapter implemented/tested; live processor activation pending authorization. Ungrounded image evidence remains limited. |
+| Independent OCR | Basic Mumbai Document AI processor is live and tested with independent text/page anchors. Unsupported fields remain unverified; OCR does not authenticate an issuer. |
 | Durable task lifecycle | Signed leases, state/run reference and journal-only reconciliation implemented; not automatic cloud crash resumption. |
 | Privacy / key rotation | Manual review/draft cleanup, in-flight cancellation and trusted historical public-key ring support. Payment journal retained. |
-| ADK, BigQuery, Cloud Tasks, Model Armor, Cloud KMS signing | Not implemented; add only for a specific demonstrable need. |
+| Buddy preferences | Private communication choices, separately consented; never financial authority. Nickname stays out of model prompts. |
+| Cloud Tasks recovery | Approved keyless callback identity and low-rate queue; actual callback and no-repeat artificial debit verified. |
+| ADK, BigQuery, Model Armor, Cloud KMS signing | Not implemented; add only for a specific demonstrable need. |
 
 Never claim guaranteed fraud detection/reimbursement, safe merchants, all banks
 supported, every fault repaired, production autonomous patching or legal compliance.

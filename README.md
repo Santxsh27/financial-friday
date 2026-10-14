@@ -105,8 +105,9 @@ and store images. IAM, IAP and Secret Manager keep credentials server-side.
 Version 0.19 adds a basic Mumbai Document AI OCR integration with exact source
 anchors and a shared 100-page daily admission limit. Check the release manifest
 for actual live activation and verified results, not just configured resources.
-Cloud Tasks journal-only recovery is implemented but **disabled** pending separate
-dedicated-identity/queue approval and a real dispatch test. Native Gemini Live voice, ADK, BigQuery, Agora and
+Cloud Tasks journal-only recovery uses a specifically approved keyless identity
+and low-rate queue. See the release manifest for actual live dispatch activation
+and its acceptance evidence. It never retries a payment. Native Gemini Live voice, ADK, BigQuery, Agora and
 KMS signing are **not implemented**. The model configured in the verified release
 is `gemini-3.5-flash-lite`; local live calls use the Gemini Developer API and cloud
 calls use Vertex AI. Model availability and quota must be checked before changing it.
@@ -134,14 +135,17 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **439 tests ran, 438 passed, one optional
-skip; 15 tooling checks passed**. The seventeen new cloud-extension tests cover
+Latest local checks, 14 October 2026: **449 tests ran, 448 passed, one optional
+skip; 15 tooling checks passed**. Ten buddy tests additionally cover private
+preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
+changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
+The seventeen cloud-extension tests cover
 preflight document bounds, global usage limits, signed recovery jobs, actor
 validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **439 ran, 420 passed, nineteen optional skips**. The deployed 0.19
+Docker: **449 ran, 430 passed, nineteen optional skips**. The previously deployed 0.19
 Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →
 Firestore readback check on an artificial PDF. Exact source anchors, cached
 upload replay, unchanged balance and zero payment requests were verified. The

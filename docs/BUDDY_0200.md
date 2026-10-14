@@ -16,6 +16,10 @@ when both the saved preference and the individual request opt in. Saved financia
 records still require their separate context consent. Changing preferences clears
 the current browser conversation; it does not change a mandate or erase receipts.
 
+The personal home list includes saved-document obligations only. Provider-only
+demo bills remain available in an explicitly labelled optional section of the
+financial inbox; they are not presented as a new visitor's unpaid household bills.
+
 The briefing button prepares a request after the user opts into workspace sharing;
 Ask Friday sends it. It never quietly grants sharing or execution permission.
 The focus setting changes explanations/examples, not warnings, payment eligibility
@@ -36,6 +40,20 @@ probe simulates a lost response after one artificial debit, waits for the actual
 Google Tasks callback, verifies the existing journal and confirms that replay
 does not debit again. It never manually invokes reconciliation as proof of a
 background worker. This is not an actual process crash or real-bank settlement.
+
+The rollout passed: live Vertex accepted the separately opted-in style, Firestore
+persisted preferences, the overview made no model call and financial rules stayed
+unchanged. The real Tasks callback returned HTTP 200 and independently verified
+the existing journal after one INR 100 artificial debit. Repeated confirmation
+was read-only. An earlier connection drop occurred before any payment confirmation;
+that probe was not blindly retried against the same operation.
+
+Native 449 ran (448 passed, one skip); Docker 449 ran (430 passed, nineteen
+optional skips); fifteen tooling checks passed. Different API/web source identities
+are recorded explicitly: the web follow-up fixes a local gateway annotation and
+uses the immutable 0.20 API dependency image. Both normal cloud services use the
+tested buddy0200 API and buddy0200personal web revisions. Updating the recovery worker target is an explicit
+future release step, not an automatic redirect to arbitrary model-supplied URLs.
 
 ## Remaining work
 

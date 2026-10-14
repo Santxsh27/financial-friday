@@ -231,8 +231,9 @@ baseline; multimodal review/chat do not masquerade as live AI in that mode.
 Document AI supports an approved basic Mumbai processor, preflight one-to-three
 page PDFs, and an app-wide 100-page daily admission limit. Deployment activation
 and actual live evidence are recorded in `docs/CURRENT_RELEASE.json`.
-Cloud Tasks journal-only recovery is implemented but disabled pending dedicated
-identity/queue approval and a real dispatch test. It cannot retry a payment.
+Cloud Tasks journal-only recovery has an approved dedicated keyless identity and
+low-rate queue. Actual deployment activation and callback evidence are recorded
+in the release manifest. It cannot retry a payment.
 Not implemented: native Gemini Live/Agora voice, ADK,
 BigQuery, Vertex AI Search, Model Armor and Cloud KMS signing.
 Bank of Anthos is retired from customer navigation/default configuration. Its

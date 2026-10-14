@@ -2,7 +2,7 @@
 
 ## Current release
 
-Current code package is `0.19.0`; actual deployed revisions/source and digests are
+Current code package is `0.20.0`; actual deployed revisions/source and digests are
 in [CURRENT_RELEASE](CURRENT_RELEASE.json), with [hardening notes](HARDENING_0180.md).
 The app has Google-sign-in visitor isolation, a private API, live Vertex chat and
 review, and transactional Firestore artificial-money state. It is not the
@@ -16,8 +16,11 @@ existing IAP/IAM/origin/secret configuration when making a future release.
 
 The 0.19 integration adds bounded basic Mumbai Document AI OCR and a signed
 journal-only recovery worker. Read [cloud extension limits](CLOUD_EXTENSIONS_0190.md)
-and the manifest before assuming activation. Cloud Tasks dispatch remains off
-until its exact dedicated identity, queue and permissions are separately approved.
+and the manifest before assuming activation. Version 0.20 adds private buddy
+preferences and a visible request-driven companion. Its approved recovery queue
+is pinned to the immutable same-service worker tag with the canonical API OIDC
+audience. Future releases must update that target deliberately; never let new
+jobs silently call an old worker or weaken authentication to fix a failed test.
 
 ## Historical cloud boundary and release log
 

@@ -1,5 +1,7 @@
 """Evidence-grounded Gemini conversation. No executor, SQL, URL or payment tools."""
 import json
+import re
+from decimal import Decimal
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -28,6 +30,25 @@ class ChatAnswer(BaseModel):
     reply: str = Field(min_length=1, max_length=1600)
     evidence_ids: list[str] = Field(default_factory=list, max_length=8)
     next_screen: Literal["NONE", "review", "document", "money", "activity", "settings"] = "NONE"
+
+
+def _check_cashflow_amounts(reply, cashflow):
+    """Fail closed on unsupported explicit rupee figures, not semantic proof."""
+    allowed = set()
+    def collect(value):
+        if not isinstance(value, dict): return
+        for key, item in value.items():
+            if key.endswith('_inr'):
+                allowed.add(Decimal(item.removeprefix('INR ').replace(',', '')))
+            elif isinstance(item, dict): collect(item)
+    collect(cashflow)
+    amount = r'(-?\d[\d,]*(?:\.\d{1,2})?)'
+    markers = r'(?:₹|\bINR\b|\bRs\.?|\brupees?\b)'
+    text = reply.replace('−', '-')
+    quoted = re.findall(markers+r'\s*'+amount, text, re.I)
+    quoted += re.findall(amount+r'\s*'+markers, text, re.I)
+    if any(Decimal(value.replace(',', '')) not in allowed for value in quoted):
+        raise ValueError('Model cash-flow amount is not supported by the calculator')
 
 
 INSTRUCTION = """You are Friday, a calm financial assistant inside Financial Friday.
@@ -72,6 +93,9 @@ INSTRUCTION += """ Cash-flow context is independently opted-in calculator output
 It is an INR what-if scenario using the user's unverified cash, income dates,
 bills and spending assumptions, NOT a bank balance or certainty about the future.
 Explain the supplied exact calculations; do not invent new totals or guarantees.
+Cash-flow monetary fields ending _inr are already formatted INR rupee strings.
+Quote those strings exactly; do not multiply, divide, convert units or calculate
+new monetary amounts. Prefer the supplied dates and daily caps over new arithmetic.
 Expected income may arrive late or never. Do not say the user will definitely
 go broke, is wealthy/poor, or can safely afford an action. Use calm conditional
 wording and mention the scenario date if it may be stale. Do not suggest skipping
@@ -100,6 +124,8 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
             system_instruction=INSTRUCTION, response_mime_type="application/json",
             response_json_schema=generation_schema(ChatAnswer.model_json_schema())))
     answer = ChatAnswer.model_validate_json(response.text or "")
+    if request.include_cashflow and cashflow:
+        _check_cashflow_amounts(answer.reply, cashflow)
     allowed_ids = {item["evidence_id"] for item in context.get("evidence", [])}
     if request.include_cashflow and cashflow: allowed_ids.add('cashflow:current')
     if any(identity not in allowed_ids for identity in answer.evidence_ids):

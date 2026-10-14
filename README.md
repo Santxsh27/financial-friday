@@ -137,7 +137,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **490 tests ran, 489 passed, one optional
+Latest local checks, 14 October 2026: **492 tests ran, 491 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -151,10 +151,11 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **490 ran, 471 passed, nineteen optional skips**. Twenty Money Runway tests
+Docker: **492 ran, 473 passed, nineteen optional skips**. Twenty-two Money Runway tests
 cover exact integer cash-flow calculations, maximal daily caps, same-day income
 ordering, delayed income, opt-in memory, tenant isolation, privacy races, chat
-consent, Firestore callbacks and gateway validation. See
+consent, Firestore callbacks, paise-to-rupee formatting, rejected unsupported
+model amounts and gateway validation. See
 [Money Runway and responsible learning](docs/MONEY_RUNWAY_0220.md).
 The previously deployed 0.19
 Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →

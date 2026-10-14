@@ -5,6 +5,21 @@ from carapace_core.friday_cashflow import project_cashflow
 from .friday_privacy import privacy_generation
 
 
+def _model_amounts(value):
+    """Remove paise ambiguity at the model boundary; never ask it to convert."""
+    if isinstance(value, dict):
+        output = {}
+        for key, item in value.items():
+            if key.endswith('_minor'):
+                absolute = abs(item)
+                output[key[:-6] + '_inr'] = ('INR ' + ('-' if item < 0 else '')
+                    + f'{absolute // 100:,}.{absolute % 100:02d}')
+            else:
+                output[key] = _model_amounts(item)
+        return output
+    return value
+
+
 class FridayCashflow:
     def __init__(self, service):
         self.service = service
@@ -43,9 +58,9 @@ class FridayCashflow:
         if not record: return {}
         result = record['result']
         # Only calculator aggregates; no statement descriptions or individual events.
-        return {'evidence_id': 'cashflow:current', 'scope': result['scope'], 'saved_at': record['created_at'],
+        return _model_amounts({'evidence_id': 'cashflow:current', 'scope': result['scope'], 'saved_at': record['created_at'],
             **{key: result[key] for key in ('currency','status','as_of','horizon_days','starting_cash_minor',
                 'reserve_minor','daily_spend_minor','expected_income_total_minor','committed_bills_total_minor','income_delay_days')},
             'baseline': {key: value for key, value in result['baseline'].items() if key != 'timeline'},
             'delayed_income': {key: value for key, value in result['delayed_income'].items() if key != 'timeline'},
-            'assumptions': result['limits']}
+            'assumptions': result['limits']})

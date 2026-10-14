@@ -55,7 +55,9 @@ Calculation calls neither Gemini nor execution. Saving the latest snapshot is
 optional, private and generation-protected against cleanup races in SQLite and
 transactional Firestore. Review cleanup removes that snapshot; opening the page
 does not create one. A separate unchecked chat consent sends only aggregate
-calculator context to Gemini, not raw statements or individual events. Changes
+calculator context as formatted INR strings to Gemini, not raw statements or
+individual events. Explicit unsupported rupee figures in a model reply fail closed;
+this is not a complete semantic-proof mechanism. Changes
 clear stale conversation context. This memory is not model training. There is no
 RAG corpus, fine-tuning job, live bank/SMS source or external notification service.
 See [algorithm, privacy and dataset plan](docs/MONEY_RUNWAY_0220.md).

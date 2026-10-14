@@ -44,7 +44,7 @@ cleanup removes all runway snapshots, even with expired-only review cleanup;
 payment journals, signed receipts and replay safeguards are preserved.
 
 Chat context has independent, initially unchecked consent. It includes calculator
-aggregates, scenario dates/limits and the citation `cashflow:current`, not individual
+aggregates as explicitly formatted INR strings, scenario dates/limits and the citation `cashflow:current`, not individual
 bill/income events. Without consent, that context and citation are unavailable.
 Changing consent or saving/clearing the plan clears the chat context; stale model
 responses cannot repopulate it. Editing assumptions clears the displayed forecast
@@ -74,7 +74,16 @@ bank/Account Aggregator permission or notification integration is created here.
 
 ## Acceptance and limits
 
-Twenty feature tests cover exact scenarios, same-day income, impossible buffers,
+The initial real Vertex check exposed a unit error: Gemini interpreted a 10,000
+paise cap as INR 10,000 instead of INR 100.00. That zero-traffic candidate was not
+promoted. Model context now contains formatted rupee strings instead of raw paise.
+An independent reply gate rejects explicit rupee figures absent from the calculator
+context. Regression tests cover prefix/suffix monetary references and the exact
+100× error shape. This gate does not prove all semantics: a model could attach a
+valid number to the wrong concept or express an amount in words. The calculator
+and chart remain authoritative, and no money can move from this conversation.
+
+Twenty-two feature tests cover exact scenarios, same-day income, impossible buffers,
 randomised maximal-cap checks, delayed events, tenant isolation, no implicit save,
 strict gateway validation, cleanup races, actual Firestore transaction callback
 code under a test driver, and independent chat consent/citation rules. Test doubles

@@ -76,6 +76,16 @@ class CashflowMathTests(unittest.TestCase):
         self.assertEqual(data['baseline'],data['delayed_income'])
         self.assertFalse(data['money_moved'])
 
+    def test_model_boundary_formats_paise_and_negative_amounts_as_rupees(self):
+        from carapace_api.friday_cashflow import _model_amounts
+        formatted=_model_amounts({'safe_daily_spend_minor':10000,
+            'delayed':{'safe_daily_spend_minor':6818,'minimum_cash_minor':-165000},'days':7})
+        self.assertEqual(formatted['safe_daily_spend_inr'],'INR 100.00')
+        self.assertEqual(formatted['delayed']['safe_daily_spend_inr'],'INR 68.18')
+        self.assertEqual(formatted['delayed']['minimum_cash_inr'],'INR -1,650.00')
+        self.assertNotIn('_minor',json.dumps(formatted))
+        self.assertEqual(formatted['days'],7)
+
 
 class CashflowAPITests(unittest.TestCase):
     def setUp(self):
@@ -110,7 +120,8 @@ class CashflowAPITests(unittest.TestCase):
         self.assertTrue(result.json()['cashflow_included'])
         content=json.loads(self.base.model.models.generate_content.call_args.kwargs['contents'])
         self.assertEqual(content['workspace_evidence'],{})
-        self.assertEqual(content['cashflow_scenario']['baseline']['safe_daily_spend_minor'],10000)
+        self.assertEqual(content['cashflow_scenario']['baseline']['safe_daily_spend_inr'],'INR 100.00')
+        self.assertNotIn('_minor',json.dumps(content['cashflow_scenario']))
         self.assertNotIn('timeline',json.dumps(content['cashflow_scenario']))
         self.assertNotIn('expected_income',content['cashflow_scenario'])
         self.base.answer();self.base.chat(include_workspace=True)
@@ -125,6 +136,15 @@ class CashflowAPITests(unittest.TestCase):
         self.client.post('/v1/friday/chat',headers=other,json={'message':'Explain my forecast','include_cashflow':True})
         content=json.loads(self.base.model.models.generate_content.call_args.kwargs['contents'])
         self.assertEqual(content['cashflow_scenario'],{})
+
+    def test_live_unit_error_shape_is_rejected_instead_of_displaying_a_bad_cap(self):
+        self.create(save_to_workspace=True)
+        for text in ('The safe cap is 10,000 INR.', 'Spend ₹10,000.00 daily.', '10000 rupees is your cap.'):
+            with self.subTest(text=text):
+                self.base.answer(reply=text)
+                self.assertEqual(self.base.chat(include_cashflow=True).status_code,503)
+        self.base.answer(reply='The calculator caps are INR 100.00 and ₹68.18. This is conditional.')
+        self.assertEqual(self.base.chat(include_cashflow=True).status_code,200)
 
     def test_no_permission_cannot_cite_private_cashflow(self):
         self.create(save_to_workspace=True);self.base.answer(evidence_ids=['cashflow:current'])

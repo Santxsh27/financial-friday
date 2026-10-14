@@ -22,8 +22,8 @@ automatically the code deployed on Cloud Run.
 
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
 for source, image digests, build IDs, revisions, test counts and activation. The
-web is `financial-friday-web-softflow0220b`; the corrected API is
-`financial-friday-api-runway0220b`, each at 100% traffic when last verified.
+web is `financial-friday-web-moneybuddy0230`; the corrected API is
+`financial-friday-api-moneybuddy0230d`, each at 100% traffic when last verified.
 
 | Evidence | Scope and limitations |
 | --- | --- |

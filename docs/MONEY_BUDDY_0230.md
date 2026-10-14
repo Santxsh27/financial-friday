@@ -67,6 +67,25 @@ No personal records or credentials were logged. Earlier failed synthetic runs ma
 retain their artificial opening diary; do not claim those were erased or purge
 other workspaces to clean them up.
 
+## Verified cloud activation, 15 October 2026
+
+The corrected API and buddy web revision were healthy at zero traffic and then
+promoted to 100%. Real Vertex extraction and aggregate coaching passed in a fresh
+synthetic visitor workspace. Transactional Firestore mode was independently read
+from the runtime. Saved ₹8,000 opening cash plus ₹1,000 in/₹250 out read back as
+₹8,750; exact replay kept the same two entries, group Undo restored ₹8,000, and
+successful test-workspace cleanup returned an empty diary. The artificial bank
+balance stayed unchanged. Failed staging aliases were removed; revisions remain
+recoverable. No real user diary was populated to make the demo appear active.
+
+The public Google-authenticated website showed the unseeded setup, settling
+greeting, animated companion and a real generic Vertex reply with no record
+sharing. Local inline Undo, a 390 px viewport without overflow, 44 px diary
+buttons and disabled animation under reduced motion passed browser checks.
+Existing payment/approval rules, IAM, signatures and resource caps were unchanged.
+Only the existing journal-only recovery target was repinned to this API tag; no
+new dispatch test was performed. See CURRENT_RELEASE.json for exact source/digests.
+
 ## Remaining limits
 
 No automatic transaction collection, validated credit score, trained personal

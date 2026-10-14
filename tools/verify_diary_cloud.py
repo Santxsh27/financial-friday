@@ -37,7 +37,9 @@ def main():
         if body is not None:writes+=1
         with urlopen(api_request(args.url,path,headers,body,'POST' if body is not None else 'GET'),context=tls,timeout=120) as r:
             return json.load(r)
-    before=call('/v1/friday/mandate')['sandbox_balance_minor']
+    opening_state=call('/v1/friday/mandate')
+    assert opening_state['storage']['mode']=='FIRESTORE_TRANSACTIONAL'
+    before=opening_state['sandbox_balance_minor']
     empty=call('/v1/friday/diary');assert empty['summary'] is None
     def body(view,action,**fields):return {'operation_id':uuid4().hex,'expected_revision':view['revision'],
         'workspace_generation':view['workspace_generation'],'action':action,'confirm_store':True,**fields}

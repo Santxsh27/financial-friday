@@ -65,6 +65,7 @@ class FridayBuddy:
                 'preferences': self.preferences(tenant),
                 'documents_checked': board['coverage']['documents_checked'],
                 'attention_count': len(unresolved),
+                'followup_summary': board.get('followup_summary', {}),
                 'recorded_artificial_count': board['summary']['RECORDED_COMPLETE'],
                 'next_item': {key: next_item[key] for key in ('obligation_id','supplier','reference','state','next_step')} if next_item else None,
                 'evidence_version': board['evidence_version'], 'provider_coverage_complete': board['coverage']['provider_coverage_complete'],

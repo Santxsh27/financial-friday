@@ -44,7 +44,7 @@ class FridayPrivacyService:
                 row=db.execute('SELECT policy FROM friday_privacy WHERE tenant=?',(tenant,)).fetchone()
             stored=json.loads(row[0]) if row else None
         return (stored or {'retention_days':None})|{'automatic_deletion_enabled':False,
-            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts. Payment journal/idempotency retained.'}
+            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts; all follow-up tracking clears on cleanup. Payment journal/idempotency retained.'}
 
     def save(self,tenant,policy):
         value=policy.model_dump()
@@ -69,6 +69,10 @@ class FridayPrivacyService:
                 db.execute('BEGIN IMMEDIATE')
                 value={'retention_days':days,'generation':uuid4().hex}
                 db.execute('INSERT OR REPLACE INTO friday_privacy VALUES (?,?)',(tenant,json.dumps(value)))
+                if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_followups'").fetchone():
+                    row=db.execute('SELECT record FROM friday_followups WHERE tenant=?',(tenant,)).fetchone()
+                    counts['followups']=len(json.loads(row[0]).get('items',{})) if row else 0
+                    db.execute('DELETE FROM friday_followups WHERE tenant=?',(tenant,))
                 for table,col,label in [('friday_reviews','tenant','reviews'),('friday_assistant_tasks','tenant_id','drafts')]:
                     exists=db.execute("SELECT 1 FROM sqlite_master WHERE name=?",(table,)).fetchone()
                     if not exists:continue
@@ -76,4 +80,4 @@ class FridayPrivacyService:
                     params=(tenant,cutoff) if cutoff else (tenant,)
                     counts[label]=db.execute(f'DELETE FROM {table} WHERE {col}=?'+clause,params).rowcount
         return {'deleted':counts,'money_moved':False,'payment_journal_retained':True,
-            'message':'Comparison inputs removed. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}
+            'message':'Requested comparison inputs removed and all follow-up tracking cleared. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}

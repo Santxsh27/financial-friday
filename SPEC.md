@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
-Updated **13 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.18.0`. Actual deployed source and
+Updated **14 October 2026**. This document replaces the mixed historical product
+specifications. Current code version is `0.21.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -40,6 +40,23 @@ is rejected before a model call. Full bounded evidence remains checked independe
 does not authorize payment, and evidence/provider/rules are rechecked at execution.
 
 ## 2. Supported workflows
+
+### Follow-up memory (separate from financial truth)
+
+Saved obligations can be tracked, marked waiting for a provider reply, rechecked,
+or closed as a follow-up. No message is sent and no payment is verified by these
+actions. Closing never clears financial warnings or bypasses the execution gate.
+New evidence for the same exact supplier/reference/currency group produces
+`NEW_EVIDENCE`, including after closing; rechecking acknowledges the current
+evidence, not merchant authenticity or settlement. Missing identities remain
+separate instead of guessing relationships.
+
+Updates require the current evidence version and tracking revision; simultaneous
+or stale edits fail rather than overwrite another session. Tracking is private,
+bounded to 100 entries, persists in SQLite locally/Firestore in cloud, and is
+cleared during explicit review cleanup. Privacy-generation transactions prevent
+in-flight updates from restoring removed tracking. Read-only inbox refresh uses
+no model call. There is no scheduled reminder, provider monitoring or external send.
 
 ### A. Conversational assistance
 

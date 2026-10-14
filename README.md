@@ -61,6 +61,7 @@ fees and recipient changes are verification questions, not automatic fraud label
 | --- | --- |
 | Ask Friday | Live Gemini answers, explanations and unsent drafts. Optional private workspace context; no execution tools. |
 | Make Friday yours | Private nickname, concise/step-by-step explanations and focus preferences. Opt-in presentation choices, never payment authority; nickname is not sent to Gemini. |
+| Follow-up memory | Keep a saved obligation on your list, wait for a reply, recheck new evidence or close the follow-up. New evidence resurfaces closed items; closing never means paid or verified. No automatic messages or bank monitoring. |
 | Visible AI companion | Animated request-driven presence, returned model/call provenance and a read-only saved-record overview. No invented background scanning or fake progress. |
 | Prepare next step | Live Gemini task selection and quoted risk analysis; signed ten-minute draft; independent claim/rule gates; explicit artificial-payment confirmation. No payment during preparation. |
 | Document intelligence | PNG/JPEG/WebP/PDF or text extraction, typed facts, quotations and exact arithmetic checks. Extracted facts are claims, not authenticity. |
@@ -135,17 +136,21 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **449 tests ran, 448 passed, one optional
+Latest local checks, 14 October 2026: **466 tests ran, 465 passed, one optional
 skip; 15 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
+Seventeen follow-up tests cover persistent tracking, new evidence after closing,
+exact stable identity, tenant isolation, simultaneous updates, bounded storage,
+privacy cleanup and the actual Firestore transaction callback using a test driver.
+See [follow-up workflow and limits](docs/FOLLOWUPS_0210.md).
 The seventeen cloud-extension tests cover
 preflight document bounds, global usage limits, signed recovery jobs, actor
 validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **449 ran, 430 passed, nineteen optional skips**. The previously deployed 0.19
+Docker: **466 ran, 447 passed, nineteen optional skips**. The previously deployed 0.19
 Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →
 Firestore readback check on an artificial PDF. Exact source anchors, cached
 upload replay, unchanged balance and zero payment requests were verified. The

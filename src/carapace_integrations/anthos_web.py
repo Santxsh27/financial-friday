@@ -15,6 +15,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from carapace_api.financial_friday_routes import FollowThroughRequest, BillHandleRequest
 from carapace_api.friday_buddy import BuddyPreferences
+from carapace_api.friday_followups import FollowupRequest
 from pydantic import BaseModel, Field
 from typing import Literal
 from fastapi.responses import HTMLResponse
@@ -469,6 +470,15 @@ def create_demo_app() -> FastAPI:
     async def friday_buddy_save(payload: BuddyPreferences):
         code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/buddy/preferences', 'PUT', payload.model_dump())
         if code != 200: raise HTTPException(code, 'Preferences were not saved.')
+        return result
+
+    @application.post('/api/friday/obligations/{obligation_id}/followup')
+    async def friday_obligation_followup(obligation_id: str, payload: FollowupRequest):
+        import re
+        if not re.fullmatch(r'obligation_[a-f0-9]{32}', obligation_id):
+            raise HTTPException(422, 'Invalid obligation identity')
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/obligations/'+obligation_id+'/followup', 'POST', payload.model_dump())
+        if code != 200: raise HTTPException(code, 'Tracking was not saved. Refresh the inbox; no payment was submitted.')
         return result
 
     @application.get('/api/friday/obligations')

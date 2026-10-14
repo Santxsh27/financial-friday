@@ -39,6 +39,22 @@ prepare the right next step → verify the result, not a promise of universal fr
 
 ## New: ask Friday to prepare a task
 
+### Keep a follow-up moving
+
+In **Financial inbox**, your own saved obligations have **Keep track of this**.
+Choose it to save a private follow-up. After independently contacting your provider,
+choose **I'm waiting for a reply**. Review new evidence through Documents/Bills;
+when it changes the same exact supplier/reference/currency obligation, Friday
+shows **New evidence arrived**. **Recheck evidence** acknowledges the current
+evidence without calling Gemini, sending a message or paying.
+
+**Close follow-up** closes only your to-do, not the financial warning. New evidence
+can resurface a closed item. Stale or concurrent edits ask you to refresh rather
+than overwrite. Artificial provider examples have no personal tracking controls.
+Explicit review cleanup clears all tracking, including expired-only cleanup;
+the confirmation explains this. There are no scheduled notifications or automatic
+provider/bank monitoring. See [the complete tracking guide](docs/FOLLOWUPS_0210.md).
+
 ### New safety and privacy controls
 
 Prepared tasks now have a separate execution status. Reopening a completed task

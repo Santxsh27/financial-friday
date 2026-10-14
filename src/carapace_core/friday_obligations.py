@@ -93,6 +93,12 @@ def _item(board, case, bill, eligible, plan_state):
             next_step = 'Ask Friday to explain the constraint. Changing a rule is your decision, not an automatic workaround.'
     kind = 'review' if case else 'provider'
     identity = case['case_id'] if case else bill['provider_id'] + ':' + bill['bill_reference']
+    if case and case.get('supplier') and case.get('reference'):
+        # The representative review ID can change when a new document arrives.
+        # This identity matches the existing exact reconciliation group, not a
+        # guessed relation based on amount/time. Missing references stay separate.
+        identity = {'supplier': normalize(case['supplier']), 'reference': normalize(case['reference']),
+                    'currency': case['currency']}
     return {'obligation_id': obligation_id(kind, identity), 'source_case_id': case['case_id'] if case else None,
             'bill_reference': bill['bill_reference'] if bill else None,
             'supplier': case['supplier'] if case else bill['provider_name'],

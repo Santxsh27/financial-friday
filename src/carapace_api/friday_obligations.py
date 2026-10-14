@@ -6,7 +6,9 @@ from .friday_workspace import financial_workspace
 
 def financial_obligations(service, reviews, tenant):
     snapshot = reviews.safety_snapshot(tenant)
-    return obligation_board(snapshot['board'], financial_workspace(service, tenant), snapshot['version'])
+    board = obligation_board(snapshot['board'], financial_workspace(service, tenant), snapshot['version'])
+    followups = getattr(service, 'followups', None)
+    return followups.enrich(tenant, board) if followups else board
 
 
 def recorded_obligation_result(service, reviews, tenant, identity):

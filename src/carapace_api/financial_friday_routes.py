@@ -85,6 +85,14 @@ def register_financial_friday_routes(application, service, authenticate):
     from .friday_buddy import FridayBuddy, BuddyPreferences
     buddy = FridayBuddy(service)
     application.state.friday_buddy = buddy
+    from .friday_followups import FridayFollowups, FollowupRequest
+    service.followups = FridayFollowups(service)
+
+    @application.post('/v1/friday/obligations/{obligation_id}/followup', tags=['financial-obligations'])
+    def obligation_followup(obligation_id: str, payload: FollowupRequest, tenant: TenantContext = Depends(authenticate)):
+        try: return service.followups.update(tenant.tenant_id, review, obligation_id, payload)
+        except KeyError as error: raise HTTPException(404, 'Saved obligation not found in this workspace') from error
+        except ValueError as error: raise HTTPException(409, str(error)) from error
 
     @application.get('/v1/friday/buddy', tags=['friday-buddy'])
     def buddy_overview(tenant: TenantContext = Depends(authenticate)):

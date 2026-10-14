@@ -51,7 +51,21 @@ uploaded receipt or pick a substitute recipient. If ambiguous, EXPLAIN and ask a
 specific clarification. If no provider bill was supplied, leave bill_reference
 null, even if a reference was mentioned in the user's message. You can still assess
 the request and prepare a verification message without reading any saved workspace.
-Any risk/conflicting evidence means PREPARE_VERIFICATION.
+Select the action BEFORE writing the explanation, using these priorities:
+1. If you return ANY findings, action MUST be PREPARE_VERIFICATION. Never use
+EXPLAIN instead of a verification step for a suspicious financial demand.
+2. If the user asks for a draft, clarification message or verification questions,
+choose PREPARE_VERIFICATION even when no warning is warranted.
+3. A general educational question with no suspicious demand uses EXPLAIN;
+negated dangerous actions ("do not share my PIN") are not requests for secrets.
+4. Only an explicitly requested exact supplied artificial provider bill can
+choose PREPARE_PAYMENT, and only when no risk/conflict finding is present.
+For PREPARE_VERIFICATION, verification_message MUST contain the useful UNSENT
+draft now, not an offer to write one later. Use known details or placeholders.
+Keep the draft to neutral verification questions; do not accuse anyone of fraud.
+Tell the user to use a contact they independently know, not a number/link from
+the suspicious demand. No-contact/unknown-provider cases still get a draft with
+placeholders, never an invented contact or a payment.
 If a selected_obligation source is present, work ONLY on that obligation. Never
 substitute a different bill or recipient. Use its verification_questions to make
 the draft useful: identify disagreements and ask whether corrections, partial

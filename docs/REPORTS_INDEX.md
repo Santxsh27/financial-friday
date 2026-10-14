@@ -28,7 +28,7 @@ web is `financial-friday-web-runway0220`; the corrected API is
 | Evidence | Scope and limitations |
 | --- | --- |
 | [Money Runway 0.22.0](MONEY_RUNWAY_0220.md) | Exact cash-flow algorithm, consent/privacy, 22 feature tests and real Vertex/Firestore acceptance. Initial unit failure corrected before promotion; not independent forecast validation. |
-| [Soft-flow UI polish](SOFT_FLOW_0220.md) | Palette-preserving interaction feedback, eight tests, browser verification, motion limits and no new financial authority. |
+| [Soft-flow UI polish](SOFT_FLOW_0220.md) | Palette-preserving feedback, ten tests, browser verification, inline icons, motion limits and no new financial authority. |
 | [Evidence study 0.21.1](EVIDENCE_EVALUATION_0211.md) | Same-output Vertex comparison, initial failures, corrected 16 developer cases. Raw/checked scores identical; not an independent fraud benchmark. |
 | [Before report](evaluation/evidence_2026-10-14_before.json) / [after report](evaluation/evidence_2026-10-14_after.json) | Preserved machine-readable developer results, not substituted success scores. |
 | [Follow-ups 0.21.0](FOLLOWUPS_0210.md) | Private tracking, evidence changes, stale edits and closing without pretending settlement. |
@@ -38,8 +38,8 @@ web is `financial-friday-web-runway0220`; the corrected API is
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 500 tests (499 passed, one optional skip); Docker ran
-500 (477 passed, twenty-three optional skips); 24 tooling checks passed. Published
+The current local suite ran 502 tests (501 passed, one optional skip); Docker ran
+502 (479 passed, twenty-three optional skips); 24 tooling checks passed. Published
 Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
 their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
 Skipped tests and model failures are not silently counted as passes.

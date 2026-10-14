@@ -14,6 +14,9 @@ acceptance checks are recorded in [CURRENT_RELEASE](CURRENT_RELEASE.json).
 - Busy indicators on chat/runway submit controls follow actual request lifecycles.
 - Existing keyboard focus, disabled controls, touch target sizes and motion settings
   remain authoritative. Colour/text still communicates held, pending and confirmed.
+- Existing Feather SVG shapes render inline through allowlisted geometry and DOM
+  creation, retaining their packaged licence. No separate icon downloads, arbitrary
+  uploaded SVG rendering or untrusted HTML insertion are introduced.
 
 ## Performance and privacy boundaries
 
@@ -31,11 +34,12 @@ chat/calculation operations and cleared in `finally`, including errors.
 
 ## Verification
 
-Eight tests exercise motion eligibility, bounded values, one-frame coalescing,
+Ten tests exercise motion eligibility, bounded values, one-frame coalescing,
 cancellation even when the frame ID is zero, target changes and disabled motion,
 no new action/network dispatch, composed script uniqueness, busy lifecycles and
-chat reading-position preservation. The full local suite ran 500 tests (499 pass,
-one optional skip); Docker ran 500 (477 pass, twenty-three optional skips).
+chat reading-position preservation and allowlisted inline icon geometry. The full
+local suite ran 502 tests (501 pass, one optional skip); Docker ran 502 (479 pass,
+twenty-three optional skips).
 Four new Node-only helper tests skip in the Python-only image. Tooling: 24 passed.
 
 Local browser checks confirmed real mouse-controlled CSS tilt, reduced-motion
@@ -44,6 +48,12 @@ horizontal page overflow and a 44 px runway button. One click made exactly one
 cash-flow POST and returned the correct INR caps, with busy state cleared.
 This is an interaction regression check, not an accessibility certification,
 measured UX-award score or new financial/model benchmark.
+
+An initial fresh cloud load showed temporary inbox unavailability and failed small
+icons. Ordinary inbox refresh returned HTTP 200; the next asset check returned
+HTTP 200 with valid SVG decoding. No root cause was established from that first
+load. Inline rendering removes separate requests for these glyphs rather than
+weakening authentication or adding financial retry behaviour.
 
 Sources for implementation boundaries:
 [animation-frame scheduling](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame),

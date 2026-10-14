@@ -5,6 +5,7 @@ or infer settlement. Inbox previews read the same tenant-scoped evidence APIs.
 """
 
 from .friday_preferences import PREFERENCES_CSS, PREFERENCES_JS
+from .friday_inline_icons import INLINE_ICON_JS
 
 EVERYDAY_CSS = r"""<style id="friday-everyday-styles">
 @font-face{font-family:FridayInter;src:url('/assets/friday-inter.ttf') format('truetype');font-weight:100 900;font-display:swap}
@@ -45,9 +46,9 @@ html[data-theme="dark"] .friday-nav button[aria-current="page"]{background:var(-
 @media(max-width:720px){.shell{width:calc(100% - 32px)}.screen-heading{margin-top:0}.review-case-facts{grid-template-columns:1fr}.activity-entry{gap:14px;flex-wrap:wrap}.activity-entry .status{max-width:100%}.money-row{flex-wrap:wrap}.journey-budget{gap:16px;padding:18px}.review-case,.card,.permission-card{padding:20px}.friday-nav button{padding:11px 13px}.simple-home .hero{min-height:0;padding-bottom:22px}}
 ''' + '</style>')
 
-EVERYDAY_JS = r"""
+EVERYDAY_JS = INLINE_ICON_JS + r"""
       // Chosen image layout. Read-only projections; no new financial authority.
-      function everydayIcon(name, className='everyday-icon'){const img=element('img',null,className);img.src='/assets/friday-icon-'+name+'.svg';img.alt='';img.width=22;img.height=22;return img;}
+      function everydayIcon(name, className='everyday-icon'){return fridayInlineIcon(name,className);}
       function everydayTile(name,tint=''){const tile=element('span',null,'everyday-icon-tile '+tint);tile.append(everydayIcon(name));return tile;}
       function everydayImage(name,className){const img=element('img',null,className);img.src='/assets/'+name+'.png';img.alt='';return img;}
       brandMark.replaceChildren(everydayImage('friday-team-logo','everyday-team-brand'));

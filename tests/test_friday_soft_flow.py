@@ -8,6 +8,8 @@ from carapace_integrations.financial_friday_ui import FINANCIAL_FRIDAY_HTML
 from carapace_integrations.friday_soft_flow import FLOW_CSS, FLOW_JS, FLOW_HELPERS
 from carapace_integrations.friday_chat_ui import CHAT_JS
 from carapace_integrations.friday_cashflow_ui import CASHFLOW_JS
+from carapace_integrations.friday_inline_icons import packaged_icon_shapes, INLINE_ICON_JS, SHAPE_TAGS, SHAPE_ATTRIBUTES
+from carapace_integrations.friday_assets import ICONS
 
 
 class SoftFlowTests(unittest.TestCase):
@@ -93,3 +95,21 @@ process.stdout.write(JSON.stringify({cleared,cancelled,applied}));
         self.assertIn('chatLog.scrollHeight-chatLog.scrollTop-chatLog.clientHeight<80',CHAT_JS)
         self.assertIn("dataset.motion==='off'?'auto':'smooth'",CHAT_JS)
         self.assertIn('sentGeneration!==chatGeneration',CHAT_JS)
+
+    def test_inline_icons_use_only_existing_static_allowlisted_geometry(self):
+        shapes=packaged_icon_shapes()
+        self.assertEqual(set(shapes),set(ICONS))
+        self.assertEqual(shapes['book-open'][0]['attributes']['d'],'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z')
+        for items in shapes.values():
+            self.assertTrue(items)
+            for item in items:
+                self.assertIn(item['tag'],SHAPE_TAGS)
+                self.assertLessEqual(set(item['attributes']),SHAPE_ATTRIBUTES)
+
+    def test_inline_icon_rendering_is_decorative_and_needs_no_network_or_html_injection(self):
+        for forbidden in ('fetch(', 'jsonRequest(', 'innerHTML', 'href', 'onclick'):
+            self.assertNotIn(forbidden,INLINE_ICON_JS)
+        for required in ('createElementNS',"'aria-hidden','true'","'focusable','false'"):
+            self.assertIn(required,INLINE_ICON_JS)
+        self.assertIn('function fridayInlineIcon',FINANCIAL_FRIDAY_HTML)
+        self.assertIn('.everyday-icon-tile :is(img,svg)',FINANCIAL_FRIDAY_HTML)

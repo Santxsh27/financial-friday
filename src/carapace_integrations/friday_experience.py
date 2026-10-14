@@ -291,7 +291,8 @@ def enhance_friday_html(html: str) -> str:
     from .friday_statements_ui import STATEMENTS_CSS, STATEMENTS_JS
     # One active design system, not another override over historical themes.
     html = re.sub(r"<style>.*?</style>", "", html, count=1, flags=re.S)
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + CASHFLOW_JS + DIARY_JS + STATEMENTS_JS + FLOW_JS + "route(false);", 1)
+    cashflow_ui=CASHFLOW_JS.replace("show('home');const consent=$('friday-chat-cashflow');consent.focus();", "show('coach');const consent=$('friday-chat-cashflow');consent.closest('details').open=true;consent.focus();")
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + cashflow_ui + DIARY_JS + STATEMENTS_JS + FLOW_JS + "route(false);", 1)
     styles=EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + BUDDY_CSS + CASHFLOW_CSS + DIARY_CSS + STATEMENTS_CSS + INLINE_ICON_CSS + FLOW_CSS + "</style>")
     styles=styles.replace('.everyday-icon-tile img','.everyday-icon-tile :is(img,svg)').replace('.everyday-document-action>img','.everyday-document-action>:is(img,svg)')
     return (html.replace("</head>", styles + "</head>", 1)

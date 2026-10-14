@@ -99,7 +99,7 @@ class DiaryTests(unittest.TestCase):
         self.assertEqual(self.post(self.change('ADD',entries=[{'direction':'IN','amount_minor':100,'date':future,'label':'Salary'}])).status_code,409)
 
     def test_gemini_proposal_requires_consent_and_does_not_save(self):
-        self.model(entries=[{'direction':'OUT','amount_text':'250','source_quote':'Spent ₹250 on groceries','label':'Groceries'}],clarification='')
+        self.model(entries=[{'direction':'OUT','amount_text':'250','source_id':'entry-0','label':'Groceries'}],clarification='')
         body={'text':'Spent ₹250 on groceries','confirm_cloud_processing':True}
         result=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json=body)
         self.assertEqual(result.status_code,200,result.text);self.assertEqual(result.json()['entries'][0]['amount_minor'],25000)
@@ -109,8 +109,8 @@ class DiaryTests(unittest.TestCase):
         self.assertEqual(self.client.post('/v1/friday/diary/prepare',headers=self.headers,json=body).status_code,422)
 
     def test_model_unanchored_amount_direction_and_authority_rejected(self):
-        for changes in [{'amount_text':'999'},{'source_quote':'Invented ₹250'},{'direction':'IN'},{'amount_text':'2,50'},{'save':True}]:
-            item={'direction':'OUT','amount_text':'250','source_quote':'Spent ₹250 on groceries','label':'Groceries'};item.update(changes)
+        for changes in [{'amount_text':'999'},{'source_id':'entry-9'},{'direction':'IN'},{'amount_text':'2,50'},{'save':True}]:
+            item={'direction':'OUT','amount_text':'250','source_id':'entry-0','label':'Groceries'};item.update(changes)
             self.model(entries=[item],clarification='')
             response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={'text':'Spent ₹250 on groceries','confirm_cloud_processing':True})
             self.assertEqual(response.status_code,503,response.text)
@@ -183,7 +183,7 @@ class DiaryTests(unittest.TestCase):
         self.assertEqual(self.post(body).status_code,409)
 
     def test_amount_grouping_is_formatting_not_currency_or_unit_conversion(self):
-        self.model(entries=[{'direction':'IN','amount_text':'1000','source_quote':'Received ₹1,000 today','label':'Received'}],clarification='')
+        self.model(entries=[{'direction':'IN','amount_text':'1000','source_id':'entry-0','label':'Received'}],clarification='')
         response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={'text':'Received ₹1,000 today','confirm_cloud_processing':True})
         self.assertEqual(response.status_code,200,response.text)
         self.assertEqual(response.json()['entries'][0]['amount_minor'],100000)
@@ -194,3 +194,21 @@ class DiaryTests(unittest.TestCase):
             diagnose_diary_error(ValueError('Entry amount is not in its source quote'))
             diagnose_diary_error(RuntimeError('PRIVATE secret provider message'))
         self.assertIn('AMOUNT_ANCHOR',str(logs.output));self.assertNotIn('PRIVATE',str(logs.output))
+
+    def test_server_attaches_canonical_quotes_without_splitting_decimal_amounts(self):
+        self.model(entries=[{'direction':'OUT','amount_text':'250.50','source_id':'entry-0','label':'Groceries'},
+            {'direction':'IN','amount_text':'1000','source_id':'entry-1','label':'Received'}],clarification='')
+        response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={
+            'text':'Spent ₹250.50 on groceries. Received ₹1,000 today.','confirm_cloud_processing':True})
+        self.assertEqual(response.status_code,200,response.text)
+        self.assertEqual(response.json()['entries'][0]['source_quote'],'Spent ₹250.50 on groceries')
+        self.assertEqual(response.json()['entries'][1]['source_quote'],'Received ₹1,000 today')
+        context=json.loads(self.base.model.models.generate_content.call_args.kwargs['contents'])
+        self.assertEqual(len(context['source_units']),2)
+
+    def test_duplicate_source_selection_and_ai_written_quote_are_rejected(self):
+        item={'direction':'OUT','amount_text':'250','source_id':'entry-0','label':'Groceries'}
+        for entries in [[item,item],[{**item,'source_quote':'AI invented text'}]]:
+            self.model(entries=entries,clarification='')
+            response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={'text':'Spent ₹250 on groceries','confirm_cloud_processing':True})
+            self.assertEqual(response.status_code,503,response.text)

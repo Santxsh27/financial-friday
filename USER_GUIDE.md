@@ -2,6 +2,16 @@
 
 ## Your financial buddy
 
+### Softer interaction, same financial boundaries
+
+Buttons give a small press response; supported desktop task cards gently follow
+the pointer. Pages, disclosures and new replies settle quickly without hiding
+the result behind a long animation. Chat follows new replies only when you are
+already near the bottom (or sending your own message), so reading older messages
+is not interrupted. Loading indicators represent real pending requests, not success.
+**Appearance & sound → Gentle motion** turns motion off; your device's reduced-motion
+setting takes priority. These effects never change consent, payment rules or status.
+
 ### New: check your money runway
 
 1. On Overview, choose **Check my money runway** (also available in My money).

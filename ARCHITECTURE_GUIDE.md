@@ -318,8 +318,9 @@ operational resilience and regulatory review remain production concerns.
 
 ## 11. Verification and what it proves
 
-Current checks: 492 native tests (491 pass/one skip), 492 Docker tests
-(473 pass/nineteen skips), 24 tooling tests. GitHub Python 3.11/3.12 and Docker
+Current checks: 500 native tests (499 pass/one skip), 500 Docker tests
+(477 pass/twenty-three skips), 24 tooling tests. The extra optional skips are
+Node-only motion runtime checks. GitHub Python 3.11/3.12 and Docker
 checks passed for the Money Runway release. Twenty-two runway tests cover exact
 caps, timing, opt-in privacy, tenant isolation, cleanup races and AI unit guards.
 Real Vertex acceptance initially exposed a 100× unit error; that zero-traffic API
@@ -372,6 +373,7 @@ or grant owner-level access merely to review the application.
 | Statement analysis | `src/carapace_core/friday_statement.py` |
 | Cash-flow calculation/private memory | `src/carapace_core/friday_cashflow.py`, `src/carapace_api/friday_cashflow.py` |
 | Cash-flow UI | `src/carapace_integrations/friday_cashflow_ui.py` |
+| Presentation-only interaction motion | `src/carapace_integrations/friday_soft_flow.py` |
 | Signed outcome replay | `src/carapace_core/friday_assurance.py` |
 | Gemini planner | `src/carapace_ai/financial_friday.py` |
 | Gemini review/chat | `src/carapace_ai/friday_review.py`, `friday_chat.py` |

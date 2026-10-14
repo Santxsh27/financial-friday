@@ -48,6 +48,10 @@ verification. Red means held/conflicting. Green is reserved for independently
 confirmed artificial-money outcomes. Status text accompanies colour. Light/dark
 themes, reduced motion, keyboard focus and phone-width navigation are supported.
 Detailed quotes, model provenance and limits remain available in expandable panels.
+Interaction polish adds soft card lift, bounded pointer depth, light click feedback,
+short page/disclosure transitions and reading-aware chat scrolling. These are local
+decorations, not financial progress. Device/app reduced-motion settings take priority;
+loading feedback is tied to actual pending requests. See [soft flow](docs/SOFT_FLOW_0220.md).
 
 ## Problem and implemented solution
 
@@ -145,7 +149,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **492 tests ran, 491 passed, one optional
+Latest local checks, 14 October 2026: **500 tests ran, 499 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -159,7 +163,11 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **492 ran, 473 passed, nineteen optional skips**. Twenty-two Money Runway tests
+Docker: **500 ran, 477 passed, twenty-three optional skips**. Four additional optional
+Node-based motion checks account for the extra container skips. Eight soft-flow
+tests cover frame coalescing/cancellation, bounded tilt, reduced motion, no new
+action/network authority, real busy states and preserved chat reading position.
+Twenty-two Money Runway tests
 cover exact integer cash-flow calculations, maximal daily caps, same-day income
 ordering, delayed income, opt-in memory, tenant isolation, privacy races, chat
 consent, Firestore callbacks, paise-to-rupee formatting, rejected unsupported

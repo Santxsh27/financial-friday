@@ -136,8 +136,8 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **466 tests ran, 465 passed, one optional
-skip; 15 tooling checks passed**. Ten buddy tests additionally cover private
+Latest local checks, 14 October 2026: **470 tests ran, 469 passed, one optional
+skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
 Seventeen follow-up tests cover persistent tracking, new evidence after closing,
@@ -150,7 +150,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **466 ran, 447 passed, nineteen optional skips**. The previously deployed 0.19
+Docker: **470 ran, 451 passed, nineteen optional skips**. The previously deployed 0.19
 Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →
 Firestore readback check on an artificial PDF. Exact source anchors, cached
 upload replay, unchanged balance and zero payment requests were verified. The
@@ -200,6 +200,15 @@ The paired live evaluation runner accepts a frozen externally labelled corpus.
 Bundled cases are developer-authored, not independent validation. A Developer API
 smoke comparison was stopped after repeated server errors; no accuracy score was
 substituted. See [evaluation protocol](docs/INDEPENDENT_EVALUATION.md).
+
+The newer [same-output Vertex study](docs/EVIDENCE_EVALUATION_0211.md) found and
+fixed four explanation-only responses where a verification step was expected.
+On the frozen 16 developer cases, the corrected run matched the requested next
+step in 16/16 attempts and supplied all 12 requested drafts, with no proposed
+payments. The first report retains its timeout and mismatches. This is a small
+developer regression, not independent accuracy, human usefulness or proof of
+real-world fraud prevention. Raw/checked scores were identical on these returned
+outputs; no unsupported “better than plain Gemini” claim is made.
 
 ## Hackathon alignment
 

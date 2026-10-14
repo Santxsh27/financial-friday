@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **14 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.21.0`. Actual deployed source and
+specifications. Current code version is `0.21.1`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -59,6 +59,13 @@ in-flight updates from restoring removed tracking. Read-only inbox refresh uses
 no model call. There is no scheduled reminder, provider monitoring or external send.
 
 ### A. Conversational assistance
+
+The task planner separately prioritises a useful unsent verification draft when
+risk is identified or the user asks for one; educational requests remain explanations.
+Production and same-output evaluation share the exact source/quote admission
+function. Duplicate source IDs are rejected. The live developer regression and
+its pre-correction failures are recorded in `docs/EVIDENCE_EVALUATION_0211.md`;
+it is not an independent fraud benchmark or permission to execute money movements.
 
 User question -> validated tenant request -> optional bounded private context ->
 Gemini response -> schema/citation/authority validation -> safely rendered text.

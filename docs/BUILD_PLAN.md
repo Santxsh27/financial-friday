@@ -1,6 +1,6 @@
 # Financial Friday build sequence
 
-## Current release — 0.21.0, 14 October 2026
+## Current release — 0.21.1, 14 October 2026
 
 - [x] Live Gemini assistance and quoted document extraction on Vertex AI.
 - [x] Independent Mumbai Document AI OCR grounding with bounded usage.
@@ -10,6 +10,8 @@
   (actual callback verified in 0.20; current worker is pinned to 0.21).
 - [x] Personal preferences, visible request-driven AI state and separate demo bills.
 - [x] Evidence-aware follow-up memory that cannot hide warnings or mark a bill paid.
+- [x] Frozen developer risk/next-step evaluation using live Vertex, a same-output
+  admission comparison, saved before/after failures and corrected verification drafts.
 - [x] Tested and deployed matching 0.21 API/web; source and counts in
   [CURRENT_RELEASE](CURRENT_RELEASE.json).
 - [ ] Independent, frozen labelled evaluation with false-warning and task-success

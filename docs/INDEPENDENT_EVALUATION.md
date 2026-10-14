@@ -3,6 +3,13 @@
 Engineering tests, generated negative proposals and a fraud-accuracy benchmark
 answer different questions. None may be substituted for another.
 
+Current developer regression evidence is in
+[EVIDENCE_EVALUATION_0211](EVIDENCE_EVALUATION_0211.md), including the original
+failures. The preferred `tools/evaluate_friday_evidence.py` comparison uses one
+live output scored before/after the production quote checker. That isolates
+admission rather than comparing separately sampled answers. It still does not
+measure real financial execution or independent fraud accuracy.
+
 1. A reviewer who has not tuned Friday's prompts supplies synthetic/redacted cases
    and labels. Record author, permitted use, category, expected output and rationale.
 2. Split development and held-out cases by document template, issuer pattern and

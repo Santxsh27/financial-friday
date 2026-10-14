@@ -94,3 +94,9 @@ class BuddyTests(unittest.TestCase):
                 self.assertEqual(transport.call_args.args[3],BuddyPreferences().model_dump())
             self.assertEqual(client.put('/api/friday/buddy/preferences',json={'display_name':'<script>'}).status_code,422)
             client.close()
+
+    def test_demo_bills_are_separate_from_personal_next_steps(self):
+        from carapace_integrations.friday_obligations_ui import OBLIGATION_JS
+        self.assertIn('Artificial provider examples (optional)',OBLIGATION_JS)
+        self.assertIn('personal.slice(0,3)',OBLIGATION_JS)
+        self.assertIn('data.items.filter(item=>item.source_case_id)',OBLIGATION_JS)

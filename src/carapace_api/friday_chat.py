@@ -30,4 +30,5 @@ def reply_to_user(service, review, bank, tenant, request):
     from .friday_buddy import FridayBuddy
     context = chat_context(service, review, bank, tenant) if request.include_workspace else {}
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
-    return answer_chat(service.planner, request, context, preferences)
+    cashflow = service.cashflow.model_context(tenant) if request.include_cashflow else {}
+    return answer_chat(service.planner, request, context, preferences, cashflow)

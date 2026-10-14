@@ -69,6 +69,7 @@ fees and recipient changes are verification questions, not automatic fraud label
 | Obligation workflow | Complete bounded evidence joined to artificial provider records and journal outcomes; exact selected-item Gemini preparation, targeted verification questions and explicit outcome states. |
 | Guided first use | Editable artificial bill/receipt/conflict examples. Clicking Load does not send or pay; explicit review produces actual model results. |
 | Statement review | Consented INR CSV analysis; exact totals and bounded coverage, not a bank balance. |
+| Money Runway | Exact income/bill/spending scenarios, first buffer dip, daily cap and delayed-income comparison. Optional private latest-plan memory and separately consented Gemini explanation; no live bank feed or guaranteed forecast. |
 | Bill planning | Exact reserve-aware deadline prioritisation over test-provider bills. Preview does not authorise or reserve money. |
 | Sandbox execution | Typed Gemini program, independent safety checks, bounded repair, adversarial mutations and atomic artificial-money posting. |
 | Outcome assurance | Signed receipts, idempotency, receipt-first replay and independent journal checks. Not external banking proof. |
@@ -136,7 +137,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **470 tests ran, 469 passed, one optional
+Latest local checks, 14 October 2026: **490 tests ran, 489 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -150,7 +151,12 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **470 ran, 451 passed, nineteen optional skips**. The previously deployed 0.19
+Docker: **490 ran, 471 passed, nineteen optional skips**. Twenty Money Runway tests
+cover exact integer cash-flow calculations, maximal daily caps, same-day income
+ordering, delayed income, opt-in memory, tenant isolation, privacy races, chat
+consent, Firestore callbacks and gateway validation. See
+[Money Runway and responsible learning](docs/MONEY_RUNWAY_0220.md).
+The previously deployed 0.19
 Cloud Run candidate passed a live basic Mumbai OCR → Vertex extraction →
 Firestore readback check on an artificial PDF. Exact source anchors, cached
 upload replay, unchanged balance and zero payment requests were verified. The

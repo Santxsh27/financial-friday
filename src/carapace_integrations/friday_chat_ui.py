@@ -32,17 +32,22 @@ CHAT_JS = r"""
       const chatConsent=element('input');chatConsent.type='checkbox';chatConsent.id='friday-chat-workspace';
       const chatConsentLabel=element('label',' Include my recent financial inbox and sandbox summary in Gemini’s answer','friday-chat-consent');chatConsentLabel.prepend(chatConsent);
       const chatStatus=element('p','Your request stays read-only.','friday-chat-status');chatStatus.setAttribute('role','status');
-      let chatBusy=false;let chatHistory=[];
+      let chatBusy=false;let chatHistory=[];let chatGeneration=0;
       function chatMessage(speaker,text){const card=element('article',null,'friday-chat-message');card.dataset.speaker=speaker;card.append(element('b',speaker==='user'?'You':'Friday'),element('div',text));chatLog.append(card);chatLog.scrollTop=chatLog.scrollHeight;return card;}
-      function clearChat(){chatHistory=[];chatLog.replaceChildren();chatStatus.textContent='Conversation cleared from this page. No payment or bank action was performed.';}
+      function clearChat(){chatGeneration+=1;chatHistory=[];chatLog.replaceChildren();chatStatus.textContent='Conversation cleared from this page. No payment or bank action was performed.';}
       chatConsent.addEventListener('change',clearChat);
+      const cashflowConsent=element('input');cashflowConsent.type='checkbox';cashflowConsent.id='friday-chat-cashflow';
+      const cashflowConsentLabel=element('label',' Include my saved cash-flow assumptions and calculator summary in Gemini’s answer','friday-chat-consent');cashflowConsentLabel.prepend(cashflowConsent);cashflowConsent.addEventListener('change',clearChat);
       document.addEventListener('friday:preferences-changed',clearChat);
+      document.addEventListener('friday:cashflow-updated',clearChat);
+      document.addEventListener('friday:cashflow-cleared',()=>{cashflowConsent.checked=false;clearChat();});
       const chatTools=element('div',null,'friday-chat-tools');const chatClear=element('button','Clear chat');chatClear.type='button';chatClear.addEventListener('click',clearChat);
       const reviewFromChat=element('button','Review a bill or receipt');reviewFromChat.type='button';reviewFromChat.dataset.screenLink='bill';
       chatTools.append(reviewFromChat,chatClear);
       everydayAssistant.querySelector('h2').textContent='Ask Friday.';
       everydayAssistant.querySelector('h2').nextElementSibling.textContent='A question, a risk check or a message you need help writing.';
       everydayAssistant.insertBefore(chatLog,command);everydayAssistant.insertBefore(chatConsentLabel,command);command.after(chatStatus,chatTools);
+      everydayAssistant.insertBefore(cashflowConsentLabel,command);
       $('home-command').placeholder='Ask about a charge, a bill or a money concept…';$('home-command').maxLength=1600;$('home-command').rows=2;
       command.querySelector('label').textContent='Your question';
       $('home-command').setAttribute('aria-label','Message Friday');command.querySelector('button[type=submit]').textContent='Ask Friday';
@@ -64,15 +69,18 @@ CHAT_JS = r"""
       scopeCopy.querySelector('p').textContent='Questions and document checks work without bank access. Only the separate payment demo uses artificial funds.';
       async function sendFridayChat(){const field=$('home-command');const message=field.value.trim();if(!message)return;if(chatBusy){toast('Friday is still replying.');return;}
         chatBusy=true;const button=command.querySelector('button[type=submit]');button.disabled=true;chatClear.disabled=true;chatConsent.disabled=true;chatMessage('user',message);field.value='';chatStatus.textContent='Friday is thinking with Gemini… No financial action is being performed.';
-        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked,include_preferences:$('buddy-use-style')?.checked===true});
+        cashflowConsent.disabled=true;
+        const sentGeneration=chatGeneration;
+        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked,include_preferences:$('buddy-use-style')?.checked===true,include_cashflow:cashflowConsent.checked});
           if(result.read_only!==true||result.money_moved!==false||result.payment_authorized!==false||!Array.isArray(result.actions_executed)||result.actions_executed.length)throw new Error('Unexpected chat authority');
-          const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited inbox case(s) · user-supplied evidence'));
+          if(sentGeneration!==chatGeneration)return;
+          const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited saved source(s) · user-supplied evidence or calculator scenario'));
           const screenLabels={review:'Open financial inbox',document:'Read a document',money:'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules'};
           if(screenLabels[result.next_screen]){const next=element('button',screenLabels[result.next_screen]);next.type='button';next.dataset.screenLink=result.next_screen;card.append(next);}
           chatHistory.push({role:'user',text:message},{role:'assistant',text:result.reply});chatHistory=chatHistory.slice(-8);
           chatStatus.textContent=result.mode+' · '+result.model+' · Guidance only; no action executed.';
-        }catch(error){chatMessage('assistant','I couldn’t get a live Gemini reply. No payment or other action was performed. You can still review saved evidence.');chatStatus.textContent='Live chat unavailable. No canned financial answer was substituted.';}
-        finally{chatBusy=false;button.disabled=false;chatClear.disabled=false;chatConsent.disabled=false;}}
+        }catch(error){if(sentGeneration!==chatGeneration)return;chatMessage('assistant','I couldn’t get a live Gemini reply. No payment or other action was performed. You can still review saved evidence.');chatStatus.textContent='Live chat unavailable. No canned financial answer was substituted.';}
+        finally{chatBusy=false;button.disabled=false;chatClear.disabled=false;chatConsent.disabled=false;cashflowConsent.disabled=false;}}
       // Intercept the old bill form before its legacy execution handler runs.
       command.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();sendFridayChat();},true);
       $('home-command').addEventListener('keydown',event=>{if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();sendFridayChat();}});

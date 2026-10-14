@@ -14,6 +14,7 @@ from .financial_friday import FridayUnderstandingUnavailable
 from carapace_ai.friday_chat import FridayChatRequest
 from carapace_ai.friday_tasks import TaskRequest
 from .friday_tasks import FridayTaskService, TaskConfirmation
+from carapace_core.friday_cashflow import CashflowRequest
 
 
 class WatchRequest(BaseModel):
@@ -87,6 +88,17 @@ def register_financial_friday_routes(application, service, authenticate):
     application.state.friday_buddy = buddy
     from .friday_followups import FridayFollowups, FollowupRequest
     service.followups = FridayFollowups(service)
+    from .friday_cashflow import FridayCashflow
+    service.cashflow = FridayCashflow(service)
+
+    @application.get('/v1/friday/cashflow', tags=['friday-cashflow'])
+    def cashflow_read(tenant: TenantContext = Depends(authenticate)):
+        return {'snapshot': service.cashflow.get(tenant.tenant_id), 'money_moved': False, 'ai_called': False}
+
+    @application.post('/v1/friday/cashflow', tags=['friday-cashflow'])
+    def cashflow_create(payload: CashflowRequest, tenant: TenantContext = Depends(authenticate)):
+        try: return service.cashflow.create(tenant.tenant_id, payload)
+        except ValueError as error: raise HTTPException(409, str(error)) from error
 
     @application.post('/v1/friday/obligations/{obligation_id}/followup', tags=['financial-obligations'])
     def obligation_followup(obligation_id: str, payload: FollowupRequest, tenant: TenantContext = Depends(authenticate)):

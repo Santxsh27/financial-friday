@@ -16,6 +16,7 @@ from fastapi import FastAPI, HTTPException
 from carapace_api.financial_friday_routes import FollowThroughRequest, BillHandleRequest
 from carapace_api.friday_buddy import BuddyPreferences
 from carapace_api.friday_followups import FollowupRequest
+from carapace_core.friday_cashflow import CashflowRequest
 from pydantic import BaseModel, Field
 from typing import Literal
 from fastapi.responses import HTMLResponse
@@ -400,6 +401,18 @@ def create_demo_app() -> FastAPI:
         )
         if code != 200:
             raise HTTPException(code, result.get("detail", "Friday could not interpret this input"))
+        return result
+
+    @application.get('/api/friday/cashflow')
+    async def friday_cashflow_read():
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/cashflow', 'GET')
+        if code != 200: raise HTTPException(code, 'Saved cash-flow snapshot unavailable.')
+        return result
+
+    @application.post('/api/friday/cashflow')
+    async def friday_cashflow_create(payload: CashflowRequest):
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/cashflow', 'POST', payload.model_dump(mode='json'))
+        if code != 200: raise HTTPException(code, 'Cash-flow scenario was not confirmed. No financial action occurred.')
         return result
 
     @application.post("/api/friday/statements/analyze")

@@ -10,7 +10,7 @@ from carapace_core.friday_assurance import seal_friday_run
 from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow"}
 
 
 class FridayDurableState(Protocol):
@@ -169,6 +169,17 @@ class FirestoreFridayState:
             return replacement
         return self._atomic(commit)
 
+    def put_cashflow(self, tenant, generation, record):
+        self._validate('cashflow', tenant, 'current')
+        ref = self._documents('cashflow', tenant).document('current')
+        privacy = self._documents('privacy', tenant).document('current')
+        def commit(transaction):
+            policy = privacy.get(transaction=transaction)
+            current = policy.to_dict().get('generation', 0) if policy.exists else 0
+            if current != generation: raise ValueError('Privacy cleanup occurred. The forecast was not saved.')
+            transaction.set(ref, record)
+        self._atomic(commit)
+
     def put_task(self,tenant,task_id,record):
         self._validate('assistant_tasks',tenant,task_id)
         ref=self._documents('assistant_tasks',tenant).document(task_id)
@@ -211,6 +222,8 @@ class FirestoreFridayState:
             transaction.set(version,{'epoch':(epoch.to_dict().get('epoch',0) if epoch.exists else 0)+1})
         self._atomic(barrier)
         counts={}
+        counts['cashflow'] = int(self.get('cashflow', tenant, 'current') is not None)
+        self._documents('cashflow', tenant).document('current').delete()
         followups = self.get('followups', tenant, 'current') or {}
         counts['followups'] = len(followups.get('items', {}))
         self._documents('followups', tenant).document('current').delete()

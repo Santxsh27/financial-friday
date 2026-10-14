@@ -8,7 +8,8 @@ FRIDAY_ROUTES = {
     "PUT": r"(?:mandate|privacy|buddy/preferences)",
     "POST": r"(?:obligations/obligation_[a-f0-9]{32}/followup|privacy/reviews/delete|chat|tasks|tasks/task_[a-f0-9]{32}/(?:confirm|reconcile)|reviews|reviews/documents|reviews/statement|bills/handle|statements/analyze|follow-through|live-input|documents|test-provider/bills|live-input/[A-Za-z0-9_-]{1,100}/run|scenarios/[A-Za-z0-9_-]{1,100}/run)",
 }
-FRIDAY_ROUTES['GET'] = r'(?:buddy(?:/preferences)?|' + FRIDAY_ROUTES['GET'] + r')'
+FRIDAY_ROUTES['GET'] = r'(?:cashflow|buddy(?:/preferences)?|' + FRIDAY_ROUTES['GET'] + r')'
+FRIDAY_ROUTES['POST'] = r'(?:cashflow|' + FRIDAY_ROUTES['POST'] + r')'
 
 
 def validate_enrollment_secret(secret: str) -> None:

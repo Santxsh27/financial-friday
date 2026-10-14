@@ -2,6 +2,33 @@
 
 ## Your financial buddy
 
+### New: check your money runway
+
+1. On Overview, choose **Check my money runway** (also available in My money).
+2. Enter available cash, a buffer you want to keep, daily variable spending and
+   the dates/amounts of expected income and known bills. Daily spending excludes
+   those separately listed bills. These are your assumptions, not a bank feed.
+3. Choose **Check my runway**. Expect a first projected buffer dip, exact daily
+   spending cap, and comparison if income is late. Purple/amber lines show cash
+   before expected income each day. **Try an editable example** only fills fields;
+   it does not send, save or calculate until you choose Check.
+4. Leave **Save only this latest plan** off for a transient calculation. Tick it
+   before checking if you want one private snapshot. **Load my saved plan** shows
+   its saved date; update stale assumptions. A changed form needs a new calculation.
+5. **Ask Friday about this plan** prepares a question, not a model call. If saved,
+   explicitly choose **Include my saved cash-flow assumptions…** on Overview and
+   press **Ask Friday**. Gemini explains aggregates; no money moves or model trains.
+
+Example: ₹8,000 cash, ₹2,000 buffer, ₹400 daily spending, ₹4,500 bill in seven days
+and ₹18,000 expected in fourteen days. The entered plan could dip below the buffer
+in seven days; its calculated daily cap is ₹100 (₹68.18 if income is seven days
+late). This is conditional on the dates/amounts, not a prediction that you will go
+broke. Known bills alone exceeding the buffer means cutting daily spending is
+not enough; review obligations and assumptions, not automatically take a loan.
+Review cleanup removes all saved cash-flow assumptions, including expired-only
+cleanup. No automatic bank/SMS access or phone notifications are connected.
+See [the complete Money Runway guide](docs/MONEY_RUNWAY_0220.md).
+
 On Overview, Friday shows a read-only summary of saved claims, not a pretend bank
 balance. Default artificial bills are not counted as your personal to-do list.
 Click **Make Friday yours** for an optional nickname, short/step-by-step replies

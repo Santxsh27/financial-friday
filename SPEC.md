@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **14 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.21.1`. Actual deployed source and
+specifications. Current code version is `0.22.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -40,6 +40,25 @@ is rejected before a model call. Full bounded evidence remains checked independe
 does not authorize payment, and evidence/provider/rules are rechecked at execution.
 
 ## 2. Supported workflows
+
+### Money Runway (private what-if planning)
+
+User-entered INR cash, chosen buffer, daily variable spending, dated expected
+income and known bills produce an exact 1–90 day scenario. Integer minor-unit
+calculations find the first buffer dip/negative cash, the largest daily cap
+consistent with every prefix of the entered plan, and a delayed-income comparison.
+Bills and discretionary spending are deducted before same-day income. Income is
+not guaranteed, and known commitments can exceed the buffer even with zero
+discretionary spending. Never classify a user as poor or promise future balances.
+
+Calculation calls neither Gemini nor execution. Saving the latest snapshot is
+optional, private and generation-protected against cleanup races in SQLite and
+transactional Firestore. Review cleanup removes that snapshot; opening the page
+does not create one. A separate unchecked chat consent sends only aggregate
+calculator context to Gemini, not raw statements or individual events. Changes
+clear stale conversation context. This memory is not model training. There is no
+RAG corpus, fine-tuning job, live bank/SMS source or external notification service.
+See [algorithm, privacy and dataset plan](docs/MONEY_RUNWAY_0220.md).
 
 ### Follow-up memory (separate from financial truth)
 

@@ -10,7 +10,7 @@ from carapace_core.friday_assurance import seal_friday_run
 from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow", "diary"}
 
 
 class FridayDurableState(Protocol):
@@ -180,6 +180,21 @@ class FirestoreFridayState:
             transaction.set(ref, record)
         self._atomic(commit)
 
+    def update_diary(self, tenant, generation, change):
+        self._validate('diary', tenant, 'current')
+        ref = self._documents('diary', tenant).document('current')
+        privacy = self._documents('privacy', tenant).document('current')
+        def commit(transaction):
+            old = ref.get(transaction=transaction)
+            policy = privacy.get(transaction=transaction)
+            current = policy.to_dict().get('generation',0) if policy.exists else 0
+            if current != generation:
+                raise ValueError('Workspace was cleared while saving; refresh first')
+            result = change(old.to_dict() if old.exists else None)
+            transaction.set(ref, result)
+            return result
+        return self._atomic(commit)
+
     def put_task(self,tenant,task_id,record):
         self._validate('assistant_tasks',tenant,task_id)
         ref=self._documents('assistant_tasks',tenant).document(task_id)
@@ -222,6 +237,8 @@ class FirestoreFridayState:
             transaction.set(version,{'epoch':(epoch.to_dict().get('epoch',0) if epoch.exists else 0)+1})
         self._atomic(barrier)
         counts={}
+        counts['diary'] = int(self.get('diary', tenant, 'current') is not None)
+        self._documents('diary', tenant).document('current').delete()
         counts['cashflow'] = int(self.get('cashflow', tenant, 'current') is not None)
         self._documents('cashflow', tenant).document('current').delete()
         followups = self.get('followups', tenant, 'current') or {}

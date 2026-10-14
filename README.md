@@ -1,6 +1,6 @@
 # Financial Friday
 
-**Keep financial obligations on track. Prepare the next safe step. Verify the outcome.**
+**Your money buddy. One small check-in, a clearer next step, and evidence-backed protection.**
 
 Financial Friday is a private **financial buddy**: understand the records you
 choose to share, organise next steps, and prepare useful guidance in your preferred
@@ -9,8 +9,15 @@ It combines Google Gemini financial assistance with a separate,
 strictly bounded artificial-money executor. It is not a bank, a trading adviser,
 or an unrestricted agent controlling real accounts.
 
-The central workflow is an **obligation inbox**, not a collection of disconnected
-AI tools: give Friday a financial request once, see what is known versus missing,
+The everyday entry point is **My money today**: report money in/out, review
+Gemini's proposed entries, and explicitly save a private diary. Exact code updates
+cash totals and coverage of your chosen buffer—not an official credit score.
+An optional diary-summary consent lets Gemini coach from aggregates without
+entry notes. Money Runway explores future bills and delayed income separately.
+No live bank balance or guarantee of avoiding hardship is implied.
+
+The connected protection workflow is an **obligation inbox**: give Friday a
+financial request once, see what is known versus missing,
 prepare one evidence-bound next step, and follow its actual outcome. Supplier and
 reference must match an artificial provider record before a document can join the
 payment workflow. No connected provider means useful verification assistance,
@@ -71,6 +78,7 @@ fees and recipient changes are verification questions, not automatic fraud label
 
 | Capability | What works and what it does not mean |
 | --- | --- |
+| My money today | Real private, versioned diary; Gemini proposes source-anchored entries, manual fallback, explicit save, group Undo, export and chosen-buffer coverage. No official score, bank balance, automatic tracking or payment. |
 | Ask Friday | Live Gemini answers, explanations and unsent drafts. Optional private workspace context; no execution tools. |
 | Make Friday yours | Private nickname, concise/step-by-step explanations and focus preferences. Opt-in presentation choices, never payment authority; nickname is not sent to Gemini. |
 | Follow-up memory | Keep a saved obligation on your list, wait for a reply, recheck new evidence or close the follow-up. New evidence resurfaces closed items; closing never means paid or verified. No automatic messages or bank monitoring. |
@@ -149,7 +157,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 14 October 2026: **502 tests ran, 501 passed, one optional
+Latest local checks, 14 October 2026: **522 tests ran, 521 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -163,7 +171,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **502 ran, 479 passed, twenty-three optional skips**. Four additional optional
+Docker: **522 ran, 499 passed, twenty-three optional skips**. Four additional optional
 Node-based motion checks account for the extra container skips. Ten soft-flow
 tests cover frame coalescing/cancellation, bounded tilt, reduced motion, no new
 action/network authority, real busy states, preserved chat reading position and

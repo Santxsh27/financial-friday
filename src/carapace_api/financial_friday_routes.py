@@ -90,6 +90,27 @@ def register_financial_friday_routes(application, service, authenticate):
     service.followups = FridayFollowups(service)
     from .friday_cashflow import FridayCashflow
     service.cashflow = FridayCashflow(service)
+    from .friday_diary import FridayDiary
+    from carapace_core.friday_diary import DiaryChange
+    from carapace_ai.friday_diary import DiaryParseRequest, parse_diary
+    service.diary = FridayDiary(service)
+
+    @application.get('/v1/friday/diary', tags=['friday-diary'])
+    def diary_read(tenant: TenantContext = Depends(authenticate)):
+        return service.diary.view(tenant.tenant_id)
+
+    @application.post('/v1/friday/diary', tags=['friday-diary'])
+    def diary_change(payload: DiaryChange, tenant: TenantContext = Depends(authenticate)):
+        try: return service.diary.change(tenant.tenant_id, payload)
+        except ValueError as error: raise HTTPException(409, str(error)) from error
+
+    @application.post('/v1/friday/diary/prepare', tags=['friday-diary'])
+    async def diary_prepare(payload: DiaryParseRequest, tenant: TenantContext = Depends(authenticate)):
+        if not payload.confirm_cloud_processing:
+            raise HTTPException(422, 'Permission to send this check-in to Gemini is required')
+        try: return await run_in_threadpool(parse_diary, service.planner, payload)
+        except Exception as error:
+            raise HTTPException(503, 'Friday could not reliably read that update. Use manual entry; nothing was saved.') from error
 
     @application.get('/v1/friday/cashflow', tags=['friday-cashflow'])
     def cashflow_read(tenant: TenantContext = Depends(authenticate)):

@@ -31,4 +31,5 @@ def reply_to_user(service, review, bank, tenant, request):
     context = chat_context(service, review, bank, tenant) if request.include_workspace else {}
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
     cashflow = service.cashflow.model_context(tenant) if request.include_cashflow else {}
-    return answer_chat(service.planner, request, context, preferences, cashflow)
+    diary = service.diary.model_context(tenant) if request.include_diary else {}
+    return answer_chat(service.planner, request, context, preferences, cashflow, diary)

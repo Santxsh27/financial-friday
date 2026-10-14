@@ -725,3 +725,29 @@ permission → handle an allowed artificial task → verify and reuse its outcom
 For implementation, tests and deployment details, continue with [README](README.md),
 [Start Here](START_HERE.md), [SPEC](SPEC.md) and the [readiness report](docs/submission/READINESS_1012.md).
 The same project history now lives in [the Financial Friday GitHub repository](https://github.com/Santxsh27/financial-friday).
+# New: My money today
+
+On **Overview**, start your private diary with cash before the entries you intend
+to log and a buffer you want to keep. Do not re-enter expenses already included
+in that opening cash. For an artificial test, use ₹8,000 and ₹2,000.
+
+Write `Spent ₹250 on groceries. Received ₹1,000 today.` and choose **Let Friday
+read this** to send that text to Gemini. Review its proposed directions, amounts
+and notes; nothing is saved yet. **Confirm & save privately** records the entries.
+The example should show ₹8,750 reported cash, ₹1,000 in and ₹250 out. This is
+bookkeeping—not bank evidence. The alternative **Or add an entry without AI**
+also works locally when Gemini is unavailable, with an explicit date.
+
+Open **My recent updates → Undo → Confirm diary undo** to undo the whole saved
+check-in group, not a bank payment. **Download my diary** exports your reports.
+**Plan what comes next** copies reported cash into Money Runway without saving,
+calculating or authorizing anything; review remaining future bills and dates.
+**Ask Friday for one next step** prepares a question. Choose the separate diary
+totals checkbox, then **Ask Friday** to share aggregates—not entry notes.
+
+The meter is coverage of your chosen buffer, not a credit score. Missing expenses
+and uncertain income limit its usefulness. Proposals use explicit English cues
+and today's date; use manual entry for another date. No live bank/SMS feed is
+connected. Diary storage caps at 100 entries/200 changes; export before cleanup.
+Existing demo request quotas still apply. Cleanup under **My rules** also erases
+the diary after explicit confirmation, while payment replay records are retained.

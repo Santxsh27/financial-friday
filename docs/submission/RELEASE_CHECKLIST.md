@@ -1,6 +1,6 @@
 # Friday — current submission readiness
 
-Updated 14 October 2026 for version 0.22.0. This replaces stale owner-only
+Updated 14 October 2026 for version 0.23.0. This replaces stale owner-only
 access and older test counts. Dated release reports retain their historical
 evidence; see [reports index](../REPORTS_INDEX.md).
 
@@ -20,7 +20,7 @@ evidence; see [reports index](../REPORTS_INDEX.md).
 - Private buddy preferences/follow-ups, manual cleanup and in-flight cancellation.
 - Money Runway: exact dated INR assumptions, spending caps, delayed-income chart,
   optional latest-plan memory and separately consented Gemini explanation.
-- Native 502 tests: 501 passed, one optional skip. Docker 502: 479 passed,
+- Native 522 tests: 521 passed, one optional skip. Docker 522: 499 passed,
   twenty-three optional skips. Twenty-four tooling checks passed; published Money
   Runway GitHub checks also passed on Python 3.11/3.12 and Docker.
 - Corrected real Vertex/Firestore runway acceptance verified exact rupee caps,

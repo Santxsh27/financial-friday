@@ -17,6 +17,8 @@ from carapace_api.financial_friday_routes import FollowThroughRequest, BillHandl
 from carapace_api.friday_buddy import BuddyPreferences
 from carapace_api.friday_followups import FollowupRequest
 from carapace_core.friday_cashflow import CashflowRequest
+from carapace_core.friday_diary import DiaryChange
+from carapace_ai.friday_diary import DiaryParseRequest
 from pydantic import BaseModel, Field
 from typing import Literal
 from fastapi.responses import HTMLResponse
@@ -407,6 +409,24 @@ def create_demo_app() -> FastAPI:
     async def friday_cashflow_read():
         code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/cashflow', 'GET')
         if code != 200: raise HTTPException(code, 'Saved cash-flow snapshot unavailable.')
+        return result
+
+    @application.get('/api/friday/diary')
+    async def friday_diary_read():
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/diary', 'GET')
+        if code != 200: raise HTTPException(code, 'Your money diary is unavailable. No balance is assumed.')
+        return result
+
+    @application.post('/api/friday/diary')
+    async def friday_diary_change(payload: DiaryChange):
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/diary', 'POST', payload.model_dump(mode='json'))
+        if code != 200: raise HTTPException(code, result.get('detail','Diary update was not confirmed. Reload before retrying.'))
+        return result
+
+    @application.post('/api/friday/diary/prepare')
+    async def friday_diary_prepare(payload: DiaryParseRequest):
+        code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/diary/prepare', 'POST', payload.model_dump(mode='json'), 120)
+        if code != 200: raise HTTPException(code, 'Friday could not read that update. Use manual entry; nothing was saved.')
         return result
 
     @application.post('/api/friday/cashflow')

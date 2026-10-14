@@ -1,6 +1,6 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **14 October 2026**, version **0.22.0**. Project name: Financial Friday.
+Current technical reference: **14 October 2026**, version **0.23.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Current product spine: financial obligation → checked next step → outcome
@@ -318,8 +318,8 @@ operational resilience and regulatory review remain production concerns.
 
 ## 11. Verification and what it proves
 
-Current checks: 502 native tests (501 pass/one skip), 502 Docker tests
-(479 pass/twenty-three skips), 24 tooling tests. The extra optional skips are
+Current checks: 522 native tests (521 pass/one skip), 522 Docker tests
+(499 pass/twenty-three skips), 24 tooling tests. The extra optional skips are
 Node-only motion runtime checks. GitHub Python 3.11/3.12 and Docker
 checks passed for the Money Runway release. Twenty-two runway tests cover exact
 caps, timing, opt-in privacy, tenant isolation, cleanup races and AI unit guards.

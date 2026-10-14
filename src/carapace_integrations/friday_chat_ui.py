@@ -40,6 +40,7 @@ CHAT_JS = r"""
       const cashflowConsentLabel=element('label',' Include my saved cash-flow assumptions and calculator summary in Gemini’s answer','friday-chat-consent');cashflowConsentLabel.prepend(cashflowConsent);cashflowConsent.addEventListener('change',clearChat);
       document.addEventListener('friday:preferences-changed',clearChat);
       document.addEventListener('friday:cashflow-updated',clearChat);
+      document.addEventListener('friday:diary-updated',clearChat);
       document.addEventListener('friday:cashflow-cleared',()=>{cashflowConsent.checked=false;clearChat();});
       const chatTools=element('div',null,'friday-chat-tools');const chatClear=element('button','Clear chat');chatClear.type='button';chatClear.addEventListener('click',clearChat);
       const reviewFromChat=element('button','Review a bill or receipt');reviewFromChat.type='button';reviewFromChat.dataset.screenLink='bill';
@@ -69,9 +70,9 @@ CHAT_JS = r"""
       scopeCopy.querySelector('p').textContent='Questions and document checks work without bank access. Only the separate payment demo uses artificial funds.';
       async function sendFridayChat(){const field=$('home-command');const message=field.value.trim();if(!message)return;if(chatBusy){toast('Friday is still replying.');return;}
         chatBusy=true;const button=command.querySelector('button[type=submit]');button.disabled=true;chatClear.disabled=true;chatConsent.disabled=true;chatMessage('user',message);field.value='';chatStatus.textContent='Friday is thinking with Gemini… No financial action is being performed.';
-        cashflowConsent.disabled=true;command.setAttribute('aria-busy','true');
+        cashflowConsent.disabled=true;if($('friday-chat-diary'))$('friday-chat-diary').disabled=true;command.setAttribute('aria-busy','true');
         const sentGeneration=chatGeneration;
-        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked,include_preferences:$('buddy-use-style')?.checked===true,include_cashflow:cashflowConsent.checked});
+        try{const result=await jsonRequest('/api/friday/chat','POST',{message,history:chatHistory.slice(-8),include_workspace:chatConsent.checked,include_preferences:$('buddy-use-style')?.checked===true,include_cashflow:cashflowConsent.checked,include_diary:$('friday-chat-diary')?.checked===true});
           if(result.read_only!==true||result.money_moved!==false||result.payment_authorized!==false||!Array.isArray(result.actions_executed)||result.actions_executed.length)throw new Error('Unexpected chat authority');
           if(sentGeneration!==chatGeneration)return;
           const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited saved source(s) · user-supplied evidence or calculator scenario'));
@@ -80,7 +81,7 @@ CHAT_JS = r"""
           chatHistory.push({role:'user',text:message},{role:'assistant',text:result.reply});chatHistory=chatHistory.slice(-8);
           chatStatus.textContent=result.mode+' · '+result.model+' · Guidance only; no action executed.';
         }catch(error){if(sentGeneration!==chatGeneration)return;chatMessage('assistant','I couldn’t get a live Gemini reply. No payment or other action was performed. You can still review saved evidence.');chatStatus.textContent='Live chat unavailable. No canned financial answer was substituted.';}
-        finally{chatBusy=false;button.disabled=false;chatClear.disabled=false;chatConsent.disabled=false;cashflowConsent.disabled=false;command.setAttribute('aria-busy','false');}}
+        finally{chatBusy=false;button.disabled=false;chatClear.disabled=false;chatConsent.disabled=false;cashflowConsent.disabled=false;if($('friday-chat-diary'))$('friday-chat-diary').disabled=false;command.setAttribute('aria-busy','false');}}
       // Intercept the old bill form before its legacy execution handler runs.
       command.addEventListener('submit',event=>{event.preventDefault();event.stopImmediatePropagation();sendFridayChat();},true);
       $('home-command').addEventListener('keydown',event=>{if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();sendFridayChat();}});

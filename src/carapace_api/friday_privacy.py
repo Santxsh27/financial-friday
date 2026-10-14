@@ -44,7 +44,7 @@ class FridayPrivacyService:
                 row=db.execute('SELECT policy FROM friday_privacy WHERE tenant=?',(tenant,)).fetchone()
             stored=json.loads(row[0]) if row else None
         return (stored or {'retention_days':None})|{'automatic_deletion_enabled':False,
-            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts; follow-up tracking and saved cash-flow snapshot clear on cleanup. Payment journal/idempotency retained.'}
+            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts; follow-up tracking, money diary and saved cash-flow snapshot clear on cleanup. Payment journal/idempotency retained.'}
 
     def save(self,tenant,policy):
         value=policy.model_dump()
@@ -75,6 +75,8 @@ class FridayPrivacyService:
                     db.execute('DELETE FROM friday_followups WHERE tenant=?',(tenant,))
                 if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_cashflow'").fetchone():
                     counts['cashflow']=db.execute('DELETE FROM friday_cashflow WHERE tenant=?',(tenant,)).rowcount
+                if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_diary'").fetchone():
+                    counts['diary']=db.execute('DELETE FROM friday_diary WHERE tenant=?',(tenant,)).rowcount
                 for table,col,label in [('friday_reviews','tenant','reviews'),('friday_assistant_tasks','tenant_id','drafts')]:
                     exists=db.execute("SELECT 1 FROM sqlite_master WHERE name=?",(table,)).fetchone()
                     if not exists:continue
@@ -82,4 +84,4 @@ class FridayPrivacyService:
                     params=(tenant,cutoff) if cutoff else (tenant,)
                     counts[label]=db.execute(f'DELETE FROM {table} WHERE {col}=?'+clause,params).rowcount
         return {'deleted':counts,'money_moved':False,'payment_journal_retained':True,
-            'message':'Requested comparison inputs removed; follow-up tracking and the saved cash-flow snapshot cleared. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}
+            'message':'Requested comparison inputs removed; follow-up tracking, money diary and the saved cash-flow snapshot cleared. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}

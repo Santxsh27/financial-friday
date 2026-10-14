@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **14 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.22.0`. Actual deployed source and
+specifications. Current code version is `0.23.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -9,8 +9,10 @@ For the detailed rationale, algorithms and trust boundaries, read
 
 ## 1. Product definition
 
-Financial Friday helps users keep financial obligations on track with minimal
-repeat input. Its obligation inbox joins saved document claims, exact artificial
+Financial Friday is a friendly money buddy combining user-reported daily money
+management, exact what-if planning and evidence-backed financial-request checks.
+It helps users keep obligations on track with minimal repeat input.
+Its obligation inbox joins saved document claims, exact artificial
 provider identities, saved constraints and recorded outcomes. Gemini prepares the
 next step; independent checks determine what can proceed. The intended outcome
 is a completed allowed task or useful verification assistance, not just an alert.
@@ -40,6 +42,30 @@ is rejected before a model call. Full bounded evidence remains checked independe
 does not authorize payment, and evidence/provider/rules are rechecked at execution.
 
 ## 2. Supported workflows
+
+### My money today (private user-reported diary)
+
+Start with cash before new entries and a positive chosen buffer. Gemini can
+propose up to five INR entries from one explicitly shared check-in; each literal
+amount needs an exact non-overlapping quote and explicit direction. This is an
+English-cue, today-only convenience path, not general statement parsing or date
+inference. Unsupported currencies, future income and ambiguous dates need manual
+entry or a future runway scenario. AI proposals never save themselves.
+
+Confirmed writes use an operation identity, expected revision and privacy
+generation. SQLite and Firestore transact updates atomically; a same-ID exact
+retry cannot duplicate entries, changed-ID payload reuse and stale tabs fail.
+Group Undo marks bookkeeping entries undone, never reverses a bank payment.
+Exact integer arithmetic shows reported cash, money in/out, net change and
+coverage of the user's buffer. Money in is not necessarily earnings or profit.
+The meter is not a credit/financial-health score or future-safety guarantee.
+
+Each diary admits 100 entries and 200 changes without silent eviction. Local
+download exports all returned entries, including undone entries. Explicit private
+input cleanup clears the diary and invalidates pending saves. Chat has independent
+unchecked diary consent, shares aggregates without entry notes, and applies the
+existing explicit-rupee response gate. No model training, bank feed, notification,
+payment permission, borrowing or investment action is added.
 
 ### Money Runway (private what-if planning)
 

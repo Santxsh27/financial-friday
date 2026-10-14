@@ -12,7 +12,7 @@
 - [x] Evidence-aware follow-up memory that cannot hide warnings or mark a bill paid.
 - [x] Frozen developer risk/next-step evaluation using live Vertex, a same-output
   admission comparison, saved before/after failures and corrected verification drafts.
-- [x] Tested and deployed matching 0.21 API/web; source and counts in
+- [x] Tested and deployed the current API and compatible web; source and counts in
   [CURRENT_RELEASE](CURRENT_RELEASE.json).
 - [ ] Independent, frozen labelled evaluation with false-warning and task-success
   measures; developer examples are not independent accuracy evidence.

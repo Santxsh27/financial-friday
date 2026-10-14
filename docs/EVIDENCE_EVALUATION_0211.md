@@ -93,8 +93,6 @@ Full immutable records:
 [before](evaluation/evidence_2026-10-14_before.json) and
 [after](evaluation/evidence_2026-10-14_after.json).
 
-## Still needed
-
 ## Deployed workflow checks
 
 The private API candidate `financial-friday-api-evidence0211` passed two real

@@ -1,6 +1,6 @@
 # Financial Friday — Current API map
 
-Updated 14 October 2026, version 0.22.0. The local OpenAPI reference at
+Updated 15 October 2026, version 0.23.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
 
@@ -13,6 +13,9 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 
 | Method and path | Purpose / authority |
 | --- | --- |
+| GET `/v1/friday/diary` | Private user-reported diary, chosen-buffer coverage and current revision/generation. No model, bank balance or score. |
+| POST `/v1/friday/diary/prepare` | Explicitly shared text; live Gemini selects grounded source IDs/amounts; unsaved proposal only. |
+| POST `/v1/friday/diary` | Explicit START/ADD/UNDO bookkeeping, operation ID, revision and privacy generation. No payment. |
 | GET `/v1/friday/obligations` | Complete bounded claims, provider matches, constraints and next steps; no model call or payment. |
 | GET `/v1/friday/obligations/{id}/result` | Verify an existing artificial-payment journal record; never retry or claim external settlement. |
 | POST `/v1/friday/chat` | Message, bounded history, optional context; live guidance only. |
@@ -32,7 +35,7 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 Example chat body (do not include financial secrets):
 
 ```json
-{"message":"Draft an unsent question about an unfamiliar charge using placeholders.","history":[],"include_workspace":false,"include_preferences":false,"include_cashflow":false}
+{"message":"Draft an unsent question about an unfamiliar charge using placeholders.","history":[],"include_workspace":false,"include_preferences":false,"include_cashflow":false,"include_diary":false}
 ```
 
 Chat returns a schema-checked reply, available evidence IDs, a next-screen

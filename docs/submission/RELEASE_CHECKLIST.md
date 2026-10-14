@@ -20,7 +20,7 @@ evidence; see [reports index](../REPORTS_INDEX.md).
 - Private buddy preferences/follow-ups, manual cleanup and in-flight cancellation.
 - Money Runway: exact dated INR assumptions, spending caps, delayed-income chart,
   optional latest-plan memory and separately consented Gemini explanation.
-- Native 522 tests: 521 passed, one optional skip. Docker 522: 499 passed,
+- Native 526 tests: 525 passed, one optional skip. Docker 526: 503 passed,
   twenty-three optional skips. Twenty-four tooling checks passed; published Money
   Runway GitHub checks also passed on Python 3.11/3.12 and Docker.
 - Corrected real Vertex/Firestore runway acceptance verified exact rupee caps,

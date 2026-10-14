@@ -46,8 +46,9 @@ does not authorize payment, and evidence/provider/rules are rechecked at executi
 ### My money today (private user-reported diary)
 
 Start with cash before new entries and a positive chosen buffer. Gemini can
-propose up to five INR entries from one explicitly shared check-in; each literal
-amount needs an exact non-overlapping quote and explicit direction. This is an
+propose up to five INR entries from one explicitly shared check-in, selecting
+server-owned source IDs rather than writing quotations. Each literal amount
+needs exact Decimal equivalence to its printed INR source and explicit direction. This is an
 English-cue, today-only convenience path, not general statement parsing or date
 inference. Unsupported currencies, future income and ambiguous dates need manual
 entry or a future runway scenario. AI proposals never save themselves.

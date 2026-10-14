@@ -196,8 +196,8 @@ class DiaryTests(unittest.TestCase):
         self.assertIn('AMOUNT_ANCHOR',str(logs.output));self.assertNotIn('PRIVATE',str(logs.output))
 
     def test_server_attaches_canonical_quotes_without_splitting_decimal_amounts(self):
-        self.model(entries=[{'direction':'OUT','amount_text':'250.50','source_id':'entry-0','label':'Groceries'},
-            {'direction':'IN','amount_text':'1000','source_id':'entry-1','label':'Received'}],clarification='')
+        self.model(entries=[{'direction':'OUT','amount_text':'₹250.50','source_id':'entry-0','label':'Groceries'},
+            {'direction':'IN','amount_text':'INR 1,000','source_id':'entry-1','label':'Received'}],clarification='')
         response=self.client.post('/v1/friday/diary/prepare',headers=self.headers,json={
             'text':'Spent ₹250.50 on groceries. Received ₹1,000 today.','confirm_cloud_processing':True})
         self.assertEqual(response.status_code,200,response.text)

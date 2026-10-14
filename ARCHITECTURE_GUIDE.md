@@ -318,8 +318,8 @@ operational resilience and regulatory review remain production concerns.
 
 ## 11. Verification and what it proves
 
-Current checks: 522 native tests (521 pass/one skip), 522 Docker tests
-(499 pass/twenty-three skips), 24 tooling tests. The extra optional skips are
+Current checks: 526 native tests (525 pass/one skip), 526 Docker tests
+(503 pass/twenty-three skips), 24 tooling tests. The extra optional skips are
 Node-only motion runtime checks. GitHub Python 3.11/3.12 and Docker
 checks passed for the Money Runway release. Twenty-two runway tests cover exact
 caps, timing, opt-in privacy, tenant isolation, cleanup races and AI unit guards.

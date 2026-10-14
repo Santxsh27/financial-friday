@@ -21,8 +21,10 @@ review panel, not a disruptive browser confirmation.
 ## Safety and storage
 
 - Diary ≠ bank ledger. The opening figure and every entry are user reports.
-- Gemini has no tools. Parsed literal INR amounts need exact non-overlapping
-  quotes and explicit English direction cues. Another date, future income,
+- Gemini has no tools. It selects IDs from server-separated source snippets;
+  code attaches their original quotations. Literal INR amounts need exact
+  Decimal equivalence to one printed rupee amount and explicit English direction cues.
+  Display markers/grouping are normalized, never currencies or units. Another date, future income,
   currencies and magnitude conversions use manual entry or the runway plan.
 - Human confirmation is mandatory. A model proposal cannot save or pay.
 - Writes bind operation ID, complete request fingerprint, expected revision and
@@ -41,11 +43,11 @@ review panel, not a disruptive browser confirmation.
 
 ## Verification
 
-20 diary feature tests cover empty state, exact arithmetic and negative cash,
+24 diary feature tests cover empty state, exact arithmetic and negative cash,
 capacity, source-anchored proposals, unavailable Gemini/manual fallback, consent,
 tenant isolation, stale tabs, exact replay, group Undo, privacy barriers and actual
-Firestore transaction callback retries/failure. Native: 522 ran, 521 passed,
-one optional skip. Docker: 522 ran, 499 passed, 23 optional skips. Tooling: 24 passed.
+Firestore transaction callback retries/failure. Native: 526 ran, 525 passed,
+one optional skip. Docker: 526 ran, 503 passed, 23 optional skips. Tooling: 24 passed.
 These are implementation checks, not independent fraud or usefulness benchmarks.
 
 Local browser confirmed opening artificial cash of ₹8,000, an unsaved manual
@@ -53,6 +55,17 @@ Local browser confirmed opening artificial cash of ₹8,000, an unsaved manual
 and final source/revisions are recorded in CURRENT_RELEASE.json after rollout.
 Browser tooling stalled on an initial native Undo popup; the final UI replaces
 that native popup with an inline confirmation rather than bypassing it.
+
+Initial zero-traffic cloud acceptance exposed source-quote reproduction failure,
+then a schema mismatch where Gemini returned currency-marked amount strings.
+Those revisions were not promoted. Server-owned source IDs and exact INR-literal
+normalization resolve the identified shapes without giving the model save/payment
+authority. The corrected parser passed a real fixed-synthetic Vertex call. Runtime
+Firestore/replay/Undo/aggregate coaching acceptance is tracked separately in the
+release manifest; a local SDK call is not substituted for runtime verification.
+No personal records or credentials were logged. Earlier failed synthetic runs may
+retain their artificial opening diary; do not claim those were erased or purge
+other workspaces to clean them up.
 
 ## Remaining limits
 

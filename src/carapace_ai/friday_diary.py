@@ -18,7 +18,7 @@ class DiaryParseRequest(BaseModel):
 class ProposedEntry(BaseModel):
     model_config = ConfigDict(extra='forbid')
     direction: Literal['IN', 'OUT']
-    amount_text: str = Field(pattern=r'^\d[\d,]*(?:\.\d{1,2})?$')
+    amount_text: str = Field(pattern=r'^(?:(?:₹|INR|Rs\.?)\s*)?\d[\d,]*(?:\.\d{1,2})?$')
     source_id: str = Field(pattern=r'^entry-\d{1,2}$')
     label: str = Field(min_length=1, max_length=80)
 
@@ -52,6 +52,8 @@ Use no currency conversion or arithmetic. Every entry selects the supplied
 source_id of one source unit. Copy a literal amount_text from that source unit.
 Never invent or rewrite a quote: the server attaches original text itself.
 Select each source_id at most once and only for an unambiguous single money event.
+amount_text may retain the printed INR marker (₹250 or INR 1,000), or use just
+the numeral (250 or 1,000). No words, arithmetic, new amounts or other currencies.
 Amounts must be literal rupees (not thousands/lakhs/paise); currency must be INR
 or unambiguous ordinary Indian rupees. If another currency, unclear direction,
 missing amount, future date or ambiguity occurs, return entries=[] and a short
@@ -68,7 +70,7 @@ def parse_diary(planner, request):
         raise RuntimeError('Live Gemini is unavailable; use manual entry')
     from google.genai import types
     redacted = redact_for_model(request.text)
-    if re.search(r'\b(?:USD|EUR|GBP|dollars?|paise|lakhs?|crores?)\b|[$€£]',redacted.text,re.I):
+    if re.search(r'\b(?:USD|EUR|GBP|dollars?|paise|lakhs?|crores?|thousand|million|billion)\b|[$€£]|₹\s*\d[\d,.]*\s*[kKmM]\b',redacted.text,re.I):
         raise ValueError('Use explicit INR rupees; currency conversion and magnitude inference are not supported')
     if re.search(r'\b(?:yesterday|tomorrow|expected|expecting|will|next|last)\b|\d{4}-\d{2}-\d{2}',redacted.text,re.I):
         raise ValueError('Use manual entry for another date; future income belongs in the runway plan')
@@ -90,12 +92,12 @@ def parse_diary(planner, request):
         opposite = r'\b(?:spent|paid|debited|bought|purchased)\b' if item.direction == 'IN' else r'\b(?:received|earned|got|credited)\b'
         if not re.search(cues,quote,re.I) or re.search(opposite,quote,re.I):
             raise ValueError('Direction is not explicit in the entry quote; use manual entry')
-        amount = item.amount_text
+        amount = re.sub(r'^(?:₹|INR|Rs\.?)\s*','',item.amount_text)
         if ',' in amount and not re.fullmatch(r'(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3})(?:\.\d{1,2})?', amount):
             raise ValueError('Amount grouping is ambiguous')
         # Commas are display formatting, not different money. Compare exact
         # Decimal values to a single quoted INR literal without any unit conversion.
-        literals = re.findall(r'(?:₹|\bINR\b|\bRs\.?)\s*(\d[\d,]*(?:\.\d{1,2})?)(?![\d,]|\.\d)',quote,re.I)
+        literals = re.findall(r'(?:₹|\bINR\b|\bRs\.?)\s*(\d[\d,]*(?:\.\d{1,2})?)(?![\d,A-Za-z]|\.\d)',quote,re.I)
         if len(literals)!=1:
             raise ValueError('Entry amount is not in its source quote')
         literal = literals[0]

@@ -55,6 +55,16 @@ HTTP 200 with valid SVG decoding. No root cause was established from that first
 load. Inline rendering removes separate requests for these glyphs rather than
 weakening authentication or adding financial retry behaviour.
 
+The final web-only revision `financial-friday-web-softflow0220b` was checked healthy
+at zero traffic, then promoted to 100%. The API remains `runway0220b`; no API,
+IAM, login, recovery target or financial rules changed. On the public page the
+final revision rendered 11 inline icon elements (seven visible), with zero
+external SVG icon requests and no console errors. Real pointer input produced
+the bounded tilt values and a settled `matrix3d` card transform. The preceding
+soft-flow revision also passed one real Vertex chat response (HTTP 200, busy
+state cleared) and one unsaved calculator POST. Those calls were not repeated
+solely for the inline-glyph refinement; no payment was made.
+
 Sources for implementation boundaries:
 [animation-frame scheduling](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame),
 [device reduced motion](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion).

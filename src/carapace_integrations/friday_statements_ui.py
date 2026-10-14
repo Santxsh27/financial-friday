@@ -12,6 +12,12 @@ STATEMENTS_JS = r'''
       toolsView.append(everydayLayout);
       const coachView=view('coach','Ask about your spending or a financial concept. Share statement totals only when you choose.');
       titles.coach='Talk to Friday';coachView.querySelector('h1').textContent=titles.coach;coachView.classList.add('statement-coach');coachView.append(everydayAssistant);
+      everydayAssistant.querySelector('h2').textContent='Let’s make sense of it.';
+      everydayAssistant.querySelector('h2').nextElementSibling.textContent='Ask about spending, repayments, or one change for next month.';
+      $('home-command').placeholder='Where is my money going? What could I change?';
+      everydayAssistant.querySelector('[role="status"]').textContent='Read-only guidance. Friday cannot move money or change your bank records.';
+      everydayAssistant.querySelectorAll('.friday-chat-status').forEach(p=>{if(p.textContent.startsWith('Ask for an answer.'))p.hidden=true;});
+      $('friday-chat-log').replaceChildren(element('p','Hi, I’m Friday. Ask a question, or share your statement totals for a more relevant answer.','friday-chat-status'));
       const profileView=view('profile','See your sign-in, your private workspace and your data controls.');titles.profile='Your account';profileView.querySelector('h1').textContent=titles.profile;profileView.classList.add('statement-profile');
       const importView=view('statements','Choose a statement, check the extracted rows, then save your private analysis.');titles.statements='Understand your statements';importView.querySelector('h1').textContent=titles.statements;
       const reviewView=view('statement-review','Check the row count, amounts and labels against your original. No money moves.');titles['statement-review']='Review before saving';reviewView.querySelector('h1').textContent=titles['statement-review'];

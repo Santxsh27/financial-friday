@@ -1,6 +1,6 @@
 # Financial Friday — Current API map
 
-Updated 13 October 2026. The local OpenAPI reference at
+Updated 14 October 2026, version 0.22.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
 
@@ -21,11 +21,18 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 | POST `/v1/friday/reviews/documents?filename=...` | Raw supported file body; extract/store claims, discard raw upload. |
 | POST `/v1/friday/reviews/statement` | Consented bounded INR CSV claim import, no AI/payment. |
 | POST `/v1/friday/statements/analyze` | Read-only INR CSV spending calculation, not a real balance. |
+| GET `/v1/friday/cashflow` | Latest optional private what-if snapshot; no model call or payment. |
+| POST `/v1/friday/cashflow` | Strict dated INR assumptions, exact cash-flow/daily-cap calculation; transient unless `save_to_workspace:true`. Never pays or trains. |
+| GET `/v1/friday/buddy` | Read-only private saved-record overview; no background monitoring. |
+| GET/PUT `/v1/friday/buddy/preferences` | Communication preferences only; not financial permission. |
+| GET/PUT `/v1/friday/privacy` | Read/save manual retention policy; does not automatically delete records. |
+| POST `/v1/friday/privacy/reviews/delete` | Explicit private-input cleanup; also clears follow-ups/runway snapshot. Payment journal/replay safeguards retained. |
+| POST `/v1/friday/obligations/{id}/followup` | Evidence/revision-bound tracking; not payment, external sending or settlement. |
 
 Example chat body (do not include financial secrets):
 
 ```json
-{"message":"Draft an unsent question about an unfamiliar charge using placeholders.","history":[],"include_workspace":false}
+{"message":"Draft an unsent question about an unfamiliar charge using placeholders.","history":[],"include_workspace":false,"include_preferences":false,"include_cashflow":false}
 ```
 
 Chat returns a schema-checked reply, available evidence IDs, a next-screen
@@ -34,12 +41,18 @@ is unavailable, not a canned answer masquerading as Gemini. Text review takes a
 `text` field; file review uses its actual media type rather than pretending a file
 path/string is an uploaded image. Read each schema before sending a request.
 
+Cash-flow sharing is independent of inbox consent. Context uses formatted INR
+aggregates and the available citation `cashflow:current`, not raw paise or individual
+bills. Unsupported explicit rupee amounts fail closed; this is not complete semantic
+verification. See [Money Runway](MONEY_RUNWAY_0220.md) for input bounds and privacy.
+
 ## Evidence-bound assistant tasks
 
 | Method and path | Authority |
 | --- | --- |
 | POST `/v1/friday/tasks` | `message`, optional strict `include_workspace`; live Gemini prepares a signed task and quoted risk findings. Saved-record payment tasks require consent. Never pays during preparation. |
 | GET `/v1/friday/tasks/{task_id}` | Tenant-scoped signed draft readback; expired tasks remain non-executable. |
+| POST `/v1/friday/tasks/{task_id}/reconcile` | Read existing artificial journal after uncertainty; never submit another payment. |
 | POST `/v1/friday/tasks/{task_id}/confirm` | Exact `expected_task_sha256` and strict `confirm_sandbox_execution:true`; rechecks and calls the existing artificial-money executor. A HOLD cannot be overridden. |
 
 Unknown/invented bills or citations fail closed. Model failure is unavailable,

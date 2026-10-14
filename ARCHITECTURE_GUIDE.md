@@ -1,6 +1,6 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **14 October 2026**. Public project name: Financial Friday.
+Current technical reference: **14 October 2026**, version **0.22.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Current product spine: financial obligation → checked next step → outcome
@@ -36,7 +36,13 @@ repository evolved substantially; current documents take precedence over old pit
 - Current contract: [SPEC.md](SPEC.md)
 - API inventory: [docs/API_MAP.md](docs/API_MAP.md)
 - Setup/change process: [CONTRIBUTING.md](CONTRIBUTING.md)
-- Release evidence: [docs/FRIDAY_CHAT_AND_BANK.md](docs/FRIDAY_CHAT_AND_BANK.md)
+- Current release/evidence: [docs/CURRENT_RELEASE.json](docs/CURRENT_RELEASE.json)
+- All reports and historical scope: [docs/REPORTS_INDEX.md](docs/REPORTS_INDEX.md)
+- Money Runway: [docs/MONEY_RUNWAY_0220.md](docs/MONEY_RUNWAY_0220.md)
+
+The GitHub repository is private. Collaborators must be invited using their own
+GitHub accounts; a link is not access permission. This does not change website
+Google sign-in or authorise cloud administration. Do not share owner tokens.
 
 Google sign-in does not link a bank. Each visitor gets an isolated workspace;
 the owner's records are not the visitor's starting data. Some managed accounts
@@ -59,7 +65,7 @@ working Google Cloud deployment, not every suggested service.
 | Usability and design | 10% | Clear starting tasks, visible states, useful next actions and accessible interaction. |
 
 Sources: [official themes/requirements](https://aibuildercup.com/themes.html),
-[public timeline/eligibility](https://aibuildercup.com/), checked 13 October.
+[public timeline/eligibility](https://aibuildercup.com/), checked 14 October.
 The public dates say team formation by **14 October** and prototype submission by
 **18 October 2026**, with finalists announced 7 November and the Singapore finale
 4 December. Public eligibility lists 2–4 members, age 21+, JAPAC and working
@@ -102,6 +108,10 @@ Private Cloud Run API: Python / FastAPI / Pydantic
     |
     +-- Review -> Gemini facts -> exact reconciliation -> private evidence inbox
     |
+    +-- Money Runway -> exact cash-flow scenario -> optional latest private memory
+              -> separate chat consent -> formatted INR context -> Gemini explanation
+              -> explicit-amount/citation gate; no payment or model training
+    |
     +-- Explicit sandbox task -> immutable goal + provider evidence
               -> Gemini program -> verifier -> bounded repair/challenges
               -> permission/reserve recheck -> restricted atomic executor
@@ -141,6 +151,13 @@ It is not a complete bank statement. There is no Anthos database lookup in chat.
 History is kept only in page memory, with at most eight previous turns in a request.
 Changing consent clears that history. Google still processes the prompt under the
 chosen service's policies; “not saved by Friday” is not “never processed elsewhere.”
+
+Private communication preferences and saved cash-flow context have independent
+strict consent flags. Cash-flow context contains aggregate calculator results,
+not raw statements or individual dated events. Amounts arrive as formatted INR
+strings; unsupported explicit rupee references fail closed. This reduces a real
+unit-error shape, not every semantic mistake. Consent changes clear page history
+and late responses cannot restore it. Context memory is not model tuning.
 
 Limits: 1,600-character messages/replies, schema-validated output, one generation
 per chat request. Recognisable secret patterns are scrubbed best-effort, not full DLP.
@@ -242,6 +259,9 @@ collections under each tenant store mandates, accounts, provider bills, signals,
 dynamic cases, runs, payments, idempotency and reviews. Atomic payment commits
 revalidate current permission/provider state. The workspace preview is bounded
 and non-atomic; execution must not trust it as a reservation.
+Buddy preferences, follow-up memory, privacy generations, prepared tasks and the
+latest optional cash-flow snapshot are also tenant-scoped. Review cleanup clears
+follow-ups and the saved runway plan; payment journals are retained.
 
 IAP verifies Google identity. The web gateway derives stable visitor identities
 and credentials using domain-separated HMACs from a server secret; browser headers
@@ -285,6 +305,9 @@ secrets and rollback revisions. Finite trial credits are not free hosting foreve
 | Durable task lifecycle | Signed leases, state/run reference and journal-only reconciliation implemented; not automatic cloud crash resumption. |
 | Privacy / key rotation | Manual review/draft cleanup, in-flight cancellation and trusted historical public-key ring support. Payment journal retained. |
 | Buddy preferences | Private communication choices, separately consented; never financial authority. Nickname stays out of model prompts. |
+| Follow-up memory | Private tracking/waiting/recheck/close states; new evidence resurfaces a closed item. No external send or settlement claim. |
+| Money Runway | Exact user-assumption forecast, daily cap and delayed-income comparison; optional private snapshot and separately consented AI explanation. No bank feed or external alerts. |
+| Dataset learning | Personal context memory implemented; reference RAG and fine-tuning are not implemented or automatically authorised. |
 | Cloud Tasks recovery | Approved keyless callback identity and low-rate queue; actual callback and no-repeat artificial debit verified. |
 | ADK, BigQuery, Model Armor, Cloud KMS signing | Not implemented; add only for a specific demonstrable need. |
 
@@ -295,8 +318,16 @@ operational resilience and regulatory review remain production concerns.
 
 ## 11. Verification and what it proves
 
-Current hardening code: 405 native tests (404 pass/one skip), 405 Docker tests
-(386 pass/nineteen skips), fifteen tooling tests. Earlier live tests used a fresh synthetic
+Current checks: 492 native tests (491 pass/one skip), 492 Docker tests
+(473 pass/nineteen skips), 24 tooling tests. GitHub Python 3.11/3.12 and Docker
+checks passed for the Money Runway release. Twenty-two runway tests cover exact
+caps, timing, opt-in privacy, tenant isolation, cleanup races and AI unit guards.
+Real Vertex acceptance initially exposed a 100× unit error; that zero-traffic API
+was not promoted. The corrected API passed Firestore save/readback/cleanup and
+an explanation with exact INR caps; public browser calculation also passed.
+See [Money Runway evidence](docs/MONEY_RUNWAY_0220.md) and the release manifest.
+
+Earlier live tests used a fresh synthetic
 visitor with saved artificial rules: Vertex prepared a task, held a refund
 contradiction, moved artificial funds only after confirmation, prevented a second
 debit and independently verified the outcome. See the
@@ -339,6 +370,8 @@ or grant owner-level access merely to review the application.
 | Bill optimisation | `src/carapace_core/friday_bill_plan.py` |
 | Claim matching/arithmetic | `src/carapace_core/friday_review.py` |
 | Statement analysis | `src/carapace_core/friday_statement.py` |
+| Cash-flow calculation/private memory | `src/carapace_core/friday_cashflow.py`, `src/carapace_api/friday_cashflow.py` |
+| Cash-flow UI | `src/carapace_integrations/friday_cashflow_ui.py` |
 | Signed outcome replay | `src/carapace_core/friday_assurance.py` |
 | Gemini planner | `src/carapace_ai/financial_friday.py` |
 | Gemini review/chat | `src/carapace_ai/friday_review.py`, `friday_chat.py` |

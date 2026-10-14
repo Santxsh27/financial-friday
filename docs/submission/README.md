@@ -2,14 +2,18 @@
 
 Use this folder for the final demo script, evaluation results, slides and submission links. Current build status is in [Start Here](../../START_HERE.md), [README](../../README.md) and [SPEC](../../SPEC.md).
 
-**Current handover, 13 October:** read [the architecture guide](../../ARCHITECTURE_GUIDE.md)
-and [current release evidence](../FRIDAY_TASK_RELEASE_1013.md) first. The default
+**Current handover, 14 October, version 0.22.0:** read [the architecture guide](../../ARCHITECTURE_GUIDE.md),
+[actual deployment manifest](../CURRENT_RELEASE.json) and [reports index](../REPORTS_INDEX.md)
+first. Money Runway adds read-only personal scenarios and optional AI explanations.
+The default
 customer journey is live chat and read-only claim review; artificial execution is
 separate. Earlier scripts/materials need review before being used as final artifacts.
 
 Implemented evidence: [proposal safety evaluation](SAFETY_EVALUATION.md),
 [security boundaries](SECURITY_BOUNDARIES.md), and [live demo script](DEMO_SCRIPT.md).
 The generated safety corpus is not a live model benchmark.
+The [current readiness checklist](RELEASE_CHECKLIST.md) supersedes earlier readiness
+claims; source reviewers need explicit access to the private GitHub repository.
 Historical readiness verification: [readiness pass](READINESS_1012.md).
 The [October 9 handoff](FINAL_HANDOFF_1009.md) is historical evidence.
 Live multimodal evidence: [document verification](../FRIDAY_DOCUMENT_VERIFICATION_1008.md),
@@ -29,7 +33,7 @@ record for actual live results; do not present these few probes as fraud accurac
 
 Official [requirements](https://aibuildercup.com/themes.html) specify a working
 Google-AI/cloud prototype, proposal deck/PDF and public short demo-video link.
-The [public timeline](https://aibuildercup.com/) checked 13 October lists team
+The [public timeline](https://aibuildercup.com/) checked 14 October lists team
 formation by 14 October and submission by 18 October 2026. Verify the dashboard's
 exact cutoff, eligibility and fields. This update does not submit the entry or
 create the video/deck.

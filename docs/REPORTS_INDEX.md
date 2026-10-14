@@ -1,0 +1,82 @@
+# Financial Friday — documentation and evidence index
+
+Updated 14 October 2026, current product version **0.22.0**. Start here to separate
+what is implemented, what was verified, and what is proposed. GitHub code is not
+automatically the code deployed on Cloud Run.
+
+## Read the project from start to finish
+
+| Document | What it covers |
+| --- | --- |
+| [README](../README.md) | Purpose, current features, Google stack, setup, tests and limits. |
+| [Start Here](../START_HERE.md) | Short live tour and local startup. |
+| [User guide](../USER_GUIDE.md) | What to click, enter and expect, including consent and Money Runway. |
+| [Architecture](../ARCHITECTURE_GUIDE.md) | Frameworks, service boundaries, algorithms, data flow, storage and security. |
+| [Specification](../SPEC.md) | Current engineering contract and authority limits. |
+| [API map](API_MAP.md) | Read-only, configuration, preparation and execution-capable routes. |
+| [Contributing](../CONTRIBUTING.md) | Setup, live AI, testing, safe changes and deployment. |
+| [Security policy](../SECURITY.md) | Authorised testing, secrets and private disclosure. |
+| [Submission checklist](submission/RELEASE_CHECKLIST.md) | Verified work and remaining human confirmation/artifacts. |
+
+## Current deployment and acceptance
+
+[CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
+for source, image digests, build IDs, revisions, test counts and activation. The
+web is `financial-friday-web-runway0220`; the corrected API is
+`financial-friday-api-runway0220b`, each at 100% traffic when last verified.
+
+| Evidence | Scope and limitations |
+| --- | --- |
+| [Money Runway 0.22.0](MONEY_RUNWAY_0220.md) | Exact cash-flow algorithm, consent/privacy, 22 feature tests and real Vertex/Firestore acceptance. Initial unit failure corrected before promotion; not independent forecast validation. |
+| [Evidence study 0.21.1](EVIDENCE_EVALUATION_0211.md) | Same-output Vertex comparison, initial failures, corrected 16 developer cases. Raw/checked scores identical; not an independent fraud benchmark. |
+| [Before report](evaluation/evidence_2026-10-14_before.json) / [after report](evaluation/evidence_2026-10-14_after.json) | Preserved machine-readable developer results, not substituted success scores. |
+| [Follow-ups 0.21.0](FOLLOWUPS_0210.md) | Private tracking, evidence changes, stale edits and closing without pretending settlement. |
+| [Buddy/recovery 0.20.0](BUDDY_0200.md) | Personalisation boundaries and separately scoped recovery evidence. |
+| [Cloud extensions 0.19.0](CLOUD_EXTENSIONS_0190.md) | Actual basic OCR, caps and journal-only queue boundaries; no issuer-authenticity proof. |
+| [Hardening 0.18.0](HARDENING_0180.md) | Lifecycle, privacy generations, historical signing keys and safety boundaries. |
+| [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
+| [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
+
+The current local suite ran 492 tests (491 passed, one optional skip); Docker ran
+492 (473 passed, nineteen optional skips); 24 tooling checks passed. Published
+Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
+their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
+Skipped tests and model failures are not silently counted as passes.
+
+## What the Google services actually do
+
+- Gemini on Vertex AI: bounded conversation, extraction, quoted risk reasoning
+  and typed proposals. Model text is never payment permission.
+- Document AI: anchor supported image/PDF quotations to independent OCR text.
+- Cloud Run: web gateway and separately private Python/FastAPI API.
+- Firestore: tenant-scoped state and transactional artificial-money journal.
+- Cloud Tasks: authenticated reconciliation of an existing journal only.
+- Cloud Build / Artifact Registry: explicit reproducible builds and images.
+- IAP / IAM / Secret Manager: Google identity, scoped invocation and server-held
+  credentials. Current signing is Ed25519, not Cloud KMS.
+
+Frontend is HTML/CSS/JavaScript; backend is Python 3.11+/FastAPI/Pydantic and the
+Google Gen AI SDK. Docker uses Python 3.12 and SQLite locally. No ADK, BigQuery,
+Agora, native Gemini Live, Model Armor, reference RAG or fine-tuning is claimed.
+
+## Historical reports are not today's feature list
+
+Earlier `MILESTONE_*`, `CLOUD_RELEASE_*`, Anthos documents, UI explorations and
+dated submission scripts remain engineering history. Their counts/access rules
+describe that point in time. Current README/SPEC/manifest take precedence.
+Legacy `carapace_*` packages and `anthos-demo` Compose names are compatibility
+identifiers; Anthos is not needed or connected in the customer product.
+The earlier cinematic control-room module is not the current Friday UI.
+
+## Sharing and remaining boundaries
+
+This repository is private. An invited collaborator can read it while signed
+into the correct GitHub account; an uninvited person cannot access it by link.
+Source access does not grant cloud-owner privileges or another user's workspace.
+Do not send tokens, `.env`, credential JSON or databases.
+
+Real bank/SMS/Gmail integration, native voice, automatic financial corrections,
+external alerts and independently measured large-scale effectiveness remain
+unimplemented. Reference datasets require provenance/licensing and a separate
+design; private customer records are not automatically training data. Deck/video,
+dashboard confirmation and a second-person access test remain submission tasks.

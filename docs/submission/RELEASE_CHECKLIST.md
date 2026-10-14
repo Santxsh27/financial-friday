@@ -1,56 +1,56 @@
-# Friday submission release checklist
+# Friday — current submission readiness
+
+Updated 14 October 2026 for version 0.22.0. This replaces stale owner-only
+access and older test counts. Dated release reports retain their historical
+evidence; see [reports index](../REPORTS_INDEX.md).
 
 ## Implemented and verified
 
-- 0.17.0 deployed in `core1011b`: code-rendered moving Friday core and independent
-  signature, safety-rule and journal replay. Historical paid-bill planning and
-  conflict/success presentation bugs fixed. 301 native tests (300 passed, one
-  optional skip); eleven tooling tests. Live Vertex hold verified independently
-  without money movement. See ../FRIDAY_CORE_0170.md.
-
-- 0.16.0 deployed: selected Money Journey layout, visible Friday companion and
-  reviewed-bill direct execution without retyping. Exact amount/payee/record and
-  current financial rules remain gates. 287 native tests (286 passed, one skip),
-  plus eleven tooling tests. Deployment/browser evidence: ../MONEY_JOURNEY_0160.md.
-
-- Protected Cloud Run web application and private API using existing owner identity.
-- Live Vertex Gemini interpretation and restricted plan generation.
-- New typed message and PDF input, not only preset demo questions.
-- Saved instruction, independent deterministic checks and artificial execution.
-- Signed receipts and receipt-first replay with no new debit or planning calls.
-- Actual live rejected-plan correction before execution.
-- Document source-evidence gate, provider mismatch and reserve/limit protection.
-- Transactional Firestore journal, tenant controls and fail-closed model handling.
-- 265 application tests (264 passed, one optional skip), plus eleven tooling tests.
-- 0.15.2 colour-coded tasks and recorded AI-correction summary deployed in
-  `clarity1011`; server-evidence progress replaces timed stages. Live Vertex
-  paid-notice check passed with unchanged balance and zero payment requests.
-- October 11: connected plan-to-prefill bill journey and readable activity are
-  deployed as 0.15.1. Live Vertex paid-notice check passed; no payment request,
-  unchanged balance and private access retained. See ../JOURNEY_1011.md.
-- Reproducible 51-case generated proposal evaluation, limitations documented.
-- Cloud browser evidence and technical demo script.
-- Two live Vertex message batches, with both failures retained in LIVE_MESSAGE_EVALUATION_1008.md.
-- Targeted false-hold repair: 24 live extraction and eight private API checks passed; privacy-safe diagnostics added.
-- Sixteen broader fresh live message checks passed exact financial fields, expected holds/approval states and retained verbatim quotations, without any payment. Median 2.240 seconds, maximum 7.824 seconds; no cost measurement or broad fraud claim.
-- Simplified direct task entry, clear outcome/next action, disclosure of saved automatic authority and read-only receipt loading.
+- Google-sign-in Cloud Run website, isolated visitor workspaces and private API.
+- Live Gemini/Vertex conversation, document facts, quoted risk reasoning and typed
+  restricted plans. Document AI OCR anchors are not issuer authentication.
+- Private document reconciliation, unsent verification drafts and selected-obligation
+  preparation with fresh evidence checks. Preparation cannot pay.
+- Separate signed artificial-payment tasks, exact confirmation, reserve/permission
+  gates, idempotency and independent recorded-outcome checks.
+- Transactional Firestore in cloud and SQLite/Docker development; server-held
+  credentials, explicit context consent and request limits.
+- Low-rate keyless Cloud Tasks journal-only recovery with historical actual
+  callback acceptance. No blind financial retry or continuous bank intake.
+- Private buddy preferences/follow-ups, manual cleanup and in-flight cancellation.
+- Money Runway: exact dated INR assumptions, spending caps, delayed-income chart,
+  optional latest-plan memory and separately consented Gemini explanation.
+- Native 492 tests: 491 passed, one optional skip. Docker 492: 473 passed,
+  nineteen optional skips. Twenty-four tooling checks passed; published Money
+  Runway GitHub checks also passed on Python 3.11/3.12 and Docker.
+- Corrected real Vertex/Firestore runway acceptance verified exact rupee caps,
+  save/readback/cleanup, unchanged rules and no money movement. The initial
+  zero-traffic unit error is documented, not hidden.
+- [Deployment manifest](../CURRENT_RELEASE.json) records actual source commits,
+  immutable images, build IDs and historical/current acceptance scopes.
 
 ## Required before claiming the submission is complete
 
-1. Public timeline checked October 11: prototype deadline October 18 and team
-   formation October 11. Confirm exact cutoff/timezone, eligibility and roster
-   in the participant dashboard; do not rely solely on earlier chat dates.
-2. Arrange explicit judge identity enrollment or organizer-approved demo access.
-   Current protection is owner-only. Do not publish the private financial API.
-3. Investigate any recurring understanding HTTP 503 and run broader unseen-input
-   evaluation after the targeted false-hold repair; report failures, latency and
-   model usage/cost. Existing synthetic corpus is not a plain-Gemini benchmark.
-4. Finish the required video, deck and organizer submission fields; verify links.
-5. Record a fallback walkthrough so an identity/AI outage does not hide the product.
+1. Confirm exact cutoff/timezone, eligibility and roster in the dashboard. The
+   [official timeline](https://aibuildercup.com/) checked 14 October lists team
+   formation by 14 October and submission by 18 October 2026. Dashboard-specific
+   completion is not verified by this documentation pass.
+2. Test the app with a second person's Google account. Visitor enrollment is not
+   owner-only, but managed accounts may be restricted. Never expose the API to
+   solve a login issue. Source access needs an invitation to this private GitHub
+   repository or an organiser-approved source-delivery method; a link is not access.
+3. Complete held-out usefulness/risk tests; report misses, false warnings, latency
+   and cost. Unit counts/developer cases are not real-world fraud accuracy. Preserve
+   the paired comparison; do not invent superiority over plain Gemini.
+4. Finish/confirm deck as PDF, public approximately three-minute video, English
+   submission fields and checked links. This file does not submit the entry.
+5. Keep a labelled outage fallback and verify trial/billing availability through
+   evaluation. Budget alerts and app quotas are not guaranteed spending/uptime caps.
 
 ## Production work, not claimed as hackathon implementation
 
-Authorized independent financial provider, real settlement/reconciliation contracts,
-security review, privacy/retention/compliance review, operational monitoring and
-durable cloud scheduling. Native voice and direct SMS/bank access are not enabled.
-Do not claim unrestricted Jarvis finance, zero fraud or guaranteed recovery.
+Authorised independent bank/utility integration, real settlement/refunds, automatic
+bank/SMS/email intake, external notifications, native voice, account-erasure and
+regulatory/security review, independent large-scale validation and trusted-reference
+retrieval remain future work. Do not claim unrestricted financial Jarvis, perfect
+safety, trained fraud classification or autonomous production patching.

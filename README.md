@@ -24,6 +24,14 @@ not a fabricated payment. Matching uploaded receipts remain unconfirmed claims.
 3. [USER_GUIDE.md](USER_GUIDE.md): detailed controls and expected results.
 4. [SPEC.md](SPEC.md), [API map](docs/API_MAP.md) and
    [CONTRIBUTING.md](CONTRIBUTING.md): engineering contract and development setup.
+5. [Reports index](docs/REPORTS_INDEX.md): current release, test evidence,
+   evaluation results, known gaps and clearly labelled historical reports.
+
+Repository access is separate from website access. This repository is private:
+share its link with an invited GitHub collaborator, not merely anyone with the
+URL. Google login to the deployed demo does not grant source-code access.
+Cloning requires your authorised GitHub login; never share owner tokens or cloud
+credentials. Confirm organisers' required source-code access before judging.
 
 [Open the live Google-sign-in demo](https://financial-friday-web-171681243260.asia-south1.run.app/#home).
 

@@ -1,7 +1,10 @@
 # Financial Friday — Start Here
 
-Updated 13 October 2026. New teammates: read
+Updated 14 October 2026; current release `0.22.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
+Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
+historical reports. Private repository access requires an invitation to your
+GitHub account; website Google login is separate.
 
 ## What this application does
 
@@ -37,6 +40,12 @@ details. See [the task guide](docs/FRIDAY_TASKS.md).
 6. **Check a bill / Documents** accepts your own redacted image or PDF. Missing
    identifiers, unclear currency or poor extraction can require more review.
 7. Moon/sun, sound and motion controls change appearance only, never permission.
+8. On Overview choose **Check my money runway → Try an editable example → Check
+   my runway**. Expect a conditional buffer warning, INR daily caps and a
+   delayed-income chart. Nothing saves or calls Gemini by default. Enter your own
+   assumptions to replace the example. Optional private saving and separate
+   chat consent let Friday explain the plan; this is not a live bank forecast.
+   See [Money Runway](docs/MONEY_RUNWAY_0220.md).
 
 An empty inbox is normal. Questions and the guide work without a bank. Example
 buttons load editable text only; extracted claims are saved when you explicitly

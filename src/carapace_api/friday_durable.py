@@ -10,7 +10,7 @@ from carapace_core.friday_assurance import seal_friday_run
 from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow", "diary"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow", "diary", "statement_portfolio"}
 
 
 class FridayDurableState(Protocol):
@@ -180,9 +180,15 @@ class FirestoreFridayState:
             transaction.set(ref, record)
         self._atomic(commit)
 
+    def update_portfolio(self, tenant, generation, change):
+        return self._update_private_current('statement_portfolio',tenant,generation,change)
+
     def update_diary(self, tenant, generation, change):
-        self._validate('diary', tenant, 'current')
-        ref = self._documents('diary', tenant).document('current')
+        return self._update_private_current('diary',tenant,generation,change)
+
+    def _update_private_current(self, kind, tenant, generation, change):
+        self._validate(kind, tenant, 'current')
+        ref = self._documents(kind, tenant).document('current')
         privacy = self._documents('privacy', tenant).document('current')
         def commit(transaction):
             old = ref.get(transaction=transaction)
@@ -237,6 +243,8 @@ class FirestoreFridayState:
             transaction.set(version,{'epoch':(epoch.to_dict().get('epoch',0) if epoch.exists else 0)+1})
         self._atomic(barrier)
         counts={}
+        counts['statement_portfolio'] = int(self.get('statement_portfolio', tenant, 'current') is not None)
+        self._documents('statement_portfolio', tenant).document('current').delete()
         counts['diary'] = int(self.get('diary', tenant, 'current') is not None)
         self._documents('diary', tenant).document('current').delete()
         counts['cashflow'] = int(self.get('cashflow', tenant, 'current') is not None)

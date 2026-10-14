@@ -43,6 +43,15 @@ class CloudWebTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertNotIn("secret", result.text)
 
+    def test_profile_comes_from_verified_identity_and_never_exposes_tenant_keys(self):
+        self.assertEqual(self.client.get('/api/friday/profile').status_code,401)
+        result=self.client.get('/api/friday/profile',headers={**self.headers,'X-Goog-Authenticated-User-Email':'attacker@example.com'})
+        self.assertEqual(result.status_code,200,result.text)
+        self.assertEqual(result.json()['email'],'one@example.com')
+        self.assertFalse(result.json()['bank_connected'])
+        self.assertNotIn('secret',result.text);self.assertNotIn('tenant',result.text)
+        self.assertEqual(result.headers['cache-control'],'no-store')
+
     def test_verified_identity_selects_tenant_not_browser_header(self):
         headers = dict(self.headers, **{"X-Carapace-Tenant": "two", "X-Carapace-API-Key": "attacker"})
         self.assertEqual(self.client.get("/api/friday/mandate", headers=headers).status_code, 200)

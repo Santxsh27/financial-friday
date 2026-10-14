@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
-Updated **14 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.23.0`. Actual deployed source and
+Updated **15 October 2026**. This document replaces the mixed historical product
+specifications. Current code version is `0.24.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -9,10 +9,12 @@ For the detailed rationale, algorithms and trust boundaries, read
 
 ## 1. Product definition
 
-Financial Friday is a friendly money buddy combining user-reported daily money
-management, exact what-if planning and evidence-backed financial-request checks.
-It helps users keep obligations on track with minimal repeat input.
-Its obligation inbox joins saved document claims, exact artificial
+Financial Friday is a statement-first money buddy. The user imports supported
+INR bank/card exports, reviews the proposed interpretation, sees exact categories
+and monthly comparisons, then optionally shares aggregate context with Gemini.
+The main interface is Home, Statements, Spending, Friday and Account. The existing
+visual system is retained; earlier forms live under More tools rather than Home.
+Its optional obligation inbox joins saved document claims, exact artificial
 provider identities, saved constraints and recorded outcomes. Gemini prepares the
 next step; independent checks determine what can proceed. The intended outcome
 is a completed allowed task or useful verification assistance, not just an alert.
@@ -23,7 +25,25 @@ real-bank connector, investment adviser, SMS/Gmail agent or universal fraud shie
 
 ### Primary customer journey
 
-Input once → obligation inbox → explicit selected-context sharing → Gemini prepares
+Statement upload → unsaved source-linked rows → explicit review/save → exact
+spending/category/monthly dashboard → independently opted-in Gemini guidance.
+Raw uploads are ephemeral. Same-source imports replay without duplicate rows;
+different overlapping files are counted with a warning until a user excludes an
+import. Exclusion is reversible, not deletion. Generic credits remain unclear;
+borrowing/refunds/transfers are not identified earnings. Card repayments are not
+new spending, but missing card purchases can understate spending. No inferred
+assets, loan principal, complete net worth, or official financial-health score.
+
+PDF support is bounded, not universal: INR, 4 MB, 1–6 pages, up to 200 proposed
+rows, one model call. Text PDFs use locally extracted text with minimized
+identifiers and source IDs. Scans need configured Document AI and existing page
+admission limits. No bank password is accepted. CSV supports the documented
+date/description/debit/credit schema, up to 1 MB/500 rows, without a model call.
+At most 10 imports / 2,000 normalized rows / 800 KB per private workspace.
+Proposals require user review; exact text matching does not prove correct column
+interpretation, completeness or authenticity. A bank-layout benchmark is pending.
+
+Optional separate protection journey: input once → obligation inbox → explicit selected-context sharing → Gemini prepares
 one exact obligation → signed task and independent gates → explicit artificial
 confirmation if eligible → journal-backed result. No provider connection means
 verification assistance only. No automatic external complaint, correction or refund.

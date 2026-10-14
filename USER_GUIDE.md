@@ -1,5 +1,47 @@
 # Financial Friday complete user walkthrough
 
+## Start here: statements, not one receipt at a time
+
+The main navigation is now **Home · Statements · Spending · Friday · Account**.
+Older workflows below are secondary tools under **More tools**, not required
+onboarding steps. The current quick tour is [START_HERE](START_HERE.md).
+
+1. **Account** shows your Google email on the hosted site. A reused Google
+   session is normal; no second login prompt is required. Local development says
+   Local demo and does not pretend to be your Google account.
+2. **Statements → Understand my statements**: choose a supported INR statement
+   PDF or CSV. Use an account nickname, not its number, and select bank/card type.
+   Confirm temporary server processing (Google AI also reads PDFs).
+3. **Read my statement**: expect an unsaved preview, row count and totals. Expand
+   **Review transaction rows & change labels** to correct income, transfer,
+   repayment and spending labels. Incorrect dates/amounts need a clearer export;
+   nothing is automatically paid or archived.
+4. Confirm review and choose **Save & see my spending**. Expect exact category
+   bars, income/outgoings by month and coverage warnings. An identical file is
+   not added twice. Different overlapping files remain counted with a warning.
+5. **Manage imports → Exclude from analysis** removes a mistaken/overlapping
+   import from calculations without deleting it. **Restore to analysis** reverses
+   that choice. These operations do not alter the bank statement or a payment.
+6. **Ask Friday about this** prepares a question. On **Friday**, explicitly select
+   **Share my saved statement totals**, then **Ask Friday**. Only aggregates, not
+   transaction descriptions, enter that context. General questions need no records.
+7. **Account → Open privacy & cleanup** controls private-input cleanup. Its
+   explicit confirmation removes all statement history as well as earlier
+   diary/forecast inputs; payment replay journals are retained. Raw files were
+   never archived. Cleanup is not a bank reversal.
+
+Supported demo bounds: INR only, PDF 4 MB / up to 6 pages / 200 rows;
+UTF-8 CSV 1 MB / up to 500 rows using `date,description,debit,credit` columns; 10 imports /
+2,000 normalized rows total. Scans need configured Document AI. Split longer
+exports or use CSV. Unlock PDFs locally; do not provide passwords. Remove names,
+addresses and identifiers before cloud processing. Redaction is best effort.
+Income is an interpretation, not every credit. Spending/loan repayments exclude
+card repayments to avoid double-counting; missing card purchases understate the
+picture. Outstanding debt, assets and net worth cannot be inferred from payments.
+
+The following sections document earlier optional tools. References to Overview
+mean the older overview inside **More tools → Diary & runway**, not today's Home.
+
 ## Your financial buddy
 
 ### Softer interaction, same financial boundaries

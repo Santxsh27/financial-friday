@@ -1,9 +1,37 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **14 October 2026**, version **0.23.0**. Project name: Financial Friday.
+Current technical reference: **15 October 2026**, version **0.24.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
-### Current product spine: financial obligation → checked next step → outcome
+### Primary product spine: statement → review → spending picture → guidance
+
+`friday_statements.py` uses strict CSV parsing or bounded PDF text extraction;
+scans use the existing Document AI processor and admission budget. Gemini sees
+minimized source units, returns row/source IDs and proposed labels; strict models
+validate dates, directions, amounts and literal source values. It has no tools.
+User review remains necessary: matching source text does not prove the right
+column or all rows were read. Raw files/text are not persisted.
+
+`FridayPortfolio` stores explicitly reviewed normalized rows in a tenant-scoped
+SQLite record or one bounded Firestore document. Revision and privacy-generation
+checks prevent stale writes/resurrection after cleanup. Same-source replay is
+idempotent; overlapping different files are warned, not automatically deduplicated.
+Reversible exclusions keep the source history but remove selected imports from
+aggregates. Exact integer arithmetic separates spending, identified income,
+transfers, borrowing/refunds and repayments. The diary and artificial ledger are
+separate and never silently merged with statement history.
+
+The primary UI has separate Upload, Review, Spending, Coach and Account views.
+The gateway's profile response uses already verified IAP claims only; it never
+returns tenant keys, OAuth tokens or unverified identity headers. An existing
+Google session can be reused. Statement chat context is an independent opt-in:
+only formatted aggregate rupees, coverage warnings and fixed evidence identity
+are sent. Transaction descriptions/account nicknames are excluded from that
+context. No weights are trained and no personal financial action is authorized.
+
+See [statement-first scope and verification](docs/STATEMENTS_0240.md).
+
+### Secondary protection spine: financial obligation → checked next step → outcome
 
 The obligation projection joins complete bounded document evidence (up to 1,000
 entries) to exact normalized supplier-and-reference artificial provider records.

@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 14 October 2026; current release `0.22.0`. New teammates: read
+Updated 15 October 2026; current release `0.24.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -8,52 +8,38 @@ GitHub account; website Google login is separate.
 
 ## What this application does
 
-Friday helps you understand financial information, compare documents and prepare
-a useful next step. A separate artificial-money system demonstrates how AI plans
-can execute under independent rules. The site and Gemini are live; real banks,
-wallets, utility accounts, Gmail and SMS are not connected.
+Friday turns supported INR bank/card statements into a user-reviewed spending
+picture and practical guidance. You do not need to type every expense. Statements
+are user-supplied records, not authenticated bank feeds. Earlier bill checks,
+diary/runway and artificial payments remain optional under More tools.
 
 ## First tour: no payment required
 
-New live task flow: enter `Someone says I must PAY INR 100 first to RECEIVE a
-refund. Prepare a verification message, not a payment.` on Overview and choose
-**Prepare next step**. Leave workspace consent off. Expect a quoted risk indication,
-hold and unsent message; no money moves. Try your own wording too. Gemini can miss
-risks or raise false warnings, so this is not a bank-backed fraud guarantee.
-For exact artificial-bill execution, save My rules, publish a fresh test-provider
-bill, grant saved-workspace consent, prepare it, then explicitly confirm eligible
-details. See [the task guide](docs/FRIDAY_TASKS.md).
-
 1. Open [the live site](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
-   and sign in with Google. A new visitor starts with a private workspace, not the
-   owner's records or a real account.
-2. Choose **Understand a charge** on Overview. It prepares a question only.
-   Click **Ask Friday** to send it to Gemini. Expect guidance and an unsent draft,
-   not a submitted complaint or refund. Never enter banking secrets.
-3. Choose **Try a guided example → 1. Load bill**. Review the artificial text and
-   click **Review this financial input**. Expect a saved bill claim.
-4. Return to Overview, load/review the matching receipt, then the changed-recipient
-   receipt. Expect matching claims followed by conflicting evidence, not bank
-   confirmation or a guaranteed fraud verdict. Results come from actual review calls.
-5. Open **Financial inbox**. Expand evidence and the prepared verification message.
-   Reading it does not send anything. These checks never submit a payment.
-6. **Check a bill / Documents** accepts your own redacted image or PDF. Missing
-   identifiers, unclear currency or poor extraction can require more review.
-7. Moon/sun, sound and motion controls change appearance only, never permission.
-8. On Overview choose **Check my money runway → Try an editable example → Check
-   my runway**. Expect a conditional buffer warning, INR daily caps and a
-   delayed-income chart. Nothing saves or calls Gemini by default. Enter your own
-   assumptions to replace the example. Optional private saving and separate
-   chat consent let Friday explain the plan; this is not a live bank forecast.
-   See [Money Runway](docs/MONEY_RUNWAY_0220.md).
+   and sign in with Google. **Account** shows the signed-in email. Returning users
+   may reuse their Google session; no bank connection is implied.
+2. **Home → Understand my statements**. Choose an INR PDF or CSV, an account
+   nickname and bank/card type. **Try a labelled statement example** downloads
+   artificial CSV data; upload that file to test the real parser.
+3. Confirm processing and **Read my statement**. Expect an unsaved preview with
+   totals. Expand the row review to correct interpretation labels. No payment.
+4. Confirm review and **Save & see my spending**. Expect categories, monthly bars,
+   identified income, repayments and coverage warnings. Same file: no double import.
+5. **Manage imports** excludes/restores overlapping files without deleting them.
+6. **Ask Friday about this** prepares a question. Select **Share my saved statement
+   totals**, then **Ask Friday** for Gemini guidance. Only aggregates enter this
+   context, not transaction descriptions. No guaranteed savings or bank action.
+7. **Account → Open privacy & cleanup** explains removal of private inputs. Read
+   its confirmation: statement history, diary and forecasts clear together.
 
-An empty inbox is normal. Questions and the guide work without a bank. Example
-buttons load editable text only; extracted claims are saved when you explicitly
-review them. No fake personal activity is inserted to fill the page.
+Demo bounds: INR; PDF 4 MB/1–6 pages/up to 200 extracted rows; documented CSV
+schema/1 MB/up to 500 rows. Ten imports/2,000 normalized rows total. Unlock PDFs locally;
+never provide passwords, PINs, OTPs or full account identifiers. Six months can be
+supplied across supported exports, not necessarily every bank's format.
 
 ## Separate artificial-payment demonstration
 
-Bills, My rules, Activity and the developer examples use Friday's own artificial
+Optional tools under More tools use Friday's own artificial
 ledger. Read [USER_GUIDE.md](USER_GUIDE.md) before changing limits or approving a
 task. An explicit handle/approval action may move artificial funds; home chat and
 default document review never do. Automatic execution is off for new visitors.
@@ -75,7 +61,6 @@ Stop with `docker compose stop`; do not delete volumes or commit `.env`.
 
 ## Remaining work
 
-Chat has no task-execution tools. Cloud follow-through is unavailable; real
-providers and native voice are future work. Another human Google-login test,
-broader evaluation and final submission artifacts still need attention. Current
-status is in [README.md](README.md); engineering boundaries are in [SPEC.md](SPEC.md).
+Broader bank-format/accuracy evaluation, independently checked usefulness, loan
+principal/APR extraction and final submission artifacts remain pending. No real
+bank feed or continuous monitoring is claimed. See [statement release scope](docs/STATEMENTS_0240.md).

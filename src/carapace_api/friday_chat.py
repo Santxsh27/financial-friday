@@ -32,4 +32,5 @@ def reply_to_user(service, review, bank, tenant, request):
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
     cashflow = service.cashflow.model_context(tenant) if request.include_cashflow else {}
     diary = service.diary.model_context(tenant) if request.include_diary else {}
-    return answer_chat(service.planner, request, context, preferences, cashflow, diary)
+    statements=service.portfolio.model_context(tenant) if request.include_statements else {}
+    return answer_chat(service.planner, request, context, preferences, cashflow, diary, statements)

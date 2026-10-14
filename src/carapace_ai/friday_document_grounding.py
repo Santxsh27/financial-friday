@@ -19,7 +19,7 @@ class GoogleDocumentGrounder:
         self.session=session
 
     @staticmethod
-    def page_count(data, mime):
+    def page_count(data, mime, max_pages=3):
         if mime == 'application/pdf':
             from io import BytesIO
             from pypdf import PdfReader
@@ -30,15 +30,15 @@ class GoogleDocumentGrounder:
                 count = len(reader.pages)
             except Exception as error:
                 raise ValueError('The PDF could not be safely read before OCR') from error
-            if not 1 <= count <= 3:
-                raise ValueError('For the public demo, choose a PDF of one to three pages before OCR')
+            if not 1 <= count <= max_pages:
+                raise ValueError(f'For this demo, choose a PDF of one to {max_pages} pages before OCR')
             return count
         if mime not in {'image/png','image/jpeg','image/webp'}:
             raise ValueError('Unsupported OCR document type')
         return 1
 
-    def read(self, data, mime):
-        page_count = self.page_count(data, mime)
+    def read(self, data, mime, *, max_pages=3):
+        page_count = self.page_count(data, mime, max_pages)
         response=self.session.post(f'https://{self.location}-documentai.googleapis.com/v1/{self.processor}:process',
             json={"rawDocument":{"content":base64.b64encode(data).decode(),"mimeType":mime}},timeout=60)
         response.raise_for_status()

@@ -139,7 +139,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     if settings.public_demo_secret:
         html = html.replace('<main class="shell layout">',
             '<div class="shell" role="note" style="padding-top:12px;font-size:13px">'
-            'Your private financial review. Upload bills and receipts - no provider setup or payment permission needed. '
+            'Your private statement review. No bank connection or payment permission needed. '
             '<a href="/about">Access, privacy &amp; demo limits</a></div>'
             '<main class="shell layout">')
     app = FastAPI(title="Financial Friday private pilot", docs_url=None, redoc_url=None, openapi_url=None)
@@ -161,6 +161,9 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
                 if tenant is None:
                     return secure_response(JSONResponse({"detail": "This account is not enrolled in the pilot"}, status_code=403))
                 request.state.tenant = tenant
+                request.state.profile = {'authenticated':True,'identity_provider':'Google / Identity-Aware Proxy',
+                    'email':claims.get('email',''),'bank_connected':False,
+                    'message':'Google reused your existing sign-in session. This is your private Friday workspace, not a connected bank account.'}
                 if request.method not in {"GET", "HEAD", "OPTIONS"}:
                     if request.headers.get("origin") != settings.public_origin:
                         return secure_response(JSONResponse({"detail": "Same-origin request required"}, status_code=403))
@@ -176,6 +179,10 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     @app.get("/")
     async def home():
         return HTMLResponse(html)
+
+    @app.get('/api/friday/profile')
+    async def profile(request: Request):
+        return request.state.profile
 
     @app.get("/assets/{name}")
     async def assistant_asset(name: str):

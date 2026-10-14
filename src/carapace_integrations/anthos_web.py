@@ -411,6 +411,34 @@ def create_demo_app() -> FastAPI:
         if code != 200: raise HTTPException(code, 'Saved cash-flow snapshot unavailable.')
         return result
 
+    @application.get('/api/friday/profile')
+    async def friday_local_profile():
+        return {'authenticated':False,'identity_provider':'Local development workspace','email':None,
+            'bank_connected':False,'message':'Local demo identity. Google sign-in is available on the protected Cloud Run website.'}
+
+    @application.get('/api/friday/statements')
+    async def friday_statement_portfolio():
+        code,result=await run_in_threadpool(_api_call,api_base_url,'/v1/friday/statements','GET')
+        if code!=200:raise HTTPException(code,'Your saved statement analysis is unavailable')
+        return result
+
+    @application.post('/api/friday/statements')
+    @application.post('/api/friday/statements/prepare')
+    @application.post('/api/friday/statements/visibility')
+    async def friday_statement_input(request: StarletteRequest):
+        data=bytearray()
+        async for chunk in request.stream():
+            if len(data)+len(chunk)>6*1024*1024:raise HTTPException(413,'Statement request exceeds 6 MB')
+            data.extend(chunk)
+        try:
+            import json
+            payload=json.loads(data)
+        except (ValueError,UnicodeError) as error:raise HTTPException(422,'Invalid statement request') from error
+        path='/v1/friday/statements'+('/prepare' if request.url.path.endswith('/prepare') else '/visibility' if request.url.path.endswith('/visibility') else '')
+        code,result=await run_in_threadpool(_api_call,api_base_url,path,'POST',payload,150)
+        if code!=200:raise HTTPException(code,result.get('detail','Statement request was not confirmed'))
+        return result
+
     @application.get('/api/friday/diary')
     async def friday_diary_read():
         code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/diary', 'GET')

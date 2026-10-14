@@ -94,6 +94,58 @@ def register_financial_friday_routes(application, service, authenticate):
     from carapace_core.friday_diary import DiaryChange
     from carapace_ai.friday_diary import DiaryParseRequest, parse_diary, diagnose_diary_error
     service.diary = FridayDiary(service)
+    from .friday_portfolio import FridayPortfolio
+    from carapace_core.friday_portfolio import SaveStatement, StatementVisibility, summarize_statements
+    service.portfolio = FridayPortfolio(service)
+
+    class PrepareStatement(BaseModel):
+        model_config = ConfigDict(extra='forbid')
+        data_base64: str = Field(min_length=4, max_length=5_592_408)
+        mime: Literal['text/csv','application/pdf']
+        account_alias: str = Field(min_length=1,max_length=40,pattern=r'^[A-Za-z][A-Za-z0-9 _-]*$')
+        account_type: Literal['BANK','CREDIT_CARD']
+        confirm_cloud_processing: bool = Field(strict=True)
+
+    @application.get('/v1/friday/statements',tags=['friday-statements'])
+    def statement_portfolio(tenant: TenantContext = Depends(authenticate)):
+        return service.portfolio.view(tenant.tenant_id)
+
+    @application.post('/v1/friday/statements',tags=['friday-statements'])
+    def statement_save(payload: SaveStatement, tenant: TenantContext = Depends(authenticate)):
+        try:return service.portfolio.save(tenant.tenant_id,payload)
+        except ValueError as error:raise HTTPException(409,str(error)) from error
+
+    @application.post('/v1/friday/statements/visibility',tags=['friday-statements'])
+    def statement_visibility(payload: StatementVisibility,tenant: TenantContext=Depends(authenticate)):
+        try:return service.portfolio.set_visibility(tenant.tenant_id,payload)
+        except ValueError as error:raise HTTPException(409,str(error)) from error
+
+    @application.post('/v1/friday/statements/prepare',tags=['friday-statements'])
+    async def statement_prepare(payload: PrepareStatement,tenant: TenantContext = Depends(authenticate)):
+        import base64
+        import binascii
+        from carapace_ai.friday_statements import extract_statement
+        from carapace_ai.friday_document_grounding import configured_grounder
+        from .friday_resource_limits import reserve_resource
+        from .friday_privacy import privacy_generation
+        if not payload.confirm_cloud_processing:
+            raise HTTPException(422,'Confirm temporary server processing; PDFs also use Google AI')
+        try:
+            data=base64.b64decode(payload.data_base64,validate=True)
+            if not 0<len(data)<=4*1024*1024:raise ValueError('Choose a file of at most 4 MB')
+            generation=str(privacy_generation(service,tenant.tenant_id))
+            statement,provenance=await run_in_threadpool(extract_statement,service.planner,data=data,mime=payload.mime,
+                account_alias=payload.account_alias,account_type=payload.account_type,use_ai=True,
+                grounder=configured_grounder() if payload.mime=='application/pdf' else None,
+                reserve=lambda pages:reserve_resource(service,'ocr_pages',pages))
+            return {'statement':statement.model_dump(mode='json'),'summary':summarize_statements([statement.model_dump(mode='json')]),
+                'workspace_generation':generation,'provenance':provenance,'saved':False,'raw_file_stored':False,'money_moved':False,
+                'review_required':True,'warning':'Check the row count, amounts and labels against the original before saving. Extraction may omit or misread rows.'}
+        except (ValueError,UnicodeError,binascii.Error) as error:raise HTTPException(422,str(error)) from error
+        except Exception as error:
+            from carapace_ai.friday_observability import LOG
+            LOG.warning('statement_prepare_failed type=%s',type(error).__name__)
+            raise HTTPException(503,'Statement reading unavailable. Nothing was saved. Try a clearer PDF or INR CSV export.') from error
 
     @application.get('/v1/friday/diary', tags=['friday-diary'])
     def diary_read(tenant: TenantContext = Depends(authenticate)):

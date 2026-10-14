@@ -24,6 +24,7 @@ class FridayChatRequest(BaseModel):
     include_preferences: bool = Field(default=False, strict=True)
     include_cashflow: bool = Field(default=False, strict=True)
     include_diary: bool = Field(default=False, strict=True)
+    include_statements: bool = Field(default=False, strict=True)
 
 
 class ChatAnswer(BaseModel):
@@ -37,11 +38,13 @@ def _check_cashflow_amounts(reply, cashflow):
     """Fail closed on unsupported explicit rupee figures, not semantic proof."""
     allowed = set()
     def collect(value):
+        if isinstance(value,list):
+            for item in value:collect(item)
         if not isinstance(value, dict): return
         for key, item in value.items():
             if key.endswith('_inr'):
                 allowed.add(Decimal(item.removeprefix('INR ').replace(',', '')))
-            elif isinstance(item, dict): collect(item)
+            elif isinstance(item, (dict,list)): collect(item)
     collect(cashflow)
     amount = r'(-?\d[\d,]*(?:\.\d{1,2})?)'
     markers = r'(?:₹|\bINR\b|\bRs\.?|\brupees?\b)'
@@ -116,7 +119,18 @@ payment rules. Personal saved context is memory, not training of model weights.
 Cite cashflow:current only when that calculator context was actually supplied."""
 
 
-def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None) -> dict:
+INSTRUCTION += ''' Statement context is separately opted-in, user-reviewed statement aggregates.
+It is not a complete financial profile. Discuss spending categories, identified
+income and repayments, not total credits as salary. Loan receipts, refunds and
+transfers are not earnings. Card repayments are excluded to avoid counting the
+same spending twice, but missing card purchase statements understate spending.
+Never infer total debt, assets, net worth, investment suitability, or future
+income. Surface coverage warnings before personalized conclusions. Quote exact
+_inr fields only; do not calculate new money values. Suggest one realistic next
+step without shame or promises. Cite statements:current only when supplied.'''
+
+
+def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:
     if planner.mode == "LOCAL_RULES":
         raise RuntimeError("Live Gemini chat is not configured")
     from google.genai import types
@@ -129,7 +143,8 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
                       "communication_preferences": preferences or {},
                       "workspace_evidence": context if request.include_workspace else {},
                       "cashflow_scenario": cashflow if request.include_cashflow and cashflow else {},
-                      "money_diary": diary if request.include_diary and diary else {}}, ensure_ascii=False)
+                      "money_diary": diary if request.include_diary and diary else {},
+                      "statement_summary":statements if request.include_statements and statements else {}}, ensure_ascii=False)
     redacted = redact_for_model(raw)
     response = planner._client.models.generate_content(
         model=planner.model_name, contents=redacted.text,
@@ -137,13 +152,16 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
             system_instruction=INSTRUCTION, response_mime_type="application/json",
             response_json_schema=generation_schema(ChatAnswer.model_json_schema())))
     answer = ChatAnswer.model_validate_json(response.text or "")
-    if request.include_diary and diary:
+    if request.include_statements and statements:
+        _check_cashflow_amounts(answer.reply,{'statements':statements,'diary':diary or {},'cashflow':cashflow or {}})
+    elif request.include_diary and diary:
         _check_cashflow_amounts(answer.reply, {'diary':diary,'cashflow':cashflow if request.include_cashflow else {}})
     elif request.include_cashflow and cashflow:
         _check_cashflow_amounts(answer.reply, cashflow)
     allowed_ids = {item["evidence_id"] for item in context.get("evidence", [])}
     if request.include_cashflow and cashflow: allowed_ids.add('cashflow:current')
     if request.include_diary and diary: allowed_ids.add('diary:current')
+    if request.include_statements and statements:allowed_ids.add('statements:current')
     if any(identity not in allowed_ids for identity in answer.evidence_ids):
         raise ValueError("Model cited an unavailable evidence reference")
     clean_reply = redact_for_model(answer.reply)
@@ -154,5 +172,6 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
             "preferences_included": bool(preferences),
             "cashflow_included": bool(request.include_cashflow and cashflow),
             "diary_included": bool(request.include_diary and diary),
+            "statements_included":bool(request.include_statements and statements),
             "mode": planner.mode, "model": planner.model_name,
             "redaction_applied": redacted.redaction_applied or clean_reply.redaction_applied}

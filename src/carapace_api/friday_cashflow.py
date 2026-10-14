@@ -7,6 +7,8 @@ from .friday_privacy import privacy_generation
 
 def _model_amounts(value):
     """Remove paise ambiguity at the model boundary; never ask it to convert."""
+    if isinstance(value, list):
+        return [_model_amounts(item) for item in value]
     if isinstance(value, dict):
         output = {}
         for key, item in value.items():

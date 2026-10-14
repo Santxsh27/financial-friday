@@ -1,22 +1,28 @@
 # Financial Friday
 
-**Your money buddy. One small check-in, a clearer next step, and evidence-backed protection.**
+**Your statements. A clearer money picture. One practical next step.**
 
-Financial Friday is a private **financial buddy**: understand the records you
-choose to share, organise next steps, and prepare useful guidance in your preferred
-style. It stores extracted facts and evidence—not an archive of your original PDFs.
-It combines Google Gemini financial assistance with a separate,
-strictly bounded artificial-money executor. It is not a bank, a trading adviser,
-or an unrestricted agent controlling real accounts.
+Financial Friday is a private, **statement-first financial buddy**. Instead of
+entering every purchase, upload supported INR bank or credit-card statements.
+Google Gemini proposes source-linked transaction interpretations; exact code
+calculates monthly spending, categories, identified income and repayments. Review
+the interpretation, save the normalized rows, and optionally ask Friday for a
+practical next step using aggregate context only. Raw PDFs/CSVs are not archived.
 
-The everyday entry point is **My money today**: report money in/out, review
-Gemini's proposed entries, and explicitly save a private diary. Exact code updates
-cash totals and coverage of your chosen buffer—not an official credit score.
-An optional diary-summary consent lets Gemini coach from aggregates without
-entry notes. Money Runway explores future bills and delayed income separately.
-No live bank balance or guarantee of avoiding hardship is implied.
+The main journey is **Statements → Review → Spending → Friday**. One month is
+enough to begin; multiple supported exports can cover six months or more within
+the demo limits. Salary is not confused with generic credits, borrowing or
+refunds. Card repayments and identified own-account transfers are kept out of
+new spending. Overlapping rows are flagged, never silently deleted. Imports can
+be reversibly excluded/restored. **Account** shows the verified Google email;
+returning users may already have a Google sign-in session.
 
-The connected protection workflow is an **obligation inbox**: give Friday a
+This is not a bank feed, a complete asset/debt statement, a credit score or a
+guarantee of saving money. Missing accounts, partial periods and wrong labels
+affect the conclusions. Bank statements alone do not establish outstanding loan
+principal or net worth. See [statement scope and evidence](docs/STATEMENTS_0240.md).
+
+Optional protection tools remain under **More tools**. The **obligation inbox** lets you give Friday a
 financial request once, see what is known versus missing,
 prepare one evidence-bound next step, and follow its actual outcome. Supplier and
 reference must match an artificial provider record before a document can join the
@@ -44,11 +50,13 @@ credentials. Confirm organisers' required source-code access before judging.
 
 ## Using the interface
 
-Start on **Overview**. **Ask Friday** gives a read-only answer; **Prepare next
-step** opens a checked task or unsent verification draft. Neither prepares a
-payment automatically. Include saved workspace context only when you want those
-records used. **Documents** explains the upload/review/inbox flow, and the
-**Financial inbox** separates status, reference, claimed amount and next steps.
+Start on **Home → Understand my statements**. Choose a file, an account nickname
+(not an account number), and bank/card type. Confirm temporary processing, then
+review the extracted totals and labels before saving. **Spending** shows category
+and monthly charts. **Friday** answers questions; its separate **Share statement
+totals** option sends aggregates, not transaction descriptions. **Account** shows
+sign-in, communication preferences and access to privacy controls. **More tools**
+contains the earlier diary, runway, document checks and artificial payment demo.
 
 Blue means working or prepared—not paid. Amber means incomplete or needing
 verification. Red means held/conflicting. Green is reserved for independently
@@ -157,7 +165,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **526 tests ran, 525 passed, one optional
+Latest local checks, 15 October 2026: **542 tests ran, 541 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -171,7 +179,12 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **526 ran, 503 passed, twenty-three optional skips**. Four additional optional
+Docker: **542 ran, 519 passed, twenty-three optional skips**. The statement-first
+release adds 15 statement tests and one verified-profile test, including real PDF
+text parsing, source-value validation, tenant isolation, exact totals, replay,
+reversible exclusions, privacy generations, aggregate-only AI context and
+Firestore transaction callback contracts. These are not independent extraction
+accuracy or customer-usefulness benchmarks. Four additional optional
 Node-based motion checks account for the extra container skips. Ten soft-flow
 tests cover frame coalescing/cancellation, bounded tilt, reduced motion, no new
 action/network authority, real busy states, preserved chat reading position and

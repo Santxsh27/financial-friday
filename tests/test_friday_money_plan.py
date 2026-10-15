@@ -156,3 +156,6 @@ class MoneyPlanUiTests(unittest.TestCase):
         self.assertNotIn('innerHTML',PLAN_JS)
         self.assertIn('/assets/friday-chart.js',FINANCIAL_FRIDAY_HTML)
         self.assertEqual(ASSETS['friday-chart.js'],'application/javascript')
+        self.assertIn("borderWidth:type==='line'?2:0",PLAN_JS)
+        from carapace_integrations.friday_studio_ui import STUDIO_CSS
+        self.assertIn('.friday-chat-log>*{flex-shrink:0}',STUDIO_CSS)

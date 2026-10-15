@@ -9,6 +9,7 @@ REHEARSAL_CSS = r'''
 
 REHEARSAL_JS = r'''
     {
+      const workspaceMoney=scenarioMoney;
       const lab=view('rehearsal','Try a money decision against your history before making it in real life. No payment, bank connection or saved plan.');titles.rehearsal='A little rehearsal. A clearer decision.';lab.querySelector('h1').textContent=titles.rehearsal;lab.setAttribute('aria-label',titles.rehearsal);
       const nav=document.querySelector('.topbar .friday-nav');if(nav){const link=element('button','What if?');link.type='button';link.dataset.screenLink='rehearsal';nav.append(link);}
       const steps=element('div',null,'rehearsal-steps');['1 · Choose a decision','2 · Review assumptions','3 · Compare checked options'].forEach((s,i)=>{const chip=element('span',s);if(!i)chip.setAttribute('aria-current','step');steps.append(chip);});lab.append(steps);

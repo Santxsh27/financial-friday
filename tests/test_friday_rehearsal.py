@@ -260,6 +260,20 @@ class RehearsalApiTests(unittest.TestCase):
 
 
 class RehearsalUiTests(unittest.TestCase):
+    def test_signed_scenarios_do_not_weaken_nonnegative_available_balance_display(self):
+        from carapace_integrations.friday_experience import EXPERIENCE_JS
+        from carapace_integrations.friday_rehearsal_ui import REHEARSAL_JS
+        from carapace_integrations.friday_plan_ui import PLAN_JS
+        import re,shutil,subprocess
+        node=shutil.which('node')
+        if not node:self.skipTest('Node optional for formatter execution')
+        formatter=re.search(r'function scenarioMoney\(value\)\{[^\n]+',EXPERIENCE_JS).group()
+        original=re.search(r'function workspaceMoney\(value\)\{[^\n]+',EXPERIENCE_JS).group()
+        output=subprocess.run([node,'-e',formatter+'\n'+original+'\nconsole.log(JSON.stringify([scenarioMoney(-123456),scenarioMoney(null),workspaceMoney(-123456)]));'],capture_output=True,text=True,check=True)
+        self.assertEqual(json.loads(output.stdout),['-₹1,234.56','Not available','Not available'])
+        self.assertIn('const workspaceMoney=scenarioMoney;',REHEARSAL_JS)
+        self.assertIn('const money=n=>scenarioMoney(n);',PLAN_JS)
+
     def test_no_model_html_auto_save_or_hidden_financial_action(self):
         from carapace_integrations.friday_rehearsal_ui import REHEARSAL_JS
         self.assertNotIn('innerHTML',REHEARSAL_JS)

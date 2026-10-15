@@ -17,7 +17,7 @@ PLAN_JS = r'''
       const extraContext=everydayAssistant.querySelector('.statement-consent-details summary');if(extraContext)extraContext.textContent='Advanced sources · optional older tools';
       let source=null,lastPlan=null,planBusy=false;const charts=new Map();
       const palette=['#a88ad4','#70af9a','#e9a184','#c2b36b','#8dadd8','#c58ead','#a1b59b','#a8a1be','#d0aa88','#8eaaa6','#b29ab0'];
-      const money=n=>workspaceMoney(n);
+      const money=n=>scenarioMoney(n);
       function destroyStaleCharts(){for(const [canvas,chart]of charts){if(!canvas.isConnected){chart.destroy();charts.delete(canvas);}}}
       function draw(canvas,type,labels,datasets){destroyStaleCharts();if(typeof Chart==='undefined'){canvas.hidden=true;return;}charts.get(canvas)?.destroy();const dark=document.documentElement.dataset.theme==='dark';const ink=dark?'#f5f1ff':'#26334e';const muted=dark?'#bcb9d3':'#5c6382';
         const options={responsive:true,maintainAspectRatio:false,animation:matchMedia('(prefers-reduced-motion:reduce)').matches||document.documentElement.dataset.motion==='off'?false:{duration:260},plugins:{legend:{display:true,position:'bottom',labels:{color:ink,boxWidth:10,padding:13,font:{size:11}}},tooltip:{callbacks:{label:c=>String(c.dataset.label||c.label)+': '+money(Math.round(c.raw))}}}};

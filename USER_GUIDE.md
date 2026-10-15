@@ -60,6 +60,15 @@ the current chat panel; earlier permission checkboxes are now reached through
 
 ## Your financial buddy
 
+### A ready-made file for your first try
+
+Use [the fictional two-month CSV](examples/friday-artificial-statement.csv) and
+[its expected results](examples/FRIDAY_SAMPLE_STATEMENT.md). The Desktop copy is
+named `Friday-Artificial-Statement.csv`. It contains 19 artificial transactions:
+INR90,000 identified income, INR43,999 classified spending and INR10,000 loan
+repayments with the initial labels. Loans received are not earnings. The file
+is not automatically added to your account; choose it through **Add a statement**.
+
 ### Softer interaction, same financial boundaries
 
 Buttons give a small press response; supported desktop task cards gently follow

@@ -48,7 +48,7 @@ Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial Q
 - The mock's unsupported image statement upload is correctly reduced to PDF/CSV.
 - Initials are shown instead of inventing a Google profile photograph/name; no OAuth scope was expanded. Google cookie clearing is explained honestly, not represented as global Google logout.
 - Higher-contrast dark primary-button text replaces low-contrast white-on-coral. Source-colour values are represented by CSS tokens, not a promise of identical capture colour profiles.
-- The mascot is matching generated artwork, not a cropped screenshot. Handwritten decorative annotation and accent swishes are omitted (P3).
+- The mascot is matching generated artwork, not a cropped screenshot. Decorative annotation and accent swishes were initially omitted; the 0.25.1 pass below restores them at the user's request.
 - On narrow screens, chat has a dedicated page and quick launcher rather than squeezing two desktop columns. Long transaction tables scroll inside their region. This is not full WCAG certification or exhaustive device testing.
 - No new forecasting model, transaction-level chat retrieval, bank feed, profit guarantee or financial-action authority was added by this redesign.
 
@@ -68,5 +68,26 @@ Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial Q
 - No statement was uploaded or saved to the owner's hosted history during these new checks. No money moved. Anonymous access to the private API returned403.
 - Final public screenshot: `/private/tmp/friday-studio-live-final.jpg`. The additional hosted privacy notice is intentional; a local design fixture is not evidence that a hosted consent notice should be removed.
 - These checks verify the exercised UI/API journeys, not every possible financial answer, device, PDF layout or accessibility requirement. They are not an independent financial-accuracy benchmark or WCAG certification.
+
+## 0.25.1 — requested decorative fidelity pass
+
+### Findings before changes — blocked
+
+- [P2] Requested source details were missing: the lavender marker underline, handwritten note/curved arrow, peach/lilac dashes and grounded character shadow. Earlier acceptance had classified these as optional; the user's explicit request makes their restoration part of this release.
+- Before screenshot: `/private/tmp/friday-accents-before.png`, captured from the published 0.25.0 page. The visible conversation differs from the first-use reference, so it is baseline evidence, not the normalized fidelity comparison.
+
+### Corrected comparison — passed locally
+
+- Source `docs/design/soft-studio-reference.png` normalized from1487×1058 to1403×998. Implementation `/private/tmp/friday-accents-desktop.png` captured at CSS1403×998, density1, light first-use Home, account menu open. Fictional Asha is intentionally replaced by local-demo identity.
+- Full-view side-by-side: `/private/tmp/friday-accents-comparison.jpg`; focused hero region: `/private/tmp/friday-accents-hero-comparison.jpg`. New packaged raster assets restore all four requested decoration groups, not CSS drawings or a screenshot overlay.
+- Typography: existing packaged font and three-line heading retained; the image underline sits behind the final phrase without changing its text. Handwriting is generated and somewhat more cursive than the source, an acceptable minor artwork difference.
+- Layout: header, chat, CTA and statement flow unchanged. The new note occupies the clear top-right hero area, and the companion remains inside its slot with a feathered contact shadow. Decorative images cannot receive pointer clicks.
+- Colour: lavender/peach source accents retained; note brightness is adjusted in dark mode, underline opacity reduced. Existing higher-contrast CTA text is intentional.
+- Image quality: true-alpha PNGs, no opaque page backdrop, whole companion/sheet intact. Minor antialiasing at generated edges is acceptable at the measured display size; not a claim of pixel-identical assets.
+- Copy: exact note **Same statements. More clarity.**; PDF/CSV support remains honest. No new financial capability or model authority is implied.
+- Phone390×844: content width390; no horizontal overflow or note/title collision. Evidence `/private/tmp/friday-accents-mobile-v1.png`. Dark phone evidence `/private/tmp/friday-accents-dark-mobile.png`; account, navigation and main CTA remain usable. Existing reduced-motion selectors still govern the same hero/avatar classes.
+- Real browser story: Desktop fictional CSV → server parse →19-row unsaved review → explicit save in a separate artificial QA workspace → Spending. Visible results: INR90,000 income, INR43,999 spending, INR10,000 loan repayments; card-coverage warning retained. No owner or hosted history was used.
+- Desktop sample is a byte-for-byte copy of `examples/friday-artificial-statement.csv`; every description is marked ARTIFICIAL. CSV parsing uses no Gemini call. Any Gemini guidance remains an explicit, separately consented conversation.
+- New checks: native551/550passed/1optional skip; Docker551/528passed/23optional skips; tooling24passed; JavaScript syntax and whitespace checks passed. Browser warning/error list was empty. Reduced-motion emulation returned hero animation **none** and was reset; the normal viewport and light theme were restored.
 
 final result: passed

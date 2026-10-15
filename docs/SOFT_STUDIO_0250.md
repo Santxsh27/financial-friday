@@ -63,3 +63,34 @@ private API are unchanged. The assistant still receives only explicitly shared
 aggregate statement context; individual-transaction retrieval, comprehensive
 loan/net-worth analysis and a bank feed remain future work. This release does
 not certify fraud detection efficacy or financial advice quality.
+
+## 0.25.1 — restore the selected design's accents
+
+The same design now includes the previously omitted handwritten lavender
+underline, the **Same statements. More clarity.** note with its curved arrow,
+two peach and two lilac accent dashes, and a softly grounded character shadow.
+The existing chat avatar is unchanged. The decorative images cannot intercept
+clicks; the note has descriptive alternative text and the underline is hidden
+from assistive technology. Existing reduced-motion controls remain authoritative.
+
+Assets were created with the built-in image tool, using the selected reference:
+
+- `friday-studio-underline.png`: 2172×724 RGBA; a pale lavender double marker
+  swoosh, almost horizontal, transparent background, no text or extra objects.
+- `friday-studio-note.png`: 1254×1254 RGBA; exact three-line lavender handwriting
+  **Same / statements. / More clarity.**, with a down-left curved arrow and no
+  opaque backdrop. This is an airy note as in the reference, not another form.
+- `friday-studio-buddy-grounded.png`: 1254×1254 RGBA; a non-destructive image edit
+  retaining the companion, cream sheet and face, adding the contact shadow and
+  paired peach/lilac dashes. A focused second edit refined its transparent edges.
+
+Original generated files are retained in the local Codex generated-images
+library. Selected outputs were copied byte-for-byte into packaged assets;
+no CSS drawing, handmade SVG or screenshot crop substitutes for these marks.
+Minor generated handwriting/antialiasing differences remain; this is not a
+claim of pixel-identical artwork.
+
+The new [artificial CSV guide](../examples/FRIDAY_SAMPLE_STATEMENT.md) describes a
+19-row input tested through the real parser. It is a separate example file,
+not seeded account history or a hardcoded model answer. The Desktop copy is
+`Friday-Artificial-Statement.csv`.

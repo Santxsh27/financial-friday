@@ -55,3 +55,31 @@ class FridayStudioTests(unittest.TestCase):
         self.assertGreaterEqual(width,512)
         self.assertEqual(width,height)
         self.assertEqual((depth,color_type),(8,6))
+
+    def test_reference_accents_are_packaged_images_not_interactive_controls(self):
+        from carapace_integrations import friday_assets
+        for name in ('friday-studio-buddy-grounded.png', 'friday-studio-note.png',
+                     'friday-studio-underline.png'):
+            self.assertEqual(ASSETS[name], 'image/png')
+            data=(Path(friday_assets.__file__).parent/'assets'/name).read_bytes()
+            self.assertEqual(data[:8], b'\x89PNG\r\n\x1a\n')
+            self.assertEqual(data[25], 6)  # RGBA, not a painted opaque backdrop.
+        self.assertIn("underline.setAttribute('aria-hidden','true')", STUDIO_JS)
+        self.assertIn("thoughtNote.alt='Same statements. More clarity.'", STUDIO_JS)
+        self.assertIn('pointer-events:none', STUDIO_CSS)
+        self.assertNotIn('setInterval(', STUDIO_JS)
+
+    def test_downloadable_artificial_statement_uses_the_real_parser(self):
+        from carapace_ai.friday_statements import extract_statement
+        from carapace_core.friday_portfolio import summarize_statements
+        data=(Path(__file__).parents[1]/'examples'/'friday-artificial-statement.csv').read_bytes()
+        statement,provenance=extract_statement(None,data=data,mime='text/csv',
+            account_alias='Fictional main',account_type='BANK',use_ai=False)
+        summary=summarize_statements([statement.model_dump(mode='json')])
+        self.assertEqual(summary['transaction_count'],19)
+        self.assertEqual(summary['totals']['identified_income_minor'],9000000)
+        self.assertEqual(summary['totals']['classified_spending_minor'],4399900)
+        self.assertEqual(summary['totals']['loan_repayments_minor'],1000000)
+        self.assertEqual(provenance['model_calls'],0)
+        self.assertFalse(summary['bank_connected'])
+        self.assertTrue(all('ARTIFICIAL' in row.description for row in statement.entries))

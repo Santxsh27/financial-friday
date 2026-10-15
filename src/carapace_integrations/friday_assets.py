@@ -10,6 +10,9 @@ ASSETS = {
     "friday-jade-orb.png": "image/png",  # Historical bookmarked asset.
     "friday-orb.png": "image/png",
     "friday-soft-studio-buddy.png": "image/png",
+    "friday-studio-buddy-grounded.png": "image/png",
+    "friday-studio-note.png": "image/png",
+    "friday-studio-underline.png": "image/png",
     "friday-brand.png": "image/png",
     "friday-team-logo.png": "image/png",
     "friday-windowsill.png": "image/png",

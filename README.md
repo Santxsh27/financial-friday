@@ -16,6 +16,11 @@ menu opens the account, spending and privacy pages. Example charts are labelled
 illustrations, not seeded financial history; saved transactions are searchable.
 Financial context sharing remains explicit and off by default. The avatar uses
 initials; no additional Google profile-photo permission has been requested.
+The selected design's handwritten underline, lavender note/arrow, accent marks
+and grounded companion shadow are restored. For a first try, use the
+[fictional two-month CSV](examples/friday-artificial-statement.csv) and
+[its expected results](examples/FRIDAY_SAMPLE_STATEMENT.md); it is never
+automatically added to your account.
 
 One month is
 enough to begin; multiple supported exports can cover six months or more within
@@ -175,7 +180,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **549 tests ran, 548 passed, one optional
+Latest local checks, 15 October 2026: **551 tests ran, 550 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -189,7 +194,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **549 ran, 526 passed, twenty-three optional skips**. The statement-first
+Docker: **551 ran, 528 passed, twenty-three optional skips**. The statement-first
 release adds 15 statement tests, one verified-profile test and two gateway-error
 tests, including real PDF
 text parsing, source-value validation, tenant isolation, exact totals, replay,

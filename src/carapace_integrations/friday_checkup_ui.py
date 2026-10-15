@@ -62,6 +62,6 @@ CHECKUP_JS = r'''
       document.addEventListener('friday:portfolio-unavailable',()=>{source=null;epoch++;for(const [node] of mounts){clearCharts(node);node.replaceChildren(element('p','Statements are unavailable. Reload before using earlier results.','statement-error'));}});
       document.addEventListener('friday:cashflow-cleared',()=>{source=null;selectedFinding=null;preparedDraft=null;epoch++;for(const [node] of mounts){clearCharts(node);node.replaceChildren();}});
       document.addEventListener('friday:assistant-analysis',event=>{const v=event.detail.checkup_view;if(!v)return;if(!source||v.source_revision!==source.revision||v.workspace_generation!==source.workspace_generation){toast('Statements changed. Ask Friday again after reloading My money.');return;}selectedTab=({FINDINGS:'findings',REGULAR_PAYMENTS:'regular',SPENDING_CHANGE:'overview',PREPARE_ENQUIRY:'findings'})[v.action]||'overview';selectedFinding=v.finding_id;preparedDraft=v.draft?v:null;show('dashboard');refresh();});
-      document.addEventListener('friday:appearance-changed',refresh);
+      new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-motion']});
     }
 '''

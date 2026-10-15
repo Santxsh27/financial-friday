@@ -172,4 +172,5 @@ class CheckupAPITests(unittest.TestCase):
         self.assertIn('ArrowRight',CHECKUP_JS)
         self.assertNotIn('statementToggle.checked=true',CHECKUP_JS)
         self.assertIn('prefers-reduced-motion:reduce',CHECKUP_JS)
+        self.assertIn("attributeFilter:['data-theme','data-motion']",CHECKUP_JS)
         self.assertIn('margin-left:auto',CHECKUP_CSS)

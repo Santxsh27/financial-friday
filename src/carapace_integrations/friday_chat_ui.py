@@ -77,8 +77,8 @@ CHAT_JS = r"""
           if(result.read_only!==true||result.money_moved!==false||result.payment_authorized!==false||!Array.isArray(result.actions_executed)||result.actions_executed.length)throw new Error('Unexpected chat authority');
           if(sentGeneration!==chatGeneration)return;
           const card=chatMessage('assistant',result.reply);if(result.evidence_ids.length)card.append(element('small',result.evidence_ids.length+' cited saved source(s) · user-supplied evidence or calculator scenario'));
-          const screenLabels={review:'Open financial inbox',document:'Read a document',money:'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules'};
-          if(screenLabels[result.next_screen]){const next=element('button',screenLabels[result.next_screen]);next.type='button';next.dataset.screenLink=result.next_screen;card.append(next);}
+          const screenLabels={review:result.statements_included?'Back to my spending':'Open financial inbox',document:'Read a document',money:result.statements_included?'Back to my spending':'View sandbox overview',activity:'Review recorded activity',settings:'Review my rules'};
+          if(screenLabels[result.next_screen]){const next=element('button',screenLabels[result.next_screen]);next.type='button';next.dataset.screenLink=result.statements_included&&['review','money'].includes(result.next_screen)?'dashboard':result.next_screen;card.append(next);}
           chatHistory.push({role:'user',text:message},{role:'assistant',text:result.reply});chatHistory=chatHistory.slice(-8);
           chatStatus.textContent=result.mode+' · '+result.model+' · Guidance only; no action executed.';
         }catch(error){if(sentGeneration!==chatGeneration)return;chatMessage('assistant','I couldn’t get a live Gemini reply. No payment or other action was performed. You can still review saved evidence.');chatStatus.textContent='Live chat unavailable. No canned financial answer was substituted.';}

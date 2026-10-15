@@ -1,6 +1,6 @@
 # Financial Friday — documentation and evidence index
 
-Updated 15 October 2026, source **0.26.0**. Deployed versions are listed below and
+Updated 15 October 2026, source **0.27.0**. Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.
@@ -28,6 +28,7 @@ web is `financial-friday-web-plan0260b`; the API is
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Financial rehearsals 0.27.0](FINANCIAL_REHEARSAL_0270.md) | Daily source-month calendar scenarios, simultaneous cash stress, concrete counterexamples, exact purchase/date/cut alternatives and separately consented Gemini explanation. Conditional replays, not predictions, bank execution or proof of novelty. |
 | [Visual money planning 0.26.0](VISUAL_MONEY_PLANS_0260.md) | Independent statement consent, typed Gemini goals, exact protected-first allocation, infeasibility/stress results and accessible charts. Read-only, not training, a bank feed, autonomous finance or independent efficacy evidence. |
 | [Soft Studio 0.25.0/0.25.1](SOFT_STUDIO_0250.md) / [Design QA](../design-qa.md) | Selected first design, restored handwritten accents and shadow, shared right-side chat, account menu, responsive statement journey and tested artificial CSV. No new bank access, financial authority or transaction-level chat retrieval. |
 | [Statements 0.24.0](STATEMENTS_0240.md) | Statement-first input, source-linked PDF proposals, exact spending/income/repayment summaries, reversible exclusions, verified account display and live Vertex/Firestore acceptance. Not complete bank-format or financial-health validation. |

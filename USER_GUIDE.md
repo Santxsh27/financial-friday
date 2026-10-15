@@ -2,11 +2,20 @@
 
 ## Start here: statements, not one receipt at a time
 
-On desktop, the main navigation is **Home · Statements · Spending**, with a
+On desktop, the main navigation is **Home · Statements · Spending · What if?**, with a
 Friday conversation panel on the right. On phones, **Friday** opens the chat
 page. Your initials/name in the top right opens the account menu. Older
 workflows below are secondary tools under **My account → More financial tools**,
 not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
+
+**What if?** is Friday's decision lab. After reviewing and saving a bank-account
+statement, enter the cash available at the start, a buffer to protect and a
+one-off purchase amount. Review the timing/stress assumptions and choose
+**Rehearse this decision**. Expect a daily cash-floor chart and calculated
+alternatives, not an approval to buy. Optional Gemini goal setup sends only your
+question. Optional result explanation shares computed result totals and dates,
+not transaction descriptions/account aliases. Manual recalculation needs no AI
+call and saves nothing. See [the full scenario rules and example](docs/FINANCIAL_REHEARSAL_0270.md).
 
 1. **Top-right initials/name → My account** shows your Google email on the hosted site. A reused Google
    session is normal; no second login prompt is required. Local development says

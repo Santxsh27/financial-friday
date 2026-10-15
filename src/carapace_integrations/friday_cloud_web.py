@@ -107,6 +107,11 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
         # Do not reflect arbitrary upstream errors, tokens or stack traces.
         if error.code == 429:
             return 429, {"detail": "Demo allowance reached. Read saved results or try again later. Daily limits reset at midnight UTC."}
+        if path.startswith('/v1/friday/rehearsals/'):
+            detail={409:'Statement history changed. Reload Spending before recalculating.',
+                    422:'Review the question, explicit INR amount, dates and replay assumptions. No result was guessed.',
+                    503:'Live Gemini is unavailable. Enter the scenario directly; exact calculation needs no model call.'}
+            return error.code, {'detail':detail.get(error.code,'The rehearsal could not be completed. No financial action was performed.')}
         if path.startswith('/v1/friday/statements'):
             if error.code == 422:
                 return 422, {'detail':'Statement could not be read. Check the INR CSV columns, or use a clear unlocked PDF within the listed limits. No payment was requested.'}
@@ -115,6 +120,8 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
             return error.code, {'detail':'Statement service unavailable. If you were saving an import, reload Spending to check whether it was recorded.'}
         return error.code, {"detail": "Friday could not complete this request. Check activity before retrying a payment."}
     except (URLError, TimeoutError, ValueError):
+        if path.startswith('/v1/friday/rehearsals/'):
+            return 502, {'detail':'The rehearsal connection was interrupted. No financial action was requested; calculate again when the connection is available.'}
         if path.startswith('/v1/friday/statements'):
             return 502, {'detail':'Statement connection interrupted. Reload Spending before retrying a save; its outcome is not confirmed.'}
         return 502, {"detail": "Connection interrupted. The outcome may be unknown; check activity before retrying."}

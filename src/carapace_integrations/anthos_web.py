@@ -405,6 +405,22 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code, result.get("detail", "Friday could not interpret this input"))
         return result
 
+    @application.post('/api/friday/rehearsals/{operation}')
+    async def friday_rehearsal(operation: str, request: StarletteRequest):
+        from carapace_core.friday_rehearsal import RehearsalPreview, InterpretRehearsal, ExplainRehearsal
+        from pydantic import ValidationError
+        if operation not in {'preview','interpret','explain'}:raise HTTPException(404,'Unknown rehearsal operation')
+        data=bytearray()
+        async for chunk in request.stream():
+            if len(data)+len(chunk)>16000:raise HTTPException(413,'Rehearsal request is too large')
+            data.extend(chunk)
+        model={'preview':RehearsalPreview,'interpret':InterpretRehearsal,'explain':ExplainRehearsal}[operation]
+        try:payload=model.model_validate_json(bytes(data))
+        except (ValueError,ValidationError) as error:raise HTTPException(422,'Use valid rehearsal inputs') from error
+        code,result=await run_in_threadpool(_api_call,api_base_url,'/v1/friday/rehearsals/'+operation,'POST',payload.model_dump(mode='json'),120)
+        if code!=200:raise HTTPException(code,result.get('detail','The rehearsal could not be completed'))
+        return result
+
     @application.post('/api/friday/plans/preview')
     async def friday_plan_preview(request: StarletteRequest):
         from carapace_core.friday_money_plan import MoneyPlanPreview

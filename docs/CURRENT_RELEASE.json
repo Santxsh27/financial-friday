@@ -1,7 +1,8 @@
 {
-  "code_version": "0.26.0",
-  "web_ui_version": "visual-money-plans-0.26.0",
-  "deployment_status": "DEPLOYED_VERIFIED",
+  "code_version": "0.27.0",
+  "web_ui_version": "financial-rehearsal-0.27.0",
+  "deployment_status": "LOCAL_VERIFIED_CLOUD_PENDING",
+  "pending_release": "Financial rehearsals 0.27.0. Runtime identities below still identify the previous verified 0.26 deployment until staged acceptance and promotion complete.",
   "runtime_source_commit": "046df84259f8e62a65e64bdd36294918f38afbb5",
   "web_source_commit": "f1767fcc89db0dcc9e68d2c12dedac226315d3b4",
   "test_source_commit": "f1767fcc89db0dcc9e68d2c12dedac226315d3b4",

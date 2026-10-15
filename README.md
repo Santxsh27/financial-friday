@@ -1,6 +1,26 @@
 # Financial Friday
 
-**Your statements. A checked money plan. Friday beside you.**
+**Understand your past. Rehearse your next money decision.**
+
+### New main capability: financial rehearsals
+
+“Can I buy a laptop next week and keep my buffer if payday is late?” Friday now
+turns that question into editable assumptions, replays up to six supplied months
+as separate calendar scenarios, and tests every day rather than just the month-end
+total. It shows where the original plan breaks and computes a smaller-purchase
+limit, a later date and the smallest uniform flexible-cost reduction that fits
+the entered constraints. Essentials and repayments stay protected.
+
+Open **What if?** after saving a reviewed bank statement. Enter available cash,
+your chosen buffer and a purchase amount; these inputs are not inferred bank
+balances. Gemini can interpret the goal and, with a separate click, explain the
+checked result. The exact engine runs without AI or financial execution. Charts
+show a lower envelope across conditional replays, not a predicted balance or an
+affordability approval. Missing/new bills and the end of the horizon matter.
+
+See the [financial rehearsal specification and verification](docs/FINANCIAL_REHEARSAL_0270.md).
+This is an engineered integration of known techniques, not a claim of a new
+optimisation theorem, world-first financial assistant or guaranteed hackathon award.
 
 Financial Friday is a private, **statement-first financial buddy**. Instead of
 entering every purchase, upload supported INR bank or credit-card statements.
@@ -9,7 +29,7 @@ calculates monthly spending, categories, identified income and repayments. Revie
 the interpretation, save the normalized rows, and optionally ask Friday for a
 practical next step using aggregate context only. Raw PDFs/CSVs are not archived.
 
-The main journey is **Statements → Review → Spending → Friday → Visual plan**. The selected
+The main journey is **Statements → Review → Spending → What if? → Checked options**. The selected
 Soft Studio interface puts a friendly, live-on-request Friday chat beside the
 desktop workspace, with a dedicated chat page on phones. A top-right avatar
 menu opens the account, spending and privacy pages. Example charts are labelled
@@ -207,7 +227,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **563 tests ran, 562 passed, one optional
+Latest local checks, 15 October 2026: **582 tests ran, 581 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).

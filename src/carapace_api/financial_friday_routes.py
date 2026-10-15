@@ -278,6 +278,44 @@ def register_financial_friday_routes(application, service, authenticate):
     from .friday_bank import FridayAnthosBank
     from .friday_chat import reply_to_user
     from carapace_core.friday_money_plan import MoneyPlanPreview, build_money_plan
+    from carapace_core.friday_rehearsal import RehearsalPreview, InterpretRehearsal, ExplainRehearsal, build_rehearsal
+
+    @application.post('/v1/friday/rehearsals/preview', tags=['friday-planning'])
+    def financial_rehearsal(payload: RehearsalPreview, tenant: TenantContext=Depends(authenticate)):
+        view=service.portfolio.view(tenant.tenant_id)
+        if (payload.expected_revision,payload.workspace_generation)!=(view['revision'],view['workspace_generation']):
+            raise HTTPException(409,'Statement history changed. Reload Spending before running another rehearsal.')
+        try:result=build_rehearsal(view,payload)
+        except ValueError as error:raise HTTPException(422,str(error)) from error
+        current=service.portfolio.view(tenant.tenant_id)
+        if (current['revision'],current['workspace_generation'])!=(view['revision'],view['workspace_generation']):
+            raise HTTPException(409,'Statement history changed during this rehearsal. Reload before relying on it.')
+        return result
+
+    @application.post('/v1/friday/rehearsals/interpret', tags=['friday-planning'])
+    async def interpret_financial_goal(payload: InterpretRehearsal, tenant: TenantContext=Depends(authenticate)):
+        if not payload.confirm_send_goal_to_gemini:
+            raise HTTPException(422,'Confirm sending this question to Gemini, or enter the scenario directly.')
+        from carapace_ai.friday_rehearsal import interpret_goal
+        try:return await run_in_threadpool(interpret_goal,service.planner,payload.message)
+        except ValueError as error:raise HTTPException(422,str(error)) from error
+        except Exception as error:
+            raise HTTPException(503,'Gemini interpretation is unavailable. Enter the scenario directly; no result was guessed.') from error
+
+    @application.post('/v1/friday/rehearsals/explain', tags=['friday-planning'])
+    async def explain_financial_rehearsal(payload: ExplainRehearsal, tenant: TenantContext=Depends(authenticate)):
+        if not payload.confirm_send_results_to_gemini:
+            raise HTTPException(422,'Confirm sharing checked result aggregates with Gemini first.')
+        # Recompute from tenant-owned history, never trust client-supplied results.
+        base=RehearsalPreview.model_validate(payload.model_dump(exclude={'confirm_send_results_to_gemini'}))
+        result=await run_in_threadpool(financial_rehearsal,base,tenant)
+        from carapace_ai.friday_rehearsal import explain_result
+        try:reply=await run_in_threadpool(explain_result,service.planner,result)
+        except Exception as error:raise HTTPException(503,'Gemini explanation unavailable. The checked figures remain available; no financial action was performed.') from error
+        current=service.portfolio.view(tenant.tenant_id)
+        if (current['revision'],current['workspace_generation'])!=(result['source_revision'],result['workspace_generation']):
+            raise HTTPException(409,'Statement history changed during the explanation. Recalculate before relying on it.')
+        return reply
 
     @application.post('/v1/friday/plans/preview', tags=['friday-planning'])
     def money_plan_preview(payload: MoneyPlanPreview, tenant: TenantContext=Depends(authenticate)):

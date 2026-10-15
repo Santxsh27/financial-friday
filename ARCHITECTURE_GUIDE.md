@@ -1,7 +1,25 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **15 October 2026**, version **0.26.0**. Project name: Financial Friday.
+Current technical reference: **15 October 2026**, version **0.27.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
+
+### Primary decision layer
+
+`friday_rehearsal.py` compiles at most six historical bank-account month templates
+into baseline and adverse calendar-event scenarios. Integer-paise daily cash
+floors feed a suffix-minimum purchase envelope and monotone search for the least
+uniform flexible-cost reduction. The checker independently replays each returned
+option; source revision/privacy generation bind every calculation. This is
+classical finite-scenario robust constraint checking, not a new optimisation
+theorem, trained forecasting model or bank authentication system.
+
+Gemini has two separate bounded jobs: interpret a goal into strict fields and
+explain server-recomputed result aggregates. Neither job supplies numerical truth
+or receives payment tools. Explicit goal interpretation shares no statements;
+explicit explanation shares no original descriptions or account aliases. Preview
+never calls the model or persists a scenario. The existing statement/private
+storage and artificial-payment trust boundaries remain separate. See
+[the algorithm and verification report](docs/FINANCIAL_REHEARSAL_0270.md).
 
 ### Primary product spine: statement → review → spending picture → guidance
 

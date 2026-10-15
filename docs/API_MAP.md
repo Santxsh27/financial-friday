@@ -1,6 +1,6 @@
 # Financial Friday — Current API map
 
-Updated 15 October 2026, version 0.26.0. The local OpenAPI reference at
+Updated 15 October 2026, version 0.27.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
 
@@ -25,6 +25,9 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 | GET `/v1/friday/obligations/{id}/result` | Verify an existing artificial-payment journal record; never retry or claim external settlement. |
 | POST `/v1/friday/chat` | Message, bounded history, optional context; live guidance only. |
 | POST `/v1/friday/plans/preview` | Exact unsaved source-month scenario; target reduction, protected/preferred categories, cut cap, income shock, expected revision and privacy generation. No AI call or execution. |
+| POST `/v1/friday/rehearsals/interpret` | Explicitly consented single Gemini call; question to strict proposed goal/stress fields. No statements, balance or execution. |
+| POST `/v1/friday/rehearsals/preview` | Revision/generation-bound bank-account history replay; daily floors, exact purchase envelope, later date and minimum proportional flexible cut. No model call, save or financial action. |
+| POST `/v1/friday/rehearsals/explain` | Separately consented explanation of server-recomputed result aggregates; no client-supplied result trusted, source freshness checked again after Gemini. No raw descriptions or account aliases sent. |
 | GET `/v1/friday/reviews` | Saved document claims and deterministic reconciliation; read-only. |
 | POST `/v1/friday/reviews` | Read supplied text and save extracted claims; never pay. |
 | POST `/v1/friday/reviews/documents?filename=...` | Raw supported file body; extract/store claims, discard raw upload. |

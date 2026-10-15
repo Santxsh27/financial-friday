@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **15 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.26.0`. Actual deployed source and
+specifications. Current code version is `0.27.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -31,6 +31,25 @@ Statement sharing is independent of the legacy financial-inbox permission.
 General questions do not require records. Explicitly shared aggregate context
 cannot grant financial actions. Ordinary settings open Privacy & data; legacy
 payment rules remain a separate artificial execution concern, not onboarding.
+
+### Financial rehearsals
+
+The main decision workflow is **goal → explicit cash/buffer → review replay
+assumptions → exact daily constraints → calculated alternatives → optional Gemini
+explanation**. A single selected bank account prevents accidentally treating
+several accounts as one cash pool. Each of up to six supplied months is replayed
+separately by calendar day. Baseline and simultaneous delayed/reduced-income,
+higher-essential-cost variants are tested. All bank-account debits count as cash
+outflow, including card/loan repayments and transfers; only identified income is
+projected. Same-day debits precede credits. Past income is not delayed forward
+and counted a second time.
+
+The engine computes an exact suffix-minimum one-off purchase envelope, earliest
+later fitting date, and minimum uniform proportional flexible cut at 0.01
+percentage-point precision within the chosen cap. An independent replay checks
+daily conservation, protected costs and option feasibility. Infeasibility remains
+visible. No probability, learned risk score, future guarantee or financial action
+is implied. Full contract: [financial rehearsals](docs/FINANCIAL_REHEARSAL_0270.md).
 
 The execution workflow is **separate and explicitly artificial**.
 Neither is a

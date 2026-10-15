@@ -9,6 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from .friday_review import generation_schema
 from .redaction import redact_for_model
 from carapace_core.friday_money_plan import MoneyPlanDraft
+from carapace_core.friday_rehearsal import RehearsalGoal
 
 
 class ChatTurn(BaseModel):
@@ -32,9 +33,10 @@ class ChatAnswer(BaseModel):
     model_config = ConfigDict(extra="forbid")
     reply: str = Field(min_length=1, max_length=1600)
     evidence_ids: list[str] = Field(default_factory=list, max_length=8)
-    next_screen: Literal["NONE", "review", "document", "money", "activity", "settings", "plan", "dashboard", "statements"] = "NONE"
+    next_screen: Literal["NONE", "review", "document", "money", "activity", "settings", "plan", "dashboard", "statements", "rehearsal"] = "NONE"
     visual_request: Literal['NONE','SPENDING','MONTHLY','PLAN'] = 'NONE'
     plan: MoneyPlanDraft | None = None
+    rehearsal_goal: RehearsalGoal | None = None
 
 
 def _check_cashflow_amounts(reply, cashflow):
@@ -155,6 +157,18 @@ bank balances, investment advice, model training, automatic cancellations or pay
 Use next_screen=plan for a plan, dashboard for saved spending, statements for
 upload, settings only for privacy. Do not direct ordinary users to sandbox rules.'''
 
+INSTRUCTION += ''' A one-off purchase/affordability question is a financial
+REHEARSAL, not a monthly reduction goal. Set rehearsal_goal with the explicitly
+stated purchase amount, purchase timing, income delay/shock and protected
+categories; use null amount if absent. Set plan=null and next_screen=rehearsal.
+Do not calculate the result or pronounce the purchase affordable. Friday will
+ask for opening cash and a protected buffer, then repeat historical calendar
+scenarios and independently test each day. Interpretation alone does not use
+records or confirm affordability. Defaults for the editable rehearsal proposal:
+purchase in 7 days, income 7 days late and 20% lower, essential costs 10% higher,
+max flexible cut 25%. All are test assumptions, not facts about the user.
+For questions that are not one-off decisions, rehearsal_goal=null.'''
+
 
 def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:
     if planner.mode == "LOCAL_RULES":
@@ -192,8 +206,14 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
         candidates=re.findall(r'(?<![\w.])\d[\d,]*(?:\.\d{1,2})?(?![\w.])',request.message)
         if Decimal(answer.plan.target_reduction_inr) not in {Decimal(n.replace(',','')) for n in candidates}:
             raise ValueError('Planning target is not explicitly present in the current request')
+    if answer.rehearsal_goal and answer.rehearsal_goal.purchase_amount_inr is not None:
+        candidates=re.findall(r'(?<![\w.])\d[\d,]*(?:\.\d{1,2})?(?![\w.])',request.message)
+        if Decimal(answer.rehearsal_goal.purchase_amount_inr) not in {Decimal(n.replace(',','')) for n in candidates}:
+            raise ValueError('Rehearsal purchase amount is not explicitly present in the current request')
     amount_context={'statements':statements or {},'diary':diary or {},'cashflow':cashflow or {}}
     if answer.plan:amount_context['requested_goal_inr']=answer.plan.target_reduction_inr
+    if answer.rehearsal_goal and answer.rehearsal_goal.purchase_amount_inr is not None:
+        amount_context['requested_purchase_inr']=answer.rehearsal_goal.purchase_amount_inr
     if request.include_statements and statements:
         _check_cashflow_amounts(answer.reply,amount_context)
     elif request.include_diary and diary:

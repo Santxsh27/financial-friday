@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 15 October 2026; API and visual-planning interface `0.26.0`. New teammates: read
+Updated 15 October 2026; financial rehearsal interface `0.27.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -37,6 +37,25 @@ diary/runway and artificial payments remain optional under **My account → More
    without Gemini for manual scenarios.
 7. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
    its confirmation: statement history, diary and forecasts clear together.
+
+## Try the new main decision feature
+
+1. After saving an included **bank-account** statement, choose **What if?**.
+2. Optionally ask **“Can I buy a laptop for INR 15000 in 7 days if salary is
+   10 days late? Protect transport.”** Choose **Let Gemini set this up**. Only
+   the question goes to the model; review the proposed fields.
+3. Enter the selected account's available cash, your protected buffer and the
+   purchase amount. Use fictional numbers when exploring an artificial statement.
+4. Expand **Review the stress test & protected costs**. Check start date, horizon,
+   delay, income reduction and essential-cost increase. Confirm the replay
+   assumptions, then **Rehearse this decision**.
+5. Compare the original gap, smaller-purchase limit, later date and flexible-cost
+   option. **Use this scenario input** changes an input, not a bank payment;
+   recalculate to check it. Exact figures are below the daily chart.
+6. Optional **Explain these results with Gemini** shares checked result totals,
+   dates and coverage warnings only. It cannot change the computed result.
+
+These are historical-template replays, not predictions. No real money moves.
 
 Demo bounds: INR; PDF 4 MB/1–6 pages/up to 200 extracted rows; documented CSV
 schema/1 MB/up to 500 rows. Ten imports/2,000 normalized rows total. Unlock PDFs locally;

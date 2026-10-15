@@ -9,13 +9,23 @@ calculates monthly spending, categories, identified income and repayments. Revie
 the interpretation, save the normalized rows, and optionally ask Friday for a
 practical next step using aggregate context only. Raw PDFs/CSVs are not archived.
 
-The main journey is **Statements → Review → Spending → Friday**. One month is
+The main journey is **Statements → Review → Spending → Friday**. The selected
+Soft Studio interface puts a friendly, live-on-request Friday chat beside the
+desktop workspace, with a dedicated chat page on phones. A top-right avatar
+menu opens the account, spending and privacy pages. Example charts are labelled
+illustrations, not seeded financial history; saved transactions are searchable.
+Financial context sharing remains explicit and off by default. The avatar uses
+initials; no additional Google profile-photo permission has been requested.
+
+One month is
 enough to begin; multiple supported exports can cover six months or more within
 the demo limits. Salary is not confused with generic credits, borrowing or
 refunds. Card repayments and identified own-account transfers are kept out of
 new spending. Overlapping rows are flagged, never silently deleted. Imports can
 be reversibly excluded/restored. **Account** shows the verified Google email;
-returning users may already have a Google sign-in session.
+returning users may already have a Google sign-in session. The account menu
+explains how to clear Friday’s IAP sign-in; Google may automatically reuse its
+browser session, so this is not advertised as signing out of all Google apps.
 
 This is not a bank feed, a complete asset/debt statement, a credit score or a
 guarantee of saving money. Missing accounts, partial periods and wrong labels
@@ -165,7 +175,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **544 tests ran, 543 passed, one optional
+Latest local checks, 15 October 2026: **549 tests ran, 548 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -179,7 +189,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **544 ran, 521 passed, twenty-three optional skips**. The statement-first
+Docker: **549 ran, 526 passed, twenty-three optional skips**. The statement-first
 release adds 15 statement tests, one verified-profile test and two gateway-error
 tests, including real PDF
 text parsing, source-value validation, tenant isolation, exact totals, replay,

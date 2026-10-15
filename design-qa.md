@@ -1,87 +1,63 @@
-# Everyday interface design QA
+# Soft Studio design QA
 
-11 October 2026. final result: passed for the scoped redesign.
-No unresolved P0/P1/P2 findings in inspected flows. Not a certification of
-accessibility, usability or pixel-identical reproduction.
+Source visual truth: selected **Option 1**, `exec-9aa10f5e-b7a7-4abf-802e-96fd1aa2de29.png` in the Codex generated-images folder.
 
-## Matched comparison
+Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial QA workspace; normal Docker website remains on8090 with its records preserved.
 
-The exact selected third Everyday image is the target:
-`/Users/santosh/.codex/generated_images/01a08bb7-be0c-7b52-b8d7-6822ccaa0e37/exec-c25ceab0-05fe-4e97-8903-f88bbf2d2757.png`.
+## Comparison history
 
-Reference and running Docker implementation at `http://localhost:8090/#home`
-were inspected together in one paired-image input at **1487 × 1058 CSS pixels**,
-with matching screenshot PNG dimensions and unchanged browser zoom. Tablet was
-864 × 1024; phone was 390 × 844. Full-page responsive captures exceed viewport height.
-Evidence folder:
-`/Users/santosh/Documents/Codex/2026-09-10/ok-this-fraudlens-replay-or-watever-3/friday-redesign-1011/`.
-Files: `everyday-desktop.png`, `everyday-mobile-final.png`, `everyday-tablet.png`,
-`everyday-documents.png`, `everyday-bills.png`, `everyday-rules.png`,
-`everyday-activity.png`, `everyday-success.png`, `everyday-held.png`.
+### Initial pass — blocked
 
-## Five fidelity surfaces
+- Source1487×1058; CSS viewport1487×1058, density1. Initial normal browser capture was1403px wide despite that CSS viewport, so it is not a valid full-frame comparison. A read-only CDP capture produced the full1487×1058 frame.
+- Evidence: `/private/tmp/friday-studio-v1.png` (invalid cropped capture), `/private/tmp/friday-studio-v2.png` (normalized full frame), `/private/tmp/friday-studio-comparison-v2.jpg` (source left / implementation right).
+- State: first use, light theme. Source uses fictional Asha and an open profile menu; implementation has the honest local identity and a closed menu. Account-open state will be captured separately.
+- [P1] Original logo node was a sibling of the brand text, so rebuilding the header removed it. Fixed by reusing both nodes in a single brand group; present in v2.
+- [P2] Suggested questions sat at the bottom of the tall conversation rather than next to the welcome. Fixed by placing them inside the conversation and restoring them on New chat; present in v2.
+- [P2] Hero companion is smaller than selected reference; increase the hero asset slot without obscuring copy.
+- [P2] Primary upload control and example-row text are smaller than the reference; tune product type/spacing.
+- Semantic icon refinements are needed for grocery, transport and food rows.
 
-- Layout/spacing: horizontal navigation, bill-first left column, navy assistant
-  dock, grouped rules, supporting tasks and recent activity preserve the reference.
-  Removed inherited duplicate companion; corrected hero/nav spacing. Mobile bill
-  references initially collapsed: fixed with an explicit grid. Final phone bill-copy
-  width is 236 px; phone/tablet document widths match their viewports.
-- Typography: self-hosted variable Inter, navy headings and muted body copy.
-  Clear headline/section/detail hierarchy; longer references wrap normally.
-- Colour/surfaces: ivory/white, peach actions, navy dock, pastel icon tiles.
-  Dark text on peach improves contrast over the mock's white button text. Green
-  completion, red holds and amber review retain explicit text labels.
-- Images/icons: original transparent orb/windowsill/aperture assets; official
-  Feather icons with consistent stroke treatment. Assets loaded successfully;
-  font/icons/licenses are packaged locally. Orb motion is decorative, not a
-  microphone or evidence of active bank monitoring.
-- Interaction/content: actual tenant records replace mock values. Bill selection
-  refreshes the record. Home preview and receipt reopening remain read-only.
-  No unsupported email connector or bank connection is advertised. Evidence stays
-  expandable, and document, bill, activity, rules and spending controls remain wired.
+## Fidelity surfaces
 
-## Functional verification
+- Fonts: packaged FridayInter variable font; hierarchy and line breaks follow the target. Button and category-label scale still needs tuning.
+- Layout: same warm page, horizontal header, welcome left and tall chat right. Mobile and tablet checks are pending.
+- Colors: ivory/lavender/peach/mint mapped to theme tokens; dark mode still requires visual testing. Dark primary-button text is intentional for contrast.
+- Assets: original team mark preserved; matching generated lavender buddy with real PNG alpha, not CSS art. Feather library icons reused.
+- Copy: PDF/CSV only, not the mock’s unsupported image upload. Sample bars are explicitly illustrative, never saved financial history. Chat scope remains opt-in totals, not transaction-level memory.
 
-Inspected Home, bill review, document upload, rules, Activity filtering and saved
-successful receipt reopening. The historical ₹1,783.41 receipt retains one live
-Gemini planning call, journal outcome and five recorded stages. Reopening does not
-pay again. Blank Home submission opens the request form without starting payment.
-Help opens/closes. A historical provider-change hold displays a red stopped outcome
-and no new payment. Spending retains its temporary-processing consent. The shared
-money heading was made neutral so it accurately covers both bills and spending.
-Browser error log is empty in the inspected run.
+## Open checks
 
-Loading/empty/unavailable states are explicit. No timer turns stages green. Tests
-cover preview failure, financial authority, asset traversal and cloud authentication.
-Hidden gates, focus outlines, semantic native controls and reduced-motion/motion-off
-support remain; original file/privacy notices and execution consent are retained.
-No saved permission was changed by visual QA. The existing Motion control was
-tested: motion-off yields `animation-name: none`, then restored to on.
+- Upload → unsaved review → label changes → save → Spending, search and reversible import exclusion.
+- Account menu, keyboard dismissal, context dialog, chat busy/error paths, appearance and reduced motion.
+- No new model access or production financial authority.
 
-Native: 307 tests, 306 passes / one optional skip. Isolated Docker: 307 tests,
-295 passes / twelve optional skips. Tooling: eleven passes. No failures.
+### Corrected pass — passed
 
-## Iterations and deliberate differences
+- Source normalized from1487×1058 to1403×998; implementation captured at CSS1403×998, density1, same light first-use state with the profile menu open. The fictional Asha identity is intentionally replaced by the real local-demo identity. No personal record is used as a visual fixture.
+- Full-view evidence: `/private/tmp/friday-studio-comparison-final.jpg`, implementation `/private/tmp/friday-studio-final-desktop.jpg` (also `docs/design/soft-studio-desktop.jpg`), source `docs/design/soft-studio-reference.png`.
+- Focused typography/CTA evidence: `/private/tmp/friday-studio-focus-final.jpg`. The hero type scale/leading, section rhythm, companion size and question placement were corrected after the initial pass. The packaged variable font is visually close, not an assertion of pixel-identical generated lettering.
+- Feather grocery/transport/food/upload icons now have appropriate semantic roles and inherit accessible light/dark foreground colors. They are library assets, not handmade SVG art.
+- Additional browser checks found a null legacy header-status reference. Both required status nodes are preserved hidden; a clean startup now has no recorded browser errors.
+- Dark-mode black icons were corrected. Phone width390 has content width390, theme target44px, reachable account/settings and a dedicated real chat view. Motion emulation reports no companion animation under reduced motion; test emulation was reset.
+- Browser flow: a new six-row artificial CSV was uploaded in the separate QA workspace, previewed unsaved, relabelled, saved, displayed as₹45,000 identified income/₹17,500 spending/₹5,000 loan repayments;₹50,000 borrowing was not counted as earned income. Search found exactly one grocery row. Reversible exclusion was checked without deleting it. The normal local and hosted owner histories were not used for this fixture.
+- Context dialog starts unchecked, changes the visible sharing indicator, clears page chat and does not itself call Gemini. There is exactly one chat input. Local no-model error handling clears busy state and does not substitute a fabricated reply. Live hosted Gemini is a separate post-deploy check.
+- Keyboard profile navigation, dialog opening/closing and appearance controls were checked. The browser automation occasionally timed out after successfully opening a native dialog; subsequent fresh UI state confirmed the action. No app fix was inferred from the automation timeout alone.
 
-Desktop pass removed duplicate hero content and protected intro copy from an old
-async updater. Second pass fixed header/hero spacing and Bills navigation. Responsive
-pass fixed bill-reference and receipt columns. Final matched comparison confirms the
-selected hierarchy. Actual counts, consent copy, focus outlines and original generated
-assets differ from the static mock deliberately. Detailed crops were unnecessary:
-full-frame matched comparison and separate responsive/task captures exposed the
-identified defects clearly.
+## Expected differences and residual limits
 
-The full local dependency rebuild hit a package-registry read timeout. Local QA
-used a UI-only overlay on the existing tested Docker runtime, preserving dependencies
-and volumes. Production uses the normal clean-source Cloud Build. Real payments,
-voice, new connectors, extensive assistive-technology testing and judge enrollment
-remain outside this UI release.
+- The mock's unsupported image statement upload is correctly reduced to PDF/CSV.
+- Initials are shown instead of inventing a Google profile photograph/name; no OAuth scope was expanded. Google cookie clearing is explained honestly, not represented as global Google logout.
+- Higher-contrast dark primary-button text replaces low-contrast white-on-coral. Source-colour values are represented by CSS tokens, not a promise of identical capture colour profiles.
+- The mascot is matching generated artwork, not a cropped screenshot. Handwritten decorative annotation and accent swishes are omitted (P3).
+- On narrow screens, chat has a dedicated page and quick launcher rather than squeezing two desktop columns. Long transaction tables scroll inside their region. This is not full WCAG certification or exhaustive device testing.
+- No new forecasting model, transaction-level chat retrieval, bank feed, profit guarantee or financial-action authority was added by this redesign.
 
-## Live handoff
+## Final checklist
 
-The protected zero-traffic candidate loaded actual cloud records (one eligible bill,
-seven needing verification), all home assets and the exact fresh bill review.
-`financial-friday-web-everyday1011` was promoted to 100% traffic. The original live
-URL was reloaded and verified with no browser errors. Live evidence:
-`everyday-live.png` in the folder above. The API, IAP and permissions are unchanged.
-Temporary responsive viewport overrides were reset before handoff.
+- [x] Typography, spacing, colours, image fidelity and meaningful copy checked against the selected image.
+- [x] Initial P1/P2 visual and startup issues corrected and recaptured.
+- [x] Primary statement/account/chat flows checked in the browser.
+- [x] Mobile, dark theme, explicit context choice and reduced motion checked.
+- [x] Native549/548passed/1skip; Docker549/526passed/23skips; tooling24passed. These are developer correctness tests, not independent financial efficacy measurements.
+
+final result: passed

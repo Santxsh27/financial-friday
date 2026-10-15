@@ -4,10 +4,12 @@ from fastapi import HTTPException
 from fastapi.responses import FileResponse
 
 ICONS = frozenset({"arrow-right", "chevron-down", "file-text", "shield", "user",
-                   "book-open", "bar-chart-2", "alert-circle", "clock", "check-circle"})
+                   "book-open", "bar-chart-2", "alert-circle", "clock", "check-circle",
+                   "home", "upload", "shopping-cart", "coffee", "truck", "log-out"})
 ASSETS = {
     "friday-jade-orb.png": "image/png",  # Historical bookmarked asset.
     "friday-orb.png": "image/png",
+    "friday-soft-studio-buddy.png": "image/png",
     "friday-brand.png": "image/png",
     "friday-team-logo.png": "image/png",
     "friday-windowsill.png": "image/png",

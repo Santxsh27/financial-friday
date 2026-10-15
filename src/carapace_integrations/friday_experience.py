@@ -289,12 +289,16 @@ def enhance_friday_html(html: str) -> str:
     from .friday_inline_icons import INLINE_ICON_CSS
     from .friday_diary_ui import DIARY_CSS, DIARY_JS
     from .friday_statements_ui import STATEMENTS_CSS, STATEMENTS_JS
+    from .friday_studio_ui import STUDIO_CSS, STUDIO_JS
     # One active design system, not another override over historical themes.
     html = re.sub(r"<style>.*?</style>", "", html, count=1, flags=re.S)
     cashflow_ui=CASHFLOW_JS.replace("show('home');const consent=$('friday-chat-cashflow');consent.focus();", "show('coach');const consent=$('friday-chat-cashflow');consent.closest('details').open=true;consent.focus();")
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + cashflow_ui + DIARY_JS + STATEMENTS_JS + FLOW_JS + "route(false);", 1)
-    styles=EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + BUDDY_CSS + CASHFLOW_CSS + DIARY_CSS + STATEMENTS_CSS + INLINE_ICON_CSS + FLOW_CSS + "</style>")
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + cashflow_ui + DIARY_JS + STATEMENTS_JS + STUDIO_JS + FLOW_JS + "route(false);", 1)
+    styles=EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + BUDDY_CSS + CASHFLOW_CSS + DIARY_CSS + STATEMENTS_CSS + INLINE_ICON_CSS + FLOW_CSS + STUDIO_CSS + "</style>")
     styles=styles.replace('.everyday-icon-tile img','.everyday-icon-tile :is(img,svg)').replace('.everyday-document-action>img','.everyday-document-action>:is(img,svg)')
+    # The statement-first UI refreshes its own views on entry. Do not keep
+    # polling the hidden, historical bill inbox every five seconds locally.
+    html=html.replace("setInterval(refreshInbox,5000);refreshInbox();", "")
     return (html.replace("</head>", styles + "</head>", 1)
             .replace('<main class="shell layout">', EXPERIENCE_NAV + '<main class="shell layout">', 1)
             .replace("    let watching=false;", compact_js + "\n    let watching=false;", 1))

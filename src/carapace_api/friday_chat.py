@@ -51,4 +51,15 @@ def reply_to_user(service, review, bank, tenant, request):
         result['statement_visuals']={'source_revision':view['revision'],
             'categories':view['summary']['categories'],'monthly':view['summary']['monthly'],
             'warnings':view['summary']['warnings']}
+    if result.get('checkup_action','NONE')!='NONE' and statements:
+        from carapace_core.friday_checkup import prepare_enquiry
+        checkup=view['checkup']
+        selected=result.get('finding_id')
+        finding=next((f for f in checkup['findings'] if f['finding_id']==selected),None) if selected else next((f for f in checkup['findings'] if not f['reviewed']),None)
+        result['checkup_view']={'scope':checkup['scope'],'source_revision':view['revision'],
+            'workspace_generation':view['workspace_generation'],'action':result['checkup_action'],
+            'finding_id':finding['finding_id'] if finding else None,
+            'draft':prepare_enquiry(finding) if finding and result['checkup_action']=='PREPARE_ENQUIRY' else None}
+        if not finding and result['checkup_action']=='PREPARE_ENQUIRY':
+            result['reply']='There is no open checkup finding to fill an enquiry from. You can review Transactions or ask me for a general unsent message template.'
     return result

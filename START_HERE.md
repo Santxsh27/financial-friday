@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 15 October 2026; financial rehearsal interface `0.27.0`. New teammates: read
+Updated 16 October 2026; automatic checkup interface `0.28.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -40,7 +40,8 @@ diary/runway and artificial payments remain optional under **My account → More
 
 ## Try the new main decision feature
 
-1. After saving an included **bank-account** statement, choose **What if?**.
+1. Optional advanced tool: after saving an included **bank-account** statement,
+   open **My account → More financial tools → Decision rehearsal**.
 2. Optionally ask **“Can I buy a laptop for INR 15000 in 7 days if salary is
    10 days late? Protect transport.”** Choose **Let Gemini set this up**. Only
    the question goes to the model; review the proposed fields.

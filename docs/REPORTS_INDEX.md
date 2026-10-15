@@ -1,6 +1,6 @@
 # Financial Friday — documentation and evidence index
 
-Updated 15 October 2026, source **0.27.0**. Deployed versions are listed below and
+Updated 16 October 2026, source **0.28.0**. Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.

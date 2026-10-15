@@ -84,7 +84,7 @@ CHAT_JS = r"""
           if(result.context_receipt?.statement_totals==='EMPTY')card.append(element('small','No reviewed statement rows are saved yet. Add a statement, review it and save before asking about your own spending.'));
           document.dispatchEvent(new CustomEvent('friday:assistant-analysis',{detail:result}));
           chatHistory.push({role:'user',text:message},{role:'assistant',text:result.reply});chatHistory=chatHistory.slice(-8);
-          chatStatus.textContent='Reply ready · Gemini on Google Cloud. Guidance only; no action executed.';chatStatus.title=result.mode+' · '+result.model;
+          chatStatus.textContent=result.checkup_view?(result.checkup_view.draft?'Enquiry prepared · unsent.':'Money view ready · Gemini + exact checks.'):'Reply ready · Gemini on Google Cloud. Guidance only; no action executed.';chatStatus.title=result.mode+' · '+result.model;
         }catch(error){if(sentGeneration!==chatGeneration)return;chatMessage('assistant','I couldn’t get a live Gemini reply. No payment or other action was performed. You can still review saved evidence.');chatStatus.textContent='Live chat unavailable. No canned financial answer was substituted.';}
         finally{chatBusy=false;button.disabled=false;chatClear.disabled=false;chatConsent.disabled=false;cashflowConsent.disabled=false;if($('friday-chat-diary'))$('friday-chat-diary').disabled=false;if($('friday-chat-statements'))$('friday-chat-statements').disabled=false;command.setAttribute('aria-busy','false');}}
       // Intercept the old bill form before its legacy execution handler runs.

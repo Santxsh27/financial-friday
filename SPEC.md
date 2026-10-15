@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
-Updated **15 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.27.0`. Actual deployed source and
+Updated **16 October 2026**. This document replaces the mixed historical product
+specifications. Current code version is `0.28.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -12,15 +12,35 @@ For the detailed rationale, algorithms and trust boundaries, read
 Financial Friday is a statement-first money buddy. The user imports supported
 INR bank/card exports, reviews the proposed interpretation, sees exact categories
 and monthly comparisons, then optionally shares aggregate context with Gemini.
-The main interface is Home, Statements, Spending, Friday and Account. The existing
+The main interface is Home, Statements and My money, with Friday chat alongside
+and Account at the top right. The existing
 visual system is retained; earlier forms live under More tools rather than Home.
 Its optional obligation inbox joins saved document claims, exact artificial
 provider identities, saved constraints and recorded outcomes. Gemini prepares the
 next step; independent checks determine what can proceed. The intended outcome
 is a completed allowed task or useful verification assistance, not just an alert.
 
-The default consumer workflow is **read-only guidance, visual counterfactual
-planning and claim reconciliation**. Typed Gemini goals feed a bounded integer
+The default consumer workflow is **automatic statement checks, visual findings
+and a prepared next step**. The server runs seven bounded checks on saved history:
+repeated entries, regular payments, changed regular amounts, unusual expense
+amounts, fees, unclear credits and exact spending-change attribution. Findings
+retain source-file/row references. Exact-description recurring series need at
+least three consecutive months, one occurrence per month and 20–40 day gaps.
+Amount increases require at least 15% and INR 100 above the prior median.
+Outliers need six earlier account/category observations and must exceed the
+maximum of three times median, median plus six median absolute deviations, and
+median plus INR 1,000. These are review heuristics, not calibrated fraud scores.
+Ambiguous recurring series are suppressed; duplicate candidates remain counted.
+
+The server prepares unsent enquiries from current source evidence. A separate
+revision/generation-bound acknowledgement stores only reviewed/open status.
+No source transaction is changed. Gemini selects typed visuals or draft requests;
+server code validates every selected finding against separately opted-in context.
+Derived context excludes transaction descriptions, account nicknames and source
+row/file identities. No personal model is trained. Monthly comparisons attribute
+supplied amounts, not proven full-month behaviour. Financial planning is optional.
+
+Typed Gemini goals feed a bounded integer
 allocation engine; a separate arithmetic/constraint checker verifies its result.
 Essentials and recorded loan repayments stay fixed. A selected source month,
 category-cut caps and income-drop assumptions are shown rather than hidden in
@@ -34,7 +54,7 @@ payment rules remain a separate artificial execution concern, not onboarding.
 
 ### Financial rehearsals
 
-The main decision workflow is **goal → explicit cash/buffer → review replay
+The optional advanced decision workflow is **goal → explicit cash/buffer → review replay
 assumptions → exact daily constraints → calculated alternatives → optional Gemini
 explanation**. A single selected bank account prevents accidentally treating
 several accounts as one cash pool. Each of up to six supplied months is replayed

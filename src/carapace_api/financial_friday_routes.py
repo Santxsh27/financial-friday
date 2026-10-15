@@ -96,6 +96,7 @@ def register_financial_friday_routes(application, service, authenticate):
     service.diary = FridayDiary(service)
     from .friday_portfolio import FridayPortfolio
     from carapace_core.friday_portfolio import SaveStatement, StatementVisibility, summarize_statements
+    from carapace_core.friday_checkup import ReviewFinding, FindingRequest, prepare_enquiry
     service.portfolio = FridayPortfolio(service)
 
     class PrepareStatement(BaseModel):
@@ -119,6 +120,22 @@ def register_financial_friday_routes(application, service, authenticate):
     def statement_visibility(payload: StatementVisibility,tenant: TenantContext=Depends(authenticate)):
         try:return service.portfolio.set_visibility(tenant.tenant_id,payload)
         except ValueError as error:raise HTTPException(409,str(error)) from error
+
+    @application.post('/v1/friday/statements/findings/review',tags=['friday-statements'])
+    def statement_finding_review(payload: ReviewFinding,tenant: TenantContext=Depends(authenticate)):
+        try:return service.portfolio.review_finding(tenant.tenant_id,payload)
+        except ValueError as error:raise HTTPException(409,str(error)) from error
+
+    @application.post('/v1/friday/statements/findings/enquiry',tags=['friday-statements'])
+    def statement_finding_enquiry(payload: FindingRequest,tenant: TenantContext=Depends(authenticate)):
+        view=service.portfolio.view(tenant.tenant_id)
+        if (view['revision'],view['workspace_generation'])!=(payload.expected_revision,payload.workspace_generation):
+            raise HTTPException(409,'Statement history changed; reload first')
+        finding=next((f for f in view['checkup']['findings'] if f['finding_id']==payload.finding_id),None)
+        if not finding:raise HTTPException(409,'Finding is not in this current analysis')
+        return {'draft':prepare_enquiry(finding),'finding_id':payload.finding_id,
+                'source_revision':view['revision'],'workspace_generation':view['workspace_generation'],
+                'sent':False,'money_moved':False}
 
     @application.post('/v1/friday/statements/prepare',tags=['friday-statements'])
     async def statement_prepare(payload: PrepareStatement,tenant: TenantContext = Depends(authenticate)):

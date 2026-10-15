@@ -37,6 +37,8 @@ class ChatAnswer(BaseModel):
     visual_request: Literal['NONE','SPENDING','MONTHLY','PLAN'] = 'NONE'
     plan: MoneyPlanDraft | None = None
     rehearsal_goal: RehearsalGoal | None = None
+    checkup_action: Literal['NONE','FINDINGS','REGULAR_PAYMENTS','SPENDING_CHANGE','PREPARE_ENQUIRY'] = 'NONE'
+    finding_id: str | None = Field(default=None, pattern=r'^finding_[a-f0-9]{24}$')
 
 
 def _check_cashflow_amounts(reply, cashflow):
@@ -169,6 +171,23 @@ purchase in 7 days, income 7 days late and 20% lower, essential costs 10% higher
 max flexible cut 25%. All are test assumptions, not facts about the user.
 For questions that are not one-off decisions, rehearsal_goal=null.'''
 
+INSTRUCTION += ''' Friday automatically checks saved statements before this chat.
+automatic_checkup contains computed review candidates and opaque finding IDs,
+never confirmed fraud. For checking unusual/repeated entries, use
+checkup_action=FINDINGS. For regular payments use REGULAR_PAYMENTS. To explain
+what changed between supplied months use SPENDING_CHANGE. For a verification
+message, bank enquiry or evidence pack use PREPARE_ENQUIRY; choose a supplied
+finding_id when relevant, otherwise null selects the first open finding.
+This requests a read-only visual or an UNSENT, source-filled draft from the
+server. Do not invent its details, claim it was sent, a charge cancelled, a
+transaction corrected or money recovered. Do not ask the user to type figures
+already in the shared totals. Keep reply to 1-3 short sentences; the app presents
+the chart and evidence. Use next_screen=dashboard, visual_request=NONE and no
+plan/rehearsal for these checkup tasks. No context sharing means no personal
+findings; still give useful general guidance. Never call this model training or
+a fraud probability. The user can mark a finding reviewed using an app button;
+this does not change amounts, confirm legitimacy or grant you write authority.'''
+
 
 def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:
     if planner.mode == "LOCAL_RULES":
@@ -224,6 +243,14 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
     if request.include_cashflow and cashflow: allowed_ids.add('cashflow:current')
     if request.include_diary and diary: allowed_ids.add('diary:current')
     if request.include_statements and statements:allowed_ids.add('statements:current')
+    checkup=statements.get('automatic_checkup',{}) if request.include_statements and statements else {}
+    if checkup:allowed_ids.add('checkup:current')
+    if answer.finding_id and answer.finding_id not in {f['finding_id'] for f in checkup.get('findings',[])}:
+        raise ValueError('Model selected an unavailable finding')
+    if answer.checkup_action!='NONE' and (answer.plan or answer.rehearsal_goal):
+        raise ValueError('Choose one financial workflow, not conflicting proposals')
+    if answer.plan and answer.rehearsal_goal:
+        raise ValueError('Choose one planning workflow')
     if any(identity not in allowed_ids for identity in answer.evidence_ids):
         raise ValueError("Model cited an unavailable evidence reference")
     clean_reply = redact_for_model(answer.reply)

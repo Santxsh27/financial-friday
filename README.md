@@ -1,35 +1,41 @@
 # Financial Friday
 
-**Understand your past. Rehearse your next money decision.**
+**One statement. Less admin. A clearer next step.**
 
-### New main capability: financial rehearsals
+### Automatic statement checkup
 
-“Can I buy a laptop next week and keep my buffer if payday is late?” Friday now
-turns that question into editable assumptions, replays up to six supplied months
-as separate calendar scenarios, and tests every day rather than just the month-end
-total. It shows where the original plan breaks and computes a smaller-purchase
-limit, a later date and the smallest uniform flexible-cost reduction that fits
-the entered constraints. Essentials and repayments stay protected.
+Upload and review a supported statement once. Friday automatically checks repeated
+entries, recurring payments, regular-amount increases, unusual expense amounts,
+fees and unclear credits. It calculates exactly which categories explain the
+change between consecutive supplied months. **My money** presents the result as
+charts and a short review queue, not another questionnaire.
 
-Open **What if?** after saving a reviewed bank statement. Enter available cash,
-your chosen buffer and a purchase amount; these inputs are not inferred bank
-balances. Gemini can interpret the goal and, with a separate click, explain the
-checked result. The exact engine runs without AI or financial execution. Charts
-show a lower envelope across conditional replays, not a predicted balance or an
-affordability approval. Missing/new bills and the end of the horizon matter.
+Friday also does the follow-through: open a finding to see its source rows and
+prepare a downloadable, **unsent bank enquiry** with the dates and amounts already
+filled in. Mark reviewed/reopen persists a reversible review status; it never
+changes a transaction or declares it legitimate. Chat can select the appropriate
+visual and prepare the same source-grounded draft. Gemini receives only separately
+opted-in aggregates and derived findings, not transaction descriptions or account
+aliases. No bank credentials or additional OAuth permissions are required.
 
-See the [financial rehearsal specification and verification](docs/FINANCIAL_REHEARSAL_0270.md).
-This is an engineered integration of known techniques, not a claim of a new
-optimisation theorem, world-first financial assistant or guaranteed hackathon award.
+The engine uses exact-description grouping, temporal regularity checks, a median
+and median-absolute-deviation outlier threshold, integer-paise attribution and
+revision-bound evidence IDs. These are explainable review heuristics, **not a
+trained fraud model, fraud probability or proof of novelty**. The test CSV is
+[artificial three-month history](examples/friday-checkup-artificial.csv): it
+produces five candidates and two regular-payment patterns without any precomputed
+answer. Generalisation to real bank exports and false-warning rates still needs
+independent validation.
 
 Financial Friday is a private, **statement-first financial buddy**. Instead of
 entering every purchase, upload supported INR bank or credit-card statements.
-Google Gemini proposes source-linked transaction interpretations; exact code
+Google Gemini proposes source-linked PDF interpretations; CSV reading uses exact
+parsing and local interpretation rules. Exact code
 calculates monthly spending, categories, identified income and repayments. Review
 the interpretation, save the normalized rows, and optionally ask Friday for a
 practical next step using aggregate context only. Raw PDFs/CSVs are not archived.
 
-The main journey is **Statements → Review → Spending → What if? → Checked options**. The selected
+The main journey is **Add statement → Review/save → Automatic checkup → Visual result → Prepared next step**. The selected
 Soft Studio interface puts a friendly, live-on-request Friday chat beside the
 desktop workspace, with a dedicated chat page on phones. A top-right avatar
 menu opens the account, spending and privacy pages. Example charts are labelled
@@ -43,6 +49,12 @@ and grounded companion shadow are restored. For a first try, use the
 automatically added to your account.
 
 ### New: ask a goal, inspect a checked plan
+
+Budget plans and daily financial rehearsals remain optional advanced tools, not
+mandatory onboarding. The former **What if?** item and its large home-page form
+invitation are removed from the primary navigation. Rehearsals still require an
+explicit opening cash/buffer because statements do not establish a live balance.
+See [the advanced rehearsal contract](docs/FINANCIAL_REHEARSAL_0270.md).
 
 Share statement totals in the chat, then try: **“Help me reduce spending by INR
 1000 per month. Protect transport and test 20% lower income.”** Gemini interprets
@@ -227,7 +239,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **585 tests ran, 584 passed, one optional
+Latest local checks, 16 October 2026: **599 tests ran, 598 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -241,7 +253,11 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **585 ran, 561 passed, twenty-four optional skips**. The statement-first
+Previous Docker release (0.27.0): **585 ran, 561 passed, twenty-four optional skips**.
+The current native suite adds 14 automatic-checkup tests covering source links,
+stable IDs, insufficient history, exact attribution, tenant isolation, stale
+reviews, reversible acknowledgements, Firestore failure, aggregate-only Gemini
+context and real source-filled enquiry preparation. The statement-first
 release adds 15 statement tests, one verified-profile test and two gateway-error
 tests, including real PDF
 text parsing, source-value validation, tenant isolation, exact totals, replay,

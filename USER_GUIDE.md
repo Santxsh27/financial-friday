@@ -2,13 +2,28 @@
 
 ## Start here: statements, not one receipt at a time
 
-On desktop, the main navigation is **Home · Statements · Spending · What if?**, with a
+On desktop, the main navigation is **Home · Statements · My money**, with a
 Friday conversation panel on the right. On phones, **Friday** opens the chat
 page. Your initials/name in the top right opens the account menu. Older
 workflows below are secondary tools under **My account → More financial tools**,
 not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
 
-**What if?** is Friday's decision lab. After reviewing and saving a bank-account
+**My money** automatically shows an overview, **Needs a look**, **Regular payments**
+and **Transactions** after saving. Overview has spending and change-attribution
+charts with exact figures. Needs a look contains review candidates, not fraud
+verdicts. Expand a finding → **Prepare bank enquiry** → review the unsent draft →
+**Download enquiry**. Friday has done the copying and assembly; it does not send
+a complaint. **Mark reviewed** acknowledges your review; **Reopen finding** undoes
+it. Neither changes a statement, cancels a charge or proves legitimacy.
+
+With **Use my saved statement totals and derived checkup findings with Gemini**
+enabled for the conversation, try **“Show my regular payments”**, **“What changed
+between my statement months?”**, or **“Prepare an enquiry for the first finding.”**
+Friday opens the relevant view and, for the last task, prepares a real unsent
+artifact. No transaction descriptions or account aliases enter that chat context.
+
+The optional **Decision rehearsal** is Friday's advanced lab, accessible from
+the account's additional tools. After reviewing and saving a bank-account
 statement, enter the cash available at the start, a buffer to protect and a
 one-off purchase amount. Review the timing/stress assumptions and choose
 **Rehearse this decision**. Expect a daily cash-floor chart and calculated
@@ -28,7 +43,7 @@ call and saves nothing. See [the full scenario rules and example](docs/FINANCIAL
    repayment and spending labels. Incorrect dates/amounts need a clearer export;
    nothing is automatically paid or archived.
 4. Confirm review and choose **Save & see my spending**. Expect exact category
-   bars, income/outgoings by month and coverage warnings. An identical file is
+   charts, automatic pattern checks and a short source-linked review queue. An identical file is
    not added twice. Different overlapping files remain counted with a warning.
 5. **Manage imports → Exclude from analysis** removes a mistaken/overlapping
    import from calculations without deleting it. **Restore to analysis** reverses

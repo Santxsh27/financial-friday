@@ -3,6 +3,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 import json
 from carapace_core.friday_portfolio import summarize_statements
+from carapace_core.friday_checkup import build_checkup, checkup_model_context
 from .friday_privacy import privacy_generation
 
 
@@ -21,8 +22,11 @@ class FridayPortfolio:
 
     def view(self,tenant,record=None):
         record=record if record is not None else self.record(tenant)
+        included=[s for s in record['statements'] if s['source_sha256'] not in record.get('excluded',[])] if record else []
+        summary=summarize_statements(included)
         return {'revision':record['revision'] if record else 0,'workspace_generation':str(privacy_generation(self.service,tenant)),
-            'summary':summarize_statements([s for s in record['statements'] if s['source_sha256'] not in record.get('excluded',[])] if record else []),
+            'summary':summary,
+            'checkup':build_checkup(included,summary,record.get('reviewed_findings',[]) if record else []),
             'imports':[{'source_sha256':s['source_sha256'],'account_alias':s['account_alias'],'account_type':s['account_type'],
                 'extraction':s['extraction'],'row_count':len(s['entries']),'excluded':s['source_sha256'] in record.get('excluded',[])} for s in record['statements']] if record else [],
             'raw_file_stored':False,'payment_authorized':False,'updated_at':record.get('updated_at') if record else None}
@@ -64,8 +68,41 @@ class FridayPortfolio:
         if not view['summary']['transaction_count']:return {}
         summary=deepcopy(view['summary'])
         summary.pop('entries',None)
-        return _model_amounts({'evidence_id':'statements:current','updated_at':view['updated_at'],
+        result=_model_amounts({'evidence_id':'statements:current','updated_at':view['updated_at'],
                               'source_revision':view['revision'],**summary})
+        result['automatic_checkup']=checkup_model_context(view['checkup'])
+        return result
+
+    def review_finding(self,tenant,request):
+        """Recoverable acknowledgement only. Never changes a transaction/label.
+
+        Recompute membership in the tenant's current analysis inside the same
+        storage transaction. Stale clicks and other tenants' IDs are rejected.
+        """
+        generation=privacy_generation(self.service,tenant)
+        if request.workspace_generation!=str(generation):raise ValueError('Workspace was cleared; reload first')
+        def update(old):
+            if not old or old['generation']!=generation:raise ValueError('No saved statement history')
+            if old['revision']!=request.expected_revision:raise ValueError('Statement history changed; reload first')
+            included=[s for s in old['statements'] if s['source_sha256'] not in old.get('excluded',[])]
+            checks=build_checkup(included,summarize_statements(included))
+            if request.finding_id not in {f['finding_id'] for f in checks['findings']}:
+                raise ValueError('Finding is not in this current analysis')
+            reviewed=set(old.get('reviewed_findings',[]))
+            if (request.finding_id in reviewed)==request.reviewed:return old
+            if request.reviewed:reviewed.add(request.finding_id)
+            else:reviewed.discard(request.finding_id)
+            result=deepcopy(old);result['reviewed_findings']=sorted(reviewed);result['revision']+=1
+            result['updated_at']=datetime.now(timezone.utc).isoformat();return result
+        if self.service.durable.mode=='FIRESTORE_TRANSACTIONAL':record=self.service.durable.update_portfolio(tenant,generation,update)
+        else:
+            with self.service.connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                if privacy_generation(self.service,tenant,db)!=generation:raise ValueError('Workspace was cleared while reviewing')
+                old=db.execute('SELECT record FROM friday_portfolio WHERE tenant=?',(tenant,)).fetchone()
+                record=update(json.loads(old[0]) if old else None)
+                db.execute('INSERT OR REPLACE INTO friday_portfolio VALUES (?,?)',(tenant,json.dumps(record)))
+        return self.view(tenant,record)
 
     def set_visibility(self,tenant,request):
         generation=privacy_generation(self.service,tenant)

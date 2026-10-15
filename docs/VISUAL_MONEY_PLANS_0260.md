@@ -78,3 +78,37 @@ References: [Google structured output](https://docs.cloud.google.com/vertex-ai/g
 
 A source-month margin is neither disposable cash nor a forecast. The model's
 plausible prose is not semantic proof. These limits remain visible in the UI.
+
+## Completed acceptance
+
+| Check | Observed result |
+| --- | --- |
+| Native suite |563 ran,562 passed,1 optional skip. |
+| Final Docker suite |563 ran,540 passed,23 optional skips. |
+| Tooling suite |24 passed. |
+| Live Vertex goal interpretation |`gemini-3.5-flash-lite`,1 call in a fresh artificial cloud workspace. |
+| Exact goal and protection |₹1,000 allocated, transport and essentials unchanged. |
+|20% lower-income assumption |₹9,001 conditional margin from the artificial September records. |
+| Infeasible manual preview |₹10,000 target under default25% caps:₹8,575.25 unmet. |
+| Mutation boundary |Statement readback unchanged, artificial ledger unchanged, zero financial actions. |
+| Cleanup |Only the fresh synthetic cloud statement workspace was cleared and read back empty. |
+| Local browser |19-row upload/review/save, doughnut/monthly bars, before/after/stress graphs, feasible/infeasible plans and clean privacy navigation. |
+| Responsive checks |390px viewport/content width, dark charts and reduced-motion recalculation; temporary settings reset. |
+| Browser cloud check |Staging page loaded; canonical-origin Vertex chat, explicit share-and-answer next step and read-only manual chart preview worked. Financial sharing stayed off. |
+
+The first regression run caught a Pydantic include-argument serialization issue;
+it was corrected and rerun before cloud build. Staged browser POSTs returned403
+`Same-origin request required`, as designed: the unchanged guard permits only
+the normal website origin. This was not bypassed or widened. Private staged API
+acceptance and normal-origin browser chat were used instead.
+
+Deployments: API `financial-friday-api-plan0260`, source
+`046df84259f8e62a65e64bdd36294918f38afbb5`; web
+`financial-friday-web-plan0260b`, source `f1767fcc89db0dcc9e68d2c12dedac226315d3b4`.
+The final frontend correction prevents long chat bubbles shrinking over each
+other and restores the stress chart's connecting lines. No calculation or
+financial-authority change. Native/Docker checks were rerun for this source.
+Old revisions remain available. The existing recovery worker is still pinned
+to0.24.0; this read-only feature needs no journal/schema migration or new worker.
+See CURRENT_RELEASE for immutable image/build identities. Existing owner records
+were not changed or shared with Gemini during these checks.

@@ -92,3 +92,42 @@ Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial Q
 - Hosted acceptance: `financial-friday-web-studio0251`, source `21f06564ac65621348dabcb1d0ff7ac0c0c2b448`, build `f788c60d-bfa0-48a9-90e6-da0e53f58594`, now100% of frontend traffic after a successful no-traffic staging browser check. All three new packaged images loaded on staging and the main URL. Verified Google identity remained visible; the main-page warning/error list was empty. Evidence `/private/tmp/friday-studio-accents-live.png`. No hosted sample was uploaded/saved and no new Gemini call was made. API/IAM/payment authority unchanged; previous web revision retained for rollback.
 
 final result: passed
+
+## 0.26.0 — useful visual planning, same selected design
+
+- Visual baseline remains selected Option1/Soft Studio. No new layout mock or
+  alternative style was substituted. Existing handwritten accents, buddy shadow,
+  packaged typography, warm/lilac/mint palette and single real chat node remain.
+- Added data-backed category doughnut/monthly bars and before/after/income-stress
+  charts. They are actual computed series, not decorative screenshots. Every
+  graph has an accessible name and an expandable exact-value HTML table. Browser
+  evidence: `docs/design/visual-plan-spending-0260.png` and
+  `docs/design/visual-plan-checked-0260.png`, separate artificial records.
+- Verified19-row upload → unsaved review → explicit save → Spending → visual plan.
+  A₹1,000 goal fits;₹10,000 shows₹8,575.25 unmet. Source-month limitations and
+  missing-card warnings remain visible. Incomes/loans/transfers are not conflated.
+- Privacy & data is reachable from the top-right menu and older settings routes;
+  normal users no longer land on payment-limit forms. Cleanup's whole-data scope
+  is explained before its unchanged confirmation. No deletion was tested against
+  owner records. Explicit statement-sharing controls start off.
+- Welcome text now reflects saved statements without pretending they were shared.
+  The labelled share-and-answer button is user-triggered; permission is not
+  silently enabled after a failed request. Model failure still releases busy state
+  and reports unavailable without substituting a canned financial answer.
+- At390×844, content width remained390 and chart width358. Mobile dark chart
+  labels/legends, phone chat launcher and recalculation were inspected. Reduced
+  motion emulation was checked, then cleared; viewport and light theme restored.
+- Cloud staging page loaded with verified identity and no observed console errors.
+  Its POSTs were correctly refused by the fixed canonical-origin guard. The normal
+  website's generic live Vertex chat worked with all financial context off. The
+  real personal-plan API check used a fresh synthetic workspace, then cleaned it.
+- Final live visual review found squeezed long chat messages and zero-width line
+  strokes. Corrected with non-shrinking message rows and2px scenario lines. Local
+  measured bubble rectangles have12px gaps and no overlap; the connected curves
+  and exact table were recaptured. Normal-origin manual plan preview also worked
+  without sharing any owner statement data with Gemini or saving a result.
+- Native563/562passed/1skip; Docker563/540passed/23skips; tooling24passed. These
+  developer checks are not a bank-format benchmark, financial efficacy trial,
+  exhaustive accessibility audit or guarantee about every model reply.
+
+final result: passed

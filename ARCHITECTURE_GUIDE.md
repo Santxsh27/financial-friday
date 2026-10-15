@@ -150,6 +150,8 @@ Cloud Run web service: HTML/CSS/JS + authenticated proxy
 Private Cloud Run API: Python / FastAPI / Pydantic
     |
     +-- Chat -> bounded Gemini answer -> schema/citation checks -> safe text
+              -> typed goal -> protected-first integer allocation
+              -> independent constraint/optimality checks -> charts + exact tables
     |
     +-- Review -> Gemini facts -> exact reconciliation -> private evidence inbox
     |

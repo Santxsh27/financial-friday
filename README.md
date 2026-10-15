@@ -104,13 +104,21 @@ loading feedback is tied to actual pending requests. See [soft flow](docs/SOFT_F
 
 ## Problem and implemented solution
 
-Bills, receipts and payment notices are difficult to reconcile. Giving an AI
-assistant unrestricted financial authority would introduce a second problem.
-Friday uses Gemini to understand unfamiliar inputs and propose restricted plans;
-ordinary code checks arithmetic, identities, constraints and actual sandbox state.
-The model's confidence is never payment authority or proof of settlement.
+People have bank records but still struggle to understand their spending or see
+whether a money goal fits their constraints. A generic chatbot can suggest a
+plausible budget without calculating or checking it. Friday uses Google AI to
+interpret reviewed records and explicit goals, then exact code computes bounded
+scenarios, checks protected costs and shows both feasible reductions and gaps.
+That turns “what should I do?” into inspectable options, not guaranteed advice.
 
-**Start-to-outcome flow:** Overview → Financial inbox → choose one obligation →
+**Main flow:** upload → review → exact spending charts → optionally share totals
+→ Gemini interprets a goal → independent calculation/checks → editable visual
+plan. It does not pay, change bank records or train on private statements.
+
+The separate protection tools reconcile financial claims and restrict artificial
+payment tasks. The model's confidence is never payment authority or settlement proof.
+
+**Optional protection flow:** Overview → Financial inbox → choose one obligation →
 confirm selected-context sharing → Prepare this bill / Prepare verification →
 review a signed task → confirm an eligible artificial payment → recorded outcome.
 No repeat upload or typed bill reference is needed for a saved item. Opening the

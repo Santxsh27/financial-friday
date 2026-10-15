@@ -107,8 +107,16 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
         # Do not reflect arbitrary upstream errors, tokens or stack traces.
         if error.code == 429:
             return 429, {"detail": "Demo allowance reached. Read saved results or try again later. Daily limits reset at midnight UTC."}
+        if path.startswith('/v1/friday/statements'):
+            if error.code == 422:
+                return 422, {'detail':'Statement could not be read. Check the INR CSV columns, or use a clear unlocked PDF within the listed limits. No payment was requested.'}
+            if error.code == 409:
+                return 409, {'detail':'Statement history changed or this source was already imported with different details. Reload Spending before saving again.'}
+            return error.code, {'detail':'Statement service unavailable. If you were saving an import, reload Spending to check whether it was recorded.'}
         return error.code, {"detail": "Friday could not complete this request. Check activity before retrying a payment."}
     except (URLError, TimeoutError, ValueError):
+        if path.startswith('/v1/friday/statements'):
+            return 502, {'detail':'Statement connection interrupted. Reload Spending before retrying a save; its outcome is not confirmed.'}
         return 502, {"detail": "Connection interrupted. The outcome may be unknown; check activity before retrying."}
 
 

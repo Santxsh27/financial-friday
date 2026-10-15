@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from urllib.error import URLError
+from urllib.error import URLError, HTTPError
 
 from fastapi.testclient import TestClient
 from carapace_integrations.friday_cloud_web import WebSettings, backend_request, create_cloud_web, verify_iap
@@ -51,6 +51,19 @@ class CloudWebTests(unittest.TestCase):
         self.assertFalse(result.json()['bank_connected'])
         self.assertNotIn('secret',result.text);self.assertNotIn('tenant',result.text)
         self.assertEqual(result.headers['cache-control'],'no-store')
+
+    def test_statement_errors_are_action_specific_without_reflecting_upstream_data(self):
+        for code,phrase in [(422,'INR CSV'),(409,'Reload Spending'),(503,'Statement service')]:
+            with self.subTest(code=code),patch('google.oauth2.id_token.fetch_id_token',return_value='fake-token'),patch('carapace_integrations.friday_cloud_web.urlopen',side_effect=HTTPError('https://private-api.run.app',code,'secret-upstream-detail',{},None)):
+                status,body=backend_request(self.settings,'one','/v1/friday/statements/prepare','POST',b'{}','application/json')
+                self.assertEqual(status,code);self.assertIn(phrase,body['detail'])
+                self.assertNotIn('secret-upstream-detail',str(body));self.assertNotIn('retrying a payment',str(body))
+
+    def test_statement_timeout_requires_history_readback_not_a_financial_retry(self):
+        with patch('google.oauth2.id_token.fetch_id_token',return_value='fake-token'),patch('carapace_integrations.friday_cloud_web.urlopen',side_effect=URLError('private upstream detail')):
+            status,body=backend_request(self.settings,'one','/v1/friday/statements','POST',b'{}','application/json')
+        self.assertEqual(status,502);self.assertIn('Reload Spending',body['detail'])
+        self.assertNotIn('private upstream detail',str(body));self.assertNotIn('payment',str(body))
 
     def test_verified_identity_selects_tenant_not_browser_header(self):
         headers = dict(self.headers, **{"X-Carapace-Tenant": "two", "X-Carapace-API-Key": "attacker"})

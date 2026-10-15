@@ -94,3 +94,7 @@ The new [artificial CSV guide](../examples/FRIDAY_SAMPLE_STATEMENT.md) describes
 19-row input tested through the real parser. It is a separate example file,
 not seeded account history or a hardcoded model answer. The Desktop copy is
 `Friday-Artificial-Statement.csv`.
+
+Current isolated first-use captures: [desktop](design/soft-studio-accents-desktop.png)
+and [phone](design/soft-studio-accents-mobile.png). These contain no owner's
+financial records.

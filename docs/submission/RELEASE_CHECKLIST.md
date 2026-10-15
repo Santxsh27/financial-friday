@@ -1,10 +1,19 @@
 # Friday — current submission readiness
 
-Updated 14 October 2026 for version 0.23.0. This replaces stale owner-only
+Updated 15 October 2026 for version 0.24.0. This replaces stale owner-only
 access and older test counts. Dated release reports retain their historical
 evidence; see [reports index](../REPORTS_INDEX.md).
 
 ## Implemented and verified
+
+- Statement-first Home → upload → review → spending → optional coaching path.
+- Verified Google account display; live Vertex PDF extraction and aggregate
+  coaching; transactional statement storage/replay; reversible exclusions;
+  hosted artificial CSV preview without polluting owner history.
+- Current test counts and exact deployed sources: [CURRENT_RELEASE](../CURRENT_RELEASE.json).
+- Still pending: independent bank-format/accuracy and usefulness evaluation,
+  dedicated outstanding-loan/APR extraction, human eligibility/deadline checks
+  and final submission artifacts. No production-bank readiness guarantee.
 
 - Google-sign-in Cloud Run website, isolated visitor workspaces and private API.
 - Live Gemini/Vertex conversation, document facts, quoted risk reasoning and typed

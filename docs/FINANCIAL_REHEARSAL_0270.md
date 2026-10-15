@@ -124,6 +124,26 @@ CSV and a fresh disposable visitor workspace, use `tools/verify_rehearsal_cloud.
 Deployment and actual live results belong in CURRENT_RELEASE, not inferred from
 the presence of that script.
 
+Verified release: 585 native tests (584 pass, one optional skip), 585 container
+tests (561 pass, 24 optional skips) and 24 tooling checks. Real Vertex accepted
+one artificial purchase question, the exact engine checked four 60-day replays,
+and Vertex explained the computed result. The disposable workspace was cleaned;
+source history and artificial payment balance were unchanged. The normal website
+also interpreted a fictional question into INR 15000, seven purchase days, ten
+income-delay days and protected Transport, without sharing statements or cash.
+
+Browser checks covered the local artificial upload/review/save/rehearsal journey,
+collapsed setup on results, smaller-purchase input editing, exact negative cash
+values, dark mode and 390px layout without body overflow. Phone navigation now
+keeps What if visible. A legacy nonnegative-only currency display was caught and
+fixed without weakening the separate available-balance guard. Docker briefly
+lost its daemon connection during rebuilding, then recovered; both local sites
+were checked healthy. These checks are scoped acceptance, not certification that
+every bank format, model answer or device is correct.
+
+The [48-case machine-readable comparison](evaluation/rehearsal_2026-10-15.json)
+preserves the synthetic cases and comparison limits.
+
 ## Differentiation and remaining limits
 
 Budget reports, financial assistants and planning are established product areas.

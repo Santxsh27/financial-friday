@@ -1,5 +1,29 @@
 # Soft Studio design QA
 
+## Financial rehearsal acceptance 0.27.0
+
+The selected Soft Studio palette, companion and statement workflow are retained.
+The new What if page separates editable setup from calculated options; the form
+collapses after calculation and returns on Edit or an alternative selection.
+The daily chart has an exact-value table and explicit conditional-scenario labels.
+Negative floors render as signed rupees, not unavailable balances. A separate
+formatter preserves the older nonnegative available-balance display guard.
+
+Local browser acceptance used only an isolated fictional statement. Desktop,
+dark theme, keyboard consent, original-gap result and smaller-purchase input
+editing were inspected. At 390px, document width was 390px. The final hosted
+navigation places What if before the phone-only Friday item; its right edge
+measured 357px, so it is visible without horizontal page scrolling. The floating
+Friday launcher remains available. Browser viewport and light theme were restored.
+No observed console errors. [Artificial result screenshot](docs/design/financial-rehearsal-0270.png).
+
+Hosted checks verified the final page and Google identity, then one canonical
+origin Gemini setup of a fictional laptop question. It returned the 15000 INR
+purchase, 7-day timing, 10-day income delay and protected Transport. No owner
+statement or cash figure was sent, saved or changed. Native: 585 run, 584 pass,
+one skip. Docker: 585 run, 561 pass, 24 skips; 24 tooling checks passed. This is scoped acceptance,
+not an exhaustive accessibility audit or independent financial-outcome benchmark.
+
 Source visual truth: selected **Option 1**, `exec-9aa10f5e-b7a7-4abf-802e-96fd1aa2de29.png` in the Codex generated-images folder.
 
 Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial QA workspace; normal Docker website remains on8090 with its records preserved.

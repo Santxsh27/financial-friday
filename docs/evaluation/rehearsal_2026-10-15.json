@@ -1,0 +1,447 @@
+{
+  "scope": "DEVELOPER_SYNTHETIC_CASH_TIMING_COMPARISON",
+  "seed": 270017,
+  "cases": 48,
+  "monthly_heuristic_approvals": 48,
+  "daily_replay_approvals": 10,
+  "monthly_heuristic_missed_buffer_gaps": 38,
+  "cut_options_found": 13,
+  "later_date_options_found": 15,
+  "seconds": 0.0812,
+  "model_calls": 0,
+  "limits": "Not real customer outcomes, calibrated forecasting, a comparison with plain Gemini or a competitor evaluation. The heuristic deliberately ignores intramonth timing and stress.",
+  "results": [
+    {
+      "case": 1,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1470000
+    },
+    {
+      "case": 2,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 3180000
+    },
+    {
+      "case": 3,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 4,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 5,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 6,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1750000
+    },
+    {
+      "case": 7,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1300000
+    },
+    {
+      "case": 8,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 980000
+    },
+    {
+      "case": 9,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2570000
+    },
+    {
+      "case": 10,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2350000
+    },
+    {
+      "case": 11,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2030000
+    },
+    {
+      "case": 12,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2580000
+    },
+    {
+      "case": 13,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2250000
+    },
+    {
+      "case": 14,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 15,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 16,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 670000
+    },
+    {
+      "case": 17,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 1060000
+    },
+    {
+      "case": 18,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 630000
+    },
+    {
+      "case": 19,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1550000
+    },
+    {
+      "case": 20,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1170000
+    },
+    {
+      "case": 21,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1400000
+    },
+    {
+      "case": 22,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2080000
+    },
+    {
+      "case": 23,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 870000
+    },
+    {
+      "case": 24,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1190000
+    },
+    {
+      "case": 25,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 1360000
+    },
+    {
+      "case": 26,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1030000
+    },
+    {
+      "case": 27,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 28,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 29,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 50000
+    },
+    {
+      "case": 30,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2650000
+    },
+    {
+      "case": 31,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 540000
+    },
+    {
+      "case": 32,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 870000
+    },
+    {
+      "case": 33,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1480000
+    },
+    {
+      "case": 34,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 240000
+    },
+    {
+      "case": 35,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2490000
+    },
+    {
+      "case": 36,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 600000
+    },
+    {
+      "case": 37,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 230000
+    },
+    {
+      "case": 38,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 39,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1000000
+    },
+    {
+      "case": 40,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 41,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2660000
+    },
+    {
+      "case": 42,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 680000
+    },
+    {
+      "case": 43,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 1260000
+    },
+    {
+      "case": 44,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2070000
+    },
+    {
+      "case": 45,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 1300000
+    },
+    {
+      "case": 46,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 2150000
+    },
+    {
+      "case": 47,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": true,
+      "heuristic_missed_buffer_gap": false,
+      "checked_cut_option_found": true,
+      "checked_later_date_found": true,
+      "worst_gap_minor": 0
+    },
+    {
+      "case": 48,
+      "end_of_month_heuristic_fits": true,
+      "all_daily_replays_fit": false,
+      "heuristic_missed_buffer_gap": true,
+      "checked_cut_option_found": false,
+      "checked_later_date_found": false,
+      "worst_gap_minor": 690000
+    }
+  ]
+}

@@ -23,8 +23,8 @@ automatically the code deployed on Cloud Run.
 
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
 for source, image digests, build IDs, revisions, test counts and activation. The
-web is `financial-friday-web-plan0260b`; the API is
-`financial-friday-api-plan0260`, each at 100% traffic when last verified.
+web is `financial-friday-web-rehearsal0270c`; the API is
+`financial-friday-api-rehearsal0270`, each at 100% traffic when last verified.
 
 | Evidence | Scope and limitations |
 | --- | --- |
@@ -44,8 +44,8 @@ web is `financial-friday-web-plan0260b`; the API is
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 563 tests (562 passed, one optional skip); Docker ran
-563 (540 passed, twenty-three optional skips); 24 tooling checks passed. Earlier
+The current local suite ran 585 tests (584 passed, one optional skip); Docker ran
+585 (561 passed, twenty-four optional skips); 24 tooling checks passed. Earlier
 Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
 their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
 Skipped tests and model failures are not silently counted as passes.

@@ -227,7 +227,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **582 tests ran, 581 passed, one optional
+Latest local checks, 15 October 2026: **585 tests ran, 584 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -241,7 +241,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **563 ran, 540 passed, twenty-three optional skips**. The statement-first
+Docker: **585 ran, 561 passed, twenty-four optional skips**. The statement-first
 release adds 15 statement tests, one verified-profile test and two gateway-error
 tests, including real PDF
 text parsing, source-value validation, tenant isolation, exact totals, replay,

@@ -1,6 +1,6 @@
 # Financial Friday — documentation and evidence index
 
-Updated 15 October 2026, current product version **0.24.0**. Start here to separate
+Updated 15 October 2026, API **0.24.0**, Soft Studio frontend **0.25.0**. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.
 
@@ -22,11 +22,12 @@ automatically the code deployed on Cloud Run.
 
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
 for source, image digests, build IDs, revisions, test counts and activation. The
-web is `financial-friday-web-statements0240errors`; the API is
+web is `financial-friday-web-studio0250links`; the API is
 `financial-friday-api-statements0240r`, each at 100% traffic when last verified.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Soft Studio 0.25.0](SOFT_STUDIO_0250.md) / [Design QA](../design-qa.md) | Selected first design, shared right-side chat, account menu, responsive statement journey and browser acceptance. No new bank access, financial authority or transaction-level chat retrieval. |
 | [Statements 0.24.0](STATEMENTS_0240.md) | Statement-first input, source-linked PDF proposals, exact spending/income/repayment summaries, reversible exclusions, verified account display and live Vertex/Firestore acceptance. Not complete bank-format or financial-health validation. |
 | [Money buddy 0.23.0](MONEY_BUDDY_0230.md) | Daily reported entries, source-anchored AI proposals, private atomic saves, Undo, target coverage and aggregate coaching; no bank balance or official score. |
 | [Money Runway 0.22.0](MONEY_RUNWAY_0220.md) | Exact cash-flow algorithm, consent/privacy, 22 feature tests and real Vertex/Firestore acceptance. Initial unit failure corrected before promotion; not independent forecast validation. |
@@ -40,8 +41,8 @@ web is `financial-friday-web-statements0240errors`; the API is
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 544 tests (543 passed, one optional skip); Docker ran
-544 (521 passed, twenty-three optional skips); 24 tooling checks passed. Earlier
+The current local suite ran 549 tests (548 passed, one optional skip); Docker ran
+549 (526 passed, twenty-three optional skips); 24 tooling checks passed. Earlier
 Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
 their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
 Skipped tests and model failures are not silently counted as passes.

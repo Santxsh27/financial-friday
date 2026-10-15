@@ -40,7 +40,7 @@ Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial Q
 - Additional browser checks found a null legacy header-status reference. Both required status nodes are preserved hidden; a clean startup now has no recorded browser errors.
 - Dark-mode black icons were corrected. Phone width390 has content width390, theme target44px, reachable account/settings and a dedicated real chat view. Motion emulation reports no companion animation under reduced motion; test emulation was reset.
 - Browser flow: a new six-row artificial CSV was uploaded in the separate QA workspace, previewed unsaved, relabelled, saved, displayed as₹45,000 identified income/₹17,500 spending/₹5,000 loan repayments;₹50,000 borrowing was not counted as earned income. Search found exactly one grocery row. Reversible exclusion was checked without deleting it. The normal local and hosted owner histories were not used for this fixture.
-- Context dialog starts unchecked, changes the visible sharing indicator, clears page chat and does not itself call Gemini. There is exactly one chat input. Local no-model error handling clears busy state and does not substitute a fabricated reply. Live hosted Gemini is a separate post-deploy check.
+- Context dialog starts unchecked, changes the visible sharing indicator, clears page chat and does not itself call Gemini. There is exactly one chat input. Local no-model error handling clears busy state and does not substitute a fabricated reply. Live hosted Gemini was checked separately after deployment, as recorded below.
 - Keyboard profile navigation, dialog opening/closing and appearance controls were checked. The browser automation occasionally timed out after successfully opening a native dialog; subsequent fresh UI state confirmed the action. No app fix was inferred from the automation timeout alone.
 
 ## Expected differences and residual limits
@@ -59,5 +59,14 @@ Implementation: `http://localhost:8092/?v=studio-qa#home`, isolated artificial Q
 - [x] Primary statement/account/chat flows checked in the browser.
 - [x] Mobile, dark theme, explicit context choice and reduced motion checked.
 - [x] Native549/548passed/1skip; Docker549/526passed/23skips; tooling24passed. These are developer correctness tests, not independent financial efficacy measurements.
+
+## Hosted acceptance
+
+- Published frontend: `financial-friday-web-studio0250links`, source `9b251415850d14b1960248321363f74b720ab529`, build `6b6cc252-6570-4773-8785-5ff8566c2f81`. It serves 100% of frontend traffic. The private API remains on `financial-friday-api-statements0240r`; IAM and financial rules were not changed. Previous frontend revisions remain available for rollback.
+- Google identity was displayed from the verified gateway. Three generic chat requests returned real Vertex AI replies (`gemini-3.5-flash-lite`), with all financial-context checkboxes off; the busy state cleared and controls became usable again. No browser console errors were recorded in the final hosted check.
+- The first hosted check exposed a legacy bill-tool destination in a chat follow-up. The corrected source now maps this follow-up to **Add a statement** in the main statement journey. The actual Gemini-generated follow-up was clicked on the public site and opened the real statement intake.
+- No statement was uploaded or saved to the owner's hosted history during these new checks. No money moved. Anonymous access to the private API returned403.
+- Final public screenshot: `/private/tmp/friday-studio-live-final.jpg`. The additional hosted privacy notice is intentional; a local design fixture is not evidence that a hosted consent notice should be removed.
+- These checks verify the exercised UI/API journeys, not every possible financial answer, device, PDF layout or accessibility requirement. They are not an independent financial-accuracy benchmark or WCAG certification.
 
 final result: passed

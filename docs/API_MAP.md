@@ -130,7 +130,8 @@ These are human-readable summaries, not an SDK contract replacing OpenAPI or
 server validation. Preserve exact enum names, strict booleans and minor-unit
 integers when building an integration. Never pass model text directly to a route
 that creates financial authority or executes a payment.
-# Automatic statement checkup
+
+## Automatic statement checkup
 
 `GET /v1/friday/statements` also returns deterministic `checkup` findings,
 recurring patterns, source references and exact category-change attribution.
@@ -141,4 +142,3 @@ revision and privacy generation; neither alters transaction rows or payments.
 The existing chat accepts separately opted-in derived findings, selects a typed
 visual/draft request and returns a checked `checkup_view`. No arbitrary tools,
 URLs, source descriptions, bank authority or model training are added.
-

@@ -18,7 +18,7 @@ visual and prepare the same source-grounded draft. Gemini receives only separate
 opted-in aggregates and derived findings, not transaction descriptions or account
 aliases. No bank credentials or additional OAuth permissions are required.
 
-The engine uses exact-description grouping, temporal regularity checks, a median
+The engine uses exact-description grouping, temporal regularity checks, a lower-median
 and median-absolute-deviation outlier threshold, integer-paise attribution and
 revision-bound evidence IDs. These are explainable review heuristics, **not a
 trained fraud model, fraud probability or proof of novelty**. The test CSV is
@@ -26,6 +26,8 @@ trained fraud model, fraud probability or proof of novelty**. The test CSV is
 produces five candidates and two regular-payment patterns without any precomputed
 answer. Generalisation to real bank exports and false-warning rates still needs
 independent validation.
+
+See [the automatic-checkup workflow and verification report](docs/AUTOMATIC_CHECKUP_0280.md).
 
 Financial Friday is a private, **statement-first financial buddy**. Instead of
 entering every purchase, upload supported INR bank or credit-card statements.
@@ -253,7 +255,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Previous Docker release (0.27.0): **585 ran, 561 passed, twenty-four optional skips**.
+Docker: **599 ran, 575 passed, twenty-four optional skips**.
 The current native suite adds 14 automatic-checkup tests covering source links,
 stable IDs, insufficient history, exact attribution, tenant isolation, stale
 reviews, reversible acknowledgements, Firestore failure, aggregate-only Gemini

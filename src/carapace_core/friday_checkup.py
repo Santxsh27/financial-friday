@@ -39,8 +39,9 @@ def _month_after(month):
 def build_checkup(statements, summary, reviewed=()):
     """Bounded <=2,000-row pipeline, deterministic under import/row reorder.
 
-    Repeated-entry checks use all occurrences; recurring/outlier detection
-    suppresses ambiguous overlapping dates rather than treating them as proof.
+    Repeated-entry checks use all occurrences. Recurring series suppress
+    ambiguous overlapping dates; outlier baselines retain earlier entries, so
+    overlapping imports can distort them and must be reviewed.
     An independent assertion reconciles chart attribution to supplied totals.
     """
     rows = []

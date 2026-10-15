@@ -23,11 +23,12 @@ automatically the code deployed on Cloud Run.
 
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
 for source, image digests, build IDs, revisions, test counts and activation. The
-web is `financial-friday-web-rehearsal0270c`; the API is
-`financial-friday-api-rehearsal0270`, each at 100% traffic when last verified.
+web is `financial-friday-web-checkup0280c`; the API is
+`financial-friday-api-checkup0280`, each at 100% traffic when last verified.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Automatic checkup 0.28.0](AUTOMATIC_CHECKUP_0280.md) | Automatic source-linked pattern checks, exact change attribution, typed Gemini visual selection, unsent enquiry assembly and reversible finding review. Explainable heuristics, not a trained fraud model or independently validated financial outcome. |
 | [Financial rehearsals 0.27.0](FINANCIAL_REHEARSAL_0270.md) | Daily source-month calendar scenarios, simultaneous cash stress, concrete counterexamples, exact purchase/date/cut alternatives and separately consented Gemini explanation. Conditional replays, not predictions, bank execution or proof of novelty. |
 | [Visual money planning 0.26.0](VISUAL_MONEY_PLANS_0260.md) | Independent statement consent, typed Gemini goals, exact protected-first allocation, infeasibility/stress results and accessible charts. Read-only, not training, a bank feed, autonomous finance or independent efficacy evidence. |
 | [Soft Studio 0.25.0/0.25.1](SOFT_STUDIO_0250.md) / [Design QA](../design-qa.md) | Selected first design, restored handwritten accents and shadow, shared right-side chat, account menu, responsive statement journey and tested artificial CSV. No new bank access, financial authority or transaction-level chat retrieval. |
@@ -44,8 +45,8 @@ web is `financial-friday-web-rehearsal0270c`; the API is
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 585 tests (584 passed, one optional skip); Docker ran
-585 (561 passed, twenty-four optional skips); 24 tooling checks passed. Earlier
+The current local suite ran 599 tests (598 passed, one optional skip); Docker ran
+599 (575 passed, twenty-four optional skips); 24 tooling checks passed. Earlier
 Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
 their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
 Skipped tests and model failures are not silently counted as passes.

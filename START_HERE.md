@@ -8,8 +8,9 @@ GitHub account; website Google login is separate.
 
 ## What this application does
 
-Friday turns supported INR bank/card statements into a user-reviewed spending
-picture and practical guidance. You do not need to type every expense. Statements
+Friday automatically checks supported INR bank/card statements for patterns,
+amount changes and entries worth reviewing, then prepares an unsent enquiry when
+needed. You do not need to type every expense. Statements
 are user-supplied records, not authenticated bank feeds. Earlier bill checks,
 diary/runway and artificial payments remain optional under **My account → More financial tools**.
 
@@ -23,14 +24,19 @@ diary/runway and artificial payments remain optional under **My account → More
    artificial CSV data; upload that file to test the real parser.
 3. Confirm processing and **Read my statement**. Expect an unsaved preview with
    totals. Expand the row review to correct interpretation labels. No payment.
-4. Confirm review and **Save & see my spending**. Expect categories, monthly bars,
-   identified income, repayments and coverage warnings. Same file: no double import.
+4. Confirm review and **Save & see my spending**. **My money** opens with charts,
+   automatic findings and regular-payment patterns. Same file: no double import.
 5. **Manage imports** excludes/restores overlapping files without deleting them.
-6. **Ask Friday about this** prepares a question. In the right-side chat (the
+6. **Needs a look** → expand a finding → **Prepare bank enquiry** fills a real
+   unsent message with source entries. Download after review. **Mark reviewed**
+   and **Reopen finding** change only its acknowledgement, never a transaction.
+7. In the right-side chat (the
    **Friday** page on phones), open **Choose what I can use**, select **Share my
    saved statement totals**, and choose **Done**. Send with the arrow or
    Ctrl/⌘ + Enter. Only aggregates enter this context, not transaction descriptions.
-   No guaranteed savings or bank action. Try **“Help me reduce spending by INR
+   Try **“Show my regular payments”** or **“Prepare an enquiry for the repeated
+   entry.”** Friday opens the view or builds the unsent draft. No guaranteed
+   savings or bank action. For an optional advanced plan, try **“Help me reduce spending by INR
    1000 per month. Protect transport and test 20% lower income.”** Friday opens
    a checked, editable visual plan. A requested reduction that cannot fit its
    caps shows the shortfall. **Spending → Build a visual money plan** also works
@@ -38,7 +44,7 @@ diary/runway and artificial payments remain optional under **My account → More
 7. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
    its confirmation: statement history, diary and forecasts clear together.
 
-## Try the new main decision feature
+## Optional advanced decision tool
 
 1. Optional advanced tool: after saving an included **bank-account** statement,
    open **My account → More financial tools → Decision rehearsal**.

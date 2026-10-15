@@ -1,9 +1,29 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **15 October 2026**, version **0.27.0**. Project name: Financial Friday.
+Current technical reference: **16 October 2026**, version **0.28.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
-### Primary decision layer
+### Automatic statement checkup
+
+`friday_checkup.py` derives source-linked review candidates, recurring monthly
+series and exact spending-change attribution automatically when the private
+portfolio is read or saved. It uses exact-description groups, bounded temporal
+regularity, median/MAD thresholds and integer-paise arithmetic, not a trained
+fraud classifier. No candidate is a fraud verdict and no source row is removed.
+The source/algorithm-derived finding ID binds its evidence and calculation.
+
+The right-side chat receives separately opted-in aggregate findings without
+merchant descriptions, account aliases or source hashes/rows. Its schema can
+select one of four bounded visual/artifact requests. The server validates the
+selected ID and source revision, then returns a visual intent or an actual unsent
+enquiry assembled from current private evidence. It never exposes arbitrary
+tools, SQL or bank actions. Explicit review/reopen uses the same transactional
+portfolio store with tenant, revision and privacy-generation guards. It stores
+acknowledgements only; underlying rows and payments stay unchanged.
+
+See [automatic checkup verification](docs/AUTOMATIC_CHECKUP_0280.md).
+
+### Optional decision layer
 
 `friday_rehearsal.py` compiles at most six historical bank-account month templates
 into baseline and adverse calendar-event scenarios. Integer-paise daily cash

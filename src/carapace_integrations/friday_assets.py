@@ -7,6 +7,7 @@ ICONS = frozenset({"arrow-right", "chevron-down", "file-text", "shield", "user",
                    "book-open", "bar-chart-2", "alert-circle", "clock", "check-circle",
                    "home", "upload", "shopping-cart", "coffee", "truck", "log-out"})
 ASSETS = {
+    "friday-chart.js": "application/javascript",
     "friday-jade-orb.png": "image/png",  # Historical bookmarked asset.
     "friday-orb.png": "image/png",
     "friday-soft-studio-buddy.png": "image/png",

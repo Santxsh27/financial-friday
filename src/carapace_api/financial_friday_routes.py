@@ -277,6 +277,15 @@ def register_financial_friday_routes(application, service, authenticate):
         except ValueError as error:raise HTTPException(409,str(error)) from error
     from .friday_bank import FridayAnthosBank
     from .friday_chat import reply_to_user
+    from carapace_core.friday_money_plan import MoneyPlanPreview, build_money_plan
+
+    @application.post('/v1/friday/plans/preview', tags=['friday-planning'])
+    def money_plan_preview(payload: MoneyPlanPreview, tenant: TenantContext=Depends(authenticate)):
+        view=service.portfolio.view(tenant.tenant_id)
+        if (payload.expected_revision,payload.workspace_generation)!=(view['revision'],view['workspace_generation']):
+            raise HTTPException(409,'Your statement history changed. Reload before recalculating the plan.')
+        try:return build_money_plan(view,payload, payload.month)
+        except ValueError as error:raise HTTPException(422,str(error)) from error
     bank = FridayAnthosBank.from_env()
     application.state.friday_bank = bank
 

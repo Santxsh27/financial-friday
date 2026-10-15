@@ -1,6 +1,6 @@
 # Financial Friday — Current API map
 
-Updated 15 October 2026, version 0.24.0. The local OpenAPI reference at
+Updated 15 October 2026, version 0.26.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
 
@@ -24,6 +24,7 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 | GET `/v1/friday/obligations` | Complete bounded claims, provider matches, constraints and next steps; no model call or payment. |
 | GET `/v1/friday/obligations/{id}/result` | Verify an existing artificial-payment journal record; never retry or claim external settlement. |
 | POST `/v1/friday/chat` | Message, bounded history, optional context; live guidance only. |
+| POST `/v1/friday/plans/preview` | Exact unsaved source-month scenario; target reduction, protected/preferred categories, cut cap, income shock, expected revision and privacy generation. No AI call or execution. |
 | GET `/v1/friday/reviews` | Saved document claims and deterministic reconciliation; read-only. |
 | POST `/v1/friday/reviews` | Read supplied text and save extracted claims; never pay. |
 | POST `/v1/friday/reviews/documents?filename=...` | Raw supported file body; extract/store claims, discard raw upload. |
@@ -44,7 +45,10 @@ Example chat body (do not include financial secrets):
 ```
 
 Chat returns a schema-checked reply, available evidence IDs, a next-screen
-suggestion, provider/model provenance and explicit no-execution fields. Failure
+suggestion, provider/model provenance and explicit no-execution fields. It also
+returns a context receipt, typed visual intent and, when actual statement totals
+were shared, a checked `money_plan` or statement chart series. No record is
+silently shared because an old inbox flag is enabled/disabled. Failure
 is unavailable, not a canned answer masquerading as Gemini. Text review takes a
 `text` field; file review uses its actual media type rather than pretending a file
 path/string is an uploaded image. Read each schema before sending a request.

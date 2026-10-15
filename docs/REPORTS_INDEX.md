@@ -1,6 +1,7 @@
 # Financial Friday — documentation and evidence index
 
-Updated 15 October 2026, API **0.24.0**, Soft Studio frontend **0.25.1**. Start here to separate
+Updated 15 October 2026, source **0.26.0**. Deployed versions are listed below and
+in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.
 
@@ -27,6 +28,7 @@ web is `financial-friday-web-studio0251`; the API is
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Visual money planning 0.26.0](VISUAL_MONEY_PLANS_0260.md) | Independent statement consent, typed Gemini goals, exact protected-first allocation, infeasibility/stress results and accessible charts. Read-only, not training, a bank feed, autonomous finance or independent efficacy evidence. |
 | [Soft Studio 0.25.0/0.25.1](SOFT_STUDIO_0250.md) / [Design QA](../design-qa.md) | Selected first design, restored handwritten accents and shadow, shared right-side chat, account menu, responsive statement journey and tested artificial CSV. No new bank access, financial authority or transaction-level chat retrieval. |
 | [Statements 0.24.0](STATEMENTS_0240.md) | Statement-first input, source-linked PDF proposals, exact spending/income/repayment summaries, reversible exclusions, verified account display and live Vertex/Firestore acceptance. Not complete bank-format or financial-health validation. |
 | [Money buddy 0.23.0](MONEY_BUDDY_0230.md) | Daily reported entries, source-anchored AI proposals, private atomic saves, Undo, target coverage and aggregate coaching; no bank balance or official score. |
@@ -41,8 +43,8 @@ web is `financial-friday-web-studio0251`; the API is
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 551 tests (550 passed, one optional skip); Docker ran
-551 (528 passed, twenty-three optional skips); 24 tooling checks passed. Earlier
+The current local suite ran 563 tests (562 passed, one optional skip); Docker ran
+563 (540 passed, twenty-three optional skips); 24 tooling checks passed. Earlier
 Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
 their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
 Skipped tests and model failures are not silently counted as passes.

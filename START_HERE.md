@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 15 October 2026; API `0.24.0`, Soft Studio interface `0.25.0`. New teammates: read
+Updated 15 October 2026; API and visual-planning interface `0.26.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -30,7 +30,11 @@ diary/runway and artificial payments remain optional under **My account → More
    **Friday** page on phones), open **Choose what I can use**, select **Share my
    saved statement totals**, and choose **Done**. Send with the arrow or
    Ctrl/⌘ + Enter. Only aggregates enter this context, not transaction descriptions.
-   No guaranteed savings or bank action.
+   No guaranteed savings or bank action. Try **“Help me reduce spending by INR
+   1000 per month. Protect transport and test 20% lower income.”** Friday opens
+   a checked, editable visual plan. A requested reduction that cannot fit its
+   caps shows the shortfall. **Spending → Build a visual money plan** also works
+   without Gemini for manual scenarios.
 7. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
    its confirmation: statement history, diary and forecasts clear together.
 

@@ -1,6 +1,6 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **15 October 2026**, version **0.24.0**. Project name: Financial Friday.
+Current technical reference: **15 October 2026**, version **0.26.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Primary product spine: statement → review → spending picture → guidance
@@ -30,6 +30,23 @@ are sent. Transaction descriptions/account nicknames are excluded from that
 context. No weights are trained and no personal financial action is authorized.
 
 See [statement-first scope and verification](docs/STATEMENTS_0240.md).
+
+### Checked visual planning
+
+Gemini returns `MoneyPlanDraft`, never executable chart code or money movements.
+The server selects the tenant's explicitly shared aggregate snapshot and rejects
+a changed revision/privacy generation. A requested amount must occur in the
+current user message. The source-month engine minimizes a separable convex
+quadratic cost over integer-paise reductions, subject to category caps and locked
+essentials/loan repayments. Marginal-cost threshold search avoids per-paise loops;
+an independent exchange-condition checker verifies exact totals, limits and
+optimality for this mathematical objective, not financial desirability.
+
+Chart.js renders only fixed server-computed series, with exact HTML tables and
+no external CDN. Manual `POST /v1/friday/plans/preview` recalculation is private,
+revision-bound, unsaved and makes no model call. No new payment or bank permission
+is granted. No-income records cannot establish an income-stress conclusion.
+See [algorithm, evaluation and limitations](docs/VISUAL_MONEY_PLANS_0260.md).
 
 ### Secondary protection spine: financial obligation → checked next step → outcome
 

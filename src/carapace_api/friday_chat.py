@@ -32,5 +32,23 @@ def reply_to_user(service, review, bank, tenant, request):
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
     cashflow = service.cashflow.model_context(tenant) if request.include_cashflow else {}
     diary = service.diary.model_context(tenant) if request.include_diary else {}
-    statements=service.portfolio.model_context(tenant) if request.include_statements else {}
-    return answer_chat(service.planner, request, context, preferences, cashflow, diary, statements)
+    view=service.portfolio.view(tenant) if request.include_statements else None
+    statements=service.portfolio.model_context(tenant,view) if view else {}
+    result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements)
+    result['context_receipt']={'statement_totals':'SHARED' if statements else 'EMPTY' if request.include_statements else 'NOT_SHARED',
+        'financial_inbox':'SHARED' if request.include_workspace else 'NOT_SHARED',
+        'transaction_descriptions_shared':False,'bank_connected':False}
+    if view:
+        current=service.portfolio.view(tenant)
+        if (current['revision'],current['workspace_generation'])!=(view['revision'],view['workspace_generation']):
+            raise ValueError('Statement history changed during this answer; reload before relying on it')
+    result['money_plan']=None
+    if result.get('plan') and statements:
+        from carapace_core.friday_money_plan import build_money_plan, MoneyPlanDraft
+        result['money_plan']=build_money_plan(view,MoneyPlanDraft.model_validate(result['plan']))
+        result['money_plan']['proposal_source']='GEMINI_TYPED_GOAL'
+    if result.get('visual_request') in {'SPENDING','MONTHLY'} and statements:
+        result['statement_visuals']={'source_revision':view['revision'],
+            'categories':view['summary']['categories'],'monthly':view['summary']['monthly'],
+            'warnings':view['summary']['warnings']}
+    return result

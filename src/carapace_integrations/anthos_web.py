@@ -405,6 +405,20 @@ def create_demo_app() -> FastAPI:
             raise HTTPException(code, result.get("detail", "Friday could not interpret this input"))
         return result
 
+    @application.post('/api/friday/plans/preview')
+    async def friday_plan_preview(request: StarletteRequest):
+        from carapace_core.friday_money_plan import MoneyPlanPreview
+        from pydantic import ValidationError
+        data=bytearray()
+        async for chunk in request.stream():
+            if len(data)+len(chunk)>16000:raise HTTPException(413,'Plan request is too large')
+            data.extend(chunk)
+        try:payload=MoneyPlanPreview.model_validate_json(bytes(data))
+        except (ValueError,ValidationError) as error:raise HTTPException(422,'Use valid planning assumptions') from error
+        code,result=await run_in_threadpool(_api_call,api_base_url,'/v1/friday/plans/preview','POST',payload.model_dump(mode='json'))
+        if code!=200:raise HTTPException(code,result.get('detail','The plan could not be calculated'))
+        return result
+
     @application.get('/api/friday/cashflow')
     async def friday_cashflow_read():
         code, result = await run_in_threadpool(_api_call, api_base_url, '/v1/friday/cashflow', 'GET')

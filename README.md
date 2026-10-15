@@ -1,6 +1,6 @@
 # Financial Friday
 
-**Your statements. A clearer money picture. One practical next step.**
+**Your statements. A checked money plan. Friday beside you.**
 
 Financial Friday is a private, **statement-first financial buddy**. Instead of
 entering every purchase, upload supported INR bank or credit-card statements.
@@ -9,7 +9,7 @@ calculates monthly spending, categories, identified income and repayments. Revie
 the interpretation, save the normalized rows, and optionally ask Friday for a
 practical next step using aggregate context only. Raw PDFs/CSVs are not archived.
 
-The main journey is **Statements → Review → Spending → Friday**. The selected
+The main journey is **Statements → Review → Spending → Friday → Visual plan**. The selected
 Soft Studio interface puts a friendly, live-on-request Friday chat beside the
 desktop workspace, with a dedicated chat page on phones. A top-right avatar
 menu opens the account, spending and privacy pages. Example charts are labelled
@@ -21,6 +21,25 @@ and grounded companion shadow are restored. For a first try, use the
 [fictional two-month CSV](examples/friday-artificial-statement.csv) and
 [its expected results](examples/FRIDAY_SAMPLE_STATEMENT.md); it is never
 automatically added to your account.
+
+### New: ask a goal, inspect a checked plan
+
+Share statement totals in the chat, then try: **“Help me reduce spending by INR
+1000 per month. Protect transport and test 20% lower income.”** Gemini interprets
+the instruction into a strict, non-executable proposal. An exact integer-paise
+allocation engine finds bounded cuts, leaves essentials and loan repayments
+unchanged, and independently checks the result. Friday opens before/after and
+income-stress charts with exact figures and visible assumptions. An impossible
+goal shows its unmet amount, not a fabricated success. Recalculate scenarios
+without a new model call, saving a plan or moving money.
+
+The old financial-inbox permission is **not** statement permission. Context
+sharing is explicit and off by default; **Statements ready · tap to share** or
+the labelled **Use my statement totals with Gemini & answer** action enables it
+for the page conversation. Ordinary questions need no records. **Privacy & data**
+replaces legacy payment rules in the normal account flow. Spending now includes
+a category doughnut and monthly comparison, with accessible exact-value tables.
+See [visual planning and its limits](docs/VISUAL_MONEY_PLANS_0260.md).
 
 One month is
 enough to begin; multiple supported exports can cover six months or more within
@@ -180,7 +199,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 15 October 2026: **551 tests ran, 550 passed, one optional
+Latest local checks, 15 October 2026: **563 tests ran, 562 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -194,7 +213,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **551 ran, 528 passed, twenty-three optional skips**. The statement-first
+Docker: **563 ran, 540 passed, twenty-three optional skips**. The statement-first
 release adds 15 statement tests, one verified-profile test and two gateway-error
 tests, including real PDF
 text parsing, source-value validation, tenant isolation, exact totals, replay,

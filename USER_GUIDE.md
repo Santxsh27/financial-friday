@@ -28,6 +28,8 @@ not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
    **Friday** page), open **Choose what I can use**, explicitly select
    **Share my saved statement totals**, and choose **Done**. Review the question,
    then press the arrow labelled **Send message to Friday** (or Ctrl/⌘ + Enter).
+   Or choose **Use my statement totals with Gemini & answer** on a relevant
+   reply: the label explicitly enables sharing and resends that question.
    Only aggregates, not transaction descriptions, enter that context. General
    questions need no records. Suggested questions only fill the input; they do
    not send automatically. **New chat** clears the page conversation, not your
@@ -36,6 +38,29 @@ not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
    explicit confirmation removes all statement history as well as earlier
    diary/forecast inputs; payment replay journals are retained. Raw files were
    never archived. Cleanup is not a bank reversal.
+
+### Ask for charts and a money plan
+
+- Ask **“Show my spending as a chart”** after sharing totals. Spending opens with
+  a category doughnut and income/outgoings comparison. Expand **Read the exact
+  figures** for the accessible table behind each chart.
+- Ask **“Help me reduce spending by INR 1000 per month. Protect transport and
+  test 20% lower income.”** Friday interprets the goal and opens a checked plan.
+  Before/after bars show reductions; an income-shock chart shows the conditional
+  margin. This is a replay of one supplied month, not a forecast or bank balance.
+- Or choose **Spending → Build a visual money plan**. Enter the amount, select
+  the source month, cut cap and income-drop assumption, then **Calculate my options**.
+  This recalculation uses exact code, not a new Gemini call. Nothing is saved or paid.
+- Essentials and recorded loan repayments never get cut. User-protected categories
+  remain fixed too. A goal that cannot fit shows the amount still unmet. Missing
+  income suppresses income-based conclusions; missing card purchases stay warned.
+- The artificial Desktop CSV supports a ₹1,000 scenario in September. A ₹10,000
+  goal under its default25% caps leaves ₹8,575.25 unmet. Those are test-fixture
+  results only, not recommendations for the real user.
+
+**Privacy & data**, not payment rules, is the normal settings page. The old
+`#settings` link redirects there. Neither Google sign-in nor sharing totals
+connects a bank, trains Gemini weights or gives Friday permission to pay.
 
 **Appearance & sound** is available from the account menu or the gear button;
 the moon/sun button changes theme directly. **Switch account / sign out** explains

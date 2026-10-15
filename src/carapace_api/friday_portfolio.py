@@ -58,13 +58,14 @@ class FridayPortfolio:
                 db.execute('INSERT OR REPLACE INTO friday_portfolio VALUES (?,?)',(tenant,json.dumps(record)))
         return self.view(tenant,record)
 
-    def model_context(self,tenant):
+    def model_context(self,tenant,view=None):
         from .friday_cashflow import _model_amounts
-        record=self.record(tenant)
-        if not record:return {}
-        summary=self.view(tenant,record)['summary']
+        view=view if view is not None else self.view(tenant)
+        if not view['summary']['transaction_count']:return {}
+        summary=deepcopy(view['summary'])
         summary.pop('entries',None)
-        return _model_amounts({'evidence_id':'statements:current','updated_at':record['updated_at'],**summary})
+        return _model_amounts({'evidence_id':'statements:current','updated_at':view['updated_at'],
+                              'source_revision':view['revision'],**summary})
 
     def set_visibility(self,tenant,request):
         generation=privacy_generation(self.service,tenant)

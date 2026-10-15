@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "carapace-core"
-version = "0.24.0"
+version = "0.26.0"
 description = "Financial Friday: statement-first money guidance with exact calculations and bounded AI"
 requires-python = ">=3.11"
 dependencies = [
@@ -35,4 +35,4 @@ carapace-witness-audit = "carapace_core.checkpoint_monitor:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-carapace_integrations = ["assets/*.png", "assets/*.svg", "assets/*.ttf", "assets/*.txt"]
+carapace_integrations = ["assets/*.png", "assets/*.svg", "assets/*.ttf", "assets/*.txt", "assets/*.js"]

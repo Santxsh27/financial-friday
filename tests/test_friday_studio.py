@@ -33,7 +33,14 @@ class FridayStudioTests(unittest.TestCase):
         self.assertIn('Example preview · not your data', STUDIO_JS)
         self.assertIn('No statement shared yet', STUDIO_JS)
         self.assertIn('contextDialog.box.append(statementChoice.closest', STUDIO_JS)
-        self.assertNotIn('statementChoice.checked=true', STUDIO_JS)
+        # Sharing remains off on load. The only enable path is a labelled,
+        # explicit user action on the answer, never a missing-permission retry.
+        consent_handler = STUDIO_JS.split("'friday:share-statements-and-answer'", 1)[1].split('\n', 1)[0]
+        self.assertEqual(STUDIO_JS.count('statementChoice.checked=true'), 1)
+        self.assertIn("if(!statementCount)", consent_handler)
+        self.assertIn("command.getAttribute('aria-busy')==='true'", consent_handler)
+        self.assertIn('statementChoice.checked=true', consent_handler)
+        self.assertIn('command.requestSubmit()', consent_handler)
         self.assertNotIn("jsonRequest(", STUDIO_JS)
         self.assertNotIn('confirm_sandbox_execution', STUDIO_JS)
 

@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **15 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.24.0`. Actual deployed source and
+specifications. Current code version is `0.26.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -19,8 +19,21 @@ provider identities, saved constraints and recorded outcomes. Gemini prepares th
 next step; independent checks determine what can proceed. The intended outcome
 is a completed allowed task or useful verification assistance, not just an alert.
 
-The default consumer workflow is **read-only guidance and claim reconciliation**.
-The execution workflow is **separate and explicitly artificial**. Neither is a
+The default consumer workflow is **read-only guidance, visual counterfactual
+planning and claim reconciliation**. Typed Gemini goals feed a bounded integer
+allocation engine; a separate arithmetic/constraint checker verifies its result.
+Essentials and recorded loan repayments stay fixed. A selected source month,
+category-cut caps and income-drop assumptions are shown rather than hidden in
+AI prose. Infeasible goals report an unmet amount. Charts include exact tables.
+See [0.26 planning contract](docs/VISUAL_MONEY_PLANS_0260.md).
+
+Statement sharing is independent of the legacy financial-inbox permission.
+General questions do not require records. Explicitly shared aggregate context
+cannot grant financial actions. Ordinary settings open Privacy & data; legacy
+payment rules remain a separate artificial execution concern, not onboarding.
+
+The execution workflow is **separate and explicitly artificial**.
+Neither is a
 real-bank connector, investment adviser, SMS/Gmail agent or universal fraud shield.
 
 ### Primary customer journey

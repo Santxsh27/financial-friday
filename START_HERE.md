@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 15 October 2026; current release `0.24.0`. New teammates: read
+Updated 15 October 2026; API `0.24.0`, Soft Studio interface `0.25.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -11,14 +11,14 @@ GitHub account; website Google login is separate.
 Friday turns supported INR bank/card statements into a user-reviewed spending
 picture and practical guidance. You do not need to type every expense. Statements
 are user-supplied records, not authenticated bank feeds. Earlier bill checks,
-diary/runway and artificial payments remain optional under More tools.
+diary/runway and artificial payments remain optional under **My account → More financial tools**.
 
 ## First tour: no payment required
 
 1. Open [the live site](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
-   and sign in with Google. **Account** shows the signed-in email. Returning users
+   and sign in with Google. **Top-right initials/name → My account** shows the signed-in email. Returning users
    may reuse their Google session; no bank connection is implied.
-2. **Home → Understand my statements**. Choose an INR PDF or CSV, an account
+2. **Home → Add a statement** (or **Statements**). Choose an INR PDF or CSV, an account
    nickname and bank/card type. **Try a labelled statement example** downloads
    artificial CSV data; upload that file to test the real parser.
 3. Confirm processing and **Read my statement**. Expect an unsaved preview with
@@ -26,10 +26,12 @@ diary/runway and artificial payments remain optional under More tools.
 4. Confirm review and **Save & see my spending**. Expect categories, monthly bars,
    identified income, repayments and coverage warnings. Same file: no double import.
 5. **Manage imports** excludes/restores overlapping files without deleting them.
-6. **Ask Friday about this** prepares a question. Select **Share my saved statement
-   totals**, then **Ask Friday** for Gemini guidance. Only aggregates enter this
-   context, not transaction descriptions. No guaranteed savings or bank action.
-7. **Account → Open privacy & cleanup** explains removal of private inputs. Read
+6. **Ask Friday about this** prepares a question. In the right-side chat (the
+   **Friday** page on phones), open **Choose what I can use**, select **Share my
+   saved statement totals**, and choose **Done**. Send with the arrow or
+   Ctrl/⌘ + Enter. Only aggregates enter this context, not transaction descriptions.
+   No guaranteed savings or bank action.
+7. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
    its confirmation: statement history, diary and forecasts clear together.
 
 Demo bounds: INR; PDF 4 MB/1–6 pages/up to 200 extracted rows; documented CSV
@@ -39,7 +41,7 @@ supplied across supported exports, not necessarily every bank's format.
 
 ## Separate artificial-payment demonstration
 
-Optional tools under More tools use Friday's own artificial
+Optional tools under **My account → More financial tools** use Friday's own artificial
 ledger. Read [USER_GUIDE.md](USER_GUIDE.md) before changing limits or approving a
 task. An explicit handle/approval action may move artificial funds; home chat and
 default document review never do. Automatic execution is off for new visitors.

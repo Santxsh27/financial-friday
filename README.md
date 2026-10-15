@@ -32,7 +32,7 @@ guarantee of saving money. Missing accounts, partial periods and wrong labels
 affect the conclusions. Bank statements alone do not establish outstanding loan
 principal or net worth. See [statement scope and evidence](docs/STATEMENTS_0240.md).
 
-Optional protection tools remain under **More tools**. The **obligation inbox** lets you give Friday a
+Optional protection tools remain under **My account → More financial tools**. The **obligation inbox** lets you give Friday a
 financial request once, see what is known versus missing,
 prepare one evidence-bound next step, and follow its actual outcome. Supplier and
 reference must match an artificial provider record before a document can join the

@@ -2,14 +2,16 @@
 
 ## Start here: statements, not one receipt at a time
 
-The main navigation is now **Home · Statements · Spending · Friday · Account**.
-Older workflows below are secondary tools under **More tools**, not required
-onboarding steps. The current quick tour is [START_HERE](START_HERE.md).
+On desktop, the main navigation is **Home · Statements · Spending**, with a
+Friday conversation panel on the right. On phones, **Friday** opens the chat
+page. Your initials/name in the top right opens the account menu. Older
+workflows below are secondary tools under **My account → More financial tools**,
+not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
 
-1. **Account** shows your Google email on the hosted site. A reused Google
+1. **Top-right initials/name → My account** shows your Google email on the hosted site. A reused Google
    session is normal; no second login prompt is required. Local development says
    Local demo and does not pretend to be your Google account.
-2. **Statements → Understand my statements**: choose a supported INR statement
+2. **Home → Add a statement** (or the **Statements** tab): choose a supported INR statement
    PDF or CSV. Use an account nickname, not its number, and select bank/card type.
    Confirm temporary server processing (Google AI also reads PDFs).
 3. **Read my statement**: expect an unsaved preview, row count and totals. Expand
@@ -22,13 +24,24 @@ onboarding steps. The current quick tour is [START_HERE](START_HERE.md).
 5. **Manage imports → Exclude from analysis** removes a mistaken/overlapping
    import from calculations without deleting it. **Restore to analysis** reverses
    that choice. These operations do not alter the bank statement or a payment.
-6. **Ask Friday about this** prepares a question. On **Friday**, explicitly select
-   **Share my saved statement totals**, then **Ask Friday**. Only aggregates, not
-   transaction descriptions, enter that context. General questions need no records.
-7. **Account → Open privacy & cleanup** controls private-input cleanup. Its
+6. **Ask Friday about this** prepares a question. In the chat panel (or phone
+   **Friday** page), open **Choose what I can use**, explicitly select
+   **Share my saved statement totals**, and choose **Done**. Review the question,
+   then press the arrow labelled **Send message to Friday** (or Ctrl/⌘ + Enter).
+   Only aggregates, not transaction descriptions, enter that context. General
+   questions need no records. Suggested questions only fill the input; they do
+   not send automatically. **New chat** clears the page conversation, not your
+   stored statement history.
+7. **Top-right initials/name → My account → Open privacy & cleanup** controls private-input cleanup. Its
    explicit confirmation removes all statement history as well as earlier
    diary/forecast inputs; payment replay journals are retained. Raw files were
    never archived. Cleanup is not a bank reversal.
+
+**Appearance & sound** is available from the account menu or the gear button;
+the moon/sun button changes theme directly. **Switch account / sign out** explains
+how to clear Friday's IAP sign-in on the hosted site. Google can reuse its existing
+browser session; this does not sign you out of every Google application. The
+avatar uses initials, not a fetched Google profile photograph.
 
 Supported demo bounds: INR only, PDF 4 MB / up to 6 pages / 200 rows;
 UTF-8 CSV 1 MB / up to 500 rows using `date,description,debit,credit` columns; 10 imports /
@@ -40,7 +53,10 @@ card repayments to avoid double-counting; missing card purchases understate the
 picture. Outstanding debt, assets and net worth cannot be inferred from payments.
 
 The following sections document earlier optional tools. References to Overview
-mean the older overview inside **More tools → Diary & runway**, not today's Home.
+mean the older overview inside **My account → More financial tools → Diary & runway**,
+not today's Home. Earlier references to **Ask Friday** mean the send action in
+the current chat panel; earlier permission checkboxes are now reached through
+**Choose what I can use**.
 
 ## Your financial buddy
 

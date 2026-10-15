@@ -21,6 +21,8 @@ integration or model-training claim.
   preview now resets the upload status.
 - Removed background polling of a hidden legacy bill inbox locally. The
   existing server-side worker/Cloud Tasks mechanisms are not changed.
+- Hosted Gemini follow-up links in the primary statement journey lead to
+  statement upload, not the earlier optional bill/receipt document tool.
 
 ## Sign-in scope
 

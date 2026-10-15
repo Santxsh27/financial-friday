@@ -18,6 +18,8 @@ class FridayStudioTests(unittest.TestCase):
         self.assertIn("'/api/friday/chat'", FINANCIAL_FRIDAY_HTML)
         self.assertNotIn('setInterval(refreshInbox', FINANCIAL_FRIDAY_HTML)
         self.assertIn("legacyHeader.append(status)", STUDIO_JS)
+        self.assertIn("document:statementJourney?'Add a statement':'Read a document'", FINANCIAL_FRIDAY_HTML)
+        self.assertIn("result.next_screen==='document'&&statementJourney?'statements'", FINANCIAL_FRIDAY_HTML)
 
     def test_profile_uses_verified_display_event_not_browser_identity_claims(self):
         self.assertIn('friday:identity-ready', STUDIO_JS)

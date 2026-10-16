@@ -2,6 +2,14 @@
 
 ## Start here: statements, not one receipt at a time
 
+During **Review before saving**, expand **Source checks** if you want to see
+declared total, balance, count and page checks. A mismatch blocks saving; choose
+a complete clearer export. “Not established” means the file did not supply enough
+supported evidence, not that money is missing. Friday's signed extraction is not
+a bank-authenticated statement. You can still correct meaning/category labels.
+For a tiny artificial example with source totals, use
+[friday-source-check-artificial.csv](examples/friday-source-check-artificial.csv).
+
 On desktop, the main navigation is **Home · Statements · My money**, with a
 Friday conversation panel on the right. On phones, **Friday** opens the chat
 page. Your initials/name in the top right opens the account menu. Older

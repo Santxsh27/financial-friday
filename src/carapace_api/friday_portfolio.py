@@ -2,8 +2,12 @@
 from copy import deepcopy
 from datetime import datetime, timezone
 import json
-from carapace_core.friday_portfolio import summarize_statements
+from time import perf_counter
+from carapace_core.friday_portfolio import StatementImport, summarize_statements
 from carapace_core.friday_checkup import build_checkup, checkup_model_context
+from carapace_core.friday_statement_reconciliation import reconcile_statement
+from carapace_core.friday_statement_receipt import verify_statement_extraction
+from carapace_core.friday_trace import record_stage
 from .friday_privacy import privacy_generation
 
 
@@ -27,30 +31,55 @@ class FridayPortfolio:
         # Never label an earlier generation's rows as a newly cleared workspace.
         if record and record['generation']!=generation:record=None
         included=[s for s in record['statements'] if s['source_sha256'] not in record.get('excluded',[])] if record else []
-        summary=summarize_statements(included)
+        started=perf_counter()
+        try:summary=summarize_statements(included)
+        except (ValueError,TypeError,KeyError):
+            record_stage('calculation',ok=False,reason='calculation_error');raise
+        record_stage('calculation',ok=True,reason='accepted',duration_ms=(perf_counter()-started)*1000)
         view={'revision':record['revision'] if record else 0,'workspace_generation':str(generation),
             'summary':summary,
             'checkup':build_checkup(included,summary,record.get('reviewed_findings',[]) if record else []),
             'imports':[{'source_sha256':s['source_sha256'],'account_alias':s['account_alias'],'account_type':s['account_type'],
-                'extraction':s['extraction'],'row_count':len(s['entries']),'excluded':s['source_sha256'] in record.get('excluded',[])} for s in record['statements']] if record else [],
+                'extraction':s['extraction'],'row_count':len(s['entries']),'excluded':s['source_sha256'] in record.get('excluded',[]),
+                **self.import_checks(tenant,generation,s)} for s in record['statements']] if record else [],
             'raw_file_stored':False,'payment_authorized':False,'updated_at':record.get('updated_at') if record else None}
         view['assistant_work']=build_assistant_work(view)
         if privacy_generation(self.service,tenant)!=generation:
             raise ValueError('Workspace changed during analysis; reload first')
         return view
 
+    def import_checks(self,tenant,generation,statement):
+        normalized=StatementImport.model_validate(statement)
+        bound=verify_statement_extraction(normalized,tenant,generation,self.service.signer)
+        # Legacy/manual imports remain usable, but supplied source facts are not
+        # promoted to evidence unless Friday's extraction signature verifies.
+        safe=normalized if bound else normalized.model_copy(update={'source_facts':None})
+        return {'source_bound':bound,'reconciliation':reconcile_statement(safe)}
+
     def save(self,tenant,request):
         if not request.confirm_reviewed_and_store:raise ValueError('Review the rows and confirm private storage first')
         generation=privacy_generation(self.service,tenant)
         if request.workspace_generation!=str(generation):raise ValueError('Your workspace was cleared; refresh before saving')
-        statement=request.statement.model_dump(mode='json')
+        started=perf_counter()
+        receipt=request.statement.extraction_receipt
+        bound=verify_statement_extraction(request.statement,tenant,generation,self.service.signer)
+        if (receipt is not None or request.statement.source_facts is not None) and not bound:
+            record_stage('validation',ok=False,reason='rejected')
+            raise ValueError('Extraction receipt does not match this workspace or statement. Prepare the original file again.')
+        checks=reconcile_statement(request.statement)
+        if bound and checks['overall_status']=='MISMATCH':
+            record_stage('reconciliation',ok=False,reason='mismatch')
+            raise ValueError('Statement rows conflict with declared source totals or coverage. Nothing was saved; use a complete, clearer export.')
+        record_stage('reconciliation',ok=True,reason='accepted' if checks['overall_status']=='CONSISTENT' else 'insufficient_data')
+        record_stage('validation',ok=True,reason='accepted',duration_ms=(perf_counter()-started)*1000)
+        statement=request.statement.model_dump(mode='json',exclude_none=True)
         # Every stored import is user-reviewed data, not bank-authenticated evidence.
         def update(old):
             old=old if old and old['generation']==generation else None
             if old:
                 existing=next((s for s in old['statements'] if s['source_sha256']==statement['source_sha256']),None)
                 if existing:
-                    if existing!=statement:raise ValueError('This source was already imported with different details; do not count it twice')
+                    if StatementImport.model_validate(existing).model_dump(mode='json',exclude_none=True)!=statement:raise ValueError('This source was already imported with different details; do not count it twice')
                     return old
             if request.expected_revision!=(old['revision'] if old else 0):raise ValueError('Statements changed in another session; reload before saving')
             result=deepcopy(old) if old else {'generation':generation,'revision':0,'statements':[]}
@@ -68,6 +97,7 @@ class FridayPortfolio:
                 old=db.execute('SELECT record FROM friday_portfolio WHERE tenant=?',(tenant,)).fetchone()
                 record=update(json.loads(old[0]) if old else None)
                 db.execute('INSERT OR REPLACE INTO friday_portfolio VALUES (?,?)',(tenant,json.dumps(record)))
+        record_stage('persistence',ok=True,reason='accepted')
         return self.view(tenant,record)
 
     def model_context(self,tenant,view=None):

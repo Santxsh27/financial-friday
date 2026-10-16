@@ -28,6 +28,7 @@ acceptance evidence. A new source version alone does not prove deployment.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Statement reliability 0.31.0](STATEMENT_RELIABILITY_0310.md) | Literal-grounded reconciliation, signed extraction receipts, labelled synthetic quality baseline with misses/false warnings, privacy races and content-free request correlation. Not independent fraud validation or bank authentication. |
 | [Assistant workbench 0.30.0](ASSISTANT_WORKBENCH_0300.md) | Automatic private review preparation, one visual priority task, integrated refund ranges, actual-event guide, opt-in bounded Google speech and privacy-generation freshness. No bank monitoring or automatic financial resolution. |
 | [Money Shield 0.29.0](MONEY_SHIELD_0290.md) | Integer refund-flow bounds, independent primal/residual checks, explicit ambiguity, source-grounded clarification and server-owned AI completion receipts. No bank-confirmed linkage, legal entitlement or autonomous recovery. |
 | [Automatic checkup 0.28.0](AUTOMATIC_CHECKUP_0280.md) | Automatic source-linked pattern checks, exact change attribution, typed Gemini visual selection, unsent enquiry assembly and reversible finding review. Explainable heuristics, not a trained fraud model or independently validated financial outcome. |

@@ -34,11 +34,15 @@ jobs:
         run: python -m unittest discover -s tools -p 'test_*.py' -v
       - name: Evaluate Friday proposal safety (no payments or AI calls)
         run: python -m carapace_core.friday_evaluation > friday-safety-evaluation.json
+      - name: Record labelled synthetic checkup baseline (tuning only, no AI calls)
+        run: python tools/evaluate_statement_checkup.py --output friday-statement-evaluation.json
       - name: Preserve proposal evaluation evidence
         uses: actions/upload-artifact@v4
         with:
           name: friday-safety-python-${{ matrix.python-version }}
-          path: friday-safety-evaluation.json
+          path: |
+            friday-safety-evaluation.json
+            friday-statement-evaluation.json
       - name: Verify valid reference payment
         run: carapace verify examples/payment-promise.json examples/execution-valid.json
 

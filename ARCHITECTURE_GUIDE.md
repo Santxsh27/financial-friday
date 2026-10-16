@@ -1,6 +1,17 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **16 October 2026**, version **0.30.0**. Project name: Financial Friday.
+Current technical reference: **16 October 2026**, version **0.31.0**. Project name: Financial Friday.
+
+### Source reliability and request correlation
+
+`friday_statement_csv.py` and `friday_statements.py` extract controlled CSV/PDF
+facts with minimal source references. `friday_statement_reconciliation.py` is
+pure integer arithmetic and coverage checking. `friday_statement_receipt.py`
+domain-separates the existing service signer to bind immutable extracted rows to
+tenant/generation/source. The portfolio recomputes checks and verifies the receipt;
+the browser cannot submit a trusted check status. New trace middleware correlates
+web/API/worker/model stages using opaque request IDs and allowlisted telemetry.
+See [reliability, evaluation and limits](docs/STATEMENT_RELIABILITY_0310.md).
 
 ### Integrated assistant work session
 

@@ -19,6 +19,7 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from starlette.concurrency import run_in_threadpool
 from carapace_core.friday_access import FRIDAY_ROUTES, validate_enrollment_secret, visitor_tenant, visitor_key
+from carapace_core.friday_trace import RequestTraceMiddleware, get_request_id, new_request_id
 
 MAX_BODY = 8 * 1024 * 1024
 ROUTES = FRIDAY_ROUTES
@@ -99,6 +100,7 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
         "X-Carapace-Tenant": tenant,
         "X-Carapace-API-Key": settings.key_for(tenant),
         "Content-Type": content_type,
+        "X-Request-ID": get_request_id() or new_request_id(),
     })
     try:
         with urlopen(request, timeout=150) as response:
@@ -241,6 +243,13 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
                                                "/v1/friday/" + path + query, request.method,
                                                bytes(body) if body else None, mime)
         return JSONResponse(result, status_code=status)
+    # Added last so correlation covers identity/origin rejections as well as the
+    # proxy. ContextVars propagate through run_in_threadpool without changing
+    # the existing transport signature or forwarding browser-supplied headers.
+    app.add_middleware(
+        RequestTraceMiddleware, service="web", trust_incoming=False,
+        allowed_routes={route.path for route in app.routes if hasattr(route, "path")},
+    )
     return app
 
 

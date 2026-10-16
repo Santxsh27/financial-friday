@@ -1,8 +1,14 @@
 # Financial Friday — Current API map
 
-Updated 16 October 2026, version 0.30.0. The local OpenAPI reference at
+Updated 16 October 2026, version 0.31.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
+
+Statement prepare additionally returns `source_bound`, `reconciliation`,
+`save_allowed` and a signed `statement.extraction_receipt`. Preserve the receipt
+when saving reviewed labels. The API verifies it and recomputes checks; mismatches
+or modified source fields fail. Legacy normalized imports have no source-bound
+claim. Responses carry `X-Request-ID` for correlation, never authentication.
 
 The browser calls `/api/friday/...` on its web origin. The gateway maps approved
 operations to `/v1/friday/...` on the private API. Direct API calls need tenant

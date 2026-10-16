@@ -1,0 +1,8 @@
+Transaction Date,Narration,Withdrawal Amt.,Deposit Amt.,Closing Balance
+,Opening balance,,,1000.00
+2026-08-01,ARTIFICIAL shop,100.00,,900.00
+2026-08-02,ARTIFICIAL refund,,50.00,950.00
+,Closing balance,,,950.00
+,Total debits,100.00,,
+,Total credits,,50.00,
+,Transaction count,,,2

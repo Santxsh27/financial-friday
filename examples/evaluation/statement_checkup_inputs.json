@@ -1,0 +1,1316 @@
+{
+  "schema_version": 1,
+  "dataset_id": "statement-checkup-synthetic-v1",
+  "synthetic": true,
+  "split_protocol": {
+    "assignment": "Conservative scenario-lineage grouping, never random rows. All structurally related amount/narration/account-alias transformations stay together, including basic and bank-style examples. Entire repeated-entry and recorded-fee lineages are tuning; remaining lineages are evaluation. Some evaluation finding kinds therefore have zero positives.",
+    "tuning_base_families": [
+      "repeated-entry-scenarios",
+      "recorded-fee-scenarios"
+    ],
+    "evaluation_base_families": [
+      "recurring-payment-scenarios",
+      "expense-spike-scenarios",
+      "credit-source-scenarios",
+      "refund-trail-scenarios",
+      "period-gap-scenarios"
+    ],
+    "blind_status": "NOT_BLIND: same authoring agent wrote and has seen all labels. No parameter tuning is permitted after evaluation exposure.",
+    "future_holdout": "A teammate must review or replace labels, author unseen base families, freeze source/label hashes, seal labels from implementers and record one first run. This authored split cannot be rebranded as independent validation.",
+    "split_revision": "Lineage grouping hardened after the first authored run exposed results. Labels and all overall counts unchanged. This split is already observed and cannot support a blind claim. Frozen case ID prefixes are historical identifiers, not split membership."
+  },
+  "cases": [
+    {
+      "id": "t-repeat-exact",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two identical grocery entries remain unexplained; ask whether this is an accidental repeat.",
+      "statements": [
+        {
+          "source_id": "t-repeat-1",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-04-03",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-03",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-repeat-distinct-day",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Equal grocery purchases occurred on two separate days; both receipts are confirmed.",
+      "statements": [
+        {
+          "source_id": "t-repeat-2",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-04-03",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-04",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-repeat-two-receipts",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two same-day cafe purchases have different confirmed receipts and were both intended. No follow-up remains.",
+      "statements": [
+        {
+          "source_id": "t-repeat-3",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-04-03",
+              "Cafe SYNTHETIC",
+              12000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-03",
+              "Cafe SYNTHETIC",
+              12000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-repeat-two-accounts",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Different household members made separate confirmed purchases from their distinct accounts.",
+      "statements": [
+        {
+          "source_id": "t-repeat-4a",
+          "account_alias": "House A",
+          "rows": [
+            [
+              "a",
+              "2026-04-03",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ]
+          ]
+        },
+        {
+          "source_id": "t-repeat-4b",
+          "account_alias": "House B",
+          "rows": [
+            [
+              "b",
+              "2026-04-03",
+              "Grocery SYNTHETIC",
+              25000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-regular-increase",
+      "split": "evaluation",
+      "family": "recurring_amounts",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "A monthly broadband obligation rose from INR 500 to INR 750 without an explanation.",
+      "statements": [
+        {
+          "source_id": "t-regular-1",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-01-05",
+              "Broadband SYNTHETIC",
+              50000,
+              0
+            ],
+            [
+              "b",
+              "2026-02-05",
+              "Broadband SYNTHETIC",
+              50000,
+              0
+            ],
+            [
+              "c",
+              "2026-03-05",
+              "Broadband SYNTHETIC",
+              75000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-regular-stable",
+      "split": "evaluation",
+      "family": "recurring_amounts",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The monthly broadband obligation remains INR 500 and is fully explained.",
+      "statements": [
+        {
+          "source_id": "t-regular-2",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-01-05",
+              "Broadband SYNTHETIC",
+              50000,
+              0
+            ],
+            [
+              "b",
+              "2026-02-05",
+              "Broadband SYNTHETIC",
+              50000,
+              0
+            ],
+            [
+              "c",
+              "2026-03-05",
+              "Broadband SYNTHETIC",
+              50000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-spike-unexplained",
+      "split": "evaluation",
+      "family": "unusual_amounts",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Six modest grocery purchases establish history; a new INR 2500 grocery entry is unexplained.",
+      "statements": [
+        {
+          "source_id": "t-spike-1",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-01-01",
+              "Grocery SYNTHETIC",
+              10000,
+              0
+            ],
+            [
+              "b",
+              "2026-01-08",
+              "Grocery SYNTHETIC",
+              11000,
+              0
+            ],
+            [
+              "c",
+              "2026-01-15",
+              "Grocery SYNTHETIC",
+              9000,
+              0
+            ],
+            [
+              "d",
+              "2026-02-01",
+              "Grocery SYNTHETIC",
+              10000,
+              0
+            ],
+            [
+              "e",
+              "2026-02-08",
+              "Grocery SYNTHETIC",
+              11000,
+              0
+            ],
+            [
+              "f",
+              "2026-02-15",
+              "Grocery SYNTHETIC",
+              9000,
+              0
+            ],
+            [
+              "g",
+              "2026-03-05",
+              "Grocery SYNTHETIC",
+              250000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-spike-normal",
+      "split": "evaluation",
+      "family": "unusual_amounts",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "All seven grocery purchases are consistent with the established small-purchase history.",
+      "statements": [
+        {
+          "source_id": "t-spike-2",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-01-01",
+              "Grocery SYNTHETIC",
+              10000,
+              0
+            ],
+            [
+              "b",
+              "2026-01-08",
+              "Grocery SYNTHETIC",
+              11000,
+              0
+            ],
+            [
+              "c",
+              "2026-01-15",
+              "Grocery SYNTHETIC",
+              9000,
+              0
+            ],
+            [
+              "d",
+              "2026-02-01",
+              "Grocery SYNTHETIC",
+              10000,
+              0
+            ],
+            [
+              "e",
+              "2026-02-08",
+              "Grocery SYNTHETIC",
+              11000,
+              0
+            ],
+            [
+              "f",
+              "2026-02-15",
+              "Grocery SYNTHETIC",
+              9000,
+              0
+            ],
+            [
+              "g",
+              "2026-03-05",
+              "Grocery SYNTHETIC",
+              12000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-credit-unknown",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "The source of this generic incoming transfer is unknown; do not assume earnings.",
+      "statements": [
+        {
+          "source_id": "t-credit-1",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-03-01",
+              "Incoming transfer SYNTHETIC",
+              0,
+              400000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-credit-salary",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "The employer pays the documented monthly salary; no credit-source question remains.",
+      "statements": [
+        {
+          "source_id": "t-credit-2",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-03-01",
+              "Salary SYNTHETIC",
+              0,
+              400000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-fee-unexplained",
+      "split": "tuning",
+      "family": "recorded_fees",
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "A bank fee is recorded and its purpose is unknown; follow-up is warranted without assuming refund eligibility.",
+      "statements": [
+        {
+          "source_id": "t-fee-1",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-03-01",
+              "Bank fee SYNTHETIC",
+              5000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t-fee-no-fee",
+      "split": "tuning",
+      "family": "recorded_fees",
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "An ordinary confirmed bus fare has no outstanding question.",
+      "statements": [
+        {
+          "source_id": "t-fee-2",
+          "account_alias": "Daily Account",
+          "rows": [
+            [
+              "a",
+              "2026-03-01",
+              "Bus fare SYNTHETIC",
+              5000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-whitespace",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "UPI narration differs only in case and whitespace; the matching debit remains unexplained.",
+      "statements": [
+        {
+          "source_id": "e-rep-1",
+          "account_alias": "Salary Vault",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "UPI  SYNTHETIC-GROCER  TX-77",
+              34700,
+              0
+            ],
+            [
+              "b",
+              "2026-06-03",
+              "upi synthetic-grocer tx-77",
+              34700,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-changed-description",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Receipt reference 88 confirms one intended purchase; the bank exported both POS and UPI narrations for that same event. The second debit remains unexplained.",
+      "statements": [
+        {
+          "source_id": "e-rep-2",
+          "account_alias": "Salary Vault",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "POS/SYNTHETIC-GROCER/88",
+              34700,
+              0
+            ],
+            [
+              "b",
+              "2026-06-03",
+              "UPI/SYNTHETIC-GROCER/88",
+              34700,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-overlap",
+      "split": "tuning",
+      "family": "overlapping_imports",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two overlapping exports contain the same original row. All rows must remain counted, but import overlap needs review.",
+      "statements": [
+        {
+          "source_id": "e-rep-3a",
+          "account_alias": "Spending Pocket",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "IMPS SYNTHETIC MART REF-35",
+              62800,
+              0
+            ]
+          ]
+        },
+        {
+          "source_id": "e-rep-3b",
+          "account_alias": "Spending Pocket",
+          "rows": [
+            [
+              "b",
+              "2026-06-03",
+              "IMPS SYNTHETIC MART REF-35",
+              62800,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-same-account-renamed",
+      "split": "tuning",
+      "family": "account_aliases",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "The user renamed the same account from Old Vault to New Vault between overlapping exports. The same original debit is represented twice and needs reconciliation.",
+      "statements": [
+        {
+          "source_id": "e-rep-4a",
+          "account_alias": "Old Vault",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "POS SYNTHETIC MART REF-35",
+              62800,
+              0
+            ]
+          ]
+        },
+        {
+          "source_id": "e-rep-4b",
+          "account_alias": "New Vault",
+          "rows": [
+            [
+              "b",
+              "2026-06-03",
+              "POS SYNTHETIC MART REF-35",
+              62800,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-legitimate",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two adults independently bought the same cinema ticket price using one card on one day; distinct receipts confirm both charges. No follow-up remains.",
+      "statements": [
+        {
+          "source_id": "e-rep-5",
+          "account_alias": "Weekend Card",
+          "account_type": "CREDIT_CARD",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "ECOM SYNTHETIC CINEMA",
+              42000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-03",
+              "ECOM SYNTHETIC CINEMA",
+              42000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-repeat-lookalike-merchants",
+      "split": "tuning",
+      "family": "repeated_entries",
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two similarly named but distinct merchants have confirmed receipts. Do not merge counterparty identity from a shared prefix.",
+      "statements": [
+        {
+          "source_id": "e-rep-6",
+          "account_alias": "Weekend Card",
+          "rows": [
+            [
+              "a",
+              "2026-06-03",
+              "UPI SYNTHETIC MART EAST",
+              42000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-03",
+              "UPI SYNTHETIC MART WEST",
+              42000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-regular-bank-narration",
+      "split": "evaluation",
+      "family": "recurring_amounts",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "An unexplained monthly NACH electricity charge rose from INR 850 to INR 1150 on the same obligation.",
+      "statements": [
+        {
+          "source_id": "e-reg-1",
+          "account_alias": "Home Bills",
+          "rows": [
+            [
+              "a",
+              "2026-04-11",
+              "NACH-DR SYNTHETIC ELECTRIC MANDATE-21",
+              85000,
+              0
+            ],
+            [
+              "b",
+              "2026-05-11",
+              "NACH-DR SYNTHETIC ELECTRIC MANDATE-21",
+              85000,
+              0
+            ],
+            [
+              "c",
+              "2026-06-11",
+              "NACH-DR SYNTHETIC ELECTRIC MANDATE-21",
+              115000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-regular-description-changed",
+      "split": "evaluation",
+      "family": "changed_descriptions",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The mandate ID 21 identifies one monthly electricity obligation despite the bank changing the narration suffix. The INR 300 increase is unexplained.",
+      "statements": [
+        {
+          "source_id": "e-reg-2",
+          "account_alias": "Home Bills",
+          "rows": [
+            [
+              "a",
+              "2026-04-11",
+              "NACH SYNTHETIC ELECTRIC APR MANDATE-21",
+              85000,
+              0
+            ],
+            [
+              "b",
+              "2026-05-11",
+              "NACH SYNTHETIC ELECTRIC MAY MANDATE-21",
+              85000,
+              0
+            ],
+            [
+              "c",
+              "2026-06-11",
+              "NACH SYNTHETIC ELECTRIC JUN MANDATE-21",
+              115000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-regular-planned-increase",
+      "split": "evaluation",
+      "family": "legitimate_spikes",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The user deliberately upgraded broadband from INR 850 to INR 1150 and confirmed the exact billed amount; the increase is fully explained.",
+      "statements": [
+        {
+          "source_id": "e-reg-3",
+          "account_alias": "Home Bills",
+          "rows": [
+            [
+              "a",
+              "2026-04-11",
+              "NACH SYNTHETIC BROADBAND",
+              85000,
+              0
+            ],
+            [
+              "b",
+              "2026-05-11",
+              "NACH SYNTHETIC BROADBAND",
+              85000,
+              0
+            ],
+            [
+              "c",
+              "2026-06-11",
+              "NACH SYNTHETIC BROADBAND",
+              115000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-regular-missing-period",
+      "split": "evaluation",
+      "family": "missing_periods",
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "May is missing. Two supplied payments cannot establish a regular payment increase; the review label for that target is deliberately withheld.",
+      "statements": [
+        {
+          "source_id": "e-reg-4",
+          "account_alias": "Home Bills",
+          "rows": [
+            [
+              "a",
+              "2026-04-11",
+              "NACH SYNTHETIC ELECTRIC",
+              85000,
+              0
+            ],
+            [
+              "c",
+              "2026-06-11",
+              "NACH SYNTHETIC ELECTRIC",
+              115000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-spike-unexplained",
+      "split": "evaluation",
+      "family": "unusual_amounts",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Six fuel purchases of around INR 400 precede an unexplained INR 9000 fuel debit. Sufficient history for review exists.",
+      "statements": [
+        {
+          "source_id": "e-spike-1",
+          "account_alias": "Travel Purse",
+          "rows": [
+            [
+              "a",
+              "2026-04-02",
+              "POS SYNTHETIC FUEL A",
+              40000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-08",
+              "UPI SYNTHETIC PETROL B",
+              42000,
+              0
+            ],
+            [
+              "c",
+              "2026-04-18",
+              "POS SYNTHETIC FUEL C",
+              38000,
+              0
+            ],
+            [
+              "d",
+              "2026-05-02",
+              "UPI SYNTHETIC PETROL D",
+              40000,
+              0
+            ],
+            [
+              "e",
+              "2026-05-08",
+              "POS SYNTHETIC FUEL E",
+              42000,
+              0
+            ],
+            [
+              "f",
+              "2026-05-18",
+              "UPI SYNTHETIC PETROL F",
+              38000,
+              0
+            ],
+            [
+              "g",
+              "2026-06-12",
+              "POS SYNTHETIC FUEL Z",
+              900000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-spike-planned",
+      "split": "evaluation",
+      "family": "legitimate_spikes",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "The user prepaid INR 9000 for a documented planned road trip and confirmed the fuel receipt. The otherwise exceptional amount is fully explained.",
+      "statements": [
+        {
+          "source_id": "e-spike-2",
+          "account_alias": "Travel Purse",
+          "rows": [
+            [
+              "a",
+              "2026-04-02",
+              "POS SYNTHETIC FUEL A",
+              40000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-08",
+              "UPI SYNTHETIC PETROL B",
+              42000,
+              0
+            ],
+            [
+              "c",
+              "2026-04-18",
+              "POS SYNTHETIC FUEL C",
+              38000,
+              0
+            ],
+            [
+              "d",
+              "2026-05-02",
+              "UPI SYNTHETIC PETROL D",
+              40000,
+              0
+            ],
+            [
+              "e",
+              "2026-05-08",
+              "POS SYNTHETIC FUEL E",
+              42000,
+              0
+            ],
+            [
+              "f",
+              "2026-05-18",
+              "UPI SYNTHETIC PETROL F",
+              38000,
+              0
+            ],
+            [
+              "g",
+              "2026-06-12",
+              "POS SYNTHETIC FUEL Z",
+              900000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-spike-insufficient-history",
+      "split": "evaluation",
+      "family": "sparse_history",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Only two fuel expenses are supplied. There is insufficient history to label the second amount as exceptional for this account.",
+      "statements": [
+        {
+          "source_id": "e-spike-3",
+          "account_alias": "Travel Purse",
+          "rows": [
+            [
+              "a",
+              "2026-05-02",
+              "POS SYNTHETIC FUEL A",
+              40000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-12",
+              "POS SYNTHETIC FUEL Z",
+              900000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-spike-account-renamed",
+      "split": "evaluation",
+      "family": "account_aliases",
+      "base_family_id": "expense-spike-scenarios",
+      "context": "The user confirms Travel Old and Travel New are the same renamed account. Six earlier fuel payments provide relevant history for the unexplained INR 9000 payment.",
+      "statements": [
+        {
+          "source_id": "e-spike-4a",
+          "account_alias": "Travel Old",
+          "rows": [
+            [
+              "a",
+              "2026-04-02",
+              "POS SYNTHETIC FUEL A",
+              40000,
+              0
+            ],
+            [
+              "b",
+              "2026-04-08",
+              "UPI SYNTHETIC PETROL B",
+              42000,
+              0
+            ],
+            [
+              "c",
+              "2026-04-18",
+              "POS SYNTHETIC FUEL C",
+              38000,
+              0
+            ],
+            [
+              "d",
+              "2026-05-02",
+              "UPI SYNTHETIC PETROL D",
+              40000,
+              0
+            ],
+            [
+              "e",
+              "2026-05-08",
+              "POS SYNTHETIC FUEL E",
+              42000,
+              0
+            ],
+            [
+              "f",
+              "2026-05-18",
+              "UPI SYNTHETIC PETROL F",
+              38000,
+              0
+            ]
+          ]
+        },
+        {
+          "source_id": "e-spike-4b",
+          "account_alias": "Travel New",
+          "rows": [
+            [
+              "g",
+              "2026-06-12",
+              "POS SYNTHETIC FUEL Z",
+              900000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-credit-loan-and-salary",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "The INR 50000 credit is documented borrowing and the INR 32000 credit is documented payroll. Only payroll is earnings; no credit-source follow-up remains.",
+      "statements": [
+        {
+          "source_id": "e-credit-1",
+          "account_alias": "Main Reserve",
+          "rows": [
+            [
+              "a",
+              "2026-06-01",
+              "NEFT Loan disbursal SYNTHETIC REF-810",
+              0,
+              5000000
+            ],
+            [
+              "b",
+              "2026-06-02",
+              "NEFT Payroll SYNTHETIC REF-811",
+              0,
+              3200000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-credit-loan-abbreviation",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "The supplied agreement confirms LN DISB is loan proceeds, not income. Its source is resolved even though the bank abbreviation is unfamiliar.",
+      "statements": [
+        {
+          "source_id": "e-credit-2",
+          "account_alias": "Main Reserve",
+          "rows": [
+            [
+              "a",
+              "2026-06-01",
+              "NEFT LN DISB SYNTHETIC REF-812",
+              0,
+              5000000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-credit-pension",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "The documented pension credit is income; no follow-up remains.",
+      "statements": [
+        {
+          "source_id": "e-credit-3",
+          "account_alias": "Retirement Pot",
+          "rows": [
+            [
+              "a",
+              "2026-06-01",
+              "ACH CR PENSION SYNTHETIC REF-813",
+              0,
+              2700000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-credit-unresolved-imps",
+      "split": "evaluation",
+      "family": "income_and_credit_sources",
+      "base_family_id": "credit-source-scenarios",
+      "context": "An unfamiliar IMPS credit has no sender explanation. Review its source and keep it outside identified income.",
+      "statements": [
+        {
+          "source_id": "e-credit-4",
+          "account_alias": "Main Reserve",
+          "rows": [
+            [
+              "a",
+              "2026-06-01",
+              "IMPS CR SYNTHETIC REF-814",
+              0,
+              920000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-refund-full",
+      "split": "evaluation",
+      "family": "refunds",
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A single purchase and a later equal merchant refund are fully reconciled under the supplied assumptions. Refund is not income and no question remains.",
+      "statements": [
+        {
+          "source_id": "e-refund-1",
+          "account_alias": "Shopping Card",
+          "account_type": "CREDIT_CARD",
+          "rows": [
+            [
+              "a",
+              "2026-06-02",
+              "Purchase: SYNTHETIC STORE Ref: P1",
+              76000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-05",
+              "Refund: SYNTHETIC STORE Ref: R1",
+              0,
+              76000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-refund-partial",
+      "split": "evaluation",
+      "family": "refunds",
+      "base_family_id": "refund-trail-scenarios",
+      "context": "The user expected a full return of one INR 760 purchase, but only INR 200 is recorded. Confirm the remaining trail without declaring an amount owed.",
+      "statements": [
+        {
+          "source_id": "e-refund-2",
+          "account_alias": "Shopping Card",
+          "account_type": "CREDIT_CARD",
+          "rows": [
+            [
+              "a",
+              "2026-06-02",
+              "Purchase: SYNTHETIC STORE Ref: P2",
+              76000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-05",
+              "Refund: SYNTHETIC STORE Ref: R2",
+              0,
+              20000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-refund-ambiguous",
+      "split": "evaluation",
+      "family": "refunds",
+      "base_family_id": "refund-trail-scenarios",
+      "context": "Two different purchases at the same merchant could explain one refund. Which purchase was returned is unresolved.",
+      "statements": [
+        {
+          "source_id": "e-refund-3",
+          "account_alias": "Shopping Card",
+          "account_type": "CREDIT_CARD",
+          "rows": [
+            [
+              "a",
+              "2026-06-01",
+              "Purchase: SYNTHETIC STORE Ref: P3",
+              76000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-02",
+              "Purchase: SYNTHETIC STORE Ref: P4",
+              76000,
+              0
+            ],
+            [
+              "c",
+              "2026-06-05",
+              "Refund: SYNTHETIC STORE Ref: R3",
+              0,
+              76000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-refund-orphan",
+      "split": "evaluation",
+      "family": "refunds",
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A refund appears without any purchase history or explanation. Its purchase relationship needs confirmation and the credit is not salary.",
+      "statements": [
+        {
+          "source_id": "e-refund-4",
+          "account_alias": "Shopping Card",
+          "rows": [
+            [
+              "a",
+              "2026-06-05",
+              "Refund: SYNTHETIC STORE Ref: R4",
+              0,
+              76000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-refund-resolved-historical",
+      "split": "evaluation",
+      "family": "refunds",
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A confirmed merchant return relates to a documented older purchase deliberately outside this export. The relationship is already resolved; no follow-up remains.",
+      "statements": [
+        {
+          "source_id": "e-refund-5",
+          "account_alias": "Shopping Card",
+          "rows": [
+            [
+              "a",
+              "2026-06-05",
+              "Refund: SYNTHETIC STORE Ref: R5",
+              0,
+              76000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-period-gap-is-not-zero",
+      "split": "evaluation",
+      "family": "missing_periods",
+      "base_family_id": "period-gap-scenarios",
+      "context": "Only April and June are supplied. May must remain missing, not zero spending; no charge itself is unexplained.",
+      "statements": [
+        {
+          "source_id": "e-period-1",
+          "account_alias": "Small Wallet",
+          "rows": [
+            [
+              "a",
+              "2026-04-02",
+              "Metro SYNTHETIC",
+              8000,
+              0
+            ],
+            [
+              "b",
+              "2026-06-02",
+              "Metro SYNTHETIC",
+              9000,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-fee-bank-style",
+      "split": "tuning",
+      "family": "recorded_fees",
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "An unexplained service charge appears in the bank export and warrants review without assuming it is improper.",
+      "statements": [
+        {
+          "source_id": "e-fee-1",
+          "account_alias": "Service Account",
+          "rows": [
+            [
+              "a",
+              "2026-06-20",
+              "DR SERVICE CHARGE SYNTHETIC REF-90",
+              17700,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-fee-abbreviation",
+      "split": "tuning",
+      "family": "recorded_fees",
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "The export legend identifies CHG AMB as a bank maintenance fee. Its purpose and authorisation are still unresolved and need review.",
+      "statements": [
+        {
+          "source_id": "e-fee-2",
+          "account_alias": "Service Account",
+          "rows": [
+            [
+              "a",
+              "2026-06-20",
+              "DR CHG AMB SYNTHETIC REF-91",
+              17700,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e-fee-confirmed",
+      "split": "tuning",
+      "family": "recorded_fees",
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "The user already confirmed this bank fee against the agreed tariff and requested no further follow-up.",
+      "statements": [
+        {
+          "source_id": "e-fee-3",
+          "account_alias": "Service Account",
+          "rows": [
+            [
+              "a",
+              "2026-06-20",
+              "DR BANK FEE SYNTHETIC REF-92",
+              17700,
+              0
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

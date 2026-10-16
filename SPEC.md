@@ -1,11 +1,23 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **16 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.30.0`. Actual deployed source and
+specifications. Current code version is `0.31.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md).
+
+### Source extraction and reconciliation
+
+Statement imports may contain literal-grounded source facts, running balances
+and unit/page references. The server issues a tenant/generation-bound extraction
+receipt, verifies immutable fields on save and recomputes all source checks.
+Declared mismatches block save; unsupported or missing facts remain UNKNOWN.
+User-reviewed meaning/category labels stay editable. Legacy imports never gain
+a source-bound badge. The signature is Friday's extraction attestation, not bank
+authentication. Minimal labelled fact excerpts are retained with normalized
+history; raw files are not archived and excerpts/signatures are not chat context.
+See [0.31.0 boundaries and measured baseline](docs/STATEMENT_RELIABILITY_0310.md).
 
 ## 1. Product definition
 

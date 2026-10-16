@@ -6,6 +6,8 @@ from zoneinfo import ZoneInfo
 import re
 from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+from .friday_statement_reconciliation import StatementSourceFacts
+from .friday_statement_receipt import StatementExtractionReceipt
 
 CATEGORIES = ('Groceries', 'Food', 'Transport', 'Housing', 'Utilities', 'Shopping',
               'Health', 'Education', 'Entertainment', 'Fees', 'Other')
@@ -22,6 +24,8 @@ class StatementEntry(BaseModel):
     kind: Literal['INCOME','EXPENSE','TRANSFER','CARD_REPAYMENT','LOAN_RECEIVED','LOAN_REPAYMENT','REFUND','UNCLEAR'] = 'UNCLEAR'
     category: Literal['Groceries','Food','Transport','Housing','Utilities','Shopping','Health','Education','Entertainment','Fees','Other'] = 'Other'
     source_row: int = Field(ge=1, le=10000, strict=True)
+    running_balance_minor: int | None = Field(default=None, ge=-100_000_000_000_000, le=100_000_000_000_000, strict=True)
+    source_unit_ids: list[str] = Field(default_factory=list, max_length=8)
 
     @model_validator(mode='after')
     def check(self):
@@ -35,6 +39,10 @@ class StatementEntry(BaseModel):
             raise ValueError('Expenses and repayments require a debit')
         if self.kind != 'EXPENSE' and self.category != 'Other':
             raise ValueError('Spending categories apply only to expenses')
+        if any(not isinstance(unit, str) or not 1 <= len(unit) <= 80 for unit in self.source_unit_ids):
+            raise ValueError('Invalid transaction source unit')
+        if len(set(self.source_unit_ids)) != len(self.source_unit_ids):
+            raise ValueError('Transaction source units must be unique')
         return self
 
 
@@ -45,6 +53,8 @@ class StatementImport(BaseModel):
     account_type: Literal['BANK','CREDIT_CARD']
     entries: list[StatementEntry] = Field(min_length=1, max_length=500)
     extraction: Literal['CSV_EXACT','PDF_TEXT_GEMINI','OCR_GEMINI']
+    source_facts: StatementSourceFacts | None = None
+    extraction_receipt: StatementExtractionReceipt | None = None
 
 
 class SaveStatement(BaseModel):

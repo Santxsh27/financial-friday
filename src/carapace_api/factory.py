@@ -34,6 +34,7 @@ from carapace_core.release_passport import (
 from carapace_core.counterfactual import search_minimal_repair
 from carapace_core.verifier import verify_payment
 from carapace_core.bank_envelope import BankEnvelopeSigner
+from carapace_core.friday_trace import RequestTraceMiddleware
 
 from .auth import TenantAuthenticator, TenantContext
 from .config import Settings
@@ -69,7 +70,7 @@ from .financial_friday_routes import register_financial_friday_routes
 from carapace_integrations.anthos_preflight_bridge import AnthosPreflightBridge
 
 
-VERSION = "0.29.0"
+VERSION = "0.31.0"
 LOGGER = logging.getLogger(__name__)
 
 
@@ -576,4 +577,8 @@ def create_app(
             {**passport, "signature_valid": signature_valid}
         )
 
+    application.add_middleware(
+        RequestTraceMiddleware, service="api", trust_incoming=True,
+        allowed_routes={route.path for route in application.routes if hasattr(route, "path")},
+    )
     return application

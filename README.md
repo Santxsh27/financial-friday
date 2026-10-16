@@ -2,6 +2,17 @@
 
 **One statement. Less admin. A clearer next step.**
 
+### Statement reliability update 0.31.0
+
+Statement review now includes folded source checks for declared totals, balances,
+counts and page coverage. Friday signs its extraction, verifies it again on save,
+and blocks known mismatches. Missing evidence stays unknown; this is not bank
+authentication. A new 39-case labelled synthetic benchmark publishes both false
+warnings and missed findings, and request IDs link gateway, API and model logs
+without logging statement contents. See [the reliability report](docs/STATEMENT_RELIABILITY_0310.md)
+for measured limitations and [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) for
+actual deployment status. The main user flow and design are unchanged.
+
 ### Friday prepares the work, not another report to read
 
 **Add statement → review once → open your workbench.** Friday reads the supplied
@@ -291,8 +302,10 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 16 October 2026: **646 tests ran, 645 passed, one optional
-skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
+Current 0.31.0 local verification ran **694 native tests, 693 passed, one optional
+skip; 38 tooling checks passed**. Docker ran 694 tests, 670 passed and 24 optional
+checks skipped. Deployed verification identities are recorded in
+[CURRENT_RELEASE](docs/CURRENT_RELEASE.json). Ten buddy tests cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
 Seventeen follow-up tests cover persistent tracking, new evidence after closing,

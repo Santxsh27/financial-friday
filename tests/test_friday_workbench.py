@@ -40,11 +40,13 @@ class WorkbenchUiTests(unittest.TestCase):
         self.assertIn('Ranges cannot be added as a loss', WORKBENCH_JS)
 
     def test_presence_follows_real_stage_events_and_is_pauseable(self):
-        for phase in ['READING','PROPOSED','SAVING','SAVED','ERROR']:
+        for phase in ['READING','PROPOSED','MISMATCH','SAVING','SAVED','ERROR']:
             self.assertIn("statementStage('"+phase+"'", STATEMENTS_JS)
         for phase in ['THINKING','REPLIED','ERROR']:
             self.assertIn("phase:'"+phase+"'", CHAT_JS)
         self.assertIn("'friday:statement-stage'", WORKBENCH_JS)
+        self.assertIn("MISMATCH:['The source checks disagree'", WORKBENCH_JS)
+        self.assertIn("proposal?.save_allowed===false", STATEMENTS_JS)
         self.assertIn("'friday:chat-state'", WORKBENCH_JS)
         self.assertIn("paused=!paused", WORKBENCH_JS)
         self.assertIn('prefers-reduced-motion:reduce', WORKBENCH_CSS)

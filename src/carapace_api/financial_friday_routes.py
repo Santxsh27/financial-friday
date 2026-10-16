@@ -160,6 +160,11 @@ def register_financial_friday_routes(application, service, authenticate):
         from carapace_ai.friday_document_grounding import configured_grounder
         from .friday_resource_limits import reserve_resource
         from .friday_privacy import privacy_generation
+        from time import perf_counter
+        from carapace_core.friday_statement_receipt import sign_statement_extraction
+        from carapace_core.friday_statement_reconciliation import reconcile_statement
+        from carapace_core.friday_trace import record_stage
+        started=perf_counter()
         if not payload.confirm_cloud_processing:
             raise HTTPException(422,'Confirm temporary server processing; PDFs also use Google AI')
         try:
@@ -170,11 +175,24 @@ def register_financial_friday_routes(application, service, authenticate):
                 account_alias=payload.account_alias,account_type=payload.account_type,use_ai=True,
                 grounder=configured_grounder() if payload.mime=='application/pdf' else None,
                 reserve=lambda pages:reserve_resource(service,'ocr_pages',pages))
+            record_stage('extraction',ok=True,reason='accepted',duration_ms=(perf_counter()-started)*1000)
+            if str(privacy_generation(service,tenant.tenant_id))!=generation:
+                record_stage('validation',ok=False,reason='stale_revision')
+                raise HTTPException(409,'Workspace was cleared while reading. This preview was discarded; reload first.')
+            statement.extraction_receipt=sign_statement_extraction(statement,tenant.tenant_id,generation,service.signer)
+            checks=reconcile_statement(statement)
+            record_stage('reconciliation',ok=checks['overall_status']!='MISMATCH',reason=(
+                'mismatch' if checks['overall_status']=='MISMATCH' else 'accepted' if checks['overall_status']=='CONSISTENT' else 'insufficient_data'))
             return {'statement':statement.model_dump(mode='json'),'summary':summarize_statements([statement.model_dump(mode='json')]),
+                'reconciliation':checks,'source_bound':True,'save_allowed':checks['overall_status']!='MISMATCH',
                 'workspace_generation':generation,'provenance':provenance,'saved':False,'raw_file_stored':False,'money_moved':False,
                 'review_required':True,'warning':'Check the row count, amounts and labels against the original before saving. Extraction may omit or misread rows.'}
-        except (ValueError,UnicodeError,binascii.Error) as error:raise HTTPException(422,str(error)) from error
+        except HTTPException:raise
+        except (ValueError,UnicodeError,binascii.Error) as error:
+            record_stage('extraction',ok=False,reason='invalid_input',duration_ms=(perf_counter()-started)*1000)
+            raise HTTPException(422,str(error)) from error
         except Exception as error:
+            record_stage('extraction',ok=False,reason='provider_unavailable',duration_ms=(perf_counter()-started)*1000)
             from carapace_ai.friday_observability import LOG
             LOG.warning('statement_prepare_failed type=%s',type(error).__name__)
             raise HTTPException(503,'Statement reading unavailable. Nothing was saved. Try a clearer PDF or INR CSV export.') from error

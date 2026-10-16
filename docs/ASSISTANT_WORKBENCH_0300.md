@@ -32,6 +32,7 @@ transcribed or certified; the exact visual figures remain available.
 ## Verification record
 
 - Native suite: 646 tests run, 645 passed, one optional integration skipped.
+- Docker suite: 646 run, 622 passed, 24 optional integration/runtime skips.
 - Tool suite: 24 passed.
 - Browser: isolated synthetic upload, 35-row proposal, explicit save, automatic
   preparation, downloaded classification worksheet, reversible review queue
@@ -41,8 +42,47 @@ transcribed or certified; the exact visual figures remain available.
   fixture and the actual new 35-row web sample. No precomputed results added.
 - A privacy-generation race was fixed: old rows cannot be labelled as a cleared
   generation, and a generation change during analysis rejects the view.
+- Client load/save/extraction tickets also discard stale responses after cleanup.
+- Initial staged TTS returned 503; its disposable workspace was cleaned up. The
+  initial provider failure reason was not logged, so its exact cause remains
+  unestablished. A separate synthetic diagnostic correctly rejected over-limit
+  audio. The script was shortened to a spending headline and the TTS request got
+  its own 60-second, one-attempt timeout. The 30-second output cap was retained.
+  One direct shorter synthetic check returned 28.65 seconds of valid audio.
+- A subsequent UI review caught a chat-to-visual mismatch: refund selection now
+  focuses the refund task; spending-change selection renders actual category
+  deltas. These are real source calculations, not an animated success placeholder.
 - Live cloud/audio acceptance and immutable release identities are recorded in
   CURRENT_RELEASE only after verification; source work is not deployment proof.
+- Final staged acceptance passed: 35 synthetic rows, eight prepared artifacts,
+  review advancement with unchanged source rows, real Vertex chat visual selection
+  and a 25.69-second Gemini TTS briefing. The successful run made two model calls
+  and verified cleanup. Three separate direct diagnostic calls and the earlier
+  failed staged request are excluded from that successful-run count, not omitted
+  from this record. No owner financial context was used or shared.
+- Both final revisions serve 100% of their normal Cloud Run traffic. The canonical
+  Google-authenticated browser showed the new sample control and integrated
+  workbench, with no console errors observed in that fresh load. This hosted UI
+  check made no model call and did not upload or alter owner statements. The API
+  still returned 403 to an unauthenticated request. No IAM or OAuth scope changed.
+
+## Screen audit and resulting flow
+
+1. **Upload — improved:** one primary file action, optional collapsed account
+   settings, one labelled sample and concise processing consent. No auto-save.
+   ![Simplified statement input](screenshots/assistant-0300/upload.jpg)
+2. **Result — improved:** actual completed counts, chart and one prepared task.
+   Extra evidence is opt-in rather than a primary wall of prose. The assistant
+   remains beside the work without stretching to the entire page height.
+   ![Visual workbench with synthetic refund evidence](screenshots/assistant-0300/workbench-light.jpg)
+3. **Theme and phone layout — checked:** opaque logo background blends into the
+   header; native controls follow the theme. At 390 px the content is 390 px wide,
+   and the prepared task precedes the chart. The temporary viewport was reset.
+   Pause/Resume labels and pressed state were checked in the browser.
+   ![Corrected dark workbench](screenshots/assistant-0300/workbench-dark.jpg)
+
+These captures use artificial data. This is a focused workflow, theme and
+responsive check, not an independent usability study or accessibility certification.
 
 ## Official integration research
 

@@ -1,9 +1,9 @@
-# Consumer assurance release candidate
+# Consumer assurance release
 
-Release 0.32.0 is a source candidate. Staging, cloud promotion, release-level
-test counts and live acceptance are pending. [CURRENT_RELEASE.json](CURRENT_RELEASE.json)
-records the deployed source, images and revisions; this note does not promote
-either service. The statement → review → spending/workbench journey stays intact.
+Release 0.32.0 is deployed on Cloud Run in production consumer mode after staged
+acceptance. [CURRENT_RELEASE.json](CURRENT_RELEASE.json) records the deployed
+source, images and revisions. The statement → review → spending/workbench
+journey stays intact.
 
 ## Consumer routes and legacy demonstrations
 
@@ -15,7 +15,7 @@ can inspect or reconcile an existing journal; they cannot prepare or retry a
 payment through that recovery path.
 
 Environment loading defaults `FRIDAY_LEGACY_DEMO_ENABLED` to `false`, including
-when the environment label is development. The planned production setting is
+when the environment label is development. The deployed production setting is
 explicitly false. Preflight, assurance and new artificial-payment demonstration
 routes require a deliberate server opt-in and are absent from consumer OpenAPI.
 Local/test fixture construction retains explicit compatibility behavior.
@@ -78,8 +78,8 @@ lineages have no positive cases there.
 
 See [the frozen comparison](../examples/evaluation/statement_checkup_report_checkup2.json)
 and [the original baseline](../examples/evaluation/statement_checkup_report.json).
-The original evaluator records hashes for its listed source modules but omits
-the newly imported narration module; this limits that report's source provenance.
+The new report includes the narration module's source hash; the original report
+retains the source identities of its earlier implementation.
 Fresh reviewer-authored cases and human label review remain necessary before
 claiming broader quality or real bank-format support.
 
@@ -158,7 +158,25 @@ distinguish limit, retry, conflict and unavailable outcomes without error text.
 Injected provider-abort tests check bounded retries and exactly one successful
 reservation. This is narrower than proving every Firestore failure mode.
 
-The revised live race result and release-level native/container/CI results will
-be recorded with verified revision identities in CURRENT_RELEASE after staging.
-Engineering regressions, authored quality scores and deployment acceptance
-answer different questions and are not interchangeable.
+The revised live Firestore API races each returned one 200 and one 409 for
+different simultaneous imports and simultaneous finding reviews. The surviving
+history had one import and one acknowledgement, unchanged amounts/rows/mandate,
+and no silent overwrite. Cleanup was verified. No live provider abort was forced;
+these requests do not prove which transaction interleavings occurred internally.
+
+Final verification ran 746 native tests (745 passed, one skipped), 746 container
+tests (722 passed, 24 skipped) and 62 offline tooling tests. GitHub CI passed on
+Python 3.11/3.12 and containers. The final staged PDF passed all seven available
+source checks through real Vertex AI. The canonical website returned a live
+Gemini reply with all financial-context switches off and no browser errors.
+The private API still returns 403 anonymously. Both promoted services receive
+100% canonical traffic; identity permissions, budgets, keys and the old recovery
+target were preserved. API and web source commits differ because the final
+quota-only change did not change the UI.
+
+Remaining release limitations include unreviewed synthetic quality labels,
+incomplete real bank-layout coverage, finite prose scoring and shared application
+process/IAM boundaries. Retained historical tagged revisions need a separate
+retirement/recovery-migration decision. Engineering regressions, authored quality
+scores and deployment acceptance answer different questions and are not
+interchangeable.

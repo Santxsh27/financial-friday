@@ -1,10 +1,10 @@
 # Financial Friday API
 
 The consumer product uses the allowlisted `/v1/friday/` statement, guidance,
-privacy and related read/recovery routes. The 0.32.0 candidate defaults
+privacy and related read/recovery routes. Release 0.32.0 defaults
 `FRIDAY_LEGACY_DEMO_ENABLED=false` in both API and web environment loading.
-The planned production setting is explicitly false; staging and promotion are
-pending. Actual deployed versions and acceptance belong in
+The deployed production setting is explicitly false after staged acceptance.
+Actual deployed versions and acceptance belong in
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json).
 
 The preflight and assurance endpoints below describe retained artificial-money

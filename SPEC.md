@@ -1,8 +1,8 @@
 # Financial Friday — Current product and engineering contract
 
-Updated **16 October 2026**. This document replaces the mixed historical product
-specifications. Current source work targets release `0.32.0`; staging and
-promotion are pending. Actual deployed source and
+Updated **17 October 2026**. This document replaces the mixed historical product
+specifications. Release `0.32.0` is deployed in production consumer mode.
+Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -22,15 +22,14 @@ See [0.31.0 boundaries and measured baseline](docs/STATEMENT_RELIABILITY_0310.md
 
 ### Consumer admission and release status
 
-The candidate consumer API and web proxy share an explicit route allowlist.
+The consumer API and web proxy share an explicit route allowlist.
 `FRIDAY_LEGACY_DEMO_ENABLED` defaults to `false` when loaded from the environment;
-the planned production setting is explicitly `false`. Earlier payment/preflight
+the deployed production setting is explicitly `false`. Earlier payment/preflight
 demonstrations and new artificial execution routes require server opt-in.
 Existing task/run inspection and authenticated journal-only recovery remain
 available. This restricts route admission and OpenAPI exposure within the same
 application; it does not create separate processes, storage or IAM identities.
-The production configuration and both cloud services must pass staging and
-promotion before they can be called deployed 0.32.0. See
+Both services passed staged acceptance before promotion. See
 [consumer assurance](docs/CONSUMER_ASSURANCE_0320.md) and
 [CURRENT_RELEASE](docs/CURRENT_RELEASE.json).
 
@@ -487,24 +486,26 @@ and privacy details. Home examples do not submit automatically. Theme, optional
 sound and motion preferences affect presentation only. Evidence states reflect
 actual results; insufficient information does not produce a universal safe badge.
 
-Candidate 0.32.0 release-level test counts, CI, cloud revisions and live acceptance
-remain pending in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json). Historical test and
-artificial-payment evidence remains in its dated reports; it does not establish
-this candidate's deployment. The original six-call production-path AI smoke run
+Release 0.32.0 test counts, successful CI, exact cloud revisions and live acceptance
+are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json). Historical test and
+artificial-payment evidence remains in its dated reports. The original six-call production-path AI smoke run
 records 0/6 strict passes, including two genuine extraction rejections and scorer
-defects. A separate revised protocol is in progress; no corrected live score is
-asserted. Engineering test passes do not measure fraud accuracy or certify every
-feature/device.
+defects. After the numeric source-fact prompt clarification, both PDFs and all
+six follow-up outputs were admitted. Strict original scoring still passes only
+1/6; separately versioned finite factual checks pass 5/6. The revised protocol
+was authored after observation, not independently held out. Engineering test
+passes and these tiny smoke checks do not establish representative fraud/AI
+accuracy or certify every feature/device.
 
 ## 8. Priorities and non-goals
 
-Before submission: confirm another human login/roster/deadline, evaluate the new
-conversation-to-approved-task bridge on varied unseen inputs
+Before submission: confirm another human login/roster/deadline, independently
+review statement labels and evaluate varied unseen statement/chat inputs,
 and create required video/deck/materials. Preserve the existing safety boundary.
 Implemented hardening includes durable task lifecycle, journal-only recovery,
 complete bounded safety snapshots, atomic evidence-version checks and explicit
 review/draft retention/deletion. Later: independently authorised providers,
-automatic cloud workflow dispatch, complete account erasure and wider governance
+authorised source connectors, complete account erasure and wider governance
 operations and native voice. No autonomous real-money access, trading calls,
 phone surveillance, production patching or guaranteed reimbursements.
 

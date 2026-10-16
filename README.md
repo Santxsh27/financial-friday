@@ -2,7 +2,7 @@
 
 **One statement. Less admin. A clearer next step.**
 
-### Consumer assurance candidate 0.32.0
+### Consumer assurance release 0.32.0
 
 Current source work narrows the consumer API and web proxy to explicit routes;
 artificial-payment demos require server opt-in. Strict narration matching can
@@ -15,9 +15,14 @@ The unchanged 39-case, unreviewed agent-authored benchmark still has false alert
 and missed findings; the new matching rules do not improve its measured scores.
 The first six-call production-path AI smoke run also exposed real PDF rejections
 and scorer defects. See [the consumer assurance note](docs/CONSUMER_ASSURANCE_0320.md)
-for results and limits. Staging and promotion of 0.32.0 are pending;
-[CURRENT_RELEASE](docs/CURRENT_RELEASE.json) remains the authority for actual
-deployment identities and acceptance. The statement workflow and design remain.
+for results and limits. Version 0.32.0 is deployed on Cloud Run in production
+consumer mode. Final checks ran 746 tests locally (745 passed, one skipped),
+746 in Docker (722 passed, 24 skipped), and 62 offline tooling tests. GitHub CI
+passed on Python 3.11/3.12 and containers. Real Firestore import/review races each
+returned one success and one conflict; live Vertex PDF validation and generic
+public chat passed. [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) records exact
+deployment identities, earlier failures and acceptance scope. The statement
+workflow and approved design remain.
 
 ### Friday prepares the work, not another report to read
 

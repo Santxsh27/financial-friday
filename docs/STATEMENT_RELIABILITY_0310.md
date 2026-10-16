@@ -10,6 +10,29 @@ Local verification: 694 native tests ran, 693 passed, one optional skip; 38
 tooling tests passed. Docker ran 694 tests, 670 passed, 24 optional skips. These
 are engineering regressions, separate from the quality benchmark below.
 
+The API and web are deployed from commit `1ed1e06`, each at 100% normal traffic.
+GitHub CI [38940982932](https://github.com/Santxsh27/financial-friday/actions/runs/38940982932)
+passed for the deployed source. Live acceptance used one artificial PDF Gemini
+call and a fresh Firestore workspace. All seven PDF checks agreed; tampered amount,
+declared mismatch and duplicate-source behavior passed. The workspace was cleaned
+up. The model log recorded 2,426 ms and 2,999 tokens without content. No owner data,
+financial action, new service, OAuth scope or IAM permission was involved.
+
+The canonical website was checked after promotion; the new source checks and
+mismatch guide are present with no new browser errors. The private API still
+returns 403 anonymously. Both normal local containers are healthy.
+
+## Coverage of the six engineering recommendations
+
+| Recommendation | Delivered here | Remaining |
+| --- | --- | --- |
+| Independent analysis evaluation | Separate labels, 39 synthetic cases, explicit false warnings/misses and archived CI baseline | External label review and fresh authorised cases; current data is not independent |
+| Extraction reconciliation | Seven checks, strict synthetic column profile, page/fact binding, signed extraction and save gate | More bank formats and independently labelled scanned documents |
+| LLM evaluation | Existing evidence/risk harnesses preserved; one live PDF acceptance and model telemetry | Fresh independent extraction/intent/citation/explanation benchmark across prompt/model changes |
+| Architecture focus | Statement ingestion, source checks and guidance stay the default; new source logic is in small pure modules | Fully separate legacy payment service and narrower deployment permissions |
+| Privacy and concurrency | Concurrent review, stale PDF/chat, cleanup/new-workspace, cross-tenant and expired identity tests | Real multi-client Firestore contention and broader distributed recovery testing |
+| Observability | Gateway/API/model correlation, fixed failure categories, duration, returned model version/token usage | Operational alerting, SLOs and exact cost attribution |
+
 ## What the user sees
 
 The existing upload → review → spending workflow stays intact. A folded
@@ -33,6 +56,8 @@ literal value citations and explicit printed totals/page markers when available.
 Fact labels and values must bind on the same source unit. Clear dated rows cannot
 be silently omitted or reused. Ambiguous dates/layouts are rejected or remain
 unknown; Gemini's own `complete` assertion is not independent completeness proof.
+
+![Artificial statement mismatch blocks saving](screenshots/reliability-0310/mismatch-blocked-full.jpg)
 
 Pure integer-paise reconciliation checks debit/credit totals, transaction count,
 printed page coverage, opening-to-closing arithmetic, running balances and detected

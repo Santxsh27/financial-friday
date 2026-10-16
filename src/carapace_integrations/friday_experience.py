@@ -294,11 +294,13 @@ def enhance_friday_html(html: str) -> str:
     from .friday_plan_ui import PLAN_CSS, PLAN_JS
     from .friday_rehearsal_ui import REHEARSAL_CSS, REHEARSAL_JS
     from .friday_checkup_ui import CHECKUP_CSS, CHECKUP_JS
+    from .friday_workbench_ui import WORKBENCH_CSS, WORKBENCH_JS
+    from .friday_polish_ui import POLISH_CSS
     # One active design system, not another override over historical themes.
     html = re.sub(r"<style>.*?</style>", "", html, count=1, flags=re.S)
     cashflow_ui=CASHFLOW_JS.replace("show('home');const consent=$('friday-chat-cashflow');consent.focus();", "show('coach');const consent=$('friday-chat-cashflow');consent.closest('details').open=true;consent.focus();")
-    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + cashflow_ui + DIARY_JS + STATEMENTS_JS + STUDIO_JS + PLAN_JS + REHEARSAL_JS + CHECKUP_JS + FLOW_JS + "route(false);", 1)
-    styles=EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + BUDDY_CSS + CASHFLOW_CSS + DIARY_CSS + STATEMENTS_CSS + INLINE_ICON_CSS + FLOW_CSS + STUDIO_CSS + PLAN_CSS + REHEARSAL_CSS + CHECKUP_CSS + "</style>")
+    compact_js = EXPERIENCE_JS.replace("route(false);", SIMPLE_JS + CORE_JS + JOURNEY_JS + EVERYDAY_JS + REVIEW_JS + CHAT_JS + TASK_JS + PRIVACY_JS + BUDDY_JS + cashflow_ui + DIARY_JS + STATEMENTS_JS + STUDIO_JS + PLAN_JS + REHEARSAL_JS + CHECKUP_JS + WORKBENCH_JS + FLOW_JS + "route(false);", 1)
+    styles=EVERYDAY_CSS.replace("</style>", CHAT_CSS + TASK_CSS + BUDDY_CSS + CASHFLOW_CSS + DIARY_CSS + STATEMENTS_CSS + INLINE_ICON_CSS + FLOW_CSS + STUDIO_CSS + PLAN_CSS + REHEARSAL_CSS + CHECKUP_CSS + WORKBENCH_CSS + POLISH_CSS + "</style>")
     styles=styles.replace('.everyday-icon-tile img','.everyday-icon-tile :is(img,svg)').replace('.everyday-document-action>img','.everyday-document-action>:is(img,svg)')
     # The statement-first UI refreshes its own views on entry. Do not keep
     # polling the hidden, historical bill inbox every five seconds locally.

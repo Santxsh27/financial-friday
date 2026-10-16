@@ -1,6 +1,6 @@
 # Financial Friday — Current API map
 
-Updated 15 October 2026, version 0.27.0. The local OpenAPI reference at
+Updated 16 October 2026, version 0.30.0. The local OpenAPI reference at
 <http://localhost:8080/docs> is the source for exact request/response schemas.
 Source: `src/carapace_api/financial_friday_routes.py`.
 
@@ -14,7 +14,8 @@ Do not paste owner credentials into the browser or impersonate another tenant.
 | Method and path | Purpose / authority |
 | --- | --- |
 | GET `/api/friday/profile` (web gateway only) | Already verified Google email/provider or explicit local demo identity; no tokens or bank access. |
-| GET `/v1/friday/statements` | Tenant-private normalized history, exact aggregates, import states and revision/generation. |
+| GET `/v1/friday/statements` | Tenant-private normalized history, exact aggregates, import states, revision/generation and automatically prepared `assistant_work`. No financial action. |
+| POST `/v1/friday/assistant/briefing-audio` | Explicit derived-total sharing consent, expected revision/generation; bounded server-composed Gemini TTS briefing returned as in-memory WAV/base64. No arbitrary text, microphone, storage or financial action. Existing visitor quotas apply. |
 | POST `/v1/friday/statements/prepare` | Consented bounded base64 PDF/CSV; unsaved row proposal. PDF uses Google AI, CSV exact local parsing. No financial action. |
 | POST `/v1/friday/statements` | Explicit user-reviewed import; revision/generation, same-source replay guard. Not bank-authenticated evidence. |
 | POST `/v1/friday/statements/visibility` | Reversibly exclude/restore one import from calculations, never a bank correction. |

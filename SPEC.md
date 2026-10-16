@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **16 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.29.0`. Actual deployed source and
+specifications. Current code version is `0.30.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -32,6 +32,25 @@ Outliers need six earlier account/category observations and must exceed the
 maximum of three times median, median plus six median absolute deviations, and
 median plus INR 1,000. These are review heuristics, not calibrated fraud scores.
 Ambiguous recurring series are suppressed; duplicate candidates remain counted.
+
+The default workbench integrates refund evidence rather than requiring a Money
+Shield tab. `ASSISTANT_WORK_1` derives a stable, source-bound batch of at most eight
+open findings on each portfolio read/save. Repeated-entry comparisons and unclear
+credit classification worksheets avoid turning those findings into unsupported
+bank complaints. Other items use the existing unsent enquiry recipe. The response
+states prepared/open/deferred counts, revision, generation, source fingerprint,
+zero model calls, zero external actions and no money moved. Review advances the
+queue; reopen/new evidence rebuilds it. This is deterministic preparation, not
+autonomous resolution or model training.
+
+An in-app guide reacts only to actual local workflow events. It is pauseable and
+does not poll or monitor a financial account. The optional briefing route sends
+only server-composed aggregate text (at most 70 words) to `gemini-2.5-flash-tts`
+through the configured Vertex client. Explicit per-action consent, current
+revision/generation and source recheck after generation are mandatory. Only
+completed mono 16-bit 24 kHz PCM, bounded to 30 seconds, is wrapped as WAV in memory.
+Audio is not persisted or auto-played; this is not a microphone/live voice agent.
+Generated speech is not independently transcribed or certified for fidelity.
 
 The server prepares unsent enquiries from current source evidence. A separate
 revision/generation-bound acknowledgement stores only reviewed/open status.

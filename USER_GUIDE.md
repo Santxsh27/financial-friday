@@ -8,13 +8,20 @@ page. Your initials/name in the top right opens the account menu. Older
 workflows below are secondary tools under **My account → More financial tools**,
 not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
 
-**My money** automatically shows an overview, **Money shield**, **Needs a look**, **Regular payments**
-and **Transactions** after saving. Overview has spending and change-attribution
-charts with exact figures. Needs a look contains review candidates, not fraud
-verdicts. Expand a finding → **Prepare bank enquiry** → review the unsent draft →
-**Download enquiry**. Friday has done the copying and assembly; it does not send
-a complaint. **Mark reviewed** acknowledges your review; **Reopen finding** undoes
-it. Neither changes a statement, cancels a charge or proves legitimacy.
+**My money** now opens a single workbench: spending chart, real completed-work
+counts and one prioritized review task. The worksheet or unsent enquiry is
+already prepared. **Read the prepared worksheet/enquiry** reveals it;
+**Save worksheet/enquiry** downloads it. **Reviewed → next** advances the queue.
+**Review history → Reopen finding** reverses the acknowledgement. Neither action
+changes a statement, cancels a charge or proves legitimacy. **All entries** and
+**Payment patterns** open the detailed views. **Show source evidence** expands
+the exact rows behind the current item.
+
+The small Friday guide responds to actual import/review/save/chat events.
+**Pause** stops this guide, not your work or chat. It is not bank monitoring.
+**Hear my briefing → confirm sharing totals → Generate my briefing → Play**
+creates optional temporary Google voice. It shares no transaction descriptions,
+uses no microphone and never auto-plays. If unavailable, use the visual result.
 
 With **Use my saved statement totals and derived checkup findings with Gemini**
 enabled for the conversation, try **“Show my regular payments”**, **“What changed
@@ -24,22 +31,24 @@ artifact. No transaction descriptions or account aliases enter that chat context
 
 ### Follow a refund with Money Shield
 
-1. **Statements → Download Money Shield example** provides fictional INR data.
-   Upload it, review its 13 rows and explicitly save. It is not added automatically.
-2. **My money → Money shield**: the example shows ₹2,400 refund credits, of which
-   ₹2,200 can fit the graph's name/date/account assumptions. The remaining ₹200
-   stays unlinked. None of these numbers is a recovered or owed amount.
-3. Expand the **amazon artificial** trail. One ₹1,000 refund could fit either
+1. **Statements → Try with an example** selects fictional INR data: 35 rows,
+   combining spending patterns, unclear credit, fees and refunds. Confirm
+   processing, read, review and save. It is not added automatically.
+2. The workbench prepares eight steps initially, with any additional candidate
+   queued. The sample has ₹90,000 identified income, ₹45,648 classified spending
+   and ₹5,000 repayments. These are supplied-history totals, not a balance.
+3. After reviewing the unclear-credit and repeated-entry worksheets, the
+   **Clarify this return** item shows one ₹1,000 refund that could fit either
    of two ₹1,000 purchases. Each shows ₹0–₹1,000; the ranges are alternatives,
    not amounts to add. Friday does not pick a purchase and call it refunded.
 4. **metro artificial** shows a ₹200 partial match against ₹500. The ₹300
    remainder is not automatically owed. **book artificial** shows two refund
    entries that can cover one purchase under the assumptions. Old-store and
    unidentified refunds remain unlinked because the necessary history is absent.
-5. **Source entries & why this result** shows the actual rows and calculation
-   checks. **Open clarification case → Prepare bank enquiry** assembles an
-   unsent message. Review and redact it before using an official bank channel.
-6. **Friday, explain my shield · share totals** explicitly shares only derived
+5. **Show source evidence** shows the actual rows. **Read the prepared enquiry**
+   opens the already assembled unsent message. Review and redact it before
+   using an official bank channel.
+6. **Friday, guide me · share totals** explicitly shares only derived
    context for the conversation. Or ask **“Show my Money Shield”** after opting
    into totals. Friday can open the visual and prepare a source-grounded enquiry;
    it cannot submit one, cancel payments or recover funds.

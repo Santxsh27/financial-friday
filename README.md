@@ -2,15 +2,39 @@
 
 **One statement. Less admin. A clearer next step.**
 
+### Friday prepares the work, not another report to read
+
+**Add statement → review once → open your workbench.** Friday reads the supplied
+history, runs eight exact checks and automatically prepares a private batch of
+up to eight source-linked next steps. The default result is a spending chart and
+**one priority item**, not five competing report tabs. Repeated entries get a
+comparison worksheet; unidentified credits get a classification worksheet;
+other candidates get a source-filled **unsent enquiry**. Download, review and
+advance. Acknowledging an item never edits its transaction or proves legitimacy.
+
+The in-app buddy responds to real reading, preview, saving and chat events.
+It can be paused; it does not watch Google Pay, other apps or bank accounts.
+**Hear my briefing** separately asks permission to send aggregate figures to
+Gemini 2.5 Flash TTS through the existing Vertex client. Audio is temporary,
+silent by default and has no microphone. Failure leaves the visual result usable.
+Gemini chat still reasons over only the context you explicitly choose to share.
+
+Use **Statements → Try with an example** for a labelled 35-row artificial history
+through the same parser, processing consent and review/save flow as your file.
+Account options and detailed evidence are folded away, not removed. The approved
+Soft Studio palette is retained, with consistent dark native controls and logo.
+See [the workbench implementation and verification report](docs/ASSISTANT_WORKBENCH_0300.md).
+
 ### Money Shield: follow refunds without inventing certainty
 
 Friday builds a purchase/refund evidence graph automatically after statement
 review. It handles split and partial returns, tests alternative allocations, and
 shows simple visual ranges when one refund could fit several purchases. A refund
 is never counted twice. Missing original purchases, repeated rows and analysis
-limits stay visibly unresolved. **My money → Money shield** opens the result;
-**Open clarification case → Prepare bank enquiry** does the source-copying work
-without sending a complaint or claiming a refund is owed.
+limits stay visibly unresolved. Refund evidence is integrated into the priority
+workbench item when clarification is needed. Its unsent enquiry is already
+prepared; **Show source evidence** reveals the underlying rows. No complaint is
+sent and no refund entitlement is asserted.
 
 Underneath is bounded **integer min-cost maximum flow**, with a separate capacity/
 conservation checker, residual optimality checks and per-purchase lower/upper
@@ -22,8 +46,8 @@ enquiry using separately consented derived totals. The server, not model prose,
 owns completion receipts for these actions, preventing a generated response from
 announcing that it sent the enquiry or recovered funds.
 
-Try [the artificial Money Shield CSV](examples/friday-money-shield-artificial.csv)
-(also downloadable from **Statements**). There are no precomputed answers: the
+The [historical artificial Money Shield CSV](examples/friday-money-shield-artificial.csv)
+remains available; the upload page now offers one combined example. There are no precomputed answers: the
 same parser and graph engine run on each upload. See the
 [algorithm, demo and verification report](docs/MONEY_SHIELD_0290.md). This adds no
 bank access, model training, legal/tax determination or autonomous financial action.
@@ -267,7 +291,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 16 October 2026: **613 tests ran, 612 passed, one optional
+Latest local checks, 16 October 2026: **646 tests ran, 645 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -281,7 +305,7 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **613 ran, 589 passed, twenty-four optional skips**.
+Docker release verification is tracked in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json).
 Fourteen Money Shield tests cover independent exhaustive allocation checks across
 80 synthetic graphs, ambiguity/partial/split returns, bounded coverage and
 server-owned completion receipts. These are mathematical and safety tests, not

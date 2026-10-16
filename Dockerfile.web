@@ -4,6 +4,7 @@
 FROM asia-south1-docker.pkg.dev/project-70f2c2d7-4e72-4e59-b14/financial-friday/api@sha256:d46fd6de110fe462d731fab6dd16f08fdef1ded072b93ad2789485ecef137b22
 COPY src/carapace_integrations /app/src/carapace_integrations
 COPY src/carapace_core /app/src/carapace_core
+COPY src/carapace_ai /app/src/carapace_ai
 ENV PYTHONPATH=/app/src
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=3)"
 CMD ["python", "-m", "carapace_integrations.friday_cloud_web"]

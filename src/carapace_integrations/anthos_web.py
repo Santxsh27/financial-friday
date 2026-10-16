@@ -421,6 +421,23 @@ def create_demo_app() -> FastAPI:
         if code!=200:raise HTTPException(code,result.get('detail','The rehearsal could not be completed'))
         return result
 
+    @application.post('/api/friday/assistant/briefing-audio')
+    async def friday_briefing_audio(request: StarletteRequest):
+        from carapace_ai.friday_speech import BriefingAudioRequest
+        from fastapi.responses import JSONResponse
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 1024:
+                raise HTTPException(413, 'Briefing request is too large')
+            data.extend(chunk)
+        try:
+            payload = BriefingAudioRequest.model_validate_json(bytes(data))
+        except ValueError as error:
+            raise HTTPException(422, 'Use a current statement revision and explicit Google voice consent') from error
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            '/v1/friday/assistant/briefing-audio', 'POST', payload.model_dump(mode='json'), 120)
+        return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
+
     @application.post('/api/friday/plans/preview')
     async def friday_plan_preview(request: StarletteRequest):
         from carapace_core.friday_money_plan import MoneyPlanPreview

@@ -1,6 +1,22 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **16 October 2026**, version **0.29.0**. Project name: Financial Friday.
+Current technical reference: **16 October 2026**, version **0.30.0**. Project name: Financial Friday.
+
+### Integrated assistant work session
+
+`friday_assistance.py` derives up to eight source-linked private artifacts from
+the current checkup, without mutating the source or calling a model. Each artifact
+is bound to a finding and the batch to revision/generation/fingerprint. Review
+advances; reopen or new evidence rebuilds. `friday_workbench_ui.py` presents one
+task beside a real category chart and supplies local event-driven guidance.
+Money Shield ambiguity is rendered inside that task, not as a primary separate
+tab. No global surveillance, background model loop or automatic financial action.
+
+`friday_speech.py` exposes only an explicitly consented aggregate briefing through
+the existing Vertex client. Strict shape, source freshness before/after the call,
+completed PCM validation and a 30-second cap precede in-memory WAV output. The web
+gateway maps exactly one route under existing authentication and quotas. Browser
+audio URLs are revoked on evidence change/cleanup. No microphone or persisted audio.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Automatic statement checkup

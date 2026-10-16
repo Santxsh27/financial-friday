@@ -21,15 +21,23 @@ class FridayPortfolio:
         return record if record and record['generation']==privacy_generation(self.service,tenant) else None
 
     def view(self,tenant,record=None):
+        from carapace_core.friday_assistance import build_assistant_work
+        generation=privacy_generation(self.service,tenant)
         record=record if record is not None else self.record(tenant)
+        # Never label an earlier generation's rows as a newly cleared workspace.
+        if record and record['generation']!=generation:record=None
         included=[s for s in record['statements'] if s['source_sha256'] not in record.get('excluded',[])] if record else []
         summary=summarize_statements(included)
-        return {'revision':record['revision'] if record else 0,'workspace_generation':str(privacy_generation(self.service,tenant)),
+        view={'revision':record['revision'] if record else 0,'workspace_generation':str(generation),
             'summary':summary,
             'checkup':build_checkup(included,summary,record.get('reviewed_findings',[]) if record else []),
             'imports':[{'source_sha256':s['source_sha256'],'account_alias':s['account_alias'],'account_type':s['account_type'],
                 'extraction':s['extraction'],'row_count':len(s['entries']),'excluded':s['source_sha256'] in record.get('excluded',[])} for s in record['statements']] if record else [],
             'raw_file_stored':False,'payment_authorized':False,'updated_at':record.get('updated_at') if record else None}
+        view['assistant_work']=build_assistant_work(view)
+        if privacy_generation(self.service,tenant)!=generation:
+            raise ValueError('Workspace changed during analysis; reload first')
+        return view
 
     def save(self,tenant,request):
         if not request.confirm_reviewed_and_store:raise ValueError('Review the rows and confirm private storage first')

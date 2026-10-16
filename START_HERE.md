@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 16 October 2026; Money Shield interface `0.29.0`. New teammates: read
+Updated 16 October 2026; integrated workbench `0.30.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -19,20 +19,22 @@ diary/runway and artificial payments remain optional under **My account → More
 1. Open [the live site](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
    and sign in with Google. **Top-right initials/name → My account** shows the signed-in email. Returning users
    may reuse their Google session; no bank connection is implied.
-2. **Home → Add a statement** (or **Statements**). Choose an INR PDF or CSV, an account
-   nickname and bank/card type. **Try a labelled statement example** downloads
-   artificial CSV data; upload that file to test the real parser.
+2. **Home → Add a statement** (or **Statements**). Choose an INR PDF or CSV.
+   **Try with an example** selects a labelled artificial 35-row CSV. Account
+   nickname/type are under the optional **Bank account · Main account · change**.
+   Open it when importing another account or a credit-card statement.
 3. Confirm processing and **Read my statement**. Expect an unsaved preview with
    totals. Expand the row review to correct interpretation labels. No payment.
-4. Confirm review and **Save & see my spending**. **My money** opens with charts,
-   automatic findings and regular-payment patterns. Same file: no double import.
-5. **Manage imports** excludes/restores overlapping files without deleting them.
-   **My money → Money shield** follows possible purchase/refund trails without
-   choosing an ambiguous match. For a quick test, download the labelled **Money
-   Shield example** from Statements. See [the 13-row guided example](docs/MONEY_SHIELD_0290.md).
-6. **Needs a look** → expand a finding → **Prepare bank enquiry** fills a real
-   unsent message with source entries. Download after review. **Mark reviewed**
-   and **Reopen finding** change only its acknowledgement, never a transaction.
+4. Confirm review and **Save & see my spending**. **My money** opens the workbench:
+   spending chart, completed counts and one prepared next step. Same file: no double import.
+5. **Read the prepared worksheet/enquiry** or **Save worksheet/enquiry** opens the
+   actual source-filled artifact. **Reviewed → next** advances the queue, without
+   changing a transaction. **Review history → Reopen finding** reverses that acknowledgement.
+   Refund ambiguities appear here with visual ranges, not a separate Shield tab.
+6. **All entries**, **Payment patterns** and **Show source evidence** provide detail
+   only when needed. **Manage imports** reversibly excludes/restores imports.
+   Optional **Hear my briefing** requires its own Google-sharing consent, then
+   **Generate my briefing → Play**. No microphone, bank action or automatic sound.
 7. In the right-side chat (the
    **Friday** page on phones), open **Choose what I can use**, select **Share my
    saved statement totals**, and choose **Done**. Send with the arrow or

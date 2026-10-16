@@ -12,6 +12,7 @@ from .auth import TenantContext
 from .friday_inbox import FridayInbox
 from .financial_friday import FridayUnderstandingUnavailable
 from carapace_ai.friday_chat import FridayChatRequest
+from carapace_ai.friday_speech import BriefingAudioRequest, SpeechUnavailable, briefing_audio
 from carapace_ai.friday_tasks import TaskRequest
 from .friday_tasks import FridayTaskService, TaskConfirmation
 from carapace_core.friday_cashflow import CashflowRequest
@@ -98,6 +99,20 @@ def register_financial_friday_routes(application, service, authenticate):
     from carapace_core.friday_portfolio import SaveStatement, StatementVisibility, summarize_statements
     from carapace_core.friday_checkup import ReviewFinding, FindingRequest, prepare_enquiry
     service.portfolio = FridayPortfolio(service)
+
+    @application.post('/v1/friday/assistant/briefing-audio', tags=['friday-assistant'])
+    async def assistant_briefing_audio(payload: BriefingAudioRequest, tenant: TenantContext = Depends(authenticate)):
+        from fastapi.responses import JSONResponse
+        headers = {'Cache-Control': 'no-store'}
+        if not payload.confirm_send_derived_totals_to_google:
+            return JSONResponse({'detail': 'Confirm sharing the derived briefing totals with Google first'}, status_code=422, headers=headers)
+        try:
+            result = await run_in_threadpool(briefing_audio, service.planner, service.portfolio, tenant.tenant_id, payload)
+            return JSONResponse(result, headers=headers)
+        except ValueError as error:
+            return JSONResponse({'detail': str(error)}, status_code=409, headers=headers)
+        except SpeechUnavailable:
+            return JSONResponse({'detail': 'Google voice is unavailable. Read the on-screen briefing; no money was moved.'}, status_code=503, headers=headers)
 
     class PrepareStatement(BaseModel):
         model_config = ConfigDict(extra='forbid')

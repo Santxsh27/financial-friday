@@ -138,16 +138,23 @@ class RefundFlowTests(unittest.TestCase):
         self.assertEqual(build_refund_shield([])['trails'],[])
         self.assertEqual(build_refund_shield([])['refund_total_minor'],0)
 
-    def test_downloadable_fixture_uses_actual_parser_and_matches_web_download(self):
+    def test_historical_fixture_and_combined_web_sample_use_actual_parser(self):
         from carapace_ai.friday_statements import extract_statement
         from carapace_integrations.friday_statements_ui import STATEMENTS_JS
+        from carapace_integrations.friday_statement_sample import STATEMENT_EXAMPLE_CSV
+        import json
         sample=(Path(__file__).resolve().parents[1]/'examples/friday-money-shield-artificial.csv').read_text()
-        self.assertIn(sample,STATEMENTS_JS)
         imported,_=extract_statement(None,data=sample.encode(),mime='text/csv',account_alias='Artificial',account_type='BANK',use_ai=False)
         saved=imported.model_dump(mode='json')
         c=build_checkup([saved],summarize_statements([saved]))
         self.assertEqual(c['money_shield']['compatible_minor'],220000)
         self.assertEqual(c['transaction_count'],13)
+        self.assertIn(json.dumps(STATEMENT_EXAMPLE_CSV),STATEMENTS_JS)
+        self.assertNotIn('__FRIDAY_STATEMENT_EXAMPLE_',STATEMENTS_JS)
+        combined,_=extract_statement(None,data=STATEMENT_EXAMPLE_CSV.encode(),mime='text/csv',account_alias='Artificial',account_type='BANK',use_ai=False)
+        overview=summarize_statements([combined.model_dump(mode='json')])
+        self.assertEqual(overview['transaction_count'],35)
+        self.assertEqual(overview['totals']['identified_income_minor'],9000000)
 
 
 class RefundShieldAPITests(unittest.TestCase):

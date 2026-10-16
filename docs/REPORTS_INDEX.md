@@ -1,6 +1,6 @@
 # Financial Friday — documentation and evidence index
 
-Updated 16 October 2026, source **0.29.0**. Deployed versions are listed below and
+Updated 16 October 2026, source **0.30.0**. Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.
@@ -23,11 +23,12 @@ automatically the code deployed on Cloud Run.
 
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) is the machine-readable authority
 for source, image digests, build IDs, revisions, test counts and activation. The
-web is `financial-friday-web-shield0290`; the API is
-`financial-friday-api-shield0290c`, each at 100% traffic when last verified.
+exact API and web revisions are recorded there, together with promotion and
+acceptance evidence. A new source version alone does not prove deployment.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Assistant workbench 0.30.0](ASSISTANT_WORKBENCH_0300.md) | Automatic private review preparation, one visual priority task, integrated refund ranges, actual-event guide, opt-in bounded Google speech and privacy-generation freshness. No bank monitoring or automatic financial resolution. |
 | [Money Shield 0.29.0](MONEY_SHIELD_0290.md) | Integer refund-flow bounds, independent primal/residual checks, explicit ambiguity, source-grounded clarification and server-owned AI completion receipts. No bank-confirmed linkage, legal entitlement or autonomous recovery. |
 | [Automatic checkup 0.28.0](AUTOMATIC_CHECKUP_0280.md) | Automatic source-linked pattern checks, exact change attribution, typed Gemini visual selection, unsent enquiry assembly and reversible finding review. Explainable heuristics, not a trained fraud model or independently validated financial outcome. |
 | [Financial rehearsals 0.27.0](FINANCIAL_REHEARSAL_0270.md) | Daily source-month calendar scenarios, simultaneous cash stress, concrete counterexamples, exact purchase/date/cut alternatives and separately consented Gemini explanation. Conditional replays, not predictions, bank execution or proof of novelty. |

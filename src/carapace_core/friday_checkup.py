@@ -130,6 +130,23 @@ def build_checkup(statements, summary, reviewed=()):
             'Unclear credits stay separate from earnings. Check their source; a loan or transfer is not salary.',
             unclear, sum(r['credit_minor'] for r in unclear), 0)
 
+    from .friday_refund_shield import build_refund_shield
+    shield=build_refund_shield(rows)
+    for trail in shield['trails']:
+        status=trail['status']
+        if status=='AMBIGUOUS':
+            add('REFUND_AMBIGUITY','A refund fits more than one purchase',
+                'Friday tested alternative allocations. Several purchase/refund explanations fit the same records; no purchase is declared refunded. Open Money shield to see the bounds.',
+                trail['evidence'],trail['refund_total_minor'],1,trail_id=trail['trail_id'])
+        elif status=='UNIQUE_UNDER_ASSUMPTIONS' and trail['compatible_minor']<trail['purchase_total_minor']:
+            add('REFUND_PARTIAL_TRAIL','Only part of this purchase trail has a matching return',
+                'A partial matching amount appears under the name/date/account assumptions. The remaining purchase amount is not an amount owed; the bank or merchant must confirm the relationship and any expected refund.',
+                trail['evidence'],trail['purchase_total_minor']-trail['compatible_minor'],2,trail_id=trail['trail_id'])
+        elif trail['certificate'] is None:
+            add('REFUND_LINK_WITHHELD','This refund needs its original purchase',
+                'Friday withheld a purchase link because history, merchant detail, non-overlapping rows or graph capacity was insufficient. This is not fraud or a missing-refund verdict. No row was removed.',
+                trail['evidence'],trail['refund_total_minor'],2,trail_id=trail['trail_id'])
+
     # Exact change attribution, not a forecast or inferred financial behaviour.
     months = summary['monthly']; change = None
     if len(months)>=2 and _month_after(months[-2]['month'])==months[-1]['month']:
@@ -153,8 +170,9 @@ def build_checkup(statements, summary, reviewed=()):
             'source_fingerprint':_digest(rows), 'transaction_count':len(rows),
             'findings':findings, 'open_count':sum(not f['reviewed'] for f in findings),
             'recurring':recurring, 'spending_change':change,
+            'money_shield':shield,
             'checks_completed':['Repeated entries','Regular payments','Changed regular amounts',
-                                'Unusual expense amounts','Recorded fees','Unclear credits','Spending attribution'],
+                                'Unusual expense amounts','Recorded fees','Unclear credits','Spending attribution','Refund evidence graph'],
             'model_calls':0, 'money_moved':False, 'rows_removed':0,
             'limits':['Review candidates, not fraud verdicts or bank-verified evidence.',
                       'Patterns need sufficient history; missing accounts, partial months and changed descriptions limit coverage.',
@@ -175,6 +193,12 @@ def checkup_model_context(checkup):
                          'amount_inr':amount(f['amount_minor']), 'reviewed':f['reviewed'],
                          'evidence_count':f['evidence_count']} for f in checkup['findings'][:20]],
             'regular_payment_count':len(checkup['recurring']),
+            'money_shield':{'refunds_inr':amount(checkup['money_shield']['refund_total_minor']),
+                'compatible_under_assumptions_inr':amount(checkup['money_shield']['compatible_minor']),
+                'unallocated_inr':amount(checkup['money_shield']['not_allocated_minor']),
+                'ambiguous_trails':checkup['money_shield']['ambiguous_count'],
+                'held_trails':checkup['money_shield']['held_count'],
+                'limits':checkup['money_shield']['limits']},
             'spending_change':({'delta_inr':amount(checkup['spending_change']['delta_minor'])}
                                if checkup['spending_change'] else {}),
             'limits':checkup['limits']}

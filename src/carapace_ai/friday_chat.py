@@ -37,7 +37,7 @@ class ChatAnswer(BaseModel):
     visual_request: Literal['NONE','SPENDING','MONTHLY','PLAN'] = 'NONE'
     plan: MoneyPlanDraft | None = None
     rehearsal_goal: RehearsalGoal | None = None
-    checkup_action: Literal['NONE','FINDINGS','REGULAR_PAYMENTS','SPENDING_CHANGE','PREPARE_ENQUIRY'] = 'NONE'
+    checkup_action: Literal['NONE','FINDINGS','REGULAR_PAYMENTS','SPENDING_CHANGE','PREPARE_ENQUIRY','MONEY_SHIELD'] = 'NONE'
     finding_id: str | None = Field(default=None, pattern=r'^finding_[a-f0-9]{24}$')
 
 
@@ -187,6 +187,20 @@ plan/rehearsal for these checkup tasks. No context sharing means no personal
 findings; still give useful general guidance. Never call this model training or
 a fraud probability. The user can mark a finding reviewed using an app button;
 this does not change amounts, confirm legitimacy or grant you write authority.'''
+
+INSTRUCTION += ''' Money Shield is the purchase/refund evidence graph. For refund
+tracking, whether a purchase was returned, money protection or refund ambiguity,
+use checkup_action=MONEY_SHIELD and next_screen=dashboard. The server calculates
+integer-capacity matching and lower/upper allocation bounds. No new input is
+needed to open this visual. A compatible or unique match is conditional on
+literal merchant/account/date assumptions, not bank confirmation. Never equate
+an unallocated amount or remaining purchase amount with money owed, missing
+refunds, loss, recoverable money or tax deductions. Statements cannot prove unused
+subscriptions, authorisation, illegal fees or refund entitlement. Offer an unsent
+enquiry when needed; do not cite laws, file disputes or browse/cancel subscriptions.
+For an enquiry use PREPARE_ENQUIRY with a supplied REFUND finding ID when present.
+Money Shield does not prevent future banking transactions or replace reporting
+an actually unrecognised payment through the bank's official channel.'''
 
 
 def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:

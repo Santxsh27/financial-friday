@@ -1,7 +1,7 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **16 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.28.0`. Actual deployed source and
+specifications. Current code version is `0.29.0`. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -21,9 +21,10 @@ next step; independent checks determine what can proceed. The intended outcome
 is a completed allowed task or useful verification assistance, not just an alert.
 
 The default consumer workflow is **automatic statement checks, visual findings
-and a prepared next step**. The server runs seven bounded checks on saved history:
+and a prepared next step**. The server runs eight bounded checks on saved history:
 repeated entries, regular payments, changed regular amounts, unusual expense
-amounts, fees, unclear credits and exact spending-change attribution. Findings
+amounts, fees, unclear credits, exact spending-change attribution and the refund
+evidence graph described below. Findings
 retain source-file/row references. Exact-description recurring series need at
 least three consecutive months, one occurrence per month and 20–40 day gaps.
 Amount increases require at least 15% and INR 100 above the prior median.
@@ -51,6 +52,27 @@ Statement sharing is independent of the legacy financial-inbox permission.
 General questions do not require records. Explicitly shared aggregate context
 cannot grant financial actions. Ordinary settings open Privacy & data; legacy
 payment rules remain a separate artificial execution concern, not onboarding.
+
+### Money Shield
+
+`REFUND_FLOW_1` groups EXPENSE purchases and REFUND credits by literal normalized
+merchant, account nickname and type. Compatibility requires a purchase no later
+than its refund, within 90 days. Integer max flow finds compatible capacity;
+fixed-total min-cost flows minimize/maximize each purchase's allocation. A
+separate primal check verifies compatible edges, capacities and conservation;
+residual reduced-cost checks verify mathematical optimality. Bounds are tight
+for this graph, not probabilities or bank-authenticated relationships. Bounds
+for different purchases cannot be added as simultaneous maxima.
+
+Groups with repeated rows, over eight purchases/refunds, or beyond 32 solved
+groups are withheld. Missing merchant/history remains unlinked. Source rows
+are not deleted or changed. Partial matches do not establish a refund obligation.
+The UI displays linked evidence, ambiguity and a clarification path. Typed Gemini
+action `MONEY_SHIELD` selects the view; `PREPARE_ENQUIRY` assembles current sources.
+The server supplies their completion text, including when no personal check was
+completed. Neither action can send a complaint, recover funds, alter a ledger or
+grant bank access. No legal deadlines, tax entitlements, illegal-fee verdicts or
+unused-subscription claims are inferred. [Full contract](docs/MONEY_SHIELD_0290.md).
 
 ### Financial rehearsals
 

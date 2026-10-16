@@ -51,6 +51,21 @@ STATEMENTS_JS = r'''
       const format=element('details',null,'statement-consent-details');format.append(element('summary','Formats & privacy'),element('p','INR only. Text/scanned PDFs: up to 6 pages / 200 extracted rows. CSV: date, description, debit, credit columns, up to 500 rows. Longer exports can be split. Unlock protected PDFs locally; never enter a document password, PIN or OTP here. Remove name, address and account identifiers first. Minimisation is best effort, not complete anonymisation.'));
       formCard.append(format);importView.append(formCard);
       const example=element('button','Try a labelled statement example');example.type='button';example.addEventListener('click',()=>{const blob=new Blob(['date,description,debit,credit,currency\n2026-08-01,Salary,,45000,INR\n2026-08-03,Rent,12000,,INR\n2026-08-04,Groceries,3000,,INR\n2026-08-05,Credit card payment,6000,,INR\n2026-08-06,Loan disbursement,,50000,INR\n2026-09-01,Salary,,45000,INR\n2026-09-02,Rent,12000,,INR\n2026-09-05,Restaurant,2500,,INR\n2026-09-08,EMI,5000,,INR\n'],{type:'text/csv'});const a=element('a');a.href=URL.createObjectURL(blob);a.download='friday-artificial-statement.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Artificial example downloaded. Choose that file to test the real parser.');});importView.append(example,element('p','The example is artificial. Your uploaded data is parsed afresh, not matched to predefined answers.','statement-subtle'));
+      const shieldExample=element('button','Download Money Shield example');shieldExample.type='button';shieldExample.addEventListener('click',()=>{const csv=`date,description,debit,credit,currency
+2026-09-01,Salary ARTIFICIAL,,50000,INR
+2026-09-02,Purchase Amazon ARTIFICIAL,1000,,INR
+2026-09-03,Purchase Amazon ARTIFICIAL,1000,,INR
+2026-09-04,Refund Amazon ARTIFICIAL,,1000,INR
+2026-09-05,Purchase Metro ARTIFICIAL,500,,INR
+2026-09-06,Refund Metro ARTIFICIAL,,200,INR
+2026-09-07,Purchase Book ARTIFICIAL,1000,,INR
+2026-09-08,Refund Book ARTIFICIAL,,600,INR
+2026-09-09,Refund Book ARTIFICIAL,,400,INR
+2026-09-10,Refund Old Store ARTIFICIAL,,150,INR
+2026-09-11,Refund,,50,INR
+2026-09-12,Loan EMI ARTIFICIAL,5000,,INR
+2026-09-13,Loan disbursement ARTIFICIAL,,10000,INR
+`;const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'})),a=element('a');a.href=url;a.download='friday-money-shield-artificial.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Artificial example downloaded. Upload it to inspect refund trails. Nothing was added automatically.');});importView.append(shieldExample);
       let portfolio=null,proposal=null,statementBusy=false,pendingSave=null;const reviewContent=element('div');reviewView.append(reviewContent);const dashboardContent=element('div');dashboardView.append(dashboardContent);
       const kinds=['INCOME','EXPENSE','TRANSFER','CARD_REPAYMENT','LOAN_RECEIVED','LOAN_REPAYMENT','REFUND','UNCLEAR'];const categories=['Groceries','Food','Transport','Housing','Utilities','Shopping','Health','Education','Entertainment','Fees','Other'];
       function money(n){return (n<0?'−':'')+workspaceMoney(Math.abs(n));}

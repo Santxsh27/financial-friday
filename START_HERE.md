@@ -1,6 +1,6 @@
 # Financial Friday — Start Here
 
-Updated 16 October 2026; automatic checkup interface `0.28.0`. New teammates: read
+Updated 16 October 2026; Money Shield interface `0.29.0`. New teammates: read
 [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md) too.
 Use [the reports index](docs/REPORTS_INDEX.md) for verified results and dated
 historical reports. Private repository access requires an invitation to your
@@ -27,6 +27,9 @@ diary/runway and artificial payments remain optional under **My account → More
 4. Confirm review and **Save & see my spending**. **My money** opens with charts,
    automatic findings and regular-payment patterns. Same file: no double import.
 5. **Manage imports** excludes/restores overlapping files without deleting them.
+   **My money → Money shield** follows possible purchase/refund trails without
+   choosing an ambiguous match. For a quick test, download the labelled **Money
+   Shield example** from Statements. See [the 13-row guided example](docs/MONEY_SHIELD_0290.md).
 6. **Needs a look** → expand a finding → **Prepare bank enquiry** fills a real
    unsent message with source entries. Download after review. **Mark reviewed**
    and **Reopen finding** change only its acknowledgement, never a transaction.
@@ -41,7 +44,7 @@ diary/runway and artificial payments remain optional under **My account → More
    a checked, editable visual plan. A requested reduction that cannot fit its
    caps shows the shortfall. **Spending → Build a visual money plan** also works
    without Gemini for manual scenarios.
-7. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
+8. **Top-right initials/name → My account → Open privacy & cleanup** explains removal of private inputs. Read
    its confirmation: statement history, diary and forecasts clear together.
 
 ## Optional advanced decision tool

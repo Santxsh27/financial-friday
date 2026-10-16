@@ -1,6 +1,6 @@
 # Financial Friday — Architecture guide
 
-Current technical reference: **16 October 2026**, version **0.28.0**. Project name: Financial Friday.
+Current technical reference: **16 October 2026**, version **0.29.0**. Project name: Financial Friday.
 Read the trust boundaries before using execution-capable APIs.
 
 ### Automatic statement checkup
@@ -14,7 +14,7 @@ The source/algorithm-derived finding ID binds its evidence and calculation.
 
 The right-side chat receives separately opted-in aggregate findings without
 merchant descriptions, account aliases or source hashes/rows. Its schema can
-select one of four bounded visual/artifact requests. The server validates the
+select one of five bounded visual/artifact requests. The server validates the
 selected ID and source revision, then returns a visual intent or an actual unsent
 enquiry assembled from current private evidence. It never exposes arbitrary
 tools, SQL or bank actions. Explicit review/reopen uses the same transactional
@@ -22,6 +22,24 @@ portfolio store with tenant, revision and privacy-generation guards. It stores
 acknowledgements only; underlying rows and payments stay unchanged.
 
 See [automatic checkup verification](docs/AUTOMATIC_CHECKUP_0280.md).
+
+### Refund evidence graph / Money Shield
+
+`friday_refund_shield.py` constructs bounded bipartite capacity graphs, then uses
+integer max flow and fixed-total min-cost flow for each purchase's allocation
+range. Primal capacity/conservation and residual reduced-cost checks run before
+results are returned. Overlapping or oversized groups are withheld, not silently
+sampled. Names/account nicknames/date windows are explicit assumptions; bounds
+certify a calculation rather than a banking relationship. No refunds are guessed
+as owed or recovered. An independent exhaustive test oracle checks 80 small graphs.
+
+The existing statement response carries private trails and sources; Gemini sees
+only opted-in derived totals/counts and bounded finding IDs. `MONEY_SHIELD` opens
+the visual; `PREPARE_ENQUIRY` assembles a private unsent artifact. Their completion
+messages come from server-owned results rather than model claims. Existing
+revision/generation, tenant, typed-action, amount/citation and same-origin guards
+are unchanged. No new service, permission, third-party transmission or training
+is added. [Algorithm and limits](docs/MONEY_SHIELD_0290.md).
 
 ### Optional decision layer
 

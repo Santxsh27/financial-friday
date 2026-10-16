@@ -8,7 +8,7 @@ page. Your initials/name in the top right opens the account menu. Older
 workflows below are secondary tools under **My account → More financial tools**,
 not required onboarding steps. The quick tour is [START_HERE](START_HERE.md).
 
-**My money** automatically shows an overview, **Needs a look**, **Regular payments**
+**My money** automatically shows an overview, **Money shield**, **Needs a look**, **Regular payments**
 and **Transactions** after saving. Overview has spending and change-attribution
 charts with exact figures. Needs a look contains review candidates, not fraud
 verdicts. Expand a finding → **Prepare bank enquiry** → review the unsent draft →
@@ -21,6 +21,32 @@ enabled for the conversation, try **“Show my regular payments”**, **“What 
 between my statement months?”**, or **“Prepare an enquiry for the first finding.”**
 Friday opens the relevant view and, for the last task, prepares a real unsent
 artifact. No transaction descriptions or account aliases enter that chat context.
+
+### Follow a refund with Money Shield
+
+1. **Statements → Download Money Shield example** provides fictional INR data.
+   Upload it, review its 13 rows and explicitly save. It is not added automatically.
+2. **My money → Money shield**: the example shows ₹2,400 refund credits, of which
+   ₹2,200 can fit the graph's name/date/account assumptions. The remaining ₹200
+   stays unlinked. None of these numbers is a recovered or owed amount.
+3. Expand the **amazon artificial** trail. One ₹1,000 refund could fit either
+   of two ₹1,000 purchases. Each shows ₹0–₹1,000; the ranges are alternatives,
+   not amounts to add. Friday does not pick a purchase and call it refunded.
+4. **metro artificial** shows a ₹200 partial match against ₹500. The ₹300
+   remainder is not automatically owed. **book artificial** shows two refund
+   entries that can cover one purchase under the assumptions. Old-store and
+   unidentified refunds remain unlinked because the necessary history is absent.
+5. **Source entries & why this result** shows the actual rows and calculation
+   checks. **Open clarification case → Prepare bank enquiry** assembles an
+   unsent message. Review and redact it before using an official bank channel.
+6. **Friday, explain my shield · share totals** explicitly shares only derived
+   context for the conversation. Or ask **“Show my Money Shield”** after opting
+   into totals. Friday can open the visual and prepare a source-grounded enquiry;
+   it cannot submit one, cancel payments or recover funds.
+
+No live payment protection is implied. Merchant strings and account nicknames
+may not uniquely identify a merchant/account. Missing/overlapping exports, wrong
+labels and the 90-day/graph-size limits reduce coverage. [Technical limits](docs/MONEY_SHIELD_0290.md).
 
 The optional **Decision rehearsal** is Friday's advanced lab, accessible from
 the account's additional tools. After reviewing and saving a bank-account

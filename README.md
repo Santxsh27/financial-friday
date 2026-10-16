@@ -2,6 +2,32 @@
 
 **One statement. Less admin. A clearer next step.**
 
+### Money Shield: follow refunds without inventing certainty
+
+Friday builds a purchase/refund evidence graph automatically after statement
+review. It handles split and partial returns, tests alternative allocations, and
+shows simple visual ranges when one refund could fit several purchases. A refund
+is never counted twice. Missing original purchases, repeated rows and analysis
+limits stay visibly unresolved. **My money → Money shield** opens the result;
+**Open clarification case → Prepare bank enquiry** does the source-copying work
+without sending a complaint or claiming a refund is owed.
+
+Underneath is bounded **integer min-cost maximum flow**, with a separate capacity/
+conservation checker, residual optimality checks and per-purchase lower/upper
+bounds over all maximum compatible allocations. This is established mathematics
+applied to evidence ambiguity, not a claimed new theorem. Compatibility uses
+literal merchant text, account nickname/type and a 90-day window; even a unique
+allocation is **not bank-confirmed**. Gemini on Vertex AI selects the visual or
+enquiry using separately consented derived totals. The server, not model prose,
+owns completion receipts for these actions, preventing a generated response from
+announcing that it sent the enquiry or recovered funds.
+
+Try [the artificial Money Shield CSV](examples/friday-money-shield-artificial.csv)
+(also downloadable from **Statements**). There are no precomputed answers: the
+same parser and graph engine run on each upload. See the
+[algorithm, demo and verification report](docs/MONEY_SHIELD_0290.md). This adds no
+bank access, model training, legal/tax determination or autonomous financial action.
+
 ### Automatic statement checkup
 
 Upload and review a supported statement once. Friday automatically checks repeated
@@ -241,7 +267,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 16 October 2026: **599 tests ran, 598 passed, one optional
+Latest local checks, 16 October 2026: **610 tests ran, 609 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -255,7 +281,11 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **599 ran, 575 passed, twenty-four optional skips**.
+Docker: **610 ran, 586 passed, twenty-four optional skips**.
+Eleven Money Shield tests cover independent exhaustive allocation checks across
+80 synthetic graphs, ambiguity/partial/split returns, bounded coverage and
+server-owned completion receipts. These are mathematical and safety tests, not
+an independently measured fraud-detection rate.
 The current native suite adds 14 automatic-checkup tests covering source links,
 stable IDs, insufficient history, exact attribution, tenant isolation, stale
 reviews, reversible acknowledgements, Firestore failure, aggregate-only Gemini

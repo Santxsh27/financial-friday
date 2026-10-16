@@ -133,6 +133,15 @@ that creates financial authority or executes a payment.
 
 ## Automatic statement checkup
 
+Version 0.29 adds `checkup.money_shield` to the same private statement response:
+`REFUND_FLOW_1`, source-linked trails, allocation bounds, coverage holds and
+calculation certificates. These are name/date/account assumptions, not verified
+bank links or amounts owed. No new public route or payment permission is added.
+Chat's typed `MONEY_SHIELD` request opens this visual only with separately shared
+statement context. `PREPARE_ENQUIRY` still builds an unsent artifact. Completion
+text for these two operations is server-owned; model claims cannot announce
+external recovery/submission. See [Money Shield](MONEY_SHIELD_0290.md).
+
 `GET /v1/friday/statements` also returns deterministic `checkup` findings,
 recurring patterns, source references and exact category-change attribution.
 `POST /v1/friday/statements/findings/enquiry` prepares a private **unsent** draft

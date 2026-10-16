@@ -51,6 +51,8 @@ def reply_to_user(service, review, bank, tenant, request):
         result['statement_visuals']={'source_revision':view['revision'],
             'categories':view['summary']['categories'],'monthly':view['summary']['monthly'],
             'warnings':view['summary']['warnings']}
+    if result.get('checkup_action') in {'MONEY_SHIELD','PREPARE_ENQUIRY'} and not statements:
+        result['reply']='No personal check was completed. Add and review a statement first, then choose to share its totals and derived findings with Friday. You can also open My money without sharing anything with Gemini.'
     if result.get('checkup_action','NONE')!='NONE' and statements:
         from carapace_core.friday_checkup import prepare_enquiry
         checkup=view['checkup']
@@ -62,4 +64,12 @@ def reply_to_user(service, review, bank, tenant, request):
             'draft':prepare_enquiry(finding) if finding and result['checkup_action']=='PREPARE_ENQUIRY' else None}
         if not finding and result['checkup_action']=='PREPARE_ENQUIRY':
             result['reply']='There is no open checkup finding to fill an enquiry from. You can review Transactions or ask me for a general unsent message template.'
+        elif result['checkup_view']['draft']:
+            # Completion claims are server-owned, not model-generated authority.
+            result['reply']='Your unsent enquiry is ready, with the relevant source dates and amounts. Nothing was sent and no refund is claimed.'
+        if result['checkup_action']=='MONEY_SHIELD':
+            shield=checkup['money_shield']
+            result['reply']=('Your Money Shield is ready. '+str(shield['ambiguous_count'])+
+                ' trail(s) have multiple matching explanations; '+str(shield['held_count'])+
+                ' could not be linked with the available evidence. Open the visual to see why. No money was moved or recovered.')
     return result

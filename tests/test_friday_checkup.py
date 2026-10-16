@@ -48,7 +48,7 @@ class CheckupCoreTests(unittest.TestCase):
         self.assertEqual(len(result['recurring']),2)
         drift=next(f for f in result['findings'] if f['kind']=='RECURRING_INCREASE')
         self.assertEqual(drift['amount_minor'],50000);self.assertEqual(drift['evidence_count'],3)
-        self.assertEqual(len(result['checks_completed']),7)
+        self.assertEqual(len(result['checks_completed']),8)
 
     def test_reorder_is_stable_and_every_reference_resolves_to_source(self):
         source=history();result=check(source);source[0]['entries'].reverse()

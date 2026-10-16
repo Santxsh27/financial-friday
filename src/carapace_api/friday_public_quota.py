@@ -4,6 +4,27 @@ Limits count admitted requests, not tokens or dollars. Reservations are not
 refunded on downstream failure: this prevents retries bypassing the allowance.
 """
 from datetime import datetime, timezone
+from time import sleep
+
+from carapace_core.friday_trace import record_stage
+
+
+def confirmed_transaction_abort(error):
+    """Only provider ABORTED is a known uncommitted transaction.
+
+    Firestore can wrap exhausted transaction retries in ValueError. Never infer
+    an abort from text, retry an unknown timeout, or retry an admitted handler.
+    """
+    from google.api_core.exceptions import Aborted
+    seen = set()
+    for _ in range(6):
+        if error is None or id(error) in seen:
+            return False
+        seen.add(id(error))
+        if isinstance(error, Aborted):
+            return True
+        error = error.__cause__
+    return False
 
 
 class DemoLimitReached(Exception):
@@ -51,4 +72,20 @@ class FirestoreDemoQuota:
                 value.update({kind: count + 1, kind + "_minute": minute, kind + "_minute_count": burst + 1})
             for ref, value in zip(refs, values):
                 transaction.set(ref, value)
-        self._atomic(commit)
+        # A hot global quota document can exhaust the SDK's transaction retry
+        # budget under concurrent admission. Restart only confirmed aborts with
+        # a fresh transaction. Reservations and limits remain in the same atomic
+        # operation; no downstream action is retried and no allowance is reset.
+        for attempt in range(3):
+            try:
+                return self._atomic(commit)
+            except DemoLimitReached:
+                record_stage('validation', ok=False, reason='quota_limit')
+                raise
+            except Exception as error:
+                aborted = confirmed_transaction_abort(error)
+                if not aborted or attempt == 2:
+                    record_stage('validation', ok=False, reason='quota_conflict' if aborted else 'quota_unavailable')
+                    raise
+                record_stage('validation', ok=False, reason='quota_retry')
+                sleep(.05 * (attempt + 1))

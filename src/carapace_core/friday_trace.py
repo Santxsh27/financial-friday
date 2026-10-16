@@ -31,6 +31,7 @@ _REASONS = frozenset({
     "accepted", "rejected", "unsupported_format", "invalid_input", "provider_unavailable",
     "empty_result", "schema_invalid", "row_limit", "duplicate", "mismatch", "incomplete",
     "insufficient_data", "stale_revision", "calculation_error", "internal_error", "unspecified",
+    "quota_limit", "quota_conflict", "quota_unavailable", "quota_retry",
 })
 
 

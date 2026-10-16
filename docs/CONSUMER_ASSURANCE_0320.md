@@ -137,7 +137,28 @@ nodes initially broke shared display handlers; hidden/inert presentation nodes
 now preserve those handlers while server admission still refuses execution.
 See [the verified consumer workbench](screenshots/consumer-assurance-0320.jpg).
 
-Release-level native/container/CI results, cloud configuration and live acceptance
-will be recorded with verified revision identities in CURRENT_RELEASE after
-staging. Engineering regressions, authored quality scores and deployment
-acceptance answer different questions and are not interchangeable.
+## Concurrent cloud acceptance
+
+The first staged source-check run passed signed CSV admission, amount-tamper
+rejection, same-source replay, declared-mismatch rejection and one real Vertex
+PDF with all seven available source checks consistent. Its disposable workspace
+was cleaned up.
+
+The first concurrent import race returned one success and one revision conflict.
+The review race instead returned 200/503: the unsuccessful request stopped in the
+shared usage-limit admission layer before its review handler. No overwrite was
+observed and cleanup completed. The original provider exception type was not
+logged, so that incident alone does not establish its underlying cause.
+
+Quota reservations now restart a fresh transaction at most twice after a typed
+provider `Aborted` error, including an explicit chained SDK cause. Unknown
+timeouts and domain limits are never retried. The same atomic counters and
+limits remain; downstream handlers are not retried. Fixed telemetry categories
+distinguish limit, retry, conflict and unavailable outcomes without error text.
+Injected provider-abort tests check bounded retries and exactly one successful
+reservation. This is narrower than proving every Firestore failure mode.
+
+The revised live race result and release-level native/container/CI results will
+be recorded with verified revision identities in CURRENT_RELEASE after staging.
+Engineering regressions, authored quality scores and deployment acceptance
+answer different questions and are not interchangeable.

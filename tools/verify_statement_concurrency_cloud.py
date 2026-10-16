@@ -63,12 +63,12 @@ def main():
             code,proposal=call('/v1/friday/statements/prepare',{'data_base64':base64.b64encode(raw).decode(),'mime':'text/csv','account_alias':'Artificial race','account_type':'BANK','confirm_cloud_processing':True})
             assert code==200 and proposal['provenance']['model_calls']==0;proposals.append(proposal)
         imports=race('/v1/friday/statements',[{'statement':q['statement'],'expected_revision':0,'workspace_generation':q['workspace_generation'],'confirm_reviewed_and_store':True} for q in proposals])
-        assert sorted(code for code,_ in imports)==[200,409]
+        assert sorted(code for code,_ in imports)==[200,409], [('import',code,body.get('detail') if code!=200 else None) for code,body in imports]
         saved=next(body for code,body in imports if code==200)
         assert saved['revision']==1 and len(saved['imports'])==1
         assert len(saved['checkup']['findings'])>=2
         reviews=race('/v1/friday/statements/findings/review',[{'finding_id':f['finding_id'],'expected_revision':1,'workspace_generation':saved['workspace_generation'],'reviewed':True} for f in saved['checkup']['findings'][:2]])
-        assert sorted(code for code,_ in reviews)==[200,409]
+        assert sorted(code for code,_ in reviews)==[200,409], [('review',code,body.get('detail') if code!=200 else None) for code,body in reviews]
         code,final=call('/v1/friday/statements');assert code==200 and final['revision']==2
         assert final['summary']==saved['summary']
         assert sum(f['reviewed'] for f in final['checkup']['findings'])==1

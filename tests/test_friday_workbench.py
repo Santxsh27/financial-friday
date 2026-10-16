@@ -17,6 +17,8 @@ class WorkbenchUiTests(unittest.TestCase):
         for key in ['work.next_item','item.artifact.content','data.summary.categories','data.summary.period.start',
                     "work.source_revision!==data.revision", "work.workspace_generation!==data.workspace_generation"]:
             self.assertIn(key, WORKBENCH_JS)
+        self.assertIn("options.focusRefund?work.items.find", WORKBENCH_JS)
+        self.assertIn("options.change?data.checkup.spending_change", WORKBENCH_JS)
 
     def test_voice_is_per_action_opt_in_bounded_and_cleared_when_evidence_changes(self):
         self.assertIn("consent.type='checkbox'", WORKBENCH_JS)

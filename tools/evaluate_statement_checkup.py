@@ -250,6 +250,7 @@ def evaluate(cases, manifest, predictor=None):
                 'type': 'FALSE_POSITIVE' if decision['predicted'] else 'MISSED_FINDING', 'context': row['context'],
                 'predicted_findings': [f for f in row['findings'] if f['kind'] == decision['kind']]})
     source_files = ('src/carapace_core/friday_checkup.py', 'src/carapace_core/friday_portfolio.py',
+                    'src/carapace_core/friday_narration.py',
                     'src/carapace_core/friday_refund_shield.py', 'tools/evaluate_statement_checkup.py')
     numeric = [check for row in results for check in row['numeric_checks']]
     evidence = [check for row in results for check in row['evidence_checks']]

@@ -1,9 +1,25 @@
 # Financial Friday API
 
-The primary v3.1 path is pre-payment protection. A bank-authenticated local
-gateway signs the payment details, evaluates customer-supplied context, and
-requires the resulting decision before it can insert a synthetic transfer.
-The earlier post-payment assurance API is retained as legacy engineering work.
+The consumer product uses the allowlisted `/v1/friday/` statement, guidance,
+privacy and related read/recovery routes. The 0.32.0 candidate defaults
+`FRIDAY_LEGACY_DEMO_ENABLED=false` in both API and web environment loading.
+The planned production setting is explicitly false; staging and promotion are
+pending. Actual deployed versions and acceptance belong in
+[CURRENT_RELEASE.json](CURRENT_RELEASE.json).
+
+The preflight and assurance endpoints below describe retained artificial-money
+engineering demonstrations. They require explicit server-side
+`FRIDAY_LEGACY_DEMO_ENABLED=true` in the relevant API/gateway deployment. Without
+that opt-in, consumer admission removes their routes and OpenAPI entries; a
+tenant key cannot enable them. Existing task/run inspection and authenticated
+journal-only recovery remain available without admitting new payment execution.
+This is an application admission boundary, not separate process or IAM isolation.
+See [consumer assurance](CONSUMER_ASSURANCE_0320.md) and the
+[route map](API_MAP.md).
+
+In the opt-in preflight demonstration, an authenticated local gateway signs the
+details, evaluates supplied context and requires a decision before inserting a
+synthetic transfer. It does not connect the consumer product to a real bank.
 
 ## Current preflight sequence
 
@@ -74,6 +90,10 @@ transfer service is not yet in the preflight gate.
 ## Legacy assurance API
 
 ## Start the service
+
+The commands and credentials in this legacy section are for an explicitly
+enabled local demonstration. Set the demo flag in the server environment only
+when intentionally running that workflow; browser input cannot enable it.
 
 ```bash
 docker compose up --build api

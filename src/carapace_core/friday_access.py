@@ -31,6 +31,10 @@ def visitor_key(secret: str, tenant: str) -> str:
     return hmac.digest(secret.encode(), ("credential-v1:" + tenant).encode(), "sha256").hex()
 
 
-def permitted_friday_route(method: str, path: str) -> bool:
+def permitted_friday_route(method: str, path: str, *, legacy_demo_enabled: bool = True) -> bool:
     prefix = "/v1/friday/"
-    return path.startswith(prefix) and bool(re.fullmatch(FRIDAY_ROUTES.get(method, r"(?!)"), path[len(prefix):]))
+    permitted = path.startswith(prefix) and bool(re.fullmatch(FRIDAY_ROUTES.get(method, r"(?!)"), path[len(prefix):]))
+    if not permitted or legacy_demo_enabled is True:
+        return permitted
+    from .friday_surface import permitted_consumer_friday_route
+    return permitted_consumer_friday_route(method, path)

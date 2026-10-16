@@ -1,19 +1,21 @@
 """Automatic, source-linked statement checks. Patterns are not fraud verdicts.
 
-Amounts remain integer paise. Exact-description grouping deliberately prefers
-missed matches to merging different counterparties. No embeddings or private
+Amounts remain integer paise. Finite narration grammars and literal-description
+fallback prefer missed matches to merging different counterparties. No embeddings or private
 statement training, bank queries, deduplication, or financial actions occur.
 """
 from collections import defaultdict
+from dataclasses import replace
 from datetime import date
 from hashlib import sha256
 import json
 from statistics import median_low
-import re
 
 from pydantic import BaseModel, ConfigDict, Field
+from .friday_narration import VERSION as NARRATION_VERSION, parse_narration
 
-ENGINE_VERSION = 'CHECKUP_1'
+ENGINE_VERSION = 'CHECKUP_2'
+MAX_ROWS = 2000
 
 
 class FindingRequest(BaseModel):
@@ -47,15 +49,35 @@ def build_checkup(statements, summary, reviewed=()):
     rows = []
     for statement in statements:
         for row in statement['entries']:
+            if len(rows) >= MAX_ROWS:
+                raise ValueError('Statement checkup supports at most 2,000 rows; no partial analysis was accepted')
             rows.append({**row, 'account_alias': statement['account_alias'],
                          'account_type': statement['account_type'],
                          'source_sha256': statement['source_sha256']})
-    rows.sort(key=lambda r: (r['date'], r['account_alias'], r['source_sha256'], r['source_row']))
+    rows.sort(key=lambda r: (r['date'], r['account_alias'], r['account_type'], r['source_sha256'], r['source_row'], _digest(r)))
     findings = []; recurring = []; reviewed = set(reviewed)
+    matches = {}
+    for r in rows:
+        match = parse_narration(r['description'])
+        if not match.direction_agrees(r['debit_minor'], r['credit_minor']):
+            match = replace(match, status='AMBIGUOUS', counterparty_key=None, reference_key=None,
+                match_basis='EXACT_DESCRIPTION_ONLY', reference_status='NOT_ESTABLISHED',
+                uncertainty=match.uncertainty + ('Printed direction conflicts with the supplied debit/credit side; structured matching withheld.',))
+        matches[id(r)] = match
 
     def refs(items):
-        return [{k: r[k] for k in ('source_sha256', 'source_row', 'date', 'account_alias',
+        return [{k: r[k] for k in ('source_sha256', 'source_row', 'date', 'account_alias', 'account_type',
                                    'description', 'debit_minor', 'credit_minor')} for r in items]
+
+    def match_details(items, *, repeated=False):
+        profiles = [matches[id(r)] for r in items]
+        strong = repeated and all(p.counterparty_key is not None and p.reference_key is not None for p in profiles)
+        structured = all(p.counterparty_key is not None for p in profiles)
+        return {'match_basis': 'EXPLICIT_REFERENCE_AND_COUNTERPARTY' if strong else
+                'EXPLICIT_COUNTERPARTY_AND_TRANSPORT' if structured and not repeated else 'EXACT_DESCRIPTION_ONLY',
+                'match_uncertainty': sorted({reason for p in profiles for reason in p.uncertainty}),
+                'reference_distinction': 'EXPLICIT_TOKEN_UNVERIFIED' if strong else 'NOT_ESTABLISHED',
+                'narration_version': NARRATION_VERSION}
 
     def add(kind, title, detail, items, amount, priority, **values):
         evidence = refs(items)
@@ -67,16 +89,23 @@ def build_checkup(statements, summary, reviewed=()):
 
     exact = defaultdict(list); groups = defaultdict(list)
     for r in rows:
-        description = re.sub(r'\s+', ' ', r['description'].casefold()).strip()
-        exact[(r['account_alias'], r['date'], description, r['debit_minor'], r['credit_minor'])].append(r)
+        match = matches[id(r)]
+        scope = (r['account_alias'], r['account_type'])
+        repeated_key = ('REFERENCE', match.counterparty_key, match.reference_key) if match.counterparty_key is not None and match.reference_key is not None else ('EXACT', match.exact_key)
+        if match.exact_key is not None:
+            exact[(*scope, r['date'], repeated_key, r['debit_minor'], r['credit_minor'])].append(r)
         if r['debit_minor'] and r['kind'] in {'EXPENSE', 'LOAN_REPAYMENT'}:
-            groups[(r['account_alias'], description, r['kind'], r['category'])].append(r)
+            payee_key = ('PAYEE', match.counterparty_key) if match.counterparty_key is not None else ('EXACT', match.exact_key)
+            if match.exact_key is not None:
+                groups[(*scope, payee_key, r['kind'], r['category'])].append(r)
     for items in exact.values():
         if len(items) > 1:
             extra = (len(items)-1)*(items[0]['debit_minor'] or items[0]['credit_minor'])
+            details = match_details(items, repeated=True)
             add('REPEATED_ENTRY', 'Matching entries need a look',
-                'Same account nickname, date, description and amount. They may be legitimate or overlapping exports; all remain counted.',
-                items, extra, 0)
+                ('Same account nickname/type, date, amount and explicit counterparty/reference token under a supported narration grammar. The token is not bank-verified; legitimate repeats or overlapping exports remain possible.' if details['match_basis']=='EXPLICIT_REFERENCE_AND_COUNTERPARTY' else
+                 'Same account nickname/type, date, literal description and amount. References may be missing or masked, so distinct transactions may look alike. They may be legitimate or overlapping exports; all remain counted.'),
+                items, extra, 0, **details)
 
     for items in groups.values():
         by_month = defaultdict(list)
@@ -90,21 +119,22 @@ def build_checkup(statements, summary, reviewed=()):
                for a,b in zip(ordered, ordered[1:])): continue
         baseline = median_low(sorted(r['debit_minor'] for r in ordered[:-1]))
         latest = ordered[-1]['debit_minor']
+        details = match_details(ordered)
         recurring.append({'label': ordered[-1]['description'], 'category': ordered[-1]['category'],
-                          'account_alias': ordered[-1]['account_alias'], 'occurrences': len(ordered),
+                          'account_alias': ordered[-1]['account_alias'], 'account_type': ordered[-1]['account_type'], 'occurrences': len(ordered),
                           'last_date': ordered[-1]['date'], 'latest_minor': latest,
-                          'baseline_minor': baseline, 'evidence': refs(ordered)})
+                          'baseline_minor': baseline, 'evidence': refs(ordered), **details})
         if latest-baseline >= 10000 and latest*100 >= baseline*115:
             add('RECURRING_INCREASE', 'A regular payment got bigger',
                 'Latest amount is at least 15% and INR 100 above its earlier median. Check the tariff, usage or renewal; this is not proof of an error.',
-                ordered, latest-baseline, 1, baseline_minor=baseline, latest_minor=latest)
+                ordered, latest-baseline, 1, baseline_minor=baseline, latest_minor=latest, **details)
 
     # Robust within-account/category baseline, historical dates only. This is a
     # conservative review heuristic, not a calibrated fraud classifier.
     latest_month = max((r['date'][:7] for r in rows), default=None)
     pools = defaultdict(list)
     for r in rows:
-        if r['kind'] == 'EXPENSE': pools[(r['account_alias'],r['category'])].append(r)
+        if r['kind'] == 'EXPENSE': pools[(r['account_alias'],r['account_type'],r['category'])].append(r)
     for items in pools.values():
         for r in items:
             if r['date'][:7] != latest_month: continue
@@ -165,12 +195,20 @@ def build_checkup(statements, summary, reviewed=()):
                   'comparison':'SUPPLIED_ROWS_ONLY_NOT_COMPLETE_MONTHS'}
 
     findings.sort(key=lambda f:(f['priority'],-f['amount_minor'],f['finding_id']))
-    recurring.sort(key=lambda r:(-r['latest_minor'],r['account_alias'],r['label']))
+    recurring.sort(key=lambda r:(-r['latest_minor'],r['account_alias'],r['account_type'],r['label']))
     return {'scope':'AUTOMATIC_STATEMENT_CHECKUP', 'engine_version':ENGINE_VERSION,
             'source_fingerprint':_digest(rows), 'transaction_count':len(rows),
             'findings':findings, 'open_count':sum(not f['reviewed'] for f in findings),
             'recurring':recurring, 'spending_change':change,
             'money_shield':shield,
+            'narration_matching':{'version':NARRATION_VERSION,
+                'structured_rows':sum(p.counterparty_key is not None for p in matches.values()),
+                'masked_reference_rows':sum(p.reference_status=='MASKED' for p in matches.values()),
+                'exact_only_rows':sum(p.counterparty_key is None and p.exact_key is not None for p in matches.values()),
+                'withheld_rows':sum(p.exact_key is None for p in matches.values()),
+                'limits':['Finite explicit transport layouts and literal text only; no fuzzy counterparty or account nickname merging.',
+                          'Saved descriptions may already mask numeric references. Masked references cannot prove that two transactions share a reliable reference.',
+                          'Reference and counterparty text are user-supplied claims, not bank-authenticated identifiers.']},
             'checks_completed':['Repeated entries','Regular payments','Changed regular amounts',
                                 'Unusual expense amounts','Recorded fees','Unclear credits','Spending attribution','Refund evidence graph'],
             'model_calls':0, 'money_moved':False, 'rows_removed':0,

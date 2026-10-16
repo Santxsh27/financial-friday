@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "protocol_version": 2,
+  "dataset_id": "statement-ai-production-smoke-v1",
+  "synthetic": true,
+  "authored_after_v1_live_observation": true,
+  "review_status": "DEVELOPMENT_REVIEW_ONLY; not an independent reviewer label set or held-out test",
+  "inputs_sha256": "bc4b31fe6bb003548c35d1573066b62deb2df61475af9262aa6946af6e306c76",
+  "v1_labels_sha256": "69c9d4621cc0fb28290e2d97f10bcbec903f07f7062cd71e07aff3940a08063d",
+  "change_log": [
+    {"id":"V2-01","change":"Preserve v1 labels, scorer, strict score and recorded report. Publish separate factual, classification, typed-field, literal-wording and admission diagnostics, without replacing them with a new single pass score.","reason":"A strict phrase/navigation mismatch is different from a wrong source fact or a production rejection."},
+    {"id":"V2-02","change":"A quoted amount is source-supported when it equals an independently input-derived shared-context monetary value. Show the exact supporting paths. Keep required role amounts and month attribution checks separate.","reason":"An empty v1 amount allowlist incorrectly marked the supplied April INR 80 and June INR 90 as invented. A supported value alone does not establish correct attribution."},
+    {"id":"V2-03","change":"Accept finite documented paraphrases for identified-income attribution, exclusion of borrowing from earnings, absent May rows, missing-is-not-zero, and inability to view/access a live balance. Reject contradictory polarity and swapped attributed values.","reason":"Exact wording is a conformance diagnostic, not general factual truth. These finite checks remain incomplete semantic tests."},
+    {"id":"V2-04","change":"Separate immutable extracted row agreement from interpretation labels. For generic SyntheticShop only, allow Other or Shopping as a classification proposal, with the original exact v1 category still reported.","reason":"The fictional generic shop name does not identify the purchase category. Clothing remains Shopping; refund kind remains REFUND. This exception is declared from input ambiguity, not applied to all rows."},
+    {"id":"V2-05","change":"An unsent enquiry need not repeat a fraud disclaimer to satisfy the factual axis. The original mandatory disclaimer remains visible as v1 literal conformance. Affirmative fraud, innocence, sending, recovery and correction claims still fail finite factual checks.","reason":"Absence of a repeated disclaimer is not an affirmative fraud or completion claim."},
+    {"id":"V2-06","change":"Distinguish original recorded production admission and source hashes from re-admission under current runtime sources. Hash checkup, narration, refund and model-amount formatting modules and report narration VERSION.","reason":"Runtime changes can affect derived context, opaque finding IDs and admission independently of a scoring revision."}
+  ],
+  "cases": [
+    {"id":"extract-bank-two-rows","task":"extract","category_alternatives":{"0":["Other","Shopping"]},"ambiguity_reason":"SyntheticShop denotes only a generic fictional shop and does not identify the purchased goods; Other and Shopping are acceptable proposals."},
+    {"id":"extract-partial-refund","task":"extract","category_alternatives":{}},
+    {"id":"chat-borrowing-is-not-income","task":"chat","claim_checks":["IDENTIFIED_INCOME_ATTRIBUTION","BORROWING_NOT_EARNINGS"],"input_facts":[{"name":"identified_income_minor","statement":0,"row":0,"column":"credit","value_minor":3200000},{"name":"loan_proceeds_minor","statement":0,"row":1,"column":"credit","value_minor":5000000}],"required_income_minor":3200000},
+    {"id":"chat-missing-month","task":"chat","claim_checks":["MISSING_PERIOD_DECLARED","MISSING_IS_NOT_ZERO","MONTH_AMOUNT_ATTRIBUTION"],"input_facts":[{"name":"april_spending_minor","statement":0,"row":0,"column":"debit","value_minor":8000},{"name":"june_spending_minor","statement":0,"row":1,"column":"debit","value_minor":9000}],"missing_month":"2026-05","month_amounts_minor":{"2026-04":8000,"2026-06":9000}},
+    {"id":"chat-unsent-enquiry","task":"chat","claim_checks":["ENQUIRY_UNSENT"],"input_facts":[]},
+    {"id":"chat-unknown-balance","task":"chat","claim_checks":["LIVE_BALANCE_UNAVAILABLE"],"input_facts":[]}
+  ],
+  "limitations": [
+    "Protocol v2 was authored after inspecting the v1 live results and cannot substantiate an unseen or independent performance improvement.",
+    "Input facts are separate static rules, checked against source rows; no model output supplies an expected amount or label.",
+    "Source-supported monetary values are not sufficient proof of role, date, causal or merchant attribution. Only the explicitly checked roles and months receive additional finite checks.",
+    "Finite English paraphrase and contradiction patterns cannot certify unrestricted free prose. Bare numeric claims and unrecognised constructions remain outside verified coverage.",
+    "Original and current runtime admission can differ after implementation changes; any such difference is reported separately from scoring changes."
+  ]
+}

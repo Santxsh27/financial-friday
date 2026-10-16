@@ -264,7 +264,8 @@ def create_demo_app() -> FastAPI:
 
     @application.get("/", response_class=HTMLResponse)
     async def home() -> HTMLResponse:
-        return HTMLResponse(FINANCIAL_FRIDAY_HTML, headers={"Cache-Control": "no-store"})
+        from carapace_core.friday_surface import surface_html, parse_legacy_demo_flag, LEGACY_DEMO_ENV
+        return HTMLResponse(surface_html(FINANCIAL_FRIDAY_HTML,legacy_demo_enabled=parse_legacy_demo_flag(os.getenv(LEGACY_DEMO_ENV))), headers={"Cache-Control": "no-store"})
 
     @application.get("/assets/{name}")
     async def friday_assistant_asset(name: str):

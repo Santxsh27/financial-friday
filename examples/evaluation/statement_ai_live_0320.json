@@ -1,0 +1,654 @@
+{
+  "attempted_outputs": 6,
+  "by_task": {
+    "chat": {
+      "abstentions": 0,
+      "admitted": 4,
+      "incorrect_amounts": 2,
+      "invalid_references": 0,
+      "missing_literal_claim_checks": 6,
+      "outputs": 4,
+      "passed": 0,
+      "rejected": 0,
+      "schema_errors": 0,
+      "scored_schema_valid_outputs": 4,
+      "unsupported_known_claims": 0,
+      "wrong_intents": 3
+    },
+    "extract": {
+      "abstentions": 0,
+      "admitted": 0,
+      "incorrect_amounts": 0,
+      "invalid_references": 0,
+      "missing_literal_claim_checks": 0,
+      "outputs": 2,
+      "passed": 0,
+      "rejected": 2,
+      "schema_errors": 0,
+      "scored_schema_valid_outputs": 2,
+      "unsupported_known_claims": 0,
+      "wrong_intents": 0
+    }
+  },
+  "call_cap": 8,
+  "completion_status": "COMPLETE",
+  "external_messages": 0,
+  "frozen_case_ids": [
+    "extract-bank-two-rows",
+    "extract-partial-refund",
+    "chat-borrowing-is-not-income",
+    "chat-missing-month",
+    "chat-unsent-enquiry",
+    "chat-unknown-balance"
+  ],
+  "frozen_response_ids": [
+    "extract-bank-two-rows-live",
+    "extract-partial-refund-live",
+    "chat-borrowing-is-not-income-live",
+    "chat-missing-month-live",
+    "chat-unsent-enquiry-live",
+    "chat-unknown-balance-live"
+  ],
+  "independent_validation_completed": false,
+  "limitations": [
+    "Small unreviewed agent-authored synthetic smoke corpus, no independent, held-out or representative accuracy claim.",
+    "Offline controls are hand-authored good/bad outputs; their pass rate measures the scorer and admission paths, never Gemini quality.",
+    "Chat intent means production typed navigation/checkup fields; there is no separate semantic-intent classifier in this run.",
+    "Currency-marker amounts, exact reference membership and narrow required/forbidden phrase patterns are scored. Bare numbers, attribution swaps and unrestricted prose semantics are not fully verified.",
+    "Missing-citation checks measure expected references, not whether a valid reference semantically supports every sentence. No judge model supplies truth.",
+    "Abstention is a predeclared literal-phrase diagnostic because production ChatAnswer has no abstention field; paraphrases can be missed.",
+    "Extraction uses two tiny text PDFs; OCR, scanned images, complex layouts and real institution format coverage remain unmeasured.",
+    "Production chat may repair once; every SDK invocation consumes the same hard cap. Provider retries are disabled for opt-in live runs.",
+    "A configured model name hash identifies requested configuration, not immutable provider weights. Response model version is recorded when supplied."
+  ],
+  "live_model_calls": 6,
+  "live_model_quality_measured": true,
+  "live_output_token_cap_per_call": 4096,
+  "manifest": {
+    "dataset_id": "statement-ai-production-smoke-v1",
+    "inputs_sha256": "bc4b31fe6bb003548c35d1573066b62deb2df61475af9262aa6946af6e306c76",
+    "label_origin": "Static development-agent-authored expected rows, known paise amounts, typed intentions and literal factual checks, authored separately from recorded output. Never prediction-derived or judge-model labels.",
+    "labels_sha256": "69c9d4621cc0fb28290e2d97f10bcbec903f07f7062cd71e07aff3940a08063d",
+    "recorded_model": null,
+    "response_provenance": "AUTHOR_WRITTEN_SCORER_CONTROLS_NOT_MODEL_OUTPUT",
+    "responses_sha256": "5ab92ff5522170dff73ce602262a15b85c7f559d47d4d5099442333f92338024",
+    "review_status": "UNREVIEWED_AUTHOR_LABELS; no independent or held-out validation"
+  },
+  "model": "gemini-3.5-flash-lite",
+  "model_identity_sha256": "9a9f0bb7d45d033b80d2c4894621c0d5ca110ed6d006afc9ed6701ad1e83d371",
+  "model_latency_seconds": {
+    "coverage": 6,
+    "maximum": 2.4433,
+    "median": 1.5216
+  },
+  "payment_effects": 0,
+  "planned_outputs": 6,
+  "production_paths": [
+    "carapace_ai.friday_statements.extract_statement",
+    "carapace_ai.friday_chat.answer_chat"
+  ],
+  "response_provenance": "RECORDED_SYNTHETIC_MODEL_OUTPUT",
+  "results": [
+    {
+      "admitted": false,
+      "calls": [
+        {
+          "config_sha256": "ed243aa7c53807f4eec4bccfb3fe8bd797b8c8c4eb5bc89e4bf816d3caad2b58",
+          "contents_sha256": "0105603bc2c5e5ff02ac5b5931b40f21fbcfbe0abf8adffb43fdb521505c9572",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "140c4c45648e1ab86c423ab49a32aa3cbe3e7a53199a8b9fca1a1eb9b8094458",
+          "model_latency_seconds": 2.4433,
+          "prompt_sha256": "497576e1844f39b9dfc70fed79bf2adf3c2fc7e437ae4a531c8314cd08f60350",
+          "response": {
+            "complete": true,
+            "currency": "INR",
+            "currency_source_ids": [
+              "line-1"
+            ],
+            "rows": [
+              {
+                "category": "Shopping",
+                "credit_text": "",
+                "date_text": "2026-06-01",
+                "debit_text": "100.00",
+                "description": "SyntheticShop",
+                "kind": "EXPENSE",
+                "running_balance_text": "900.00",
+                "source_ids": [
+                  "line-6"
+                ]
+              },
+              {
+                "category": "Other",
+                "credit_text": "50.00",
+                "date_text": "2026-06-02",
+                "debit_text": "",
+                "description": "SyntheticRefund",
+                "kind": "REFUND",
+                "running_balance_text": "950.00",
+                "source_ids": [
+                  "line-7"
+                ]
+              }
+            ],
+            "source_facts": {
+              "opening_balance": {
+                "literal_text": "Opening balance: 1000.00",
+                "source_ids": [
+                  "line-4"
+                ]
+              },
+              "transaction_count": {
+                "literal_text": "Transaction count: 2",
+                "source_ids": [
+                  "line-11"
+                ]
+              }
+            }
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "20d68067e5f825cb462acf748561074ec161750520c10dfc44535b68f09fd338",
+          "schema_sha256": "376e6b8b455d8b5021ece1e5451cd8a4700dbbb39633f15efdbeb3e5476e0267",
+          "tokens": {
+            "candidates_token_count": 370,
+            "prompt_token_count": 2578,
+            "total_token_count": 2948
+          }
+        }
+      ],
+      "case_id": "extract-bank-two-rows",
+      "error_type": "ValueError",
+      "failure_category": "EXTRACTION_REJECTED",
+      "input_sha256": "88997c9ad9e3365f8260d436042c934aa409b1e67b83532e6b467e21e5d85658",
+      "label_sha256": "839052464b47adf2c1f8fee085f40bd0081a6340c7adab78b4b506c74fed3bdd",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "incorrect_amounts": 0,
+        "invalid_references": [],
+        "normalized_rows": [
+          {
+            "category": "Shopping",
+            "credit_minor": 0,
+            "date": "2026-06-01",
+            "debit_minor": 10000,
+            "description": "SyntheticShop",
+            "kind": "EXPENSE",
+            "source_unit_ids": [
+              "line-6"
+            ]
+          },
+          {
+            "category": "Other",
+            "credit_minor": 5000,
+            "date": "2026-06-02",
+            "debit_minor": 0,
+            "description": "SyntheticRefund",
+            "kind": "REFUND",
+            "source_unit_ids": [
+              "line-7"
+            ]
+          }
+        ],
+        "passed": false,
+        "row_mismatches": 1,
+        "schema_valid": true
+      },
+      "record_id": "extract-bank-two-rows-live",
+      "task": "extract"
+    },
+    {
+      "admitted": false,
+      "calls": [
+        {
+          "config_sha256": "ed243aa7c53807f4eec4bccfb3fe8bd797b8c8c4eb5bc89e4bf816d3caad2b58",
+          "contents_sha256": "0d616a624b2d403b82df251b935440becd3d2d9ad3a484868862b0b874fbb01d",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "140c4c45648e1ab86c423ab49a32aa3cbe3e7a53199a8b9fca1a1eb9b8094458",
+          "model_latency_seconds": 1.9637,
+          "prompt_sha256": "497576e1844f39b9dfc70fed79bf2adf3c2fc7e437ae4a531c8314cd08f60350",
+          "response": {
+            "complete": true,
+            "currency": "INR",
+            "currency_source_ids": [
+              "line-1"
+            ],
+            "rows": [
+              {
+                "category": "Shopping",
+                "credit_text": "0",
+                "date_text": "2026-06-01",
+                "debit_text": "760.00",
+                "description": "SyntheticClothing",
+                "kind": "EXPENSE",
+                "running_balance_text": "1240.00",
+                "source_ids": [
+                  "line-6"
+                ]
+              },
+              {
+                "category": "Other",
+                "credit_text": "200.00",
+                "date_text": "2026-06-05",
+                "debit_text": "0",
+                "description": "SyntheticRefund",
+                "kind": "REFUND",
+                "running_balance_text": "1440.00",
+                "source_ids": [
+                  "line-7"
+                ]
+              }
+            ],
+            "source_facts": {
+              "opening_balance": {
+                "literal_text": "Opening balance: 2000.00",
+                "source_ids": [
+                  "line-4"
+                ]
+              },
+              "ordering": {
+                "literal_text": "oldest first",
+                "source_ids": [
+                  "line-3"
+                ],
+                "value": "ASCENDING"
+              },
+              "transaction_count": {
+                "literal_text": "Transaction count: 2",
+                "source_ids": [
+                  "line-11"
+                ]
+              }
+            }
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "28de5e20e0b37d3c07efe4d7c71da02773aec7113c01a68d1c2665bb43948fc7",
+          "schema_sha256": "376e6b8b455d8b5021ece1e5451cd8a4700dbbb39633f15efdbeb3e5476e0267",
+          "tokens": {
+            "candidates_token_count": 427,
+            "prompt_token_count": 2583,
+            "total_token_count": 3010
+          }
+        }
+      ],
+      "case_id": "extract-partial-refund",
+      "error_type": "ValueError",
+      "failure_category": "EXTRACTION_REJECTED",
+      "input_sha256": "32dc10ffeccbe3b448b714e173bb071c8375621c1826e7557ca02f262984e132",
+      "label_sha256": "821df674568e4ebdafa16d57d92365eb82d04645e7878b68fe922654ad3ba3fa",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "incorrect_amounts": 0,
+        "invalid_references": [],
+        "normalized_rows": [
+          {
+            "category": "Shopping",
+            "credit_minor": 0,
+            "date": "2026-06-01",
+            "debit_minor": 76000,
+            "description": "SyntheticClothing",
+            "kind": "EXPENSE",
+            "source_unit_ids": [
+              "line-6"
+            ]
+          },
+          {
+            "category": "Other",
+            "credit_minor": 20000,
+            "date": "2026-06-05",
+            "debit_minor": 0,
+            "description": "SyntheticRefund",
+            "kind": "REFUND",
+            "source_unit_ids": [
+              "line-7"
+            ]
+          }
+        ],
+        "passed": true,
+        "row_mismatches": 0,
+        "schema_valid": true
+      },
+      "record_id": "extract-partial-refund-live",
+      "task": "extract"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "NONE",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "finding_id": null,
+        "next_screen": "statements",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "Your identified income in your reviewed statements is INR 32,000.00. Loan proceeds do not count as earnings because loan credits and other non-income inflows are excluded from income calculations.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "807844015337e328c9a3802779fa379c3a016ce2e42c0c10a4e1330c53a20b27",
+          "contents_sha256": "ee96b3f0a7745f4c2260135ee20128ddd12c811247028eaabe2ac3daa02307c3",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "ebcfe8c566d5a7a56e7dfeadd77f59b1512c1622faf2d886ff12298012640b33",
+          "model_latency_seconds": 1.4023,
+          "prompt_sha256": "bb786e5d136044e9fb50b2923fa7af83d38f742337fbfcd4d86e629c32c0a9b2",
+          "response": {
+            "evidence_ids": [
+              "statements:current"
+            ],
+            "finding_id": null,
+            "next_screen": "statements",
+            "reply": "Your identified income in your reviewed statements is INR 32,000.00. Loan proceeds do not count as earnings because loan credits and other non-income inflows are excluded from income calculations.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "84ffb9b672a61df03770f357fc69ea9c56180f7d02b498691c72b0686b5fdea4",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": {
+            "candidates_token_count": 79,
+            "prompt_token_count": 4172,
+            "total_token_count": 4251
+          }
+        }
+      ],
+      "case_id": "chat-borrowing-is-not-income",
+      "input_sha256": "1467e52cf0abb695b9a3d7d657212f3553952ea0b8249ad84118d1523654ea67",
+      "label_sha256": "3be20ea18f4c3b1a0698bb0b0b00bfe1006b0f7bdeb792817cf78ec2f6cb1069",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 0,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "identified income is INR 32,000\\.00",
+          "loan proceeds[^.]*not (?:income|earnings)"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [
+          3200000
+        ],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-borrowing-is-not-income-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "SPENDING_CHANGE",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "finding_id": null,
+        "next_screen": "dashboard",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "Your reviewed statements show spending of INR 80.00 in April 2026 and INR 90.00 in June 2026 under Transport. May 2026 has no supplied rows, so missing data is not treated as zero.",
+        "visual_request": "MONTHLY"
+      },
+      "calls": [
+        {
+          "config_sha256": "807844015337e328c9a3802779fa379c3a016ce2e42c0c10a4e1330c53a20b27",
+          "contents_sha256": "823145b7ce06fd2194229bf29a347808d44365d616c567683463d93cf4fc2373",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "ebcfe8c566d5a7a56e7dfeadd77f59b1512c1622faf2d886ff12298012640b33",
+          "model_latency_seconds": 1.5639,
+          "prompt_sha256": "bb786e5d136044e9fb50b2923fa7af83d38f742337fbfcd4d86e629c32c0a9b2",
+          "response": {
+            "checkup_action": "SPENDING_CHANGE",
+            "evidence_ids": [
+              "statements:current"
+            ],
+            "finding_id": null,
+            "next_screen": "dashboard",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "Your reviewed statements show spending of INR 80.00 in April 2026 and INR 90.00 in June 2026 under Transport. May 2026 has no supplied rows, so missing data is not treated as zero.",
+            "visual_request": "MONTHLY"
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "29d087636b14e100995daa923e81e0a4978547da7739f8716743e8aec0738b4f",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": {
+            "candidates_token_count": 147,
+            "prompt_token_count": 4304,
+            "total_token_count": 4451
+          }
+        }
+      ],
+      "case_id": "chat-missing-month",
+      "input_sha256": "80435f14f4d8eefd0c72c4991debf4f867653bcf6aef73cbfa38b44794f9e7bd",
+      "label_sha256": "72886726dad2865a66256a99498e2322aa84200e156474f3d6fd6ea29425e4bd",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 2,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": false
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "May is missing",
+          "not zero|cannot[^.]*zero|does not mean zero"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [
+          8000,
+          9000
+        ],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [
+          8000,
+          9000
+        ],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-missing-month-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "PREPARE_ENQUIRY",
+        "evidence_ids": [
+          "checkup:current"
+        ],
+        "finding_id": "finding_5556b1b929c16ba9e9553bd6",
+        "next_screen": "dashboard",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "I have prepared an unsent enquiry draft for the review candidate in your dashboard.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "807844015337e328c9a3802779fa379c3a016ce2e42c0c10a4e1330c53a20b27",
+          "contents_sha256": "a522b37a1a412e1208da37b1ff0caa10a3af973613717a6b638debee160ca62b",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "ebcfe8c566d5a7a56e7dfeadd77f59b1512c1622faf2d886ff12298012640b33",
+          "model_latency_seconds": 1.3138,
+          "prompt_sha256": "bb786e5d136044e9fb50b2923fa7af83d38f742337fbfcd4d86e629c32c0a9b2",
+          "response": {
+            "checkup_action": "PREPARE_ENQUIRY",
+            "evidence_ids": [
+              "checkup:current"
+            ],
+            "finding_id": "finding_5556b1b929c16ba9e9553bd6",
+            "next_screen": "dashboard",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "I have prepared an unsent enquiry draft for the review candidate in your dashboard.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "c29ada778c14ebe6ab18a1216afa08f4a1c1686a7c4889ee2698b5fefe2483a7",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": {
+            "candidates_token_count": 126,
+            "prompt_token_count": 4279,
+            "total_token_count": 4405
+          }
+        }
+      ],
+      "case_id": "chat-unsent-enquiry",
+      "input_sha256": "7e0c310fe30586ababf4f659703f14c7ef3181094cdd7d0760909670692f260f",
+      "label_sha256": "191f1f76a9444e9417a41f896ab9e836874bbb1e5b5f56265f010fafc8500ebf",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 0,
+        "intent_correct": true,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "does not establish fraud|not a fraud verdict|not confirmed fraud"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-unsent-enquiry-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "NONE",
+        "evidence_ids": [],
+        "finding_id": null,
+        "next_screen": "settings",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "I cannot view live bank balances or connect to real bank accounts. For statement totals, you can choose what I can use in 'Choose what I can use', or add a statement if none has been saved.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "807844015337e328c9a3802779fa379c3a016ce2e42c0c10a4e1330c53a20b27",
+          "contents_sha256": "e346547cb4abbeb0140b82bfd92c76a2f33440a3474d478037ecfbe03d6292bc",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "ebcfe8c566d5a7a56e7dfeadd77f59b1512c1622faf2d886ff12298012640b33",
+          "model_latency_seconds": 1.4793,
+          "prompt_sha256": "bb786e5d136044e9fb50b2923fa7af83d38f742337fbfcd4d86e629c32c0a9b2",
+          "response": {
+            "checkup_action": "NONE",
+            "evidence_ids": [],
+            "finding_id": null,
+            "next_screen": "settings",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "I cannot view live bank balances or connect to real bank accounts. For statement totals, you can choose what I can use in 'Choose what I can use', or add a statement if none has been saved.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": "gemini-3.5-flash-lite",
+          "response_sha256": "516b4ea05d6eccb14d68791d79a94d8a22a350faf9d1fc77d896346159cf4c48",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": {
+            "candidates_token_count": 117,
+            "prompt_token_count": 3354,
+            "total_token_count": 3471
+          }
+        }
+      ],
+      "case_id": "chat-unknown-balance",
+      "input_sha256": "54705db7b5dec51e4f7dc35e1a9c3fc91471e87421899405a98676e6dbd0bda4",
+      "label_sha256": "373841e1a57ce2d7c1379b44cc911972f9b16feff9198048e305f9eea703cf71",
+      "passed": false,
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": false,
+        "incorrect_amounts": 0,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "cannot (?:determine|know|see)[^.]*balance|balance[^.]*not (?:available|established|provided)"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-unknown-balance-live",
+      "task": "chat"
+    }
+  ],
+  "schema_version": 1,
+  "score_definitions": {
+    "abstentions": "Extraction complete=false or a pre-authored chat abstention phrase. Schema/provider failures are separate rejected/unresolved outputs.",
+    "hash_encoding": "SHA256 of UTF-8 compact sorted JSON for structured values; raw file bytes for fixture/source files; raw UTF-8 strings for contents/response text.",
+    "incorrect_amounts": "Extraction: row positions with a wrong debit/credit pair, plus parse errors. Chat: distinct currency-marked values outside that case's pre-authored allowed amounts. Task counts have different units and are also shown separately.",
+    "invalid_references": "Unknown extraction source-unit IDs or chat evidence IDs outside the pre-authored case allowlist.",
+    "missing_literal_claim_checks": "Number of pre-authored required factual phrase patterns absent; paraphrases may be missed.",
+    "passed": "Production admission AND static raw expectations, plus exact normalized extraction rows/source checks where applicable.",
+    "unsupported_known_claims": "Number of matching pre-authored forbidden factual/action phrase patterns; not all unsupported prose."
+  },
+  "scorer_controls": {
+    "declared": 0,
+    "matched": 0,
+    "mismatched_record_ids": []
+  },
+  "skipped_output_ids": [],
+  "source_sha256": {
+    "src/carapace_ai/friday_chat.py": "6f483c6d3fd0d5a5fb02527f0ff9f0e0c0da32167649bb9df3d293b524cef031",
+    "src/carapace_ai/friday_statements.py": "45cd7e108b045c4714c663421b537afc1b36e78d5b9245e4b90d0f656c02c587",
+    "src/carapace_core/friday_portfolio.py": "99ecb142ca1ec379b110c7739e04b6fdc8d6516b60e87d6b553ed842d39bc240",
+    "src/carapace_core/friday_statement_reconciliation.py": "b51e2c1e613ac3655d1b099253d7951366e4e1d24f20e2a7a64c0e9e95ec9525",
+    "tools/evaluate_friday_statement_ai.py": "445834cf25eca2716a59871272bf038af2704f2dd48e47f2140e309773181a73"
+  },
+  "status": "LIVE_SYNTHETIC_SMOKE",
+  "summary": {
+    "abstentions": 0,
+    "admitted": 4,
+    "incorrect_amounts": 2,
+    "invalid_references": 0,
+    "missing_literal_claim_checks": 6,
+    "outputs": 6,
+    "passed": 0,
+    "rejected": 2,
+    "schema_errors": 0,
+    "scored_schema_valid_outputs": 6,
+    "unsupported_known_claims": 0,
+    "wrong_intents": 3
+  },
+  "synthetic": true,
+  "token_coverage_calls": 6,
+  "total_sdk_invocations": 6,
+  "total_tokens_reported": 22536,
+  "user_records": 0
+}

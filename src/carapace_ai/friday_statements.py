@@ -90,7 +90,15 @@ Dates must be unambiguous. Do not identify fraud or outstanding debt from
 spending alone. Extract optional running_balance_text VERBATIM where printed.
 source_facts holds printed opening_balance, closing_balance, debit_total,
 credit_total, transaction_count and page markers only: literal_text plus exact
-source_ids. Never calculate a missing fact. Omit unknown facts. For convention
+source_ids. For numeric facts, literal_text is ONLY the printed numeric token,
+not its label or currency. Example: a unit "Opening balance: 1000.00" yields
+{"literal_text":"1000.00","source_ids":["the-exact-unit-id"]}, NOT
+"Opening balance: 1000.00". "Transaction count: 2" yields literal_text="2";
+"Page 1 of 2" yields page number "1" and declared page count "2". Preserve
+printed separators/signs in numeric tokens. The server independently binds
+each numeric token to its printed label. Never calculate a missing fact.
+Omit unknown facts. Convention and ordering are different: copy their full
+explicit supported phrase as literal_text, not a number. For convention
 only copy an explicit sentence: "Credits increase balance; debits decrease
 balance", "Debits increase amount due; credits decrease amount due", or
 "Credits increase amount due; debits decrease amount due", with corresponding

@@ -12,6 +12,7 @@ from carapace_core.friday_access import validate_enrollment_secret, visitor_key,
 from .friday_public_quota import DemoLimitReached, FirestoreDemoQuota
 
 from .config import Settings
+from carapace_core.friday_surface import legacy_demo_enabled
 
 
 @dataclass(frozen=True)
@@ -23,6 +24,7 @@ class TenantAuthenticator:
     def __init__(self, settings: Settings, *, quota=None) -> None:
         self._tenant_keys = dict(settings.tenant_keys)
         self._public_secret = settings.public_demo_secret
+        self._legacy_demo_enabled = legacy_demo_enabled(settings)
         self._quota = quota
         if self._public_secret:
             validate_enrollment_secret(self._public_secret)
@@ -51,7 +53,7 @@ class TenantAuthenticator:
                 detail="invalid Financial Friday credentials",
             )
         if visitor:
-            if not permitted_friday_route(request.method, request.url.path):
+            if not permitted_friday_route(request.method, request.url.path, legacy_demo_enabled=self._legacy_demo_enabled):
                 raise HTTPException(403, "This demo account can only use supported Friday actions")
             try:
                 await run_in_threadpool(self._quota.reserve, tenant_id, request.method)

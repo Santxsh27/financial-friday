@@ -219,6 +219,19 @@ class SourceReconciliationTests(unittest.TestCase):
         self.assertIsNone(result.source_facts.debit_total)
         self.assertEqual(result.rows[0].running_balance_text, '')
 
+    def test_numeric_fact_prompt_explains_value_only_without_weakening_binding(self):
+        from carapace_ai.friday_statements import INSTRUCTION
+        self.assertIn('ONLY the printed numeric token', INSTRUCTION)
+        self.assertIn('Convention and ordering are different', INSTRUCTION)
+        planner = SimpleNamespace(mode='VERTEX_GEMINI', model_name='synthetic-no-live-model', _client=None)
+        def labelled_fact(units):
+            unit = next(unit for unit in units if unit['text'].startswith('Opening balance'))
+            return {'opening_balance': {'literal_text': 'Opening balance: 1000.00', 'source_ids': [unit['id']]}}
+        with patch('carapace_ai.friday_statements.generate', side_effect=synthetic_model_response(facts=labelled_fact)):
+            with self.assertRaisesRegex(ValueError, 'bind'):
+                extract_statement(planner, data=synthetic_pdf([SYNTHETIC_PDF_LINES]), mime='application/pdf',
+                    account_alias='Synthetic', account_type='BANK', use_ai=True)
+
     def test_synthetic_pdf_printed_facts_are_read_even_when_model_omits_them(self):
         planner = SimpleNamespace(mode='VERTEX_GEMINI', model_name='synthetic-no-live-model', _client=None)
         with patch('carapace_ai.friday_statements.generate', side_effect=synthetic_model_response()):

@@ -2,16 +2,22 @@
 
 **One statement. Less admin. A clearer next step.**
 
-### Statement reliability update 0.31.0
+### Consumer assurance candidate 0.32.0
 
-Statement review now includes folded source checks for declared totals, balances,
-counts and page coverage. Friday signs its extraction, verifies it again on save,
-and blocks known mismatches. Missing evidence stays unknown; this is not bank
-authentication. A new 39-case labelled synthetic benchmark publishes both false
-warnings and missed findings, and request IDs link gateway, API and model logs
-without logging statement contents. See [the reliability report](docs/STATEMENT_RELIABILITY_0310.md)
-for measured limitations and [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) for
-actual deployment status. The main user flow and design are unchanged.
+Current source work narrows the consumer API and web proxy to explicit routes;
+artificial-payment demos require server opt-in. Strict narration matching can
+recognise the same literal payee across supported UPI/NEFT/IMPS/RTGS layouts while
+keeping account nicknames/types and distinct reliable references separate.
+Private chat rechecks cleanup generations through its final context read, and a
+reloaded unsaved preview offers a clear return to statement selection.
+
+The unchanged 39-case, unreviewed agent-authored benchmark still has false alerts
+and missed findings; the new matching rules do not improve its measured scores.
+The first six-call production-path AI smoke run also exposed real PDF rejections
+and scorer defects. See [the consumer assurance note](docs/CONSUMER_ASSURANCE_0320.md)
+for results and limits. Staging and promotion of 0.32.0 are pending;
+[CURRENT_RELEASE](docs/CURRENT_RELEASE.json) remains the authority for actual
+deployment identities and acceptance. The statement workflow and design remain.
 
 ### Friday prepares the work, not another report to read
 

@@ -41,6 +41,33 @@ class ChatAnswer(BaseModel):
     finding_id: str | None = Field(default=None, pattern=r'^finding_[a-f0-9]{24}$')
 
 
+def coherent_navigation(answer: ChatAnswer) -> ChatAnswer:
+    """Make presentation agree with the validated typed workflow.
+
+    This does not infer intent from user text, grant context access, calculate a
+    result or perform an action. Incompatible workflows stay rejected.
+    """
+    if answer.checkup_action != 'NONE' and (answer.plan or answer.rehearsal_goal):
+        raise ValueError('Choose one financial workflow, not conflicting proposals')
+    if answer.plan and answer.rehearsal_goal:
+        raise ValueError('Choose one planning workflow')
+    if answer.checkup_action != 'NONE':
+        navigation = {'next_screen': 'dashboard', 'visual_request': 'NONE'}
+    elif answer.plan:
+        navigation = {'next_screen': 'plan', 'visual_request': 'PLAN'}
+    elif answer.rehearsal_goal:
+        navigation = {'next_screen': 'rehearsal', 'visual_request': 'NONE'}
+    elif answer.visual_request in {'SPENDING', 'MONTHLY'}:
+        navigation = {'next_screen': 'dashboard'}
+    else:
+        navigation = {}
+        if answer.visual_request == 'PLAN':
+            navigation['visual_request'] = 'NONE'
+        if answer.next_screen in {'plan', 'rehearsal'}:
+            navigation['next_screen'] = 'NONE'
+    return answer.model_copy(update=navigation)
+
+
 def _check_cashflow_amounts(reply, cashflow):
     """Fail closed on unsupported explicit rupee figures, not semantic proof."""
     allowed = set()
@@ -99,7 +126,15 @@ Do not solicit/repeat PINs, OTPs, passwords, CVVs or full card numbers. Do not g
 personalized securities recommendations, trade calls, guaranteed returns or
 legal conclusions. Explain general financial concepts instead. No latest-news
 claims: browsing and market feeds are not connected. No universal safety claim.
-Return only schema-valid JSON. next_screen is a navigation suggestion only."""
+Return only schema-valid JSON. next_screen is a navigation suggestion only.
+For unavailable live bank balances, bank connections, bank transactions,
+payment execution, trading or current news, explain the limitation and use
+next_screen=NONE, visual_request=NONE, checkup_action=NONE, plan=null and
+rehearsal_goal=null unless the user also explicitly requests a supported task.
+Settings cannot enable those functions. Use next_screen=settings only for an
+actual privacy, saved-data deletion or context-sharing controls request.
+If no supported destination helps the current answer, use next_screen=NONE;
+do not send the user to settings or invent a destination."""
 
 INSTRUCTION += """ Communication preferences are optional presentation choices only.
 CONCISE means a short answer; STEP_BY_STEP means clear numbered guidance within
@@ -291,12 +326,9 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
     checkup=statements.get('automatic_checkup',{}) if request.include_statements and statements else {}
     if answer.finding_id and answer.finding_id not in {f['finding_id'] for f in checkup.get('findings',[])}:
         raise ValueError('Model selected an unavailable finding')
-    if answer.checkup_action!='NONE' and (answer.plan or answer.rehearsal_goal):
-        raise ValueError('Choose one financial workflow, not conflicting proposals')
-    if answer.plan and answer.rehearsal_goal:
-        raise ValueError('Choose one planning workflow')
     if any(identity not in allowed_ids for identity in answer.evidence_ids):
         raise ValueError("Model cited an unavailable evidence reference")
+    answer = coherent_navigation(answer)
     clean_reply = redact_for_model(answer.reply)
     return {**answer.model_dump(), "reply": clean_reply.text,
             "read_only": True, "money_moved": False, "payment_authorized": False,

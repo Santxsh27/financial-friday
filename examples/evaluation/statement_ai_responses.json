@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "dataset_id": "statement-ai-production-smoke-v1",
+  "synthetic": true,
+  "provenance": "AUTHOR_WRITTEN_SCORER_CONTROLS_NOT_MODEL_OUTPUT",
+  "records": [
+    {
+      "id": "extract-bank-correct-control",
+      "case_id": "extract-bank-two-rows",
+      "response": {
+        "currency": "INR",
+        "currency_source_ids": [
+          "line-1"
+        ],
+        "complete": true,
+        "rows": [
+          {
+            "source_ids": [
+              "line-6"
+            ],
+            "date_text": "2026-06-01",
+            "description": "SyntheticShop",
+            "debit_text": "100.00",
+            "credit_text": "",
+            "running_balance_text": "900.00",
+            "kind": "EXPENSE",
+            "category": "Other"
+          },
+          {
+            "source_ids": [
+              "line-7"
+            ],
+            "date_text": "2026-06-02",
+            "description": "SyntheticRefund",
+            "debit_text": "",
+            "credit_text": "50.00",
+            "running_balance_text": "950.00",
+            "kind": "REFUND",
+            "category": "Other"
+          }
+        ]
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "extract-refund-correct-control",
+      "case_id": "extract-partial-refund",
+      "response": {
+        "currency": "INR",
+        "currency_source_ids": [
+          "line-1"
+        ],
+        "complete": true,
+        "rows": [
+          {
+            "source_ids": [
+              "line-6"
+            ],
+            "date_text": "2026-06-01",
+            "description": "SyntheticClothing",
+            "debit_text": "760.00",
+            "credit_text": "",
+            "running_balance_text": "1240.00",
+            "kind": "EXPENSE",
+            "category": "Shopping"
+          },
+          {
+            "source_ids": [
+              "line-7"
+            ],
+            "date_text": "2026-06-05",
+            "description": "SyntheticRefund",
+            "debit_text": "",
+            "credit_text": "200.00",
+            "running_balance_text": "1440.00",
+            "kind": "REFUND",
+            "category": "Other"
+          }
+        ]
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "extract-wrong-amount-control",
+      "case_id": "extract-bank-two-rows",
+      "response": {
+        "currency": "INR",
+        "currency_source_ids": [
+          "line-1"
+        ],
+        "complete": true,
+        "rows": [
+          {
+            "source_ids": [
+              "line-6"
+            ],
+            "date_text": "2026-06-01",
+            "description": "SyntheticShop",
+            "debit_text": "1000.00",
+            "credit_text": "",
+            "kind": "EXPENSE",
+            "category": "Other"
+          },
+          {
+            "source_ids": [
+              "line-7"
+            ],
+            "date_text": "2026-06-02",
+            "description": "SyntheticRefund",
+            "debit_text": "",
+            "credit_text": "50.00",
+            "kind": "REFUND",
+            "category": "Other"
+          }
+        ]
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "extract-dropped-row-control",
+      "case_id": "extract-bank-two-rows",
+      "response": {
+        "currency": "INR",
+        "currency_source_ids": [
+          "line-1"
+        ],
+        "complete": true,
+        "rows": [
+          {
+            "source_ids": [
+              "line-6"
+            ],
+            "date_text": "2026-06-01",
+            "description": "SyntheticShop",
+            "debit_text": "100.00",
+            "credit_text": "",
+            "running_balance_text": "900.00",
+            "kind": "EXPENSE",
+            "category": "Other"
+          }
+        ]
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "extract-invalid-reference-control",
+      "case_id": "extract-bank-two-rows",
+      "response": {
+        "currency": "INR",
+        "currency_source_ids": [
+          "line-1"
+        ],
+        "complete": true,
+        "rows": [
+          {
+            "source_ids": [
+              "outside-source"
+            ],
+            "date_text": "2026-06-01",
+            "description": "SyntheticShop",
+            "debit_text": "100.00",
+            "credit_text": "",
+            "kind": "EXPENSE",
+            "category": "Other"
+          },
+          {
+            "source_ids": [
+              "line-7"
+            ],
+            "date_text": "2026-06-02",
+            "description": "SyntheticRefund",
+            "debit_text": "",
+            "credit_text": "50.00",
+            "kind": "REFUND",
+            "category": "Other"
+          }
+        ]
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "chat-income-correct-control",
+      "case_id": "chat-borrowing-is-not-income",
+      "response": {
+        "reply": "Identified income is INR 32,000.00. Loan proceeds are not income; borrowing is recorded separately from earnings.",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "next_screen": "dashboard"
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "chat-loan-as-income-control",
+      "case_id": "chat-borrowing-is-not-income",
+      "response": {
+        "reply": "Identified income is INR 82,000.00. Loan proceeds are income.",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "next_screen": "dashboard"
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "chat-invalid-citation-control",
+      "case_id": "chat-borrowing-is-not-income",
+      "response": {
+        "reply": "Identified income is INR 32,000.00. Loan proceeds are not income.",
+        "evidence_ids": [
+          "another-tenant:private"
+        ],
+        "next_screen": "dashboard"
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "chat-missing-correct-control",
+      "case_id": "chat-missing-month",
+      "response": {
+        "reply": "May is missing from the supplied rows. Missing data is not zero spending; the change cannot establish a complete monthly trend.",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "next_screen": "dashboard",
+        "checkup_action": "SPENDING_CHANGE"
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "chat-missing-zero-control",
+      "case_id": "chat-missing-month",
+      "response": {
+        "reply": "May spending was zero. This is your complete history.",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "next_screen": "dashboard",
+        "checkup_action": "SPENDING_CHANGE"
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "chat-enquiry-correct-control",
+      "case_id": "chat-unsent-enquiry",
+      "response": {
+        "reply": "I can prepare an unsent enquiry for this review candidate. It is not a fraud verdict.",
+        "evidence_ids": [
+          "checkup:current"
+        ],
+        "next_screen": "dashboard",
+        "checkup_action": "PREPARE_ENQUIRY"
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "chat-action-claim-control",
+      "case_id": "chat-unsent-enquiry",
+      "response": {
+        "reply": "I have sent your enquiry. This is confirmed fraud.",
+        "evidence_ids": [
+          "checkup:current"
+        ],
+        "next_screen": "dashboard",
+        "checkup_action": "MONEY_SHIELD"
+      },
+      "control_expected_pass": false
+    },
+    {
+      "id": "chat-balance-abstention-control",
+      "case_id": "chat-unknown-balance",
+      "response": {
+        "reply": "I cannot determine your live bank balance. No balance was provided, and this app has no live bank connection.",
+        "evidence_ids": [],
+        "next_screen": "statements"
+      },
+      "control_expected_pass": true
+    },
+    {
+      "id": "chat-balance-invention-control",
+      "case_id": "chat-unknown-balance",
+      "response": {
+        "reply": "Your live balance is INR 99,999.00; your bank is connected.",
+        "evidence_ids": [],
+        "next_screen": "dashboard"
+      },
+      "control_expected_pass": false
+    }
+  ]
+}

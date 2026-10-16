@@ -35,6 +35,7 @@ from carapace_core.counterfactual import search_minimal_repair
 from carapace_core.verifier import verify_payment
 from carapace_core.bank_envelope import BankEnvelopeSigner
 from carapace_core.friday_trace import RequestTraceMiddleware
+from carapace_core.friday_surface import legacy_demo_enabled, restrict_consumer_api
 
 from .auth import TenantAuthenticator, TenantContext
 from .config import Settings
@@ -70,7 +71,7 @@ from .financial_friday_routes import register_financial_friday_routes
 from carapace_integrations.anthos_preflight_bridge import AnthosPreflightBridge
 
 
-VERSION = "0.31.0"
+VERSION = "0.32.0"
 LOGGER = logging.getLogger(__name__)
 
 
@@ -81,6 +82,7 @@ def create_app(
     incident_provider: IncidentReasoningProvider | None = None,
 ) -> FastAPI:
     resolved_settings = settings or Settings.from_env()
+    legacy_demo = legacy_demo_enabled(resolved_settings)
     resolved_store = store or SQLiteEvidenceStore(resolved_settings.database_path)
     resolved_store.initialize()
     authenticate = TenantAuthenticator(resolved_settings)
@@ -102,7 +104,7 @@ def create_app(
                     LOGGER.warning("Friday inbox check failed: %s", type(error).__name__)
                 stop.wait(5)
         inbox_thread = None
-        if hasattr(_application.state, "friday_inbox") and resolved_settings.environment != "test":
+        if legacy_demo and hasattr(_application.state, "friday_inbox") and resolved_settings.environment != "test":
             inbox_thread = threading.Thread(target=inbox_loop, daemon=True, name="friday-inbox")
             inbox_thread.start()
         thread: threading.Thread | None = None
@@ -135,6 +137,7 @@ def create_app(
         lifespan=lifespan,
     )
     application.state.store = resolved_store
+    application.state.legacy_demo_enabled = legacy_demo
     preflight_gate = PreflightGate(resolved_settings.database_path)
     preflight_gate.initialize()
     signer = BankEnvelopeSigner(
@@ -152,7 +155,7 @@ def create_app(
     )
     evidence_log = PreflightEvidenceLog(resolved_settings.database_path, witness_signer)
     evidence_log.initialize()
-    if os.getenv("CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED", "false").lower() == "true":
+    if legacy_demo and os.getenv("CARAPACE_TEST_ANTHOS_BRIDGE_ENABLED", "false").lower() == "true":
         if resolved_settings.environment not in {"development", "test"}:
             raise RuntimeError("direct Anthos sample-ledger bridge is forbidden outside development/test")
         database_url = os.getenv("BOA_DATABASE_URL", "")
@@ -163,18 +166,18 @@ def create_app(
             witness_public_key=witness_signer.public_key_bytes,
         )
     application.state.test_delivery_worker = test_delivery_worker
-    if resolved_settings.environment in {"development", "test"}:
+    if legacy_demo and resolved_settings.environment in {"development", "test"}:
         operations = OperationsService(resolved_settings.database_path, signer, create_operations_planner(resolved_lens_provider))
         application.state.operations = operations
         register_operations_routes(application, operations, authenticate)
-        financial_friday = FinancialFridayService(
-            resolved_settings.database_path,
-            signer,
-            create_financial_friday_planner(resolved_lens_provider),
-            create_friday_durable_state(resolved_settings),
-        )
-        application.state.financial_friday = financial_friday
-        register_financial_friday_routes(application, financial_friday, authenticate)
+    financial_friday = FinancialFridayService(
+        resolved_settings.database_path,
+        signer,
+        create_financial_friday_planner(resolved_lens_provider),
+        create_friday_durable_state(resolved_settings),
+    )
+    application.state.financial_friday = financial_friday
+    register_financial_friday_routes(application, financial_friday, authenticate)
     register_preflight_routes(
         application,
         authenticate=authenticate,
@@ -577,6 +580,8 @@ def create_app(
             {**passport, "signature_valid": signature_valid}
         )
 
+    if not legacy_demo:
+        restrict_consumer_api(application)
     application.add_middleware(
         RequestTraceMiddleware, service="api", trust_incoming=True,
         allowed_routes={route.path for route in application.routes if hasattr(route, "path")},

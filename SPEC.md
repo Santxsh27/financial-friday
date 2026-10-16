@@ -1,7 +1,8 @@
 # Financial Friday — Current product and engineering contract
 
 Updated **16 October 2026**. This document replaces the mixed historical product
-specifications. Current code version is `0.31.0`. Actual deployed source and
+specifications. Current source work targets release `0.32.0`; staging and
+promotion are pending. Actual deployed source and
 image identities are recorded in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json),
 not inferred from documentation or a GitHub push. See [hardening](docs/HARDENING_0180.md).
 For the detailed rationale, algorithms and trust boundaries, read
@@ -18,6 +19,20 @@ a source-bound badge. The signature is Friday's extraction attestation, not bank
 authentication. Minimal labelled fact excerpts are retained with normalized
 history; raw files are not archived and excerpts/signatures are not chat context.
 See [0.31.0 boundaries and measured baseline](docs/STATEMENT_RELIABILITY_0310.md).
+
+### Consumer admission and release status
+
+The candidate consumer API and web proxy share an explicit route allowlist.
+`FRIDAY_LEGACY_DEMO_ENABLED` defaults to `false` when loaded from the environment;
+the planned production setting is explicitly `false`. Earlier payment/preflight
+demonstrations and new artificial execution routes require server opt-in.
+Existing task/run inspection and authenticated journal-only recovery remain
+available. This restricts route admission and OpenAPI exposure within the same
+application; it does not create separate processes, storage or IAM identities.
+The production configuration and both cloud services must pass staging and
+promotion before they can be called deployed 0.32.0. See
+[consumer assurance](docs/CONSUMER_ASSURANCE_0320.md) and
+[CURRENT_RELEASE](docs/CURRENT_RELEASE.json).
 
 ## 1. Product definition
 
@@ -37,13 +52,26 @@ and a prepared next step**. The server runs eight bounded checks on saved histor
 repeated entries, regular payments, changed regular amounts, unusual expense
 amounts, fees, unclear credits, exact spending-change attribution and the refund
 evidence graph described below. Findings
-retain source-file/row references. Exact-description recurring series need at
-least three consecutive months, one occurrence per month and 20–40 day gaps.
+retain source-file/row references and account type. `CHECKUP_2` uses finite,
+complete UPI/NEFT/IMPS/RTGS narration layouts with explicit reference and payee
+slots, with literal-description fallback. It preserves payee words, digits,
+punctuation and non-ASCII distinctions, scopes matches by exact account
+nickname/type, and reports match basis and uncertainty. Reliable explicit tokens
+distinguish repeated-entry candidates; masked references cannot establish the
+same transaction. They can support a weaker recurring payee candidate. Recurring
+series still need at least three consecutive months, one occurrence per month
+and 20–40 day gaps.
 Amount increases require at least 15% and INR 100 above the prior median.
 Outliers need six earlier account/category observations and must exceed the
 maximum of three times median, median plus six median absolute deviations, and
 median plus INR 1,000. These are review heuristics, not calibrated fraud scores.
 Ambiguous recurring series are suppressed; duplicate candidates remain counted.
+No thresholds were tuned against the existing 39-case authored corpus. Its
+precision remains 14/21 = 66.67%, recall 14/19 = 73.68%, and case false-positive
+rate 7/18 = 38.89%. These unreviewed agent-authored labels are not independent or
+blind validation. The comparison report records no measured improvement or
+regression; [the assurance note](docs/CONSUMER_ASSURANCE_0320.md) separates this
+quality evidence from engineering regressions and AI smoke-test limitations.
 
 The default workbench integrates refund evidence rather than requiring a Money
 Shield tab. `ASSISTANT_WORK_1` derives a stable, source-bound batch of at most eight
@@ -252,6 +280,14 @@ Gemini response -> schema/citation/authority validation -> safely rendered text.
 - Known credential patterns are scrubbed best-effort; users must not enter secrets.
 - Model failure reports unavailable instead of substituting a pretend live answer.
 
+Private-context replies check the privacy generation before loading context,
+after generation, and after the last freshness read and response assembly.
+Changed shared diary, forecast or inbox context rejects the reply; statement
+context also checks revision/generation. Regression tests cover cleanup during
+the final read even when it returns an older snapshot. General chat does not load
+unshared private records. Reloading an unsaved statement preview shows an empty
+state and a statement-selection action without changing saved history.
+
 ### B. Document/transaction-claim review
 
 User-supplied text/image/PDF -> Gemini typed facts -> exact checks -> tenant review
@@ -451,13 +487,14 @@ and privacy details. Home examples do not submit automatically. Theme, optional
 sound and motion preferences affect presentation only. Evidence states reflect
 actual results; insufficient information does not produce a universal safe badge.
 
-Current hardening code: 405 native tests (404 pass/one skip), 405 Docker tests
-(386 pass/nineteen skips), fifteen tooling tests. Earlier live Vertex/Firestore verified
-preparation without debit, a quoted refund-risk hold, confirmed artificial payment,
-repeat-confirmation idempotency and independent replay. Details are in
-[the release record](docs/FRIDAY_TASK_RELEASE_1013.md). Remote CI for runtime source
-`a248997` passed; later documentation CI must be checked separately.
-Test passes do not measure fraud accuracy or certify every feature/device.
+Candidate 0.32.0 release-level test counts, CI, cloud revisions and live acceptance
+remain pending in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json). Historical test and
+artificial-payment evidence remains in its dated reports; it does not establish
+this candidate's deployment. The original six-call production-path AI smoke run
+records 0/6 strict passes, including two genuine extraction rejections and scorer
+defects. A separate revised protocol is in progress; no corrected live score is
+asserted. Engineering test passes do not measure fraud accuracy or certify every
+feature/device.
 
 ## 8. Priorities and non-goals
 

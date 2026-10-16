@@ -1,6 +1,7 @@
 # Financial Friday — documentation and evidence index
 
-Updated 16 October 2026, source **0.30.0**. Deployed versions are listed below and
+Updated 16 October 2026, source candidate **0.32.0**, with staging and promotion
+pending. Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
 automatically the code deployed on Cloud Run.
@@ -28,6 +29,7 @@ acceptance evidence. A new source version alone does not prove deployment.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Consumer assurance candidate 0.32.0](CONSUMER_ASSURANCE_0320.md) | Explicit consumer API/proxy admission, opt-in legacy demos, strict narration grouping, unchanged 39-case authored quality, original six-call AI smoke failures/scorer limits, final-read privacy checks and preview recovery. Deployment and release-level counts pending. |
 | [Statement reliability 0.31.0](STATEMENT_RELIABILITY_0310.md) | Literal-grounded reconciliation, signed extraction receipts, labelled synthetic quality baseline with misses/false warnings, privacy races and content-free request correlation. Not independent fraud validation or bank authentication. |
 | [Assistant workbench 0.30.0](ASSISTANT_WORKBENCH_0300.md) | Automatic private review preparation, one visual priority task, integrated refund ranges, actual-event guide, opt-in bounded Google speech and privacy-generation freshness. No bank monitoring or automatic financial resolution. |
 | [Money Shield 0.29.0](MONEY_SHIELD_0290.md) | Integer refund-flow bounds, independent primal/residual checks, explicit ambiguity, source-grounded clarification and server-owned AI completion receipts. No bank-confirmed linkage, legal entitlement or autonomous recovery. |
@@ -48,11 +50,12 @@ acceptance evidence. A new source version alone does not prove deployment.
 | [Task release](FRIDAY_TASK_RELEASE_1013.md) | Historical live preparation/confirmation/replay and selected-obligation acceptance. Artificial funds only. |
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
-The current local suite ran 613 tests (612 passed, one optional skip); Docker ran
-613 (589 passed, twenty-four optional skips); 24 tooling checks passed. Earlier
-Money Runway checks passed on Python 3.11/3.12 and Docker. Later commits have
-their own [Actions status](https://github.com/Santxsh27/financial-friday/actions).
-Skipped tests and model failures are not silently counted as passes.
+Each dated report retains its own test and live-acceptance counts. Candidate
+0.32.0 release-level counts and cloud activation remain pending in
+[CURRENT_RELEASE](CURRENT_RELEASE.json); historical suite counts do not establish
+this candidate's acceptance. Later commits have their own
+[Actions status](https://github.com/Santxsh27/financial-friday/actions).
+Skipped tests and model failures are not counted as passes.
 
 ## What the Google services actually do
 

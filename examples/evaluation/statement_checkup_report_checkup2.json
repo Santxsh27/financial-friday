@@ -1,0 +1,6527 @@
+{
+  "baseline": {
+    "any_finding_per_case": {
+      "alerts_on_abstained_labels": 0,
+      "decision_count": 39,
+      "false_positive_rate": 0.0,
+      "fn": 19,
+      "fp": 0,
+      "label_abstentions": 2,
+      "labelled_negatives": 18,
+      "labelled_positives": 19,
+      "missed_findings": 19,
+      "precision": null,
+      "recall": 0.0,
+      "recall_including_unresolved_as_missed": 0.0,
+      "runtime_abstentions": 0,
+      "scored_decisions": 37,
+      "tn": 18,
+      "tp": 0,
+      "unresolved_negatives": 0,
+      "unresolved_positives": 0
+    },
+    "by_kind": {
+      "FEES": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 3,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 36,
+        "labelled_positives": 3,
+        "missed_findings": 3,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 36,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "RECURRING_INCREASE": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 3,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 35,
+        "labelled_positives": 3,
+        "missed_findings": 3,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 38,
+        "tn": 35,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_AMBIGUITY": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 1,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 1,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 38,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_LINK_WITHHELD": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 1,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 1,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 38,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_PARTIAL_TRAIL": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 1,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 1,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 38,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REPEATED_ENTRY": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 34,
+        "labelled_positives": 5,
+        "missed_findings": 5,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 34,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "UNCLEAR_CREDIT": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 2,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 37,
+        "labelled_positives": 2,
+        "missed_findings": 2,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 37,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "UNUSUAL_AMOUNT": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 3,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 35,
+        "labelled_positives": 3,
+        "missed_findings": 3,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 38,
+        "tn": 35,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      }
+    },
+    "case_kind": {
+      "alerts_on_abstained_labels": 0,
+      "decision_count": 312,
+      "false_positive_rate": 0.0,
+      "fn": 19,
+      "fp": 0,
+      "label_abstentions": 2,
+      "labelled_negatives": 291,
+      "labelled_positives": 19,
+      "missed_findings": 19,
+      "precision": null,
+      "recall": 0.0,
+      "recall_including_unresolved_as_missed": 0.0,
+      "runtime_abstentions": 0,
+      "scored_decisions": 310,
+      "tn": 291,
+      "tp": 0,
+      "unresolved_negatives": 0,
+      "unresolved_positives": 0
+    },
+    "cases": 39,
+    "name": "ALWAYS_NO_FINDING",
+    "purpose": "Non-learned prevalence control on exactly the same labels; not a prior production model."
+  },
+  "blinded_validation_completed": false,
+  "by_family": {
+    "account_aliases": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 2,
+        "false_positive_rate": null,
+        "fn": 2,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 0,
+        "labelled_positives": 2,
+        "missed_findings": 2,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 2,
+        "tn": 0,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 1,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 1,
+          "missed_findings": 1,
+          "precision": null,
+          "recall": 0.0,
+          "recall_including_unresolved_as_missed": 0.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 1,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 1,
+          "missed_findings": 1,
+          "precision": null,
+          "recall": 0.0,
+          "recall_including_unresolved_as_missed": 0.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 16,
+        "false_positive_rate": 0.0,
+        "fn": 2,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 14,
+        "labelled_positives": 2,
+        "missed_findings": 2,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 16,
+        "tn": 14,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 2
+    },
+    "changed_descriptions": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 1,
+        "false_positive_rate": null,
+        "fn": 1,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 0,
+        "labelled_positives": 1,
+        "missed_findings": 1,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 1,
+        "tn": 0,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": null,
+          "fn": 1,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 0,
+          "labelled_positives": 1,
+          "missed_findings": 1,
+          "precision": null,
+          "recall": 0.0,
+          "recall_including_unresolved_as_missed": 0.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 0,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 8,
+        "false_positive_rate": 0.0,
+        "fn": 1,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 7,
+        "labelled_positives": 1,
+        "missed_findings": 1,
+        "precision": null,
+        "recall": 0.0,
+        "recall_including_unresolved_as_missed": 0.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 8,
+        "tn": 7,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 1
+    },
+    "income_and_credit_sources": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 6,
+        "false_positive_rate": 0.25,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 4,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 0.666667,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 6,
+        "tn": 3,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.25,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 4,
+          "labelled_positives": 2,
+          "missed_findings": 0,
+          "precision": 0.666667,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 3,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 6,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 6,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 6,
+          "tn": 6,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 48,
+        "false_positive_rate": 0.021739,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 46,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 0.666667,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 48,
+        "tn": 45,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 6
+    },
+    "legitimate_spikes": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 2,
+        "false_positive_rate": 1.0,
+        "fn": 0,
+        "fp": 2,
+        "label_abstentions": 0,
+        "labelled_negatives": 2,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": 0.0,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 2,
+        "tn": 0,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.5,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": 0.0,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.5,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": 0.0,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 16,
+        "false_positive_rate": 0.125,
+        "fn": 0,
+        "fp": 2,
+        "label_abstentions": 0,
+        "labelled_negatives": 16,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": 0.0,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 16,
+        "tn": 14,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 2
+    },
+    "missing_periods": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 2,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 1,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": null,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 1,
+        "tn": 1,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 1,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 2,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 2,
+          "tn": 2,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 16,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 15,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": null,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 15,
+        "tn": 15,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 2
+    },
+    "overlapping_imports": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 1,
+        "false_positive_rate": null,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 0,
+        "labelled_positives": 1,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 1,
+        "tn": 0,
+        "tp": 1,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": null,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 0,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 0,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 8,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 7,
+        "labelled_positives": 1,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 8,
+        "tn": 7,
+        "tp": 1,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 1
+    },
+    "recorded_fees": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 5,
+        "false_positive_rate": 0.5,
+        "fn": 1,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 2,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.666667,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 5,
+        "tn": 1,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.5,
+          "fn": 1,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 2,
+          "labelled_positives": 3,
+          "missed_findings": 1,
+          "precision": 0.666667,
+          "recall": 0.666667,
+          "recall_including_unresolved_as_missed": 0.666667,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 1,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 40,
+        "false_positive_rate": 0.027027,
+        "fn": 1,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 37,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.666667,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 40,
+        "tn": 36,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 5
+    },
+    "recurring_amounts": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 3,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 1,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 3,
+        "tn": 1,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 2,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 1,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 24,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 22,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 24,
+        "tn": 22,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 3
+    },
+    "refunds": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 5,
+        "false_positive_rate": 0.5,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 2,
+        "labelled_positives": 3,
+        "missed_findings": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 5,
+        "tn": 1,
+        "tp": 3,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 4,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 4,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.25,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 4,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 3,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 4,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 4,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 5,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 5,
+          "tn": 5,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 40,
+        "false_positive_rate": 0.027027,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 37,
+        "labelled_positives": 3,
+        "missed_findings": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 40,
+        "tn": 36,
+        "tp": 3,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 5
+    },
+    "repeated_entries": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 8,
+        "false_positive_rate": 0.4,
+        "fn": 1,
+        "fp": 2,
+        "label_abstentions": 0,
+        "labelled_negatives": 5,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.5,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 8,
+        "tn": 3,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.4,
+          "fn": 1,
+          "fp": 2,
+          "label_abstentions": 0,
+          "labelled_negatives": 5,
+          "labelled_positives": 3,
+          "missed_findings": 1,
+          "precision": 0.5,
+          "recall": 0.666667,
+          "recall_including_unresolved_as_missed": 0.666667,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 3,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 8,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 8,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 8,
+          "tn": 8,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 64,
+        "false_positive_rate": 0.032787,
+        "fn": 1,
+        "fp": 2,
+        "label_abstentions": 0,
+        "labelled_negatives": 61,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.5,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 64,
+        "tn": 59,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 8
+    },
+    "sparse_history": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 1,
+        "false_positive_rate": null,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 0,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": null,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 0,
+        "tn": 0,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 1,
+          "tn": 1,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 1,
+          "false_positive_rate": null,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 1,
+          "labelled_negatives": 0,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 0,
+          "tn": 0,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 8,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 1,
+        "labelled_negatives": 7,
+        "labelled_positives": 0,
+        "missed_findings": 0,
+        "precision": null,
+        "recall": null,
+        "recall_including_unresolved_as_missed": null,
+        "runtime_abstentions": 0,
+        "scored_decisions": 7,
+        "tn": 7,
+        "tp": 0,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 1
+    },
+    "unusual_amounts": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 3,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 1,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 3,
+        "tn": 1,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 3,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 3,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 3,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 1,
+          "labelled_positives": 2,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 3,
+          "tn": 1,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 24,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 22,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 24,
+        "tn": 22,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 3
+    }
+  },
+  "by_split": {
+    "evaluation": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 24,
+        "false_positive_rate": 0.363636,
+        "fn": 2,
+        "fp": 4,
+        "label_abstentions": 2,
+        "labelled_negatives": 11,
+        "labelled_positives": 11,
+        "missed_findings": 2,
+        "precision": 0.692308,
+        "recall": 0.818182,
+        "recall_including_unresolved_as_missed": 0.818182,
+        "runtime_abstentions": 0,
+        "scored_decisions": 22,
+        "tn": 7,
+        "tp": 9,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 24,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 24,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.05,
+          "fn": 1,
+          "fp": 1,
+          "label_abstentions": 1,
+          "labelled_negatives": 20,
+          "labelled_positives": 3,
+          "missed_findings": 1,
+          "precision": 0.666667,
+          "recall": 0.666667,
+          "recall_including_unresolved_as_missed": 0.666667,
+          "runtime_abstentions": 0,
+          "scored_decisions": 23,
+          "tn": 19,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 23,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 23,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.043478,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 23,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 22,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 23,
+          "labelled_positives": 1,
+          "missed_findings": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 23,
+          "tp": 1,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 24,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 24,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.045455,
+          "fn": 0,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 22,
+          "labelled_positives": 2,
+          "missed_findings": 0,
+          "precision": 0.666667,
+          "recall": 1.0,
+          "recall_including_unresolved_as_missed": 1.0,
+          "runtime_abstentions": 0,
+          "scored_decisions": 24,
+          "tn": 21,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 24,
+          "false_positive_rate": 0.05,
+          "fn": 1,
+          "fp": 1,
+          "label_abstentions": 1,
+          "labelled_negatives": 20,
+          "labelled_positives": 3,
+          "missed_findings": 1,
+          "precision": 0.666667,
+          "recall": 0.666667,
+          "recall_including_unresolved_as_missed": 0.666667,
+          "runtime_abstentions": 0,
+          "scored_decisions": 23,
+          "tn": 19,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 192,
+        "false_positive_rate": 0.022346,
+        "fn": 2,
+        "fp": 4,
+        "label_abstentions": 2,
+        "labelled_negatives": 179,
+        "labelled_positives": 11,
+        "missed_findings": 2,
+        "precision": 0.692308,
+        "recall": 0.818182,
+        "recall_including_unresolved_as_missed": 0.818182,
+        "runtime_abstentions": 0,
+        "scored_decisions": 190,
+        "tn": 175,
+        "tp": 9,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 24
+    },
+    "tuning": {
+      "any_finding_per_case": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 15,
+        "false_positive_rate": 0.428571,
+        "fn": 3,
+        "fp": 3,
+        "label_abstentions": 0,
+        "labelled_negatives": 7,
+        "labelled_positives": 8,
+        "missed_findings": 3,
+        "precision": 0.625,
+        "recall": 0.625,
+        "recall_including_unresolved_as_missed": 0.625,
+        "runtime_abstentions": 0,
+        "scored_decisions": 15,
+        "tn": 4,
+        "tp": 5,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "by_kind": {
+        "FEES": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.083333,
+          "fn": 1,
+          "fp": 1,
+          "label_abstentions": 0,
+          "labelled_negatives": 12,
+          "labelled_positives": 3,
+          "missed_findings": 1,
+          "precision": 0.666667,
+          "recall": 0.666667,
+          "recall_including_unresolved_as_missed": 0.666667,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 11,
+          "tp": 2,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "RECURRING_INCREASE": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_AMBIGUITY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_LINK_WITHHELD": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REFUND_PARTIAL_TRAIL": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "REPEATED_ENTRY": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.2,
+          "fn": 2,
+          "fp": 2,
+          "label_abstentions": 0,
+          "labelled_negatives": 10,
+          "labelled_positives": 5,
+          "missed_findings": 2,
+          "precision": 0.6,
+          "recall": 0.6,
+          "recall_including_unresolved_as_missed": 0.6,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 8,
+          "tp": 3,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNCLEAR_CREDIT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        },
+        "UNUSUAL_AMOUNT": {
+          "alerts_on_abstained_labels": 0,
+          "decision_count": 15,
+          "false_positive_rate": 0.0,
+          "fn": 0,
+          "fp": 0,
+          "label_abstentions": 0,
+          "labelled_negatives": 15,
+          "labelled_positives": 0,
+          "missed_findings": 0,
+          "precision": null,
+          "recall": null,
+          "recall_including_unresolved_as_missed": null,
+          "runtime_abstentions": 0,
+          "scored_decisions": 15,
+          "tn": 15,
+          "tp": 0,
+          "unresolved_negatives": 0,
+          "unresolved_positives": 0
+        }
+      },
+      "case_kind": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 120,
+        "false_positive_rate": 0.026786,
+        "fn": 3,
+        "fp": 3,
+        "label_abstentions": 0,
+        "labelled_negatives": 112,
+        "labelled_positives": 8,
+        "missed_findings": 3,
+        "precision": 0.625,
+        "recall": 0.625,
+        "recall_including_unresolved_as_missed": 0.625,
+        "runtime_abstentions": 0,
+        "scored_decisions": 120,
+        "tn": 109,
+        "tp": 5,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "cases": 15
+    }
+  },
+  "comparison": {
+    "counts_delta": {
+      "fn": 0,
+      "fp": 0,
+      "runtime_abstentions": 0,
+      "tn": 0,
+      "tp": 0
+    },
+    "interpretation": "Measured count changes on this frozen authored corpus only; not independent evidence of improvement.",
+    "reference_source_sha256": {
+      "src/carapace_core/friday_checkup.py": "f311f8d1ee8051ebe597b6112f3b49cbb184af86f0daf439e52c8f1852d05f38",
+      "src/carapace_core/friday_portfolio.py": "99ecb142ca1ec379b110c7739e04b6fdc8d6516b60e87d6b553ed842d39bc240",
+      "src/carapace_core/friday_refund_shield.py": "668348df0bce56c366cac5a5ebd9f51ce91146fb5a9dc4724e26a53376938e43",
+      "tools/evaluate_statement_checkup.py": "cc99ec03b209cedb861224bbfc74135b68d05f49affab1bfa41e9a6b8eae6433"
+    }
+  },
+  "engine_version": "CHECKUP_2",
+  "evaluated_condition": "Review-worthy follow-up under the pre-authored supplied context, never real fraud, entitlement or confirmed error.",
+  "evidence_localisation": {
+    "evaluated_groups": 19,
+    "exact_groups_found": 14,
+    "expected_groups": 19,
+    "unresolved_groups": 0
+  },
+  "false_positive_examples": [
+    {
+      "case_id": "t-repeat-two-receipts",
+      "context": "Two same-day cafe purchases have different confirmed receipts and were both intended. No follow-up remains.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [
+        {
+          "amount_minor": 12000,
+          "descriptions": [
+            "Cafe SYNTHETIC",
+            "Cafe SYNTHETIC"
+          ],
+          "finding_id": "finding_9f5ad918a551f0de8f10f902",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-repeat-legitimate",
+      "context": "Two adults independently bought the same cinema ticket price using one card on one day; distinct receipts confirm both charges. No follow-up remains.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [
+        {
+          "amount_minor": 42000,
+          "descriptions": [
+            "ECOM SYNTHETIC CINEMA",
+            "ECOM SYNTHETIC CINEMA"
+          ],
+          "finding_id": "finding_af7a0bdcd64ef7576a987955",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-regular-planned-increase",
+      "context": "The user deliberately upgraded broadband from INR 850 to INR 1150 and confirmed the exact billed amount; the increase is fully explained.",
+      "family": "legitimate_spikes",
+      "kind": "RECURRING_INCREASE",
+      "predicted_findings": [
+        {
+          "amount_minor": 30000,
+          "descriptions": [
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND"
+          ],
+          "finding_id": "finding_6a08a91a5d9b7a44e7e7211c",
+          "kind": "RECURRING_INCREASE",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-spike-planned",
+      "context": "The user prepaid INR 9000 for a documented planned road trip and confirmed the fuel receipt. The otherwise exceptional amount is fully explained.",
+      "family": "legitimate_spikes",
+      "kind": "UNUSUAL_AMOUNT",
+      "predicted_findings": [
+        {
+          "amount_minor": 900000,
+          "descriptions": [
+            "POS SYNTHETIC FUEL Z"
+          ],
+          "finding_id": "finding_bf7ac3d3f321da6e649e3a21",
+          "kind": "UNUSUAL_AMOUNT",
+          "row_ids": [
+            "g"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-credit-loan-abbreviation",
+      "context": "The supplied agreement confirms LN DISB is loan proceeds, not income. Its source is resolved even though the bank abbreviation is unfamiliar.",
+      "family": "income_and_credit_sources",
+      "kind": "UNCLEAR_CREDIT",
+      "predicted_findings": [
+        {
+          "amount_minor": 5000000,
+          "descriptions": [
+            "NEFT LN DISB SYNTHETIC REF-812"
+          ],
+          "finding_id": "finding_227dfae784a90e252ac70891",
+          "kind": "UNCLEAR_CREDIT",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-refund-resolved-historical",
+      "context": "A confirmed merchant return relates to a documented older purchase deliberately outside this export. The relationship is already resolved; no follow-up remains.",
+      "family": "refunds",
+      "kind": "REFUND_LINK_WITHHELD",
+      "predicted_findings": [
+        {
+          "amount_minor": 76000,
+          "descriptions": [
+            "Refund: SYNTHETIC STORE Ref: R5"
+          ],
+          "finding_id": "finding_a4aae5d8c57f3960f3ea2e64",
+          "kind": "REFUND_LINK_WITHHELD",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-fee-confirmed",
+      "context": "The user already confirmed this bank fee against the agreed tariff and requested no further follow-up.",
+      "family": "recorded_fees",
+      "kind": "FEES",
+      "predicted_findings": [
+        {
+          "amount_minor": 17700,
+          "descriptions": [
+            "DR BANK FEE SYNTHETIC REF-92"
+          ],
+          "finding_id": "finding_370544e1bc50538ee113c19e",
+          "kind": "FEES",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    }
+  ],
+  "frozen_case_ids": [
+    "t-repeat-exact",
+    "t-repeat-distinct-day",
+    "t-repeat-two-receipts",
+    "t-repeat-two-accounts",
+    "t-regular-increase",
+    "t-regular-stable",
+    "t-spike-unexplained",
+    "t-spike-normal",
+    "t-credit-unknown",
+    "t-credit-salary",
+    "t-fee-unexplained",
+    "t-fee-no-fee",
+    "e-repeat-whitespace",
+    "e-repeat-changed-description",
+    "e-repeat-overlap",
+    "e-repeat-same-account-renamed",
+    "e-repeat-legitimate",
+    "e-repeat-lookalike-merchants",
+    "e-regular-bank-narration",
+    "e-regular-description-changed",
+    "e-regular-planned-increase",
+    "e-regular-missing-period",
+    "e-spike-unexplained",
+    "e-spike-planned",
+    "e-spike-insufficient-history",
+    "e-spike-account-renamed",
+    "e-credit-loan-and-salary",
+    "e-credit-loan-abbreviation",
+    "e-credit-pension",
+    "e-credit-unresolved-imps",
+    "e-refund-full",
+    "e-refund-partial",
+    "e-refund-ambiguous",
+    "e-refund-orphan",
+    "e-refund-resolved-historical",
+    "e-period-gap-is-not-zero",
+    "e-fee-bank-style",
+    "e-fee-abbreviation",
+    "e-fee-confirmed"
+  ],
+  "independent_validation_completed": false,
+  "label_access": "The authoring agent has seen all labels. Evaluation here means an authored split, not an unseen holdout.",
+  "limitations": [
+    "Small synthetic developer/agent-authored convenience sample, not independent, representative or bank-validated data; no confidence or real-world fraud claims.",
+    "Supplied explanatory context is available to labels but production checkup accepts classified rows only. Context-aware false positives are intentional task gaps.",
+    "Bank-style strings are artificial examples, not evidence of real institution format coverage. Account aliases do not establish ownership.",
+    "Family disjointness is enforced by declared base_family_id and exact source hash; semantic independence of different families requires human review.",
+    "Presence metrics can hide incorrect localisation or several alerts in a kind; inspect exact evidence coverage and all raw findings.",
+    "No production parameter was changed. Do not tune on this report and then describe this same split as held out.",
+    "For a future blind test, a teammate must review labels and create new unseen base families, freeze hashes, seal labels from implementers, run once, and record label access before interpreting results."
+  ],
+  "manifest": {
+    "base_family_splits": {
+      "credit-source-scenarios": "evaluation",
+      "expense-spike-scenarios": "evaluation",
+      "period-gap-scenarios": "evaluation",
+      "recorded-fee-scenarios": "tuning",
+      "recurring-payment-scenarios": "evaluation",
+      "refund-trail-scenarios": "evaluation",
+      "repeated-entry-scenarios": "tuning"
+    },
+    "dataset_id": "statement-checkup-synthetic-v1",
+    "inputs_sha256": "7f00f2354ad2292a0d10905fbd17272adc9f1e6b6bc4577f2b8d895433dcf7c3",
+    "label_origin": "Pre-authored by a development agent from fictional scenario context, before running this evaluator. Not derived at runtime from production predictions.",
+    "labels_sha256": "b759b0391dce6f9a710e763d250097a2fa82062ae102f9842ec4a574e7ba8523",
+    "review_status": "UNREVIEWED_AGENT_AUTHORED; no teammate review, bank review, independent validation or blind validation completed",
+    "split_protocol": {
+      "assignment": "Conservative scenario-lineage grouping, never random rows. All structurally related amount/narration/account-alias transformations stay together, including basic and bank-style examples. Entire repeated-entry and recorded-fee lineages are tuning; remaining lineages are evaluation. Some evaluation finding kinds therefore have zero positives.",
+      "blind_status": "NOT_BLIND: same authoring agent wrote and has seen all labels. No parameter tuning is permitted after evaluation exposure.",
+      "evaluation_base_families": [
+        "recurring-payment-scenarios",
+        "expense-spike-scenarios",
+        "credit-source-scenarios",
+        "refund-trail-scenarios",
+        "period-gap-scenarios"
+      ],
+      "future_holdout": "A teammate must review or replace labels, author unseen base families, freeze source/label hashes, seal labels from implementers and record one first run. This authored split cannot be rebranded as independent validation.",
+      "split_revision": "Lineage grouping hardened after the first authored run exposed results. Labels and all overall counts unchanged. This split is already observed and cannot support a blind claim. Frozen case ID prefixes are historical identifiers, not split membership.",
+      "tuning_base_families": [
+        "repeated-entry-scenarios",
+        "recorded-fee-scenarios"
+      ]
+    }
+  },
+  "mismatches": [
+    {
+      "case_id": "t-repeat-two-receipts",
+      "context": "Two same-day cafe purchases have different confirmed receipts and were both intended. No follow-up remains.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [
+        {
+          "amount_minor": 12000,
+          "descriptions": [
+            "Cafe SYNTHETIC",
+            "Cafe SYNTHETIC"
+          ],
+          "finding_id": "finding_9f5ad918a551f0de8f10f902",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-repeat-changed-description",
+      "context": "Receipt reference 88 confirms one intended purchase; the bank exported both POS and UPI narrations for that same event. The second debit remains unexplained.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-repeat-same-account-renamed",
+      "context": "The user renamed the same account from Old Vault to New Vault between overlapping exports. The same original debit is represented twice and needs reconciliation.",
+      "family": "account_aliases",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-repeat-legitimate",
+      "context": "Two adults independently bought the same cinema ticket price using one card on one day; distinct receipts confirm both charges. No follow-up remains.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [
+        {
+          "amount_minor": 42000,
+          "descriptions": [
+            "ECOM SYNTHETIC CINEMA",
+            "ECOM SYNTHETIC CINEMA"
+          ],
+          "finding_id": "finding_af7a0bdcd64ef7576a987955",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-regular-description-changed",
+      "context": "The mandate ID 21 identifies one monthly electricity obligation despite the bank changing the narration suffix. The INR 300 increase is unexplained.",
+      "family": "changed_descriptions",
+      "kind": "RECURRING_INCREASE",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-regular-planned-increase",
+      "context": "The user deliberately upgraded broadband from INR 850 to INR 1150 and confirmed the exact billed amount; the increase is fully explained.",
+      "family": "legitimate_spikes",
+      "kind": "RECURRING_INCREASE",
+      "predicted_findings": [
+        {
+          "amount_minor": 30000,
+          "descriptions": [
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND"
+          ],
+          "finding_id": "finding_6a08a91a5d9b7a44e7e7211c",
+          "kind": "RECURRING_INCREASE",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-spike-planned",
+      "context": "The user prepaid INR 9000 for a documented planned road trip and confirmed the fuel receipt. The otherwise exceptional amount is fully explained.",
+      "family": "legitimate_spikes",
+      "kind": "UNUSUAL_AMOUNT",
+      "predicted_findings": [
+        {
+          "amount_minor": 900000,
+          "descriptions": [
+            "POS SYNTHETIC FUEL Z"
+          ],
+          "finding_id": "finding_bf7ac3d3f321da6e649e3a21",
+          "kind": "UNUSUAL_AMOUNT",
+          "row_ids": [
+            "g"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-spike-account-renamed",
+      "context": "The user confirms Travel Old and Travel New are the same renamed account. Six earlier fuel payments provide relevant history for the unexplained INR 9000 payment.",
+      "family": "account_aliases",
+      "kind": "UNUSUAL_AMOUNT",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-credit-loan-abbreviation",
+      "context": "The supplied agreement confirms LN DISB is loan proceeds, not income. Its source is resolved even though the bank abbreviation is unfamiliar.",
+      "family": "income_and_credit_sources",
+      "kind": "UNCLEAR_CREDIT",
+      "predicted_findings": [
+        {
+          "amount_minor": 5000000,
+          "descriptions": [
+            "NEFT LN DISB SYNTHETIC REF-812"
+          ],
+          "finding_id": "finding_227dfae784a90e252ac70891",
+          "kind": "UNCLEAR_CREDIT",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-refund-resolved-historical",
+      "context": "A confirmed merchant return relates to a documented older purchase deliberately outside this export. The relationship is already resolved; no follow-up remains.",
+      "family": "refunds",
+      "kind": "REFUND_LINK_WITHHELD",
+      "predicted_findings": [
+        {
+          "amount_minor": 76000,
+          "descriptions": [
+            "Refund: SYNTHETIC STORE Ref: R5"
+          ],
+          "finding_id": "finding_a4aae5d8c57f3960f3ea2e64",
+          "kind": "REFUND_LINK_WITHHELD",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    },
+    {
+      "case_id": "e-fee-abbreviation",
+      "context": "The export legend identifies CHG AMB as a bank maintenance fee. Its purpose and authorisation are still unresolved and need review.",
+      "family": "recorded_fees",
+      "kind": "FEES",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-fee-confirmed",
+      "context": "The user already confirmed this bank fee against the agreed tariff and requested no further follow-up.",
+      "family": "recorded_fees",
+      "kind": "FEES",
+      "predicted_findings": [
+        {
+          "amount_minor": 17700,
+          "descriptions": [
+            "DR BANK FEE SYNTHETIC REF-92"
+          ],
+          "finding_id": "finding_370544e1bc50538ee113c19e",
+          "kind": "FEES",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "type": "FALSE_POSITIVE"
+    }
+  ],
+  "missed_finding_examples": [
+    {
+      "case_id": "e-repeat-changed-description",
+      "context": "Receipt reference 88 confirms one intended purchase; the bank exported both POS and UPI narrations for that same event. The second debit remains unexplained.",
+      "family": "repeated_entries",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-repeat-same-account-renamed",
+      "context": "The user renamed the same account from Old Vault to New Vault between overlapping exports. The same original debit is represented twice and needs reconciliation.",
+      "family": "account_aliases",
+      "kind": "REPEATED_ENTRY",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-regular-description-changed",
+      "context": "The mandate ID 21 identifies one monthly electricity obligation despite the bank changing the narration suffix. The INR 300 increase is unexplained.",
+      "family": "changed_descriptions",
+      "kind": "RECURRING_INCREASE",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-spike-account-renamed",
+      "context": "The user confirms Travel Old and Travel New are the same renamed account. Six earlier fuel payments provide relevant history for the unexplained INR 9000 payment.",
+      "family": "account_aliases",
+      "kind": "UNUSUAL_AMOUNT",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    },
+    {
+      "case_id": "e-fee-abbreviation",
+      "context": "The export legend identifies CHG AMB as a bank maintenance fee. Its purpose and authorisation are still unresolved and need review.",
+      "family": "recorded_fees",
+      "kind": "FEES",
+      "predicted_findings": [],
+      "type": "MISSED_FINDING"
+    }
+  ],
+  "model_calls": 0,
+  "negative_label_rule": "Kinds absent from expected_findings are explicitly negative except kinds listed in abstain.",
+  "network_calls": 0,
+  "numeric_invariants": {
+    "checks": 20,
+    "mismatches": [],
+    "passed": 20,
+    "planned_checks": 20,
+    "unresolved_checks": 0
+  },
+  "offline": true,
+  "overall": {
+    "any_finding_per_case": {
+      "alerts_on_abstained_labels": 0,
+      "decision_count": 39,
+      "false_positive_rate": 0.388889,
+      "fn": 5,
+      "fp": 7,
+      "label_abstentions": 2,
+      "labelled_negatives": 18,
+      "labelled_positives": 19,
+      "missed_findings": 5,
+      "precision": 0.666667,
+      "recall": 0.736842,
+      "recall_including_unresolved_as_missed": 0.736842,
+      "runtime_abstentions": 0,
+      "scored_decisions": 37,
+      "tn": 11,
+      "tp": 14,
+      "unresolved_negatives": 0,
+      "unresolved_positives": 0
+    },
+    "by_kind": {
+      "FEES": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.027778,
+        "fn": 1,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 36,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.666667,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 35,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "RECURRING_INCREASE": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.028571,
+        "fn": 1,
+        "fp": 1,
+        "label_abstentions": 1,
+        "labelled_negatives": 35,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.666667,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 38,
+        "tn": 34,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_AMBIGUITY": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 38,
+        "tp": 1,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_LINK_WITHHELD": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.026316,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 37,
+        "tp": 1,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REFUND_PARTIAL_TRAIL": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "label_abstentions": 0,
+        "labelled_negatives": 38,
+        "labelled_positives": 1,
+        "missed_findings": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 38,
+        "tp": 1,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "REPEATED_ENTRY": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.058824,
+        "fn": 2,
+        "fp": 2,
+        "label_abstentions": 0,
+        "labelled_negatives": 34,
+        "labelled_positives": 5,
+        "missed_findings": 2,
+        "precision": 0.6,
+        "recall": 0.6,
+        "recall_including_unresolved_as_missed": 0.6,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 32,
+        "tp": 3,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "UNCLEAR_CREDIT": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.027027,
+        "fn": 0,
+        "fp": 1,
+        "label_abstentions": 0,
+        "labelled_negatives": 37,
+        "labelled_positives": 2,
+        "missed_findings": 0,
+        "precision": 0.666667,
+        "recall": 1.0,
+        "recall_including_unresolved_as_missed": 1.0,
+        "runtime_abstentions": 0,
+        "scored_decisions": 39,
+        "tn": 36,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      },
+      "UNUSUAL_AMOUNT": {
+        "alerts_on_abstained_labels": 0,
+        "decision_count": 39,
+        "false_positive_rate": 0.028571,
+        "fn": 1,
+        "fp": 1,
+        "label_abstentions": 1,
+        "labelled_negatives": 35,
+        "labelled_positives": 3,
+        "missed_findings": 1,
+        "precision": 0.666667,
+        "recall": 0.666667,
+        "recall_including_unresolved_as_missed": 0.666667,
+        "runtime_abstentions": 0,
+        "scored_decisions": 38,
+        "tn": 34,
+        "tp": 2,
+        "unresolved_negatives": 0,
+        "unresolved_positives": 0
+      }
+    },
+    "case_kind": {
+      "alerts_on_abstained_labels": 0,
+      "decision_count": 312,
+      "false_positive_rate": 0.024055,
+      "fn": 5,
+      "fp": 7,
+      "label_abstentions": 2,
+      "labelled_negatives": 291,
+      "labelled_positives": 19,
+      "missed_findings": 5,
+      "precision": 0.666667,
+      "recall": 0.736842,
+      "recall_including_unresolved_as_missed": 0.736842,
+      "runtime_abstentions": 0,
+      "scored_decisions": 310,
+      "tn": 284,
+      "tp": 14,
+      "unresolved_negatives": 0,
+      "unresolved_positives": 0
+    },
+    "cases": 39
+  },
+  "ratio_definitions": {
+    "abstentions": "Author-labelled unknowable targets and runtime failures are excluded from conditional ratios and counted separately; runtime failures also count against recall_including_unresolved_as_missed.",
+    "false_positive_rate": "FP/(FP+TN)",
+    "precision": "TP/(TP+FP)",
+    "recall": "TP/(TP+FN)",
+    "undefined_ratios": "null; never replace no denominator with zero"
+  },
+  "results": [
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two identical grocery entries remain unexplained; ask whether this is an accidental repeat.",
+      "decisions": [
+        {
+          "expected": true,
+          "kind": "REPEATED_ENTRY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REPEATED_ENTRY"
+        }
+      ],
+      "family": "repeated_entries",
+      "findings": [
+        {
+          "amount_minor": 25000,
+          "descriptions": [
+            "Grocery SYNTHETIC",
+            "Grocery SYNTHETIC"
+          ],
+          "finding_id": "finding_a208f5fa62a3b1bc09af368b",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "t-repeat-exact",
+      "input_sha256": "65fb00d01603a73d3c3826b12fe29cf63d5a50ed757a36b58689b763711ff5d9",
+      "label_sha256": "8916c0bfc155500d5c2d864a776f6ad12703965bb0346088bb084cf00b146b3b",
+      "numeric_checks": [
+        {
+          "actual": 50000,
+          "expected": 50000,
+          "matched": true,
+          "target": "classified_spending_minor"
+        },
+        {
+          "actual": 2,
+          "expected": 2,
+          "matched": true,
+          "target": "transaction_count"
+        }
+      ],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Equal grocery purchases occurred on two separate days; both receipts are confirmed.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "repeated_entries",
+      "findings": [],
+      "id": "t-repeat-distinct-day",
+      "input_sha256": "3e3320f5f057d3f537208149b1875b85802f8988f55ffa2cc60eea6e26c99d7c",
+      "label_sha256": "0e901535afc149aae90eed630f409b25f31d632abbbbc49667ac1f155fdcfff1",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two same-day cafe purchases have different confirmed receipts and were both intended. No follow-up remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "repeated_entries",
+      "findings": [
+        {
+          "amount_minor": 12000,
+          "descriptions": [
+            "Cafe SYNTHETIC",
+            "Cafe SYNTHETIC"
+          ],
+          "finding_id": "finding_9f5ad918a551f0de8f10f902",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "t-repeat-two-receipts",
+      "input_sha256": "139bd8f5bfe9be6fd7d95babb14ff949473fad7b3b934c24cfee4302e7bee8a2",
+      "label_sha256": "cac370b1590093bee5e285ae20896513df9d17f85f0f7e6ef2b9a60c987480e3",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Different household members made separate confirmed purchases from their distinct accounts.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "repeated_entries",
+      "findings": [],
+      "id": "t-repeat-two-accounts",
+      "input_sha256": "a7da13edff33131d968076e1367f8964afa398d9bd646112e13151c861c2e934",
+      "label_sha256": "b6e80c21788c76c3338fb2a0331cdcdae7b48c7ac09d90cc5d3e9a13fef2bb9d",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "A monthly broadband obligation rose from INR 500 to INR 750 without an explanation.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "RECURRING_INCREASE",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "kind": "RECURRING_INCREASE"
+        }
+      ],
+      "family": "recurring_amounts",
+      "findings": [
+        {
+          "amount_minor": 25000,
+          "descriptions": [
+            "Broadband SYNTHETIC",
+            "Broadband SYNTHETIC",
+            "Broadband SYNTHETIC"
+          ],
+          "finding_id": "finding_957d5f73ae3066597a82f0f6",
+          "kind": "RECURRING_INCREASE",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "id": "t-regular-increase",
+      "input_sha256": "9b3e641a7e0b54368c3bd0bd6189e363509c3ea646cda8e1b87106206bb60caa",
+      "label_sha256": "06443784ae4fa718f05f41da43909a2cb879fb8e7ffd511b55a16d89aade2d43",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The monthly broadband obligation remains INR 500 and is fully explained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "recurring_amounts",
+      "findings": [],
+      "id": "t-regular-stable",
+      "input_sha256": "81aba8b040601b9e130e44042cab85993192741614590c39e9e20a8521d05a34",
+      "label_sha256": "c0fee4c7d44a1e0649e2474f2837787929b2e03cdce1e789018358c001efac68",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Six modest grocery purchases establish history; a new INR 2500 grocery entry is unexplained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "g"
+          ],
+          "kind": "UNUSUAL_AMOUNT"
+        }
+      ],
+      "family": "unusual_amounts",
+      "findings": [
+        {
+          "amount_minor": 250000,
+          "descriptions": [
+            "Grocery SYNTHETIC"
+          ],
+          "finding_id": "finding_75b8d37d6bb76297db423660",
+          "kind": "UNUSUAL_AMOUNT",
+          "row_ids": [
+            "g"
+          ]
+        }
+      ],
+      "id": "t-spike-unexplained",
+      "input_sha256": "8cfc05a3ca49a81d5ca25d8030ac209f5345495e28874abd54ab0e6b53cc931d",
+      "label_sha256": "4a954e286f368d69b1d2dcf8f333e1918a527ff1192d86e66aba9f9ec6195595",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "All seven grocery purchases are consistent with the established small-purchase history.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "unusual_amounts",
+      "findings": [],
+      "id": "t-spike-normal",
+      "input_sha256": "72d41203c22e1eba42d58d5b24d78458e8155e16c5095c5a432f5b8e5bb5a74e",
+      "label_sha256": "a7d4734fab22f66b4c8b50289f1c336d41838c6cbbdcf9def42617c328ac636f",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "The source of this generic incoming transfer is unknown; do not assume earnings.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "UNCLEAR_CREDIT"
+        }
+      ],
+      "family": "income_and_credit_sources",
+      "findings": [
+        {
+          "amount_minor": 400000,
+          "descriptions": [
+            "Incoming transfer SYNTHETIC"
+          ],
+          "finding_id": "finding_9da96349e82acaefe8e8dd44",
+          "kind": "UNCLEAR_CREDIT",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "t-credit-unknown",
+      "input_sha256": "b09a5bd3db19461129613efb08c1a0b234dab5d7499c3846108fa0ec7a72eca3",
+      "label_sha256": "87b46a475e1d4ac5e1eeb6289917c115ce80717535ece9e7010ff3678251bb42",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "The employer pays the documented monthly salary; no credit-source question remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "income_and_credit_sources",
+      "findings": [],
+      "id": "t-credit-salary",
+      "input_sha256": "3256d8c1038d01d509e330fa7f5c1c17863e2de43128813bddd31e5c5d03857b",
+      "label_sha256": "2f8f03e0b54f6ff92baa6bc0effbc8a445f24e1f3627c82aec9ec7997609e446",
+      "numeric_checks": [
+        {
+          "actual": 400000,
+          "expected": 400000,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "A bank fee is recorded and its purpose is unknown; follow-up is warranted without assuming refund eligibility.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "FEES",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "FEES"
+        }
+      ],
+      "family": "recorded_fees",
+      "findings": [
+        {
+          "amount_minor": 5000,
+          "descriptions": [
+            "Bank fee SYNTHETIC"
+          ],
+          "finding_id": "finding_64a774d7b3fc3c84b449435d",
+          "kind": "FEES",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "t-fee-unexplained",
+      "input_sha256": "39547a803462924392c3b3254fcfa776ceff76655fd8007dd5ae3fb95e046494",
+      "label_sha256": "d36a8af99ba6b2bca38e00c20be8ad83cb9b763eba85bc2781d29d67901760f9",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "An ordinary confirmed bus fare has no outstanding question.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "recorded_fees",
+      "findings": [],
+      "id": "t-fee-no-fee",
+      "input_sha256": "ef2f69c0b5b80ef8fde5979d508441c680b6cde81569a32e99d73fdbf7d96e6e",
+      "label_sha256": "bfad63ee388ea620f4b2ded96d6f0eaf14a4a8def01d53c6ebaa32600d06b623",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "UPI narration differs only in case and whitespace; the matching debit remains unexplained.",
+      "decisions": [
+        {
+          "expected": true,
+          "kind": "REPEATED_ENTRY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REPEATED_ENTRY"
+        }
+      ],
+      "family": "repeated_entries",
+      "findings": [
+        {
+          "amount_minor": 34700,
+          "descriptions": [
+            "UPI  SYNTHETIC-GROCER  TX-77",
+            "upi synthetic-grocer tx-77"
+          ],
+          "finding_id": "finding_338d4948caf9d24f83aaca4f",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "e-repeat-whitespace",
+      "input_sha256": "326159828d7727e754e3172e29c37b34f4a25d2dc8b46d4b4117255191c52e5c",
+      "label_sha256": "adfebe0a758eb3149b08ed71d05baada714e9d2e63c9ad29cfcb6cac91d3a347",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Receipt reference 88 confirms one intended purchase; the bank exported both POS and UPI narrations for that same event. The second debit remains unexplained.",
+      "decisions": [
+        {
+          "expected": true,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": false,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REPEATED_ENTRY"
+        }
+      ],
+      "family": "repeated_entries",
+      "findings": [],
+      "id": "e-repeat-changed-description",
+      "input_sha256": "bb0735aaee6f27294b77115d15b271e89f70f6119a3aa5b7f6e33bd026b20183",
+      "label_sha256": "9e127dc1f06357867d569d3cda08f582e75f2df4f71c407651118b1817e57454",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two overlapping exports contain the same original row. All rows must remain counted, but import overlap needs review.",
+      "decisions": [
+        {
+          "expected": true,
+          "kind": "REPEATED_ENTRY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REPEATED_ENTRY"
+        }
+      ],
+      "family": "overlapping_imports",
+      "findings": [
+        {
+          "amount_minor": 62800,
+          "descriptions": [
+            "IMPS SYNTHETIC MART REF-35",
+            "IMPS SYNTHETIC MART REF-35"
+          ],
+          "finding_id": "finding_d0c808f0dd934051b0482a40",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "e-repeat-overlap",
+      "input_sha256": "0bee3df2aea246cd97f29cad33746a231c54f222b807bf0069b1ac270a165e9c",
+      "label_sha256": "58f39d70ddcf43f06d3703604293b8efeb8bb97867cdaf94f5e99c7450c284ca",
+      "numeric_checks": [
+        {
+          "actual": 125600,
+          "expected": 125600,
+          "matched": true,
+          "target": "classified_spending_minor"
+        },
+        {
+          "actual": 2,
+          "expected": 2,
+          "matched": true,
+          "target": "transaction_count"
+        }
+      ],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "The user renamed the same account from Old Vault to New Vault between overlapping exports. The same original debit is represented twice and needs reconciliation.",
+      "decisions": [
+        {
+          "expected": true,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": false,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REPEATED_ENTRY"
+        }
+      ],
+      "family": "account_aliases",
+      "findings": [],
+      "id": "e-repeat-same-account-renamed",
+      "input_sha256": "4ea34496fc380454a98ba212d07c4a7644c5e1bcbce74f87f14a4842ce44e393",
+      "label_sha256": "3ebed86314529dc93e45cda3e7831010d44c5be395ea327430a90f6e800a6029",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two adults independently bought the same cinema ticket price using one card on one day; distinct receipts confirm both charges. No follow-up remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "repeated_entries",
+      "findings": [
+        {
+          "amount_minor": 42000,
+          "descriptions": [
+            "ECOM SYNTHETIC CINEMA",
+            "ECOM SYNTHETIC CINEMA"
+          ],
+          "finding_id": "finding_af7a0bdcd64ef7576a987955",
+          "kind": "REPEATED_ENTRY",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "e-repeat-legitimate",
+      "input_sha256": "381228823cc11c990f8420d8fb5c992692db5f59a6608db1c9b58b695b5c3435",
+      "label_sha256": "9c4bf4ecbd5ef9079421372c35a1e012aa825e74afb2f3b67f9527cbe60d24aa",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "repeated-entry-scenarios",
+      "context": "Two similarly named but distinct merchants have confirmed receipts. Do not merge counterparty identity from a shared prefix.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "repeated_entries",
+      "findings": [],
+      "id": "e-repeat-lookalike-merchants",
+      "input_sha256": "5a991cf00e95a4cd39456a86164352bc29fba6ff8073b1cb21cd52cc3720d942",
+      "label_sha256": "cb9b570dbd1f53c9eeb51bffe568991525b92436ca2cac6a76d520d9cbbd1fa4",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "An unexplained monthly NACH electricity charge rose from INR 850 to INR 1150 on the same obligation.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "RECURRING_INCREASE",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "kind": "RECURRING_INCREASE"
+        }
+      ],
+      "family": "recurring_amounts",
+      "findings": [
+        {
+          "amount_minor": 30000,
+          "descriptions": [
+            "NACH-DR SYNTHETIC ELECTRIC MANDATE-21",
+            "NACH-DR SYNTHETIC ELECTRIC MANDATE-21",
+            "NACH-DR SYNTHETIC ELECTRIC MANDATE-21"
+          ],
+          "finding_id": "finding_6c2512f62f1870ff05aec7ef",
+          "kind": "RECURRING_INCREASE",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "id": "e-regular-bank-narration",
+      "input_sha256": "47b49fc92270886d33c18e54c1f29210e7e9e2c28b3f0c46d5af206668e981ae",
+      "label_sha256": "c2297d5f0681c97b1b2bafb09e24a0a1b136ee6734e5fded1375ee10c830258b",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The mandate ID 21 identifies one monthly electricity obligation despite the bank changing the narration suffix. The INR 300 increase is unexplained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": false,
+          "expected_row_ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "kind": "RECURRING_INCREASE"
+        }
+      ],
+      "family": "changed_descriptions",
+      "findings": [],
+      "id": "e-regular-description-changed",
+      "input_sha256": "cfb0bd229b60700cd8b9cec0253a9d96e20651b6e94410c7724a50293ad3b7bd",
+      "label_sha256": "fc927d50f01c939474e4bf9c7f4cb563ce26cb23f7f34711ff0e7349a6b55ee7",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "The user deliberately upgraded broadband from INR 850 to INR 1150 and confirmed the exact billed amount; the increase is fully explained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "legitimate_spikes",
+      "findings": [
+        {
+          "amount_minor": 30000,
+          "descriptions": [
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND",
+            "NACH SYNTHETIC BROADBAND"
+          ],
+          "finding_id": "finding_6a08a91a5d9b7a44e7e7211c",
+          "kind": "RECURRING_INCREASE",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "id": "e-regular-planned-increase",
+      "input_sha256": "e5691b7505c87f15daff0e581e00daa9c0f7b20f4161e82c1eaa3bd5db5de027",
+      "label_sha256": "36749c7620c064f95b9469bbf20295939edb1ee2b50c0de14a669868b4b516e0",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recurring-payment-scenarios",
+      "context": "May is missing. Two supplied payments cannot establish a regular payment increase; the review label for that target is deliberately withheld.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "abstention_reason": "Insufficient continuous history; missing May cannot establish the regular-payment relationship from supplied rows.",
+          "expected": null,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "missing_periods",
+      "findings": [],
+      "id": "e-regular-missing-period",
+      "input_sha256": "2c9fc26aaea3bc5b897f99fcdf767fec060c112cea84059db79ca57e2dbbcef3",
+      "label_sha256": "03bda203e77bc51fbb68bb021b2ea77e02fda07f51a2ed11791d712dab5d4a17",
+      "numeric_checks": [
+        {
+          "actual": [
+            "2026-04",
+            "2026-06"
+          ],
+          "expected": [
+            "2026-04",
+            "2026-06"
+          ],
+          "matched": true,
+          "target": "monthly_months"
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "matched": true,
+          "target": "spending_change_present"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Six fuel purchases of around INR 400 precede an unexplained INR 9000 fuel debit. Sufficient history for review exists.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "g"
+          ],
+          "kind": "UNUSUAL_AMOUNT"
+        }
+      ],
+      "family": "unusual_amounts",
+      "findings": [
+        {
+          "amount_minor": 900000,
+          "descriptions": [
+            "POS SYNTHETIC FUEL Z"
+          ],
+          "finding_id": "finding_a549102832139ce25e949ebb",
+          "kind": "UNUSUAL_AMOUNT",
+          "row_ids": [
+            "g"
+          ]
+        }
+      ],
+      "id": "e-spike-unexplained",
+      "input_sha256": "163e4ed938c7522854fee7636afa110f472ac5f99520252d94a8d959ad15a61c",
+      "label_sha256": "67c969a27581b0d1daa7776c7b24b5f23206c497a3fc3875e33d080d93b12006",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "The user prepaid INR 9000 for a documented planned road trip and confirmed the fuel receipt. The otherwise exceptional amount is fully explained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "legitimate_spikes",
+      "findings": [
+        {
+          "amount_minor": 900000,
+          "descriptions": [
+            "POS SYNTHETIC FUEL Z"
+          ],
+          "finding_id": "finding_bf7ac3d3f321da6e649e3a21",
+          "kind": "UNUSUAL_AMOUNT",
+          "row_ids": [
+            "g"
+          ]
+        }
+      ],
+      "id": "e-spike-planned",
+      "input_sha256": "9346cd74359e74149f2629a6f5d3c988eeb795ea134040cf0956695ac4501b0f",
+      "label_sha256": "b97402cd1b34c524de3e59ff39a72615927ab4309150c3993ba751caa480c311",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "Only two fuel expenses are supplied. There is insufficient history to label the second amount as exceptional for this account.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "abstention_reason": "Only two expenses; insufficient history to determine account-specific exceptionalness.",
+          "expected": null,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "sparse_history",
+      "findings": [],
+      "id": "e-spike-insufficient-history",
+      "input_sha256": "b734bba09b792f53911cda34a25cbcc043f4b6235b8c211b3a0039af4201368e",
+      "label_sha256": "83a88848eb9bccd34e65b3b455a5ad00081a220d3a1af2312441c65b1bf7ebf5",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "expense-spike-scenarios",
+      "context": "The user confirms Travel Old and Travel New are the same renamed account. Six earlier fuel payments provide relevant history for the unexplained INR 9000 payment.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": false,
+          "expected_row_ids": [
+            "g"
+          ],
+          "kind": "UNUSUAL_AMOUNT"
+        }
+      ],
+      "family": "account_aliases",
+      "findings": [],
+      "id": "e-spike-account-renamed",
+      "input_sha256": "dee8b3e1dfa8155bfc3713a4cd81038fc127a9a36b57aaed8f5bf8197afd659f",
+      "label_sha256": "65fb20488a3c899da0e1b0762b1db7c0de5a575c951164fb50d8c392431a2b83",
+      "numeric_checks": [],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "The INR 50000 credit is documented borrowing and the INR 32000 credit is documented payroll. Only payroll is earnings; no credit-source follow-up remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "income_and_credit_sources",
+      "findings": [],
+      "id": "e-credit-loan-and-salary",
+      "input_sha256": "a9bf36536ff0db4eaff84c06ce132b6322a21e370e41df1d54c7dfa9b21ff053",
+      "label_sha256": "5ece89cd3517f0e35f8c1444ec2be897135a534c00bf26843c56c73f8eb37ca1",
+      "numeric_checks": [
+        {
+          "actual": 3200000,
+          "expected": 3200000,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "The supplied agreement confirms LN DISB is loan proceeds, not income. Its source is resolved even though the bank abbreviation is unfamiliar.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "income_and_credit_sources",
+      "findings": [
+        {
+          "amount_minor": 5000000,
+          "descriptions": [
+            "NEFT LN DISB SYNTHETIC REF-812"
+          ],
+          "finding_id": "finding_227dfae784a90e252ac70891",
+          "kind": "UNCLEAR_CREDIT",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-credit-loan-abbreviation",
+      "input_sha256": "f86922cf28f5c95bf5461b549ea702cad41279bec5ef276dd603bc4f619b844b",
+      "label_sha256": "5f23c0dde6fe6124ff45eca4397c35632d8399012a7ff7b4c32ba9fb684ce57e",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "The documented pension credit is income; no follow-up remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "income_and_credit_sources",
+      "findings": [],
+      "id": "e-credit-pension",
+      "input_sha256": "4cb1e37e86c0b92507ca50e97c6eed5b0da4f3b4a7b6eaff13e83a329c6e9304",
+      "label_sha256": "b5eb5e5b6b7ef804b605b44ccf8de350a5d4a3a3abeb0dd5830b6ac578789d01",
+      "numeric_checks": [
+        {
+          "actual": 2700000,
+          "expected": 2700000,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "credit-source-scenarios",
+      "context": "An unfamiliar IMPS credit has no sender explanation. Review its source and keep it outside identified income.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "UNCLEAR_CREDIT"
+        }
+      ],
+      "family": "income_and_credit_sources",
+      "findings": [
+        {
+          "amount_minor": 920000,
+          "descriptions": [
+            "IMPS CR SYNTHETIC REF-814"
+          ],
+          "finding_id": "finding_3ce6606ef6c8b63fd0931728",
+          "kind": "UNCLEAR_CREDIT",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-credit-unresolved-imps",
+      "input_sha256": "c1a6874aedf9ab49a38bcb7178251a43f2a5dd7f21081982400f0684dd91eb38",
+      "label_sha256": "466afadbefdccf76c23557675543eb4de749b63f13833f4e198144dfc607b910",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A single purchase and a later equal merchant refund are fully reconciled under the supplied assumptions. Refund is not income and no question remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "refunds",
+      "findings": [],
+      "id": "e-refund-full",
+      "input_sha256": "7bc97ae8a487fec5ce77801a085d5c46d67c9b2ece7e8c94d604da919fae31be",
+      "label_sha256": "1626313ccc3c4a9255911d76f85ad19e9f3baac9f94a435b24b96beb328b964c",
+      "numeric_checks": [
+        {
+          "actual": 76000,
+          "expected": 76000,
+          "matched": true,
+          "target": "classified_spending_minor"
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "refund-trail-scenarios",
+      "context": "The user expected a full return of one INR 760 purchase, but only INR 200 is recorded. Confirm the remaining trail without declaring an amount owed.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b"
+          ],
+          "kind": "REFUND_PARTIAL_TRAIL"
+        }
+      ],
+      "family": "refunds",
+      "findings": [
+        {
+          "amount_minor": 56000,
+          "descriptions": [
+            "Purchase: SYNTHETIC STORE Ref: P2",
+            "Refund: SYNTHETIC STORE Ref: R2"
+          ],
+          "finding_id": "finding_d516c1c5bc6927b9914b9e8c",
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "row_ids": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "id": "e-refund-partial",
+      "input_sha256": "5f629491cda87224f9a30b2650ef438ebb84563b801b585b43ede23b3811cc2d",
+      "label_sha256": "2c99f38b05c4e738f0dd93e02f7c8d1cbcfb321535dd4e3da6e6bec315e762c6",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "refund-trail-scenarios",
+      "context": "Two different purchases at the same merchant could explain one refund. Which purchase was returned is unresolved.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "kind": "REFUND_AMBIGUITY"
+        }
+      ],
+      "family": "refunds",
+      "findings": [
+        {
+          "amount_minor": 76000,
+          "descriptions": [
+            "Purchase: SYNTHETIC STORE Ref: P3",
+            "Purchase: SYNTHETIC STORE Ref: P4",
+            "Refund: SYNTHETIC STORE Ref: R3"
+          ],
+          "finding_id": "finding_92374208e9f8f338b868acfc",
+          "kind": "REFUND_AMBIGUITY",
+          "row_ids": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      ],
+      "id": "e-refund-ambiguous",
+      "input_sha256": "2d8af85e22c3ad8ec8010cd2e2c85cf484481359d29a956f515af0699e08c2ad",
+      "label_sha256": "773a5ac4b7d068a9de2e52a6f4f0871ff00395a9a5aef031b3f8e226f0a8f31d",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A refund appears without any purchase history or explanation. Its purchase relationship needs confirmation and the credit is not salary.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": true
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "REFUND_LINK_WITHHELD"
+        }
+      ],
+      "family": "refunds",
+      "findings": [
+        {
+          "amount_minor": 76000,
+          "descriptions": [
+            "Refund: SYNTHETIC STORE Ref: R4"
+          ],
+          "finding_id": "finding_7738d7987ae6a4740fe9f757",
+          "kind": "REFUND_LINK_WITHHELD",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-refund-orphan",
+      "input_sha256": "3f3a5535d9908c42527df80315e7c5d63cecf88f4fb72c55dec680ee4f30be3d",
+      "label_sha256": "f204cecdf11aa3f8231665658199f3f7ae03ed77a61c82aa7c3c66071bbfff65",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "refund-trail-scenarios",
+      "context": "A confirmed merchant return relates to a documented older purchase deliberately outside this export. The relationship is already resolved; no follow-up remains.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": true
+        }
+      ],
+      "evidence_checks": [],
+      "family": "refunds",
+      "findings": [
+        {
+          "amount_minor": 76000,
+          "descriptions": [
+            "Refund: SYNTHETIC STORE Ref: R5"
+          ],
+          "finding_id": "finding_a4aae5d8c57f3960f3ea2e64",
+          "kind": "REFUND_LINK_WITHHELD",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-refund-resolved-historical",
+      "input_sha256": "6e425bb17807c4968d8e7332ae800375a65e85ec1d098451ec74e10192172225",
+      "label_sha256": "f75ea871363e953a2ca71b4dd44a20e90f064c5b498e0a063081ff905110cc43",
+      "numeric_checks": [
+        {
+          "actual": 0,
+          "expected": 0,
+          "matched": true,
+          "target": "identified_income_minor"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "period-gap-scenarios",
+      "context": "Only April and June are supplied. May must remain missing, not zero spending; no charge itself is unexplained.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "missing_periods",
+      "findings": [],
+      "id": "e-period-gap-is-not-zero",
+      "input_sha256": "c4930f32f1a8a3040d24887f8d0f42717bc3bf8ec4b8faad4498fd8b28c6ec0d",
+      "label_sha256": "22ae0e5842c8f26ae7fd1296ed3b710dff29f3b5e52fee6c36edeac56aef4c6d",
+      "numeric_checks": [
+        {
+          "actual": [
+            "2026-04",
+            "2026-06"
+          ],
+          "expected": [
+            "2026-04",
+            "2026-06"
+          ],
+          "matched": true,
+          "target": "monthly_months"
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "matched": true,
+          "target": "spending_change_present"
+        }
+      ],
+      "split": "evaluation"
+    },
+    {
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "An unexplained service charge appears in the bank export and warrants review without assuming it is improper.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "FEES",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": true,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "FEES"
+        }
+      ],
+      "family": "recorded_fees",
+      "findings": [
+        {
+          "amount_minor": 17700,
+          "descriptions": [
+            "DR SERVICE CHARGE SYNTHETIC REF-90"
+          ],
+          "finding_id": "finding_43d01b54eff0e23248c3affc",
+          "kind": "FEES",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-fee-bank-style",
+      "input_sha256": "d6758fa2f16d08799caf433225dcfaa74796607d12d7261906d2b14bb22d84d3",
+      "label_sha256": "4fcdebfe4303c8cf97178b8b7a5a833c29ca0f055a6d554f46f047f52fff9067",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "The export legend identifies CHG AMB as a bank maintenance fee. Its purpose and authorisation are still unresolved and need review.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": true,
+          "kind": "FEES",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [
+        {
+          "exact_evidence_found": false,
+          "expected_row_ids": [
+            "a"
+          ],
+          "kind": "FEES"
+        }
+      ],
+      "family": "recorded_fees",
+      "findings": [],
+      "id": "e-fee-abbreviation",
+      "input_sha256": "a5608608e5637690a42af1c926826d7f24d7ab98858c22187dc4f44dfe76cb95",
+      "label_sha256": "d7696235a6ac98ed20d84ddfa42cee897a4784cd5b177505c8314ca59b1b8024",
+      "numeric_checks": [],
+      "split": "tuning"
+    },
+    {
+      "base_family_id": "recorded-fee-scenarios",
+      "context": "The user already confirmed this bank fee against the agreed tariff and requested no further follow-up.",
+      "decisions": [
+        {
+          "expected": false,
+          "kind": "REPEATED_ENTRY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "RECURRING_INCREASE",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "UNUSUAL_AMOUNT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "FEES",
+          "predicted": true
+        },
+        {
+          "expected": false,
+          "kind": "UNCLEAR_CREDIT",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_AMBIGUITY",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_PARTIAL_TRAIL",
+          "predicted": false
+        },
+        {
+          "expected": false,
+          "kind": "REFUND_LINK_WITHHELD",
+          "predicted": false
+        }
+      ],
+      "evidence_checks": [],
+      "family": "recorded_fees",
+      "findings": [
+        {
+          "amount_minor": 17700,
+          "descriptions": [
+            "DR BANK FEE SYNTHETIC REF-92"
+          ],
+          "finding_id": "finding_370544e1bc50538ee113c19e",
+          "kind": "FEES",
+          "row_ids": [
+            "a"
+          ]
+        }
+      ],
+      "id": "e-fee-confirmed",
+      "input_sha256": "968872cbab12bb24efdb4a3f8375c5a0ab2cf029be6be4c38356453b8520fdab",
+      "label_sha256": "6f13f4186b5bfed2643b1491e46ab5ae52c43957bfb89d41332139efc426a5db",
+      "numeric_checks": [],
+      "split": "tuning"
+    }
+  ],
+  "runtime_errors": [],
+  "schema_version": 1,
+  "selected_splits": [
+    "evaluation",
+    "tuning"
+  ],
+  "source_sha256": {
+    "src/carapace_core/friday_checkup.py": "3133235ddbc66cb09f43a5b317a31361c1029e273624abf150b9264a52b290d8",
+    "src/carapace_core/friday_narration.py": "2fbdbf15d80a93a881db697895a8933f5486562f47dcf72003af8228a835ca3c",
+    "src/carapace_core/friday_portfolio.py": "99ecb142ca1ec379b110c7739e04b6fdc8d6516b60e87d6b553ed842d39bc240",
+    "src/carapace_core/friday_refund_shield.py": "668348df0bce56c366cac5a5ebd9f51ce91146fb5a9dc4724e26a53376938e43",
+    "tools/evaluate_statement_checkup.py": "ce2c9e409179c8c274f1ed7c323da775b8759a5912d05e3c7d1355228ce3ff92"
+  },
+  "status": "DEVELOPER_AUTHORED_SYNTHETIC_FIRST_PASS",
+  "target_definitions": {
+    "FEES": "Recorded fees whose purpose or authorisation still needs review; already explained fees do not.",
+    "RECURRING_INCREASE": "An unexplained increase in the same regular obligation needs follow-up, including known changed bank narration.",
+    "REFUND_AMBIGUITY": "Several purchase allocations remain possible and require confirmation.",
+    "REFUND_LINK_WITHHELD": "A refund cannot be reconciled from supplied records and its relationship remains unresolved.",
+    "REFUND_PARTIAL_TRAIL": "An expected purchase return remains only partly reconciled and needs confirmation; this does not establish money owed.",
+    "REPEATED_ENTRY": "An unexplained matching or plausibly duplicated entry needs follow-up; confirmed separate purchases do not.",
+    "UNCLEAR_CREDIT": "A credit source is unresolved; supplied evidence of borrowing, refund, transfer or salary resolves this target.",
+    "UNUSUAL_AMOUNT": "An unexplained exceptional expense with sufficient relevant history needs follow-up; a supplied planned purchase does not."
+  },
+  "unit": "One binary case × finding-kind presence decision; 8 explicit kinds per case. Multiple same-kind findings count once. Exact evidence coverage is reported separately.",
+  "user_records": 0
+}

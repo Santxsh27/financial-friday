@@ -7,6 +7,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
+from carapace_core.friday_surface import LEGACY_DEMO_ENV, parse_legacy_demo_flag
 
 
 LOCAL_DEMO_KEY = "local-demo-key-change-me"
@@ -30,10 +31,12 @@ class Settings:
     firestore_collection: str = "financial_friday_v1"
     public_demo_secret: str | None = None
     verification_keys_path: Path | None = None
+    legacy_demo_enabled: bool | None = None
 
     @classmethod
     def from_env(cls) -> "Settings":
         environment = os.getenv("CARAPACE_ENV", "development").strip().lower()
+        legacy_demo = parse_legacy_demo_flag(os.getenv(LEGACY_DEMO_ENV))
         database_path = Path(
             os.getenv("CARAPACE_DB_PATH", "/tmp/carapace/carapace.db")
         )
@@ -69,7 +72,7 @@ class Settings:
             passport_signing_keys = {
                 str(key): str(value) for key, value in parsed_passport_keys.items()
             }
-        elif environment not in {"development", "test"}:
+        elif legacy_demo and environment not in {"development", "test"}:
             raise RuntimeError(
                 "CARAPACE_PASSPORT_KEYS_JSON is required outside development"
             )
@@ -105,6 +108,7 @@ class Settings:
             firestore_collection=os.getenv("CARAPACE_FIRESTORE_COLLECTION", "financial_friday_v1"),
             public_demo_secret=os.getenv("FRIDAY_PUBLIC_DEMO_SECRET"),
             verification_keys_path=Path(os.environ["FRIDAY_VERIFICATION_KEYS_PATH"]) if os.getenv("FRIDAY_VERIFICATION_KEYS_PATH") else None,
+            legacy_demo_enabled=legacy_demo,
         )
 
     def passport_signing_key(self, tenant_id: str) -> str:

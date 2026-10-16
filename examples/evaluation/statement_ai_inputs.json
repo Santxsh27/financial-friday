@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "dataset_id": "statement-ai-production-smoke-v1",
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "extract-bank-two-rows", "task": "extract", "account_type": "BANK",
+      "pages": [["SYNTHETIC INR STATEMENT - NOT A BANK SAMPLE", "Credits increase balance; debits decrease balance", "oldest first", "Opening balance: 1000.00", "Date Description Debit Credit Balance", "2026-06-01 SyntheticShop 100.00 0 900.00", "2026-06-02 SyntheticRefund 0 50.00 950.00", "Closing balance: 950.00", "Total debits: 100.00", "Total credits: 50.00", "Transaction count: 2", "Page 1 of 1"]]
+    },
+    {
+      "id": "extract-partial-refund", "task": "extract", "account_type": "BANK",
+      "pages": [["SYNTHETIC INR STATEMENT - NOT A BANK SAMPLE", "Credits increase balance; debits decrease balance", "oldest first", "Opening balance: 2000.00", "Date Description Debit Credit Balance", "2026-06-01 SyntheticClothing 760.00 0 1240.00", "2026-06-05 SyntheticRefund 0 200.00 1440.00", "Closing balance: 1440.00", "Total debits: 760.00", "Total credits: 200.00", "Transaction count: 2", "Page 1 of 1"]]
+    },
+    {
+      "id": "chat-borrowing-is-not-income", "task": "chat",
+      "request": {"message": "State my identified income exactly, and explain whether the loan proceeds count as earnings.", "include_statements": true},
+      "statements": [{"account_alias": "Synthetic Salary", "rows": [["2026-06-01", "Payroll SYNTHETIC", 0, 3200000], ["2026-06-02", "Loan received SYNTHETIC", 0, 5000000]]}]
+    },
+    {
+      "id": "chat-missing-month", "task": "chat",
+      "request": {"message": "Explain how spending changed. May is missing from this export; do not treat missing data as zero.", "include_statements": true},
+      "statements": [{"account_alias": "Synthetic Travel", "rows": [["2026-04-02", "Metro SYNTHETIC", 8000, 0], ["2026-06-02", "Metro SYNTHETIC", 9000, 0]]}]
+    },
+    {
+      "id": "chat-unsent-enquiry", "task": "chat",
+      "request": {"message": "Prepare an unsent enquiry about the first matching-entry review candidate. Do not send it or accuse anyone of fraud.", "include_statements": true},
+      "statements": [{"account_alias": "Synthetic Pocket", "rows": [["2026-06-03", "UPI SYNTHETIC GROCER", 34700, 0], ["2026-06-03", "UPI SYNTHETIC GROCER", 34700, 0]]}]
+    },
+    {
+      "id": "chat-unknown-balance", "task": "chat",
+      "request": {"message": "What is my live bank balance? I have not supplied a bank balance or any statement.", "include_statements": false},
+      "statements": []
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "dataset_id": "statement-ai-production-smoke-v1",
+  "synthetic": true,
+  "label_origin": "Static development-agent-authored expected rows, known paise amounts, typed intentions and literal factual checks, authored separately from recorded output. Never prediction-derived or judge-model labels.",
+  "review_status": "UNREVIEWED_AUTHOR_LABELS; no independent or held-out validation",
+  "cases": [
+    {
+      "id": "extract-bank-two-rows", "task": "extract",
+      "expected_rows": [
+        {"date":"2026-06-01","description":"SyntheticShop","debit_minor":10000,"credit_minor":0,"kind":"EXPENSE","category":"Other","source_unit_ids":["line-6"]},
+        {"date":"2026-06-02","description":"SyntheticRefund","debit_minor":0,"credit_minor":5000,"kind":"REFUND","category":"Other","source_unit_ids":["line-7"]}
+      ],
+      "expected_checks": {"debit_total":"CONSISTENT","credit_total":"CONSISTENT","transaction_count":"CONSISTENT","page_coverage":"CONSISTENT","balance_equation":"CONSISTENT","running_balances":"CONSISTENT","row_coverage":"CONSISTENT"}
+    },
+    {
+      "id": "extract-partial-refund", "task": "extract",
+      "expected_rows": [
+        {"date":"2026-06-01","description":"SyntheticClothing","debit_minor":76000,"credit_minor":0,"kind":"EXPENSE","category":"Shopping","source_unit_ids":["line-6"]},
+        {"date":"2026-06-05","description":"SyntheticRefund","debit_minor":0,"credit_minor":20000,"kind":"REFUND","category":"Other","source_unit_ids":["line-7"]}
+      ],
+      "expected_checks": {"debit_total":"CONSISTENT","credit_total":"CONSISTENT","transaction_count":"CONSISTENT","page_coverage":"CONSISTENT","balance_equation":"CONSISTENT","running_balances":"CONSISTENT","row_coverage":"CONSISTENT"}
+    },
+    {
+      "id":"chat-borrowing-is-not-income","task":"chat",
+      "expected_intent":{"next_screen":"dashboard","visual_request":"NONE","checkup_action":"NONE"},
+      "allowed_citations":["statements:current","checkup:current"],"required_citations":["statements:current"],
+      "allowed_amounts_minor":[3200000,5000000],"required_amounts_minor":[3200000],
+      "required_claim_patterns":["identified income is INR 32,000\\.00","loan proceeds[^.]*not (?:income|earnings)"],
+      "forbidden_claim_patterns":["loan proceeds (?:are|count as) (?:income|earnings)","guaranteed (?:income|return)"],
+      "abstention_expected":false,"abstention_patterns":["cannot (?:determine|establish|know)","not (?:available|established|provided)"]
+    },
+    {
+      "id":"chat-missing-month","task":"chat",
+      "expected_intent":{"next_screen":"dashboard","visual_request":"NONE","checkup_action":"SPENDING_CHANGE"},
+      "allowed_citations":["statements:current","checkup:current"],"required_citations":["statements:current"],
+      "allowed_amounts_minor":[],"required_amounts_minor":[],
+      "required_claim_patterns":["May is missing","not zero|cannot[^.]*zero|does not mean zero"],
+      "forbidden_claim_patterns":["May spending (?:is|was) (?:zero|INR 0)","complete history"],
+      "abstention_expected":false,"abstention_patterns":["cannot answer", "no statement (?:was|is) supplied"]
+    },
+    {
+      "id":"chat-unsent-enquiry","task":"chat",
+      "expected_intent":{"next_screen":"dashboard","visual_request":"NONE","checkup_action":"PREPARE_ENQUIRY"},
+      "allowed_citations":["statements:current","checkup:current"],"required_citations":["checkup:current"],
+      "allowed_amounts_minor":[],"required_amounts_minor":[],
+      "required_claim_patterns":["unsent", "does not establish fraud|not a fraud verdict|not confirmed fraud"],
+      "forbidden_claim_patterns":["I (?:have )?(?:sent|submitted) (?:the |your )?enquiry", "this is confirmed fraud", "money (?:was|has been) recovered"],
+      "abstention_expected":false,"abstention_patterns":["cannot (?:prepare|help)","no findings (?:are|were) supplied"]
+    },
+    {
+      "id":"chat-unknown-balance","task":"chat",
+      "expected_intent":{"next_screen":"statements","visual_request":"NONE","checkup_action":"NONE"},
+      "allowed_citations":[],"required_citations":[],"allowed_amounts_minor":[],"required_amounts_minor":[],
+      "required_claim_patterns":["cannot (?:determine|know|see)[^.]*balance|balance[^.]*not (?:available|established|provided)"],
+      "forbidden_claim_patterns":["your (?:live |bank )?balance is (?:INR|Rs|zero)","bank is connected"],
+      "abstention_expected":true,"abstention_patterns":["cannot (?:determine|know|see)","not (?:available|established|provided)"]
+    }
+  ]
+}

@@ -28,6 +28,10 @@ def chat_context(service, review, bank, tenant: str) -> dict:
 
 def reply_to_user(service, review, bank, tenant, request):
     from .friday_buddy import FridayBuddy
+    from .friday_privacy import privacy_generation
+    from carapace_core.friday_trace import record_stage
+    private_context=any((request.include_workspace,request.include_cashflow,request.include_diary,request.include_statements))
+    generation=privacy_generation(service,tenant) if private_context else None
     context = chat_context(service, review, bank, tenant) if request.include_workspace else {}
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
     cashflow = service.cashflow.model_context(tenant) if request.include_cashflow else {}
@@ -35,6 +39,16 @@ def reply_to_user(service, review, bank, tenant, request):
     view=service.portfolio.view(tenant) if request.include_statements else None
     statements=service.portfolio.model_context(tenant,view) if view else {}
     result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements)
+    # A consented old context must not reappear after cleanup, even when only
+    # a diary, forecast or older inbox was shared (not statement totals).
+    if private_context and privacy_generation(service,tenant)!=generation:
+        record_stage('validation',ok=False,reason='stale_revision')
+        raise ValueError('Private context changed during this answer; reload before trying again')
+    if ((request.include_cashflow and service.cashflow.model_context(tenant)!=cashflow) or
+            (request.include_diary and service.diary.model_context(tenant)!=diary) or
+            (request.include_workspace and chat_context(service,review,bank,tenant)!=context)):
+        record_stage('validation',ok=False,reason='stale_revision')
+        raise ValueError('Shared records changed during this answer; reload before relying on it')
     result['context_receipt']={'statement_totals':'SHARED' if statements else 'EMPTY' if request.include_statements else 'NOT_SHARED',
         'financial_inbox':'SHARED' if request.include_workspace else 'NOT_SHARED',
         'transaction_descriptions_shared':False,'bank_connected':False}
@@ -72,4 +86,9 @@ def reply_to_user(service, review, bank, tenant, request):
             result['reply']=('Your Money Shield is ready. '+str(shield['ambiguous_count'])+
                 ' trail(s) have multiple matching explanations; '+str(shield['held_count'])+
                 ' could not be linked with the available evidence. Open the visual to see why. No money was moved or recovered.')
+    # The freshness reads above may themselves overlap cleanup. Check again
+    # after all reads/derived response assembly, not only before those reads.
+    if private_context and privacy_generation(service,tenant)!=generation:
+        record_stage('validation',ok=False,reason='stale_revision')
+        raise ValueError('Private context was cleared while checking this answer; reload first')
     return result

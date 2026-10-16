@@ -1,0 +1,1288 @@
+{
+  "attempted_outputs": 6,
+  "by_task": {
+    "chat": {
+      "abstentions": 0,
+      "admitted": 4,
+      "incorrect_amounts": 2,
+      "invalid_references": 0,
+      "missing_literal_claim_checks": 6,
+      "outputs": 4,
+      "passed": 0,
+      "rejected": 0,
+      "schema_errors": 0,
+      "scored_schema_valid_outputs": 4,
+      "unsupported_known_claims": 0,
+      "wrong_intents": 3
+    },
+    "extract": {
+      "abstentions": 0,
+      "admitted": 0,
+      "incorrect_amounts": 0,
+      "invalid_references": 0,
+      "missing_literal_claim_checks": 0,
+      "outputs": 2,
+      "passed": 0,
+      "rejected": 2,
+      "schema_errors": 0,
+      "scored_schema_valid_outputs": 2,
+      "unsupported_known_claims": 0,
+      "wrong_intents": 0
+    }
+  },
+  "call_cap": 60,
+  "completion_status": "COMPLETE",
+  "external_messages": 0,
+  "frozen_case_ids": [
+    "extract-bank-two-rows",
+    "extract-partial-refund",
+    "chat-borrowing-is-not-income",
+    "chat-missing-month",
+    "chat-unsent-enquiry",
+    "chat-unknown-balance"
+  ],
+  "frozen_response_ids": [
+    "extract-bank-two-rows-live",
+    "extract-partial-refund-live",
+    "chat-borrowing-is-not-income-live",
+    "chat-missing-month-live",
+    "chat-unsent-enquiry-live",
+    "chat-unknown-balance-live"
+  ],
+  "independent_validation_completed": false,
+  "limitations": [
+    "Small unreviewed agent-authored synthetic smoke corpus, no independent, held-out or representative accuracy claim.",
+    "Offline controls are hand-authored good/bad outputs; their pass rate measures the scorer and admission paths, never Gemini quality.",
+    "Chat intent means production typed navigation/checkup fields; there is no separate semantic-intent classifier in this run.",
+    "Currency-marker amounts, exact reference membership and narrow required/forbidden phrase patterns are scored. Bare numbers, attribution swaps and unrestricted prose semantics are not fully verified.",
+    "Missing-citation checks measure expected references, not whether a valid reference semantically supports every sentence. No judge model supplies truth.",
+    "Abstention is a predeclared literal-phrase diagnostic because production ChatAnswer has no abstention field; paraphrases can be missed.",
+    "Extraction uses two tiny text PDFs; OCR, scanned images, complex layouts and real institution format coverage remain unmeasured.",
+    "Production chat may repair once; every SDK invocation consumes the same hard cap. Provider retries are disabled for opt-in live runs.",
+    "A configured model name hash identifies requested configuration, not immutable provider weights. Response model version is recorded when supplied."
+  ],
+  "live_model_calls": 0,
+  "live_model_quality_measured": false,
+  "live_output_token_cap_per_call": null,
+  "manifest": {
+    "dataset_id": "statement-ai-production-smoke-v1",
+    "inputs_sha256": "bc4b31fe6bb003548c35d1573066b62deb2df61475af9262aa6946af6e306c76",
+    "label_origin": "Static development-agent-authored expected rows, known paise amounts, typed intentions and literal factual checks, authored separately from recorded output. Never prediction-derived or judge-model labels.",
+    "labels_sha256": "69c9d4621cc0fb28290e2d97f10bcbec903f07f7062cd71e07aff3940a08063d",
+    "recorded_model": "gemini-3.5-flash-lite",
+    "response_provenance": "RECORDED_SYNTHETIC_MODEL_OUTPUT",
+    "responses_sha256": "512a347b960d9d663ecc3d869a204be1ed09430b3a49fd3013d8373a341967cb",
+    "review_status": "UNREVIEWED_AUTHOR_LABELS; no independent or held-out validation"
+  },
+  "model": "gemini-3.5-flash-lite",
+  "model_identity_sha256": "9a9f0bb7d45d033b80d2c4894621c0d5ca110ed6d006afc9ed6701ad1e83d371",
+  "model_latency_seconds": {
+    "coverage": 0,
+    "maximum": null,
+    "median": null
+  },
+  "payment_effects": 0,
+  "planned_outputs": 6,
+  "production_paths": [
+    "carapace_ai.friday_statements.extract_statement",
+    "carapace_ai.friday_chat.answer_chat"
+  ],
+  "protocol_v2": {
+    "by_task": {
+      "chat": {
+        "current_runtime_admitted": 4,
+        "original_recorded_admission_known": 4,
+        "original_recorded_admitted": 4,
+        "original_recorded_v1_passed": 0,
+        "outputs": 4,
+        "raw_factual_checks_passed": 4,
+        "strict_v1_current_runtime_passed": 0
+      },
+      "extract": {
+        "current_runtime_admitted": 0,
+        "original_recorded_admission_known": 2,
+        "original_recorded_admitted": 0,
+        "original_recorded_v1_passed": 0,
+        "outputs": 2,
+        "raw_factual_checks_passed": 2,
+        "strict_v1_current_runtime_passed": 0
+      }
+    },
+    "interpretation": "A scoring-protocol revision on already-seen outputs, not a measured model improvement. Raw factual diagnostics, original/current admission and strict conformance are separate axes; there is no replacement overall pass score.",
+    "narration_version": "NARRATION_1",
+    "original_recorded_report_sha256": "512a347b960d9d663ecc3d869a204be1ed09430b3a49fd3013d8373a341967cb",
+    "original_recorded_source_sha256": {
+      "src/carapace_ai/friday_chat.py": "6f483c6d3fd0d5a5fb02527f0ff9f0e0c0da32167649bb9df3d293b524cef031",
+      "src/carapace_ai/friday_statements.py": "45cd7e108b045c4714c663421b537afc1b36e78d5b9245e4b90d0f656c02c587",
+      "src/carapace_core/friday_portfolio.py": "99ecb142ca1ec379b110c7739e04b6fdc8d6516b60e87d6b553ed842d39bc240",
+      "src/carapace_core/friday_statement_reconciliation.py": "b51e2c1e613ac3655d1b099253d7951366e4e1d24f20e2a7a64c0e9e95ec9525",
+      "tools/evaluate_friday_statement_ai.py": "445834cf25eca2716a59871272bf038af2704f2dd48e47f2140e309773181a73"
+    },
+    "original_recorded_summary": {
+      "abstentions": 0,
+      "admitted": 4,
+      "incorrect_amounts": 2,
+      "invalid_references": 0,
+      "missing_literal_claim_checks": 6,
+      "outputs": 6,
+      "passed": 0,
+      "rejected": 2,
+      "schema_errors": 0,
+      "scored_schema_valid_outputs": 6,
+      "unsupported_known_claims": 0,
+      "wrong_intents": 3
+    },
+    "rules": {
+      "authored_after_v1_live_observation": true,
+      "cases": [
+        {
+          "ambiguity_reason": "SyntheticShop denotes only a generic fictional shop and does not identify the purchased goods; Other and Shopping are acceptable proposals.",
+          "category_alternatives": {
+            "0": [
+              "Other",
+              "Shopping"
+            ]
+          },
+          "id": "extract-bank-two-rows",
+          "task": "extract"
+        },
+        {
+          "category_alternatives": {},
+          "id": "extract-partial-refund",
+          "task": "extract"
+        },
+        {
+          "claim_checks": [
+            "IDENTIFIED_INCOME_ATTRIBUTION",
+            "BORROWING_NOT_EARNINGS"
+          ],
+          "id": "chat-borrowing-is-not-income",
+          "input_facts": [
+            {
+              "column": "credit",
+              "name": "identified_income_minor",
+              "row": 0,
+              "statement": 0,
+              "value_minor": 3200000
+            },
+            {
+              "column": "credit",
+              "name": "loan_proceeds_minor",
+              "row": 1,
+              "statement": 0,
+              "value_minor": 5000000
+            }
+          ],
+          "required_income_minor": 3200000,
+          "task": "chat"
+        },
+        {
+          "claim_checks": [
+            "MISSING_PERIOD_DECLARED",
+            "MISSING_IS_NOT_ZERO",
+            "MONTH_AMOUNT_ATTRIBUTION"
+          ],
+          "id": "chat-missing-month",
+          "input_facts": [
+            {
+              "column": "debit",
+              "name": "april_spending_minor",
+              "row": 0,
+              "statement": 0,
+              "value_minor": 8000
+            },
+            {
+              "column": "debit",
+              "name": "june_spending_minor",
+              "row": 1,
+              "statement": 0,
+              "value_minor": 9000
+            }
+          ],
+          "missing_month": "2026-05",
+          "month_amounts_minor": {
+            "2026-04": 8000,
+            "2026-06": 9000
+          },
+          "task": "chat"
+        },
+        {
+          "claim_checks": [
+            "ENQUIRY_UNSENT"
+          ],
+          "id": "chat-unsent-enquiry",
+          "input_facts": [],
+          "task": "chat"
+        },
+        {
+          "claim_checks": [
+            "LIVE_BALANCE_UNAVAILABLE"
+          ],
+          "id": "chat-unknown-balance",
+          "input_facts": [],
+          "task": "chat"
+        }
+      ],
+      "change_log": [
+        {
+          "change": "Preserve v1 labels, scorer, strict score and recorded report. Publish separate factual, classification, typed-field, literal-wording and admission diagnostics, without replacing them with a new single pass score.",
+          "id": "V2-01",
+          "reason": "A strict phrase/navigation mismatch is different from a wrong source fact or a production rejection."
+        },
+        {
+          "change": "A quoted amount is source-supported when it equals an independently input-derived shared-context monetary value. Show the exact supporting paths. Keep required role amounts and month attribution checks separate.",
+          "id": "V2-02",
+          "reason": "An empty v1 amount allowlist incorrectly marked the supplied April INR 80 and June INR 90 as invented. A supported value alone does not establish correct attribution."
+        },
+        {
+          "change": "Accept finite documented paraphrases for identified-income attribution, exclusion of borrowing from earnings, absent May rows, missing-is-not-zero, and inability to view/access a live balance. Reject contradictory polarity and swapped attributed values.",
+          "id": "V2-03",
+          "reason": "Exact wording is a conformance diagnostic, not general factual truth. These finite checks remain incomplete semantic tests."
+        },
+        {
+          "change": "Separate immutable extracted row agreement from interpretation labels. For generic SyntheticShop only, allow Other or Shopping as a classification proposal, with the original exact v1 category still reported.",
+          "id": "V2-04",
+          "reason": "The fictional generic shop name does not identify the purchase category. Clothing remains Shopping; refund kind remains REFUND. This exception is declared from input ambiguity, not applied to all rows."
+        },
+        {
+          "change": "An unsent enquiry need not repeat a fraud disclaimer to satisfy the factual axis. The original mandatory disclaimer remains visible as v1 literal conformance. Affirmative fraud, innocence, sending, recovery and correction claims still fail finite factual checks.",
+          "id": "V2-05",
+          "reason": "Absence of a repeated disclaimer is not an affirmative fraud or completion claim."
+        },
+        {
+          "change": "Distinguish original recorded production admission and source hashes from re-admission under current runtime sources. Hash checkup, narration, refund and model-amount formatting modules and report narration VERSION.",
+          "id": "V2-06",
+          "reason": "Runtime changes can affect derived context, opaque finding IDs and admission independently of a scoring revision."
+        }
+      ],
+      "dataset_id": "statement-ai-production-smoke-v1",
+      "inputs_sha256": "bc4b31fe6bb003548c35d1573066b62deb2df61475af9262aa6946af6e306c76",
+      "limitations": [
+        "Protocol v2 was authored after inspecting the v1 live results and cannot substantiate an unseen or independent performance improvement.",
+        "Input facts are separate static rules, checked against source rows; no model output supplies an expected amount or label.",
+        "Source-supported monetary values are not sufficient proof of role, date, causal or merchant attribution. Only the explicitly checked roles and months receive additional finite checks.",
+        "Finite English paraphrase and contradiction patterns cannot certify unrestricted free prose. Bare numeric claims and unrecognised constructions remain outside verified coverage.",
+        "Original and current runtime admission can differ after implementation changes; any such difference is reported separately from scoring changes."
+      ],
+      "protocol_version": 2,
+      "review_status": "DEVELOPMENT_REVIEW_ONLY; not an independent reviewer label set or held-out test",
+      "schema_version": 1,
+      "synthetic": true,
+      "v1_labels_sha256": "69c9d4621cc0fb28290e2d97f10bcbec903f07f7062cd71e07aff3940a08063d"
+    },
+    "rules_sha256": "ba94241047292901b50fe2a26c3076701f4a7ec695a41525aa7251e996cc7bc8",
+    "summary": {
+      "current_runtime_admitted": 4,
+      "original_recorded_admission_known": 6,
+      "original_recorded_admitted": 4,
+      "original_recorded_v1_passed": 0,
+      "outputs": 6,
+      "raw_factual_checks_passed": 6,
+      "strict_v1_current_runtime_passed": 0
+    },
+    "version": 2
+  },
+  "response_provenance": "RECORDED_SYNTHETIC_MODEL_OUTPUT",
+  "results": [
+    {
+      "admitted": false,
+      "calls": [
+        {
+          "config_sha256": "27628f5e7890c39d8c1bc8016eaeaf6723ac81830a15fa4eaec3dc983c7eb2f4",
+          "contents_sha256": "0105603bc2c5e5ff02ac5b5931b40f21fbcfbe0abf8adffb43fdb521505c9572",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "f2e76e565e13817ac7276e1969b2815fc68eadc52624e5e5f2a504928ffb3000",
+          "model_latency_seconds": null,
+          "prompt_sha256": "d1b4c63e3a877c9ae708b9de3656cd834622cedc24afc7b2e669254c9c4a1ff9",
+          "response": {
+            "complete": true,
+            "currency": "INR",
+            "currency_source_ids": [
+              "line-1"
+            ],
+            "rows": [
+              {
+                "category": "Shopping",
+                "credit_text": "",
+                "date_text": "2026-06-01",
+                "debit_text": "100.00",
+                "description": "SyntheticShop",
+                "kind": "EXPENSE",
+                "running_balance_text": "900.00",
+                "source_ids": [
+                  "line-6"
+                ]
+              },
+              {
+                "category": "Other",
+                "credit_text": "50.00",
+                "date_text": "2026-06-02",
+                "debit_text": "",
+                "description": "SyntheticRefund",
+                "kind": "REFUND",
+                "running_balance_text": "950.00",
+                "source_ids": [
+                  "line-7"
+                ]
+              }
+            ],
+            "source_facts": {
+              "opening_balance": {
+                "literal_text": "Opening balance: 1000.00",
+                "source_ids": [
+                  "line-4"
+                ]
+              },
+              "transaction_count": {
+                "literal_text": "Transaction count: 2",
+                "source_ids": [
+                  "line-11"
+                ]
+              }
+            }
+          },
+          "response_model_version": null,
+          "response_sha256": "963c3ba76fd9afc686861e18a825473a913480a0ed5f9ad92ca9cf21f619bbb1",
+          "schema_sha256": "376e6b8b455d8b5021ece1e5451cd8a4700dbbb39633f15efdbeb3e5476e0267",
+          "tokens": null
+        }
+      ],
+      "case_id": "extract-bank-two-rows",
+      "error_type": "ValueError",
+      "failure_category": "EXTRACTION_REJECTED",
+      "input_sha256": "88997c9ad9e3365f8260d436042c934aa409b1e67b83532e6b467e21e5d85658",
+      "label_sha256": "839052464b47adf2c1f8fee085f40bd0081a6340c7adab78b4b506c74fed3bdd",
+      "passed": false,
+      "protocol_v2": {
+        "category_ambiguity_note": "SyntheticShop denotes only a generic fictional shop and does not identify the purchased goods; Other and Shopping are acceptable proposals.",
+        "classification_conformance": {
+          "category": true,
+          "kind": true
+        },
+        "coverage": "FINITE_IMMUTABLE_SOURCE_ROW_CHECKS",
+        "current_runtime_admitted": false,
+        "factual_checks": {
+          "immutable_rows_exact": true,
+          "not_abstained": true,
+          "source_references_valid": true
+        },
+        "factual_checks_passed": true,
+        "original_recorded_admitted": false,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "incorrect_amounts": 0,
+          "invalid_references": [],
+          "normalized_rows": [
+            {
+              "category": "Shopping",
+              "credit_minor": 0,
+              "date": "2026-06-01",
+              "debit_minor": 10000,
+              "description": "SyntheticShop",
+              "kind": "EXPENSE",
+              "source_unit_ids": [
+                "line-6"
+              ]
+            },
+            {
+              "category": "Other",
+              "credit_minor": 5000,
+              "date": "2026-06-02",
+              "debit_minor": 0,
+              "description": "SyntheticRefund",
+              "kind": "REFUND",
+              "source_unit_ids": [
+                "line-7"
+              ]
+            }
+          ],
+          "passed": false,
+          "row_mismatches": 1,
+          "schema_valid": true
+        },
+        "schema_valid": true,
+        "strict_v1_raw_passed": false,
+        "strict_v1_row_mismatches": 1
+      },
+      "raw_score": {
+        "abstained": false,
+        "incorrect_amounts": 0,
+        "invalid_references": [],
+        "normalized_rows": [
+          {
+            "category": "Shopping",
+            "credit_minor": 0,
+            "date": "2026-06-01",
+            "debit_minor": 10000,
+            "description": "SyntheticShop",
+            "kind": "EXPENSE",
+            "source_unit_ids": [
+              "line-6"
+            ]
+          },
+          {
+            "category": "Other",
+            "credit_minor": 5000,
+            "date": "2026-06-02",
+            "debit_minor": 0,
+            "description": "SyntheticRefund",
+            "kind": "REFUND",
+            "source_unit_ids": [
+              "line-7"
+            ]
+          }
+        ],
+        "passed": false,
+        "row_mismatches": 1,
+        "schema_valid": true
+      },
+      "record_id": "extract-bank-two-rows-live",
+      "task": "extract"
+    },
+    {
+      "admitted": false,
+      "calls": [
+        {
+          "config_sha256": "27628f5e7890c39d8c1bc8016eaeaf6723ac81830a15fa4eaec3dc983c7eb2f4",
+          "contents_sha256": "0d616a624b2d403b82df251b935440becd3d2d9ad3a484868862b0b874fbb01d",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "f2e76e565e13817ac7276e1969b2815fc68eadc52624e5e5f2a504928ffb3000",
+          "model_latency_seconds": null,
+          "prompt_sha256": "d1b4c63e3a877c9ae708b9de3656cd834622cedc24afc7b2e669254c9c4a1ff9",
+          "response": {
+            "complete": true,
+            "currency": "INR",
+            "currency_source_ids": [
+              "line-1"
+            ],
+            "rows": [
+              {
+                "category": "Shopping",
+                "credit_text": "0",
+                "date_text": "2026-06-01",
+                "debit_text": "760.00",
+                "description": "SyntheticClothing",
+                "kind": "EXPENSE",
+                "running_balance_text": "1240.00",
+                "source_ids": [
+                  "line-6"
+                ]
+              },
+              {
+                "category": "Other",
+                "credit_text": "200.00",
+                "date_text": "2026-06-05",
+                "debit_text": "0",
+                "description": "SyntheticRefund",
+                "kind": "REFUND",
+                "running_balance_text": "1440.00",
+                "source_ids": [
+                  "line-7"
+                ]
+              }
+            ],
+            "source_facts": {
+              "opening_balance": {
+                "literal_text": "Opening balance: 2000.00",
+                "source_ids": [
+                  "line-4"
+                ]
+              },
+              "ordering": {
+                "literal_text": "oldest first",
+                "source_ids": [
+                  "line-3"
+                ],
+                "value": "ASCENDING"
+              },
+              "transaction_count": {
+                "literal_text": "Transaction count: 2",
+                "source_ids": [
+                  "line-11"
+                ]
+              }
+            }
+          },
+          "response_model_version": null,
+          "response_sha256": "5e2dd9d14b7ff064961335613f2fb74bcf8a33c89a562544807b61aa98ba3e53",
+          "schema_sha256": "376e6b8b455d8b5021ece1e5451cd8a4700dbbb39633f15efdbeb3e5476e0267",
+          "tokens": null
+        }
+      ],
+      "case_id": "extract-partial-refund",
+      "error_type": "ValueError",
+      "failure_category": "EXTRACTION_REJECTED",
+      "input_sha256": "32dc10ffeccbe3b448b714e173bb071c8375621c1826e7557ca02f262984e132",
+      "label_sha256": "821df674568e4ebdafa16d57d92365eb82d04645e7878b68fe922654ad3ba3fa",
+      "passed": false,
+      "protocol_v2": {
+        "category_ambiguity_note": null,
+        "classification_conformance": {
+          "category": true,
+          "kind": true
+        },
+        "coverage": "FINITE_IMMUTABLE_SOURCE_ROW_CHECKS",
+        "current_runtime_admitted": false,
+        "factual_checks": {
+          "immutable_rows_exact": true,
+          "not_abstained": true,
+          "source_references_valid": true
+        },
+        "factual_checks_passed": true,
+        "original_recorded_admitted": false,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "incorrect_amounts": 0,
+          "invalid_references": [],
+          "normalized_rows": [
+            {
+              "category": "Shopping",
+              "credit_minor": 0,
+              "date": "2026-06-01",
+              "debit_minor": 76000,
+              "description": "SyntheticClothing",
+              "kind": "EXPENSE",
+              "source_unit_ids": [
+                "line-6"
+              ]
+            },
+            {
+              "category": "Other",
+              "credit_minor": 20000,
+              "date": "2026-06-05",
+              "debit_minor": 0,
+              "description": "SyntheticRefund",
+              "kind": "REFUND",
+              "source_unit_ids": [
+                "line-7"
+              ]
+            }
+          ],
+          "passed": true,
+          "row_mismatches": 0,
+          "schema_valid": true
+        },
+        "schema_valid": true,
+        "strict_v1_raw_passed": true,
+        "strict_v1_row_mismatches": 0
+      },
+      "raw_score": {
+        "abstained": false,
+        "incorrect_amounts": 0,
+        "invalid_references": [],
+        "normalized_rows": [
+          {
+            "category": "Shopping",
+            "credit_minor": 0,
+            "date": "2026-06-01",
+            "debit_minor": 76000,
+            "description": "SyntheticClothing",
+            "kind": "EXPENSE",
+            "source_unit_ids": [
+              "line-6"
+            ]
+          },
+          {
+            "category": "Other",
+            "credit_minor": 20000,
+            "date": "2026-06-05",
+            "debit_minor": 0,
+            "description": "SyntheticRefund",
+            "kind": "REFUND",
+            "source_unit_ids": [
+              "line-7"
+            ]
+          }
+        ],
+        "passed": true,
+        "row_mismatches": 0,
+        "schema_valid": true
+      },
+      "record_id": "extract-partial-refund-live",
+      "task": "extract"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "NONE",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "finding_id": null,
+        "next_screen": "statements",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "Your identified income in your reviewed statements is INR 32,000.00. Loan proceeds do not count as earnings because loan credits and other non-income inflows are excluded from income calculations.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "476818923e9554ba789562d75ab7676126a7f41f082c11de30c77b65b4d82452",
+          "contents_sha256": "ee96b3f0a7745f4c2260135ee20128ddd12c811247028eaabe2ac3daa02307c3",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "c5c13dafd98bb225486b290f22ce961530f4b66d5ffc6ff2aa05908c467138c7",
+          "model_latency_seconds": null,
+          "prompt_sha256": "dc151dd7d25bedc9806c0ea21634edab3ee9bd6fe07135242c3624471e0a1111",
+          "response": {
+            "evidence_ids": [
+              "statements:current"
+            ],
+            "finding_id": null,
+            "next_screen": "statements",
+            "reply": "Your identified income in your reviewed statements is INR 32,000.00. Loan proceeds do not count as earnings because loan credits and other non-income inflows are excluded from income calculations.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": null,
+          "response_sha256": "264ba542b000ecffc0051e044589fb40fded0e242989c46770af208850a7901b",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": null
+        }
+      ],
+      "case_id": "chat-borrowing-is-not-income",
+      "input_sha256": "1467e52cf0abb695b9a3d7d657212f3553952ea0b8249ad84118d1523654ea67",
+      "label_sha256": "3be20ea18f4c3b1a0698bb0b0b00bfe1006b0f7bdeb792817cf78ec2f6cb1069",
+      "passed": false,
+      "protocol_v2": {
+        "attribution_details": {
+          "identified_income_attributed_minor": [
+            3200000
+          ]
+        },
+        "coverage": "FINITE_DECLARED_FACT_CHECKS_NOT_FULL_PROSE_TRUTH",
+        "current_runtime_admitted": true,
+        "factual_checks": {
+          "BORROWING_NOT_EARNINGS": true,
+          "IDENTIFIED_INCOME_ATTRIBUTION": true,
+          "citations_valid": true,
+          "no_known_contradictory_claim": true,
+          "required_citations_present": true,
+          "source_backed_amounts": true
+        },
+        "factual_checks_passed": true,
+        "known_contradictions": [],
+        "original_recorded_admitted": true,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "abstention_correct": true,
+          "incorrect_amounts": 0,
+          "intent_correct": false,
+          "intent_fields": {
+            "checkup_action": true,
+            "next_screen": false,
+            "visual_request": true
+          },
+          "invalid_references": [],
+          "missing_literal_claim_checks": [
+            "identified income is INR 32,000\\.00",
+            "loan proceeds[^.]*not (?:income|earnings)"
+          ],
+          "missing_required_amounts_minor": [],
+          "missing_required_citations": [],
+          "passed": false,
+          "quoted_amounts_minor": [
+            3200000
+          ],
+          "schema_valid": true,
+          "unsupported_amounts_minor": [],
+          "unsupported_known_claims": []
+        },
+        "schema_valid": true,
+        "source_backed_amounts": [
+          {
+            "support_paths": [
+              "statement_summary.automatic_checkup.money_shield.compatible_under_assumptions_inr",
+              "statement_summary.automatic_checkup.money_shield.refunds_inr",
+              "statement_summary.automatic_checkup.money_shield.unallocated_inr",
+              "statement_summary.monthly[0].card_repayments_inr",
+              "statement_summary.monthly[0].loan_repayments_inr",
+              "statement_summary.monthly[0].money_out_inr",
+              "statement_summary.monthly[0].spending_inr",
+              "statement_summary.totals.card_repayments_inr",
+              "statement_summary.totals.classified_spending_inr",
+              "statement_summary.totals.loan_repayments_inr",
+              "statement_summary.totals.money_out_inr",
+              "statement_summary.totals.unclassified_inr"
+            ],
+            "value_minor": 0
+          },
+          {
+            "support_paths": [
+              "statement_summary.monthly[0].identified_income_inr",
+              "statement_summary.totals.identified_income_inr",
+              "statement_summary.totals.income_less_classified_outgoings_inr"
+            ],
+            "value_minor": 3200000
+          },
+          {
+            "support_paths": [
+              "statement_summary.monthly[0].money_in_inr",
+              "statement_summary.totals.money_in_inr"
+            ],
+            "value_minor": 8200000
+          }
+        ],
+        "strict_typed_field_conformance": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "strict_v1_abstention_conformance": true,
+        "strict_v1_literal_misses": [
+          "identified income is INR 32,000\\.00",
+          "loan proceeds[^.]*not (?:income|earnings)"
+        ],
+        "strict_v1_raw_passed": false,
+        "unsupported_amounts_minor": []
+      },
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 0,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "identified income is INR 32,000\\.00",
+          "loan proceeds[^.]*not (?:income|earnings)"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [
+          3200000
+        ],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-borrowing-is-not-income-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "SPENDING_CHANGE",
+        "evidence_ids": [
+          "statements:current"
+        ],
+        "finding_id": null,
+        "next_screen": "dashboard",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "Your reviewed statements show spending of INR 80.00 in April 2026 and INR 90.00 in June 2026 under Transport. May 2026 has no supplied rows, so missing data is not treated as zero.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "476818923e9554ba789562d75ab7676126a7f41f082c11de30c77b65b4d82452",
+          "contents_sha256": "823145b7ce06fd2194229bf29a347808d44365d616c567683463d93cf4fc2373",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "c5c13dafd98bb225486b290f22ce961530f4b66d5ffc6ff2aa05908c467138c7",
+          "model_latency_seconds": null,
+          "prompt_sha256": "dc151dd7d25bedc9806c0ea21634edab3ee9bd6fe07135242c3624471e0a1111",
+          "response": {
+            "checkup_action": "SPENDING_CHANGE",
+            "evidence_ids": [
+              "statements:current"
+            ],
+            "finding_id": null,
+            "next_screen": "dashboard",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "Your reviewed statements show spending of INR 80.00 in April 2026 and INR 90.00 in June 2026 under Transport. May 2026 has no supplied rows, so missing data is not treated as zero.",
+            "visual_request": "MONTHLY"
+          },
+          "response_model_version": null,
+          "response_sha256": "d72efcc59bafe90887eabcb0b1d3eea80385aa7f9f38e6471e257e125c146653",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": null
+        }
+      ],
+      "case_id": "chat-missing-month",
+      "input_sha256": "80435f14f4d8eefd0c72c4991debf4f867653bcf6aef73cbfa38b44794f9e7bd",
+      "label_sha256": "72886726dad2865a66256a99498e2322aa84200e156474f3d6fd6ea29425e4bd",
+      "passed": false,
+      "protocol_v2": {
+        "attribution_details": {
+          "month_amount_attribution": {
+            "2026-04": [
+              8000
+            ],
+            "2026-06": [
+              9000
+            ]
+          }
+        },
+        "coverage": "FINITE_DECLARED_FACT_CHECKS_NOT_FULL_PROSE_TRUTH",
+        "current_runtime_admitted": true,
+        "factual_checks": {
+          "MISSING_IS_NOT_ZERO": true,
+          "MISSING_PERIOD_DECLARED": true,
+          "MONTH_AMOUNT_ATTRIBUTION": true,
+          "citations_valid": true,
+          "no_known_contradictory_claim": true,
+          "required_citations_present": true,
+          "source_backed_amounts": true
+        },
+        "factual_checks_passed": true,
+        "known_contradictions": [],
+        "original_recorded_admitted": true,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "abstention_correct": true,
+          "incorrect_amounts": 2,
+          "intent_correct": false,
+          "intent_fields": {
+            "checkup_action": true,
+            "next_screen": true,
+            "visual_request": false
+          },
+          "invalid_references": [],
+          "missing_literal_claim_checks": [
+            "May is missing",
+            "not zero|cannot[^.]*zero|does not mean zero"
+          ],
+          "missing_required_amounts_minor": [],
+          "missing_required_citations": [],
+          "passed": false,
+          "quoted_amounts_minor": [
+            8000,
+            9000
+          ],
+          "schema_valid": true,
+          "unsupported_amounts_minor": [
+            8000,
+            9000
+          ],
+          "unsupported_known_claims": []
+        },
+        "schema_valid": true,
+        "source_backed_amounts": [
+          {
+            "support_paths": [
+              "statement_summary.totals.income_less_classified_outgoings_inr"
+            ],
+            "value_minor": -17000
+          },
+          {
+            "support_paths": [
+              "statement_summary.automatic_checkup.money_shield.compatible_under_assumptions_inr",
+              "statement_summary.automatic_checkup.money_shield.refunds_inr",
+              "statement_summary.automatic_checkup.money_shield.unallocated_inr",
+              "statement_summary.monthly[0].card_repayments_inr",
+              "statement_summary.monthly[0].identified_income_inr",
+              "statement_summary.monthly[0].loan_repayments_inr",
+              "statement_summary.monthly[0].money_in_inr",
+              "statement_summary.monthly[1].card_repayments_inr",
+              "statement_summary.monthly[1].identified_income_inr",
+              "statement_summary.monthly[1].loan_repayments_inr",
+              "statement_summary.monthly[1].money_in_inr",
+              "statement_summary.totals.card_repayments_inr",
+              "statement_summary.totals.identified_income_inr",
+              "statement_summary.totals.loan_repayments_inr",
+              "statement_summary.totals.money_in_inr",
+              "statement_summary.totals.unclassified_inr"
+            ],
+            "value_minor": 0
+          },
+          {
+            "support_paths": [
+              "statement_summary.monthly[0].money_out_inr",
+              "statement_summary.monthly[0].spending_inr"
+            ],
+            "value_minor": 8000
+          },
+          {
+            "support_paths": [
+              "statement_summary.monthly[1].money_out_inr",
+              "statement_summary.monthly[1].spending_inr"
+            ],
+            "value_minor": 9000
+          },
+          {
+            "support_paths": [
+              "statement_summary.categories[0].amount_inr",
+              "statement_summary.totals.classified_spending_inr",
+              "statement_summary.totals.money_out_inr"
+            ],
+            "value_minor": 17000
+          }
+        ],
+        "strict_typed_field_conformance": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": false
+        },
+        "strict_v1_abstention_conformance": true,
+        "strict_v1_literal_misses": [
+          "May is missing",
+          "not zero|cannot[^.]*zero|does not mean zero"
+        ],
+        "strict_v1_raw_passed": false,
+        "unsupported_amounts_minor": []
+      },
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 2,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": false
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "May is missing",
+          "not zero|cannot[^.]*zero|does not mean zero"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [
+          8000,
+          9000
+        ],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [
+          8000,
+          9000
+        ],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-missing-month-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "PREPARE_ENQUIRY",
+        "evidence_ids": [
+          "checkup:current"
+        ],
+        "finding_id": "finding_5556b1b929c16ba9e9553bd6",
+        "next_screen": "dashboard",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "I have prepared an unsent enquiry draft for the review candidate in your dashboard.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "476818923e9554ba789562d75ab7676126a7f41f082c11de30c77b65b4d82452",
+          "contents_sha256": "a522b37a1a412e1208da37b1ff0caa10a3af973613717a6b638debee160ca62b",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "c5c13dafd98bb225486b290f22ce961530f4b66d5ffc6ff2aa05908c467138c7",
+          "model_latency_seconds": null,
+          "prompt_sha256": "dc151dd7d25bedc9806c0ea21634edab3ee9bd6fe07135242c3624471e0a1111",
+          "response": {
+            "checkup_action": "PREPARE_ENQUIRY",
+            "evidence_ids": [
+              "checkup:current"
+            ],
+            "finding_id": "finding_5556b1b929c16ba9e9553bd6",
+            "next_screen": "dashboard",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "I have prepared an unsent enquiry draft for the review candidate in your dashboard.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": null,
+          "response_sha256": "458a12fc7195016c832d89cecad50de845a007e84aa6b842b4006d3888d37288",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": null
+        }
+      ],
+      "case_id": "chat-unsent-enquiry",
+      "input_sha256": "7e0c310fe30586ababf4f659703f14c7ef3181094cdd7d0760909670692f260f",
+      "label_sha256": "191f1f76a9444e9417a41f896ab9e836874bbb1e5b5f56265f010fafc8500ebf",
+      "passed": false,
+      "protocol_v2": {
+        "attribution_details": {},
+        "coverage": "FINITE_DECLARED_FACT_CHECKS_NOT_FULL_PROSE_TRUTH",
+        "current_runtime_admitted": true,
+        "factual_checks": {
+          "ENQUIRY_UNSENT": true,
+          "citations_valid": true,
+          "no_known_contradictory_claim": true,
+          "required_citations_present": true,
+          "source_backed_amounts": true
+        },
+        "factual_checks_passed": true,
+        "known_contradictions": [],
+        "original_recorded_admitted": true,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "abstention_correct": true,
+          "incorrect_amounts": 0,
+          "intent_correct": true,
+          "intent_fields": {
+            "checkup_action": true,
+            "next_screen": true,
+            "visual_request": true
+          },
+          "invalid_references": [],
+          "missing_literal_claim_checks": [
+            "does not establish fraud|not a fraud verdict|not confirmed fraud"
+          ],
+          "missing_required_amounts_minor": [],
+          "missing_required_citations": [],
+          "passed": false,
+          "quoted_amounts_minor": [],
+          "schema_valid": true,
+          "unsupported_amounts_minor": [],
+          "unsupported_known_claims": []
+        },
+        "schema_valid": true,
+        "source_backed_amounts": [
+          {
+            "support_paths": [
+              "statement_summary.totals.income_less_classified_outgoings_inr"
+            ],
+            "value_minor": -69400
+          },
+          {
+            "support_paths": [
+              "statement_summary.automatic_checkup.money_shield.compatible_under_assumptions_inr",
+              "statement_summary.automatic_checkup.money_shield.refunds_inr",
+              "statement_summary.automatic_checkup.money_shield.unallocated_inr",
+              "statement_summary.monthly[0].card_repayments_inr",
+              "statement_summary.monthly[0].identified_income_inr",
+              "statement_summary.monthly[0].loan_repayments_inr",
+              "statement_summary.monthly[0].money_in_inr",
+              "statement_summary.totals.card_repayments_inr",
+              "statement_summary.totals.identified_income_inr",
+              "statement_summary.totals.loan_repayments_inr",
+              "statement_summary.totals.money_in_inr",
+              "statement_summary.totals.unclassified_inr"
+            ],
+            "value_minor": 0
+          },
+          {
+            "support_paths": [
+              "statement_summary.automatic_checkup.findings[0].amount_inr"
+            ],
+            "value_minor": 34700
+          },
+          {
+            "support_paths": [
+              "statement_summary.categories[0].amount_inr",
+              "statement_summary.monthly[0].money_out_inr",
+              "statement_summary.monthly[0].spending_inr",
+              "statement_summary.totals.classified_spending_inr",
+              "statement_summary.totals.money_out_inr"
+            ],
+            "value_minor": 69400
+          }
+        ],
+        "strict_typed_field_conformance": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": true
+        },
+        "strict_v1_abstention_conformance": true,
+        "strict_v1_literal_misses": [
+          "does not establish fraud|not a fraud verdict|not confirmed fraud"
+        ],
+        "strict_v1_raw_passed": false,
+        "unsupported_amounts_minor": []
+      },
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": true,
+        "incorrect_amounts": 0,
+        "intent_correct": true,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": true,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "does not establish fraud|not a fraud verdict|not confirmed fraud"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-unsent-enquiry-live",
+      "task": "chat"
+    },
+    {
+      "admitted": true,
+      "admitted_answer": {
+        "checkup_action": "NONE",
+        "evidence_ids": [],
+        "finding_id": null,
+        "next_screen": "settings",
+        "plan": null,
+        "rehearsal_goal": null,
+        "reply": "I cannot view live bank balances or connect to real bank accounts. For statement totals, you can choose what I can use in 'Choose what I can use', or add a statement if none has been saved.",
+        "visual_request": "NONE"
+      },
+      "calls": [
+        {
+          "config_sha256": "476818923e9554ba789562d75ab7676126a7f41f082c11de30c77b65b4d82452",
+          "contents_sha256": "e346547cb4abbeb0140b82bfd92c76a2f33440a3474d478037ecfbe03d6292bc",
+          "model": "gemini-3.5-flash-lite",
+          "model_config_sha256": "c5c13dafd98bb225486b290f22ce961530f4b66d5ffc6ff2aa05908c467138c7",
+          "model_latency_seconds": null,
+          "prompt_sha256": "dc151dd7d25bedc9806c0ea21634edab3ee9bd6fe07135242c3624471e0a1111",
+          "response": {
+            "checkup_action": "NONE",
+            "evidence_ids": [],
+            "finding_id": null,
+            "next_screen": "settings",
+            "plan": null,
+            "rehearsal_goal": null,
+            "reply": "I cannot view live bank balances or connect to real bank accounts. For statement totals, you can choose what I can use in 'Choose what I can use', or add a statement if none has been saved.",
+            "visual_request": "NONE"
+          },
+          "response_model_version": null,
+          "response_sha256": "a87c01416e1b49f85887c7404f450da45cfcde77cada825d44d53da63e2306fe",
+          "schema_sha256": "abafa23606cd771b4d141ef377ff12af6892052be817766ec7a473e0b9ffaf44",
+          "tokens": null
+        }
+      ],
+      "case_id": "chat-unknown-balance",
+      "input_sha256": "54705db7b5dec51e4f7dc35e1a9c3fc91471e87421899405a98676e6dbd0bda4",
+      "label_sha256": "373841e1a57ce2d7c1379b44cc911972f9b16feff9198048e305f9eea703cf71",
+      "passed": false,
+      "protocol_v2": {
+        "attribution_details": {},
+        "coverage": "FINITE_DECLARED_FACT_CHECKS_NOT_FULL_PROSE_TRUTH",
+        "current_runtime_admitted": true,
+        "factual_checks": {
+          "LIVE_BALANCE_UNAVAILABLE": true,
+          "citations_valid": true,
+          "no_known_contradictory_claim": true,
+          "required_citations_present": true,
+          "source_backed_amounts": true
+        },
+        "factual_checks_passed": true,
+        "known_contradictions": [],
+        "original_recorded_admitted": true,
+        "original_recorded_v1_passed": false,
+        "original_recorded_v1_raw_score": {
+          "abstained": false,
+          "abstention_correct": false,
+          "incorrect_amounts": 0,
+          "intent_correct": false,
+          "intent_fields": {
+            "checkup_action": true,
+            "next_screen": false,
+            "visual_request": true
+          },
+          "invalid_references": [],
+          "missing_literal_claim_checks": [
+            "cannot (?:determine|know|see)[^.]*balance|balance[^.]*not (?:available|established|provided)"
+          ],
+          "missing_required_amounts_minor": [],
+          "missing_required_citations": [],
+          "passed": false,
+          "quoted_amounts_minor": [],
+          "schema_valid": true,
+          "unsupported_amounts_minor": [],
+          "unsupported_known_claims": []
+        },
+        "schema_valid": true,
+        "source_backed_amounts": [],
+        "strict_typed_field_conformance": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "strict_v1_abstention_conformance": false,
+        "strict_v1_literal_misses": [
+          "cannot (?:determine|know|see)[^.]*balance|balance[^.]*not (?:available|established|provided)"
+        ],
+        "strict_v1_raw_passed": false,
+        "unsupported_amounts_minor": []
+      },
+      "raw_score": {
+        "abstained": false,
+        "abstention_correct": false,
+        "incorrect_amounts": 0,
+        "intent_correct": false,
+        "intent_fields": {
+          "checkup_action": true,
+          "next_screen": false,
+          "visual_request": true
+        },
+        "invalid_references": [],
+        "missing_literal_claim_checks": [
+          "cannot (?:determine|know|see)[^.]*balance|balance[^.]*not (?:available|established|provided)"
+        ],
+        "missing_required_amounts_minor": [],
+        "missing_required_citations": [],
+        "passed": false,
+        "quoted_amounts_minor": [],
+        "schema_valid": true,
+        "unsupported_amounts_minor": [],
+        "unsupported_known_claims": []
+      },
+      "record_id": "chat-unknown-balance-live",
+      "task": "chat"
+    }
+  ],
+  "schema_version": 1,
+  "score_definitions": {
+    "abstentions": "Extraction complete=false or a pre-authored chat abstention phrase. Schema/provider failures are separate rejected/unresolved outputs.",
+    "hash_encoding": "SHA256 of UTF-8 compact sorted JSON for structured values; raw file bytes for fixture/source files; raw UTF-8 strings for contents/response text.",
+    "incorrect_amounts": "Extraction: row positions with a wrong debit/credit pair, plus parse errors. Chat: distinct currency-marked values outside that case's pre-authored allowed amounts. Task counts have different units and are also shown separately.",
+    "invalid_references": "Unknown extraction source-unit IDs or chat evidence IDs outside the pre-authored case allowlist.",
+    "missing_literal_claim_checks": "Number of pre-authored required factual phrase patterns absent; paraphrases may be missed.",
+    "passed": "Production admission AND static raw expectations, plus exact normalized extraction rows/source checks where applicable.",
+    "unsupported_known_claims": "Number of matching pre-authored forbidden factual/action phrase patterns; not all unsupported prose."
+  },
+  "scorer_controls": {
+    "declared": 0,
+    "matched": 0,
+    "mismatched_record_ids": []
+  },
+  "skipped_output_ids": [],
+  "source_sha256": {
+    "src/carapace_ai/friday_chat.py": "1319e35b1f54c0c76d4b7dc90316c71c3f3c06f154a21bf4ff734734e51be6ab",
+    "src/carapace_ai/friday_statements.py": "44431512ccaa3e23ada4b2faa0a148df8b4fcdce4d0c3f088dd5e9405cd30e47",
+    "src/carapace_api/friday_cashflow.py": "dead8ccdc9db346ffdd4871b86831228aba788bf03b33958b8390942a10a9911",
+    "src/carapace_core/friday_checkup.py": "3133235ddbc66cb09f43a5b317a31361c1029e273624abf150b9264a52b290d8",
+    "src/carapace_core/friday_narration.py": "2fbdbf15d80a93a881db697895a8933f5486562f47dcf72003af8228a835ca3c",
+    "src/carapace_core/friday_portfolio.py": "99ecb142ca1ec379b110c7739e04b6fdc8d6516b60e87d6b553ed842d39bc240",
+    "src/carapace_core/friday_refund_shield.py": "668348df0bce56c366cac5a5ebd9f51ce91146fb5a9dc4724e26a53376938e43",
+    "src/carapace_core/friday_statement_reconciliation.py": "b51e2c1e613ac3655d1b099253d7951366e4e1d24f20e2a7a64c0e9e95ec9525",
+    "tools/evaluate_friday_statement_ai.py": "e2677597f2e2fc46dc4a37ab473f7e79fcd5fc760693b72b254abb26f18a00e1"
+  },
+  "status": "OFFLINE_RECORDED_MODEL_RESPONSE_REPLAY",
+  "summary": {
+    "abstentions": 0,
+    "admitted": 4,
+    "incorrect_amounts": 2,
+    "invalid_references": 0,
+    "missing_literal_claim_checks": 6,
+    "outputs": 6,
+    "passed": 0,
+    "rejected": 2,
+    "schema_errors": 0,
+    "scored_schema_valid_outputs": 6,
+    "unsupported_known_claims": 0,
+    "wrong_intents": 3
+  },
+  "synthetic": true,
+  "token_coverage_calls": 0,
+  "total_sdk_invocations": 6,
+  "total_tokens_reported": null,
+  "user_records": 0
+}

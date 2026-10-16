@@ -36,6 +36,8 @@ jobs:
         run: python -m carapace_core.friday_evaluation > friday-safety-evaluation.json
       - name: Record labelled synthetic checkup baseline (tuning only, no AI calls)
         run: python tools/evaluate_statement_checkup.py --output friday-statement-evaluation.json
+      - name: Check AI scorer controls (authored synthetic answers, no AI calls)
+        run: python tools/evaluate_friday_statement_ai.py --protocol v2 --output friday-statement-ai-controls.json
       - name: Preserve proposal evaluation evidence
         uses: actions/upload-artifact@v4
         with:
@@ -43,6 +45,7 @@ jobs:
           path: |
             friday-safety-evaluation.json
             friday-statement-evaluation.json
+            friday-statement-ai-controls.json
       - name: Verify valid reference payment
         run: carapace verify examples/payment-promise.json examples/execution-valid.json
 
@@ -93,6 +96,8 @@ jobs:
   bank-of-anthos-integration:
     # Historical engineering fixture, never a dependency of the customer app.
     if: github.event_name == 'workflow_dispatch' && inputs.run_legacy_anthos
+    env:
+      FRIDAY_LEGACY_DEMO_ENABLED: "true"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -24,6 +24,7 @@ services:
     image: carapace-core:local
     environment:
       CARAPACE_ENV: development
+      FRIDAY_LEGACY_DEMO_ENABLED: ${FRIDAY_LEGACY_DEMO_ENABLED:-false}
       CARAPACE_DB_PATH: /data/carapace.db
       CARAPACE_TENANT_KEYS_JSON: '{"demo-bank":"local-demo-key-change-me"}'
       CARAPACE_AI_PROVIDER: ${CARAPACE_AI_PROVIDER:-local}
@@ -114,6 +115,7 @@ services:
     entrypoint: ["carapace-anthos-web"]
     environment:
       CARAPACE_DEMO_ENABLED: "true"
+      FRIDAY_LEGACY_DEMO_ENABLED: ${FRIDAY_LEGACY_DEMO_ENABLED:-false}
       CARAPACE_API_BASE_URL: http://api:8080
       CARAPACE_TENANT: demo-bank
       CARAPACE_API_KEY: local-demo-key-change-me

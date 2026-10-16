@@ -20,6 +20,9 @@ from pathlib import Path
 from starlette.concurrency import run_in_threadpool
 from carapace_core.friday_access import FRIDAY_ROUTES, validate_enrollment_secret, visitor_tenant, visitor_key
 from carapace_core.friday_trace import RequestTraceMiddleware, get_request_id, new_request_id
+from carapace_core.friday_surface import (
+    LEGACY_DEMO_ENV, parse_legacy_demo_flag, permitted_consumer_friday_route, surface_html,
+)
 
 MAX_BODY = 8 * 1024 * 1024
 ROUTES = FRIDAY_ROUTES
@@ -42,8 +45,13 @@ class WebSettings:
     users: dict[str, str]
     tenant_keys: dict[str, str]
     public_demo_secret: str | None = None
+    # Direct construction remains useful for existing local/demo fixtures.
+    # The deployed from_env entrypoint always sets this flag, defaulting off.
+    legacy_demo_enabled: bool = True
 
     def __post_init__(self):
+        if type(self.legacy_demo_enabled) is not bool:
+            raise ValueError("legacy_demo_enabled must be a boolean")
         origin(self.public_origin)
         if not urlsplit(origin(self.backend_url)).hostname.endswith(".run.app"):
             raise ValueError("Backend must be the private Cloud Run origin")
@@ -65,7 +73,8 @@ class WebSettings:
                    os.environ["FRIDAY_WEB_IAP_AUDIENCE"],
                    json.loads(os.environ["FRIDAY_WEB_USERS_JSON"]),
                    json.loads(os.environ["CARAPACE_TENANT_KEYS_JSON"]),
-                   os.getenv("FRIDAY_PUBLIC_DEMO_SECRET"))
+                   os.getenv("FRIDAY_PUBLIC_DEMO_SECRET"),
+                   parse_legacy_demo_flag(os.getenv(LEGACY_DEMO_ENV)))
 
     def key_for(self, tenant: str) -> str:
         if tenant in self.tenant_keys:
@@ -166,7 +175,9 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
             'Your private statement review. No bank connection or payment permission needed. '
             '<a href="/about">Access, privacy &amp; demo limits</a></div>'
             '<main class="shell layout">')
+    html = surface_html(html, legacy_demo_enabled=settings.legacy_demo_enabled)
     app = FastAPI(title="Financial Friday private pilot", docs_url=None, redoc_url=None, openapi_url=None)
+    app.state.legacy_demo_enabled = settings.legacy_demo_enabled
 
     @app.middleware("http")
     async def authenticate(request: Request, call_next):
@@ -198,7 +209,9 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
 
     @app.get("/health")
     async def health():
-        return {"status": "ok", "service": "friday-cloud-web", "scope": "GOOGLE_SIGNIN_ARTIFICIAL_MONEY_DEMO" if settings.public_demo_secret else "INVITED_ARTIFICIAL_MONEY_PILOT"}
+        scope = ("GOOGLE_SIGNIN_ARTIFICIAL_MONEY_DEMO" if settings.public_demo_secret else "INVITED_ARTIFICIAL_MONEY_PILOT") if settings.legacy_demo_enabled else (
+            "GOOGLE_SIGNIN_STATEMENT_GUIDANCE" if settings.public_demo_secret else "INVITED_STATEMENT_GUIDANCE")
+        return {"status": "ok", "service": "friday-cloud-web", "scope": scope}
 
     @app.get("/")
     async def home():
@@ -215,12 +228,16 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
 
     @app.get("/about")
     async def about():
+        if not settings.legacy_demo_enabled:
+            return HTMLResponse("<h1>Financial Friday: access and privacy</h1><p>Google sign-in identifies your private workspace. Friday helps you review statements and understand their recorded spending. No bank, Gmail, Drive or phone-message access is granted, and this service cannot submit payments.</p><p>Start with supported redacted INR statements or an artificial example. PDF reading uses Google AI; scanned PDFs also need Document AI. Raw uploads are discarded after processing. Normalized history is saved only after you review and confirm. Sharing derived totals with chat or voice requires separate permission.</p><p>Review source coverage, reconciliation checks and labels before relying on an answer. These records are not a live bank balance, a complete financial profile or proof that a charge is fraudulent. Guides and drafts do not send enquiries or move money.</p><p>Limits: PDF 4 MB / six pages / 200 rows; CSV 1 MB / 500 rows; ten imports / 2,000 saved rows. Remove names, addresses and identifiers first. Never enter passwords, PINs, OTPs or CVVs. Privacy cleanup clears saved private inputs; existing payment journals are retained for recovery safety.</p><p>Visitor usage limits apply to requests and may count failed processing. Optional legacy artificial-payment demonstrations require a separately enabled service.</p><p><a href='https://github.com/Santxsh27/financial-friday/blob/main/USER_GUIDE.md'>Detailed guide (repository access required)</a></p><a href='/'>Return to Friday</a>")
         return HTMLResponse("<h1>Financial Friday: access and privacy</h1><p>Google sign-in identifies your private workspace; Account shows the signed-in email. Google may reuse an existing session. No bank, Gmail, Drive or phone-message access is granted.</p><p>Start with supported redacted INR statements or an artificial example. PDF reading uses Google AI; scanned PDFs also need Document AI. Raw uploads are discarded after processing. Only normalized transaction history is saved when you explicitly review and confirm. Statement coaching shares aggregates only with separate permission. Labels and completeness can be wrong; no guaranteed savings, fraud verdict, bank balance or official credit score is implied.</p><p>Limits: PDF 4 MB / six pages / 200 rows; CSV 1 MB / 500 rows; ten imports / 2,000 saved rows. Remove names, addresses and identifiers first. Never enter passwords, PINs, OTPs or CVVs. Privacy cleanup clears statement history and other private inputs; artificial payment journals remain for replay safety.</p><p>Visitor limits: 20 action requests per account per UTC day, 200 across visitors, plus burst/read limits. Failed requests may consume allowance. These limits do not guarantee zero cloud cost. No continuous monitoring or native voice. The optional payment demo uses artificial funds only, with automatic permission off for new visitors.</p><p><a href='https://github.com/Santxsh27/financial-friday/blob/main/USER_GUIDE.md'>Detailed guide (repository access required)</a></p><a href='/'>Return to Friday</a>")
 
     @app.api_route("/api/friday/{path:path}", methods=["GET", "PUT", "POST", "DELETE", "PATCH"])
     async def proxy(path: str, request: Request):
         if not re.fullmatch(ROUTES.get(request.method, r"(?!)"), path):
             raise HTTPException(404, "Unsupported pilot action")
+        if not settings.legacy_demo_enabled and not permitted_consumer_friday_route(request.method, "/v1/friday/" + path):
+            raise HTTPException(404, "Unsupported Friday action")
         query = ""
         if request.query_params:
             if path not in {"documents", "reviews/documents"} or set(request.query_params) != {"filename"} or len(request.query_params.getlist("filename")) != 1:

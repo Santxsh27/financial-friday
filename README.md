@@ -16,8 +16,8 @@ Underneath is bounded **integer min-cost maximum flow**, with a separate capacit
 conservation checker, residual optimality checks and per-purchase lower/upper
 bounds over all maximum compatible allocations. This is established mathematics
 applied to evidence ambiguity, not a claimed new theorem. Compatibility uses
-literal merchant text, account nickname/type and a 90-day window; even a unique
-allocation is **not bank-confirmed**. Gemini on Vertex AI selects the visual or
+literal merchant text, account nickname/type and a 90-day window; even fixed
+purchase totals are **not bank-confirmed** or proof of unique refund links. Gemini on Vertex AI selects the visual or
 enquiry using separately consented derived totals. The server, not model prose,
 owns completion receipts for these actions, preventing a generated response from
 announcing that it sent the enquiry or recovered funds.

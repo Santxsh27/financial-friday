@@ -46,8 +46,10 @@ all source transactions stay accessible. Local processing adds zero model calls.
 
 **Bounds are not independent money pots.** If a single ₹1,000 refund fits two
 ₹1,000 purchases, each may have a ₹0–₹1,000 range, but both cannot receive ₹1,000
-simultaneously. The UI states this explicitly. Unique allocation is conditional
-on the graph assumptions. The 90-day window is a product bound, not a legal rule.
+simultaneously. The UI states this explicitly. Fixed purchase totals do not imply
+unique refund-to-purchase edges, so Friday does not return selected links. All
+bounds are conditional on graph assumptions. The 90-day window is a product bound,
+not a legal rule.
 
 ## Google AI and the authority boundary
 

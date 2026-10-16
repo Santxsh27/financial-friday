@@ -1,7 +1,7 @@
 """Bounded, ambiguity-aware purchase/refund graph. No bank or legal authority.
 
-Exact name/date/account compatibility is only an assumption. Even a unique
-allocation is NOT bank-confirmed linkage or evidence that money is owed.
+Exact name/date/account compatibility is only an assumption. Even fixed purchase
+totals are NOT bank-confirmed linkage or evidence that money is owed.
 Integer min-cost flow gives tight per-purchase bounds among maximum compatible
 allocations; residual potentials certify optimality without an LLM doing maths.
 """
@@ -148,7 +148,8 @@ def build_refund_shield(rows):
                     'refund_max_minor':high[j],'not_matched_min_minor':p['debit_minor']-high[j],
                     'not_matched_max_minor':p['debit_minor']-low[j]})
             trail['compatible_minor']=total
-            trail['status']='AMBIGUOUS' if any(p['refund_min_minor']!=p['refund_max_minor'] for p in trail['purchases']) else 'UNIQUE_UNDER_ASSUMPTIONS'
+            # Fixed purchase totals do not imply unique refund-to-purchase edges.
+            trail['status']='AMBIGUOUS' if any(p['refund_min_minor']!=p['refund_max_minor'] for p in trail['purchases']) else 'FIXED_TOTALS_UNDER_ASSUMPTIONS'
             trail['certificate']={'integer_amounts':True,'capacity_conservation':True,
                 'maximum_flow_checked':True,'lower_upper_bounds_checked':True,'residual_optimality_checked':True}
         trails.append(trail)

@@ -108,6 +108,14 @@ class RefundFlowTests(unittest.TestCase):
         data[1]['date']='2026-12-02'
         self.assertEqual(build_refund_shield(data)['compatible_minor'],100)  # exactly 90 days
 
+    def test_fixed_purchase_totals_are_not_claimed_as_unique_edge_links(self):
+        data=rows([('01','Purchase Shop',100,0),('02','Purchase Shop',100,0),
+                   ('03','Refund Shop',0,100),('04','Refund Shop',0,100)])
+        t=build_refund_shield(data)['trails'][0]
+        self.assertEqual(t['status'],'FIXED_TOTALS_UNDER_ASSUMPTIONS')
+        self.assertEqual([(p['refund_min_minor'],p['refund_max_minor']) for p in t['purchases']],[(100,100)]*2)
+        self.assertNotIn('selected_links',t)
+
     def test_overlap_and_capacity_limit_hold_entire_group_without_deleting_rows(self):
         data=rows([('01','Purchase Shop',100,0),('01','Purchase Shop',100,0),('02','Refund Shop',0,100)])
         before=deepcopy(data);shield=build_refund_shield(data)

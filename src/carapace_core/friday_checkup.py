@@ -138,12 +138,12 @@ def build_checkup(statements, summary, reviewed=()):
             add('REFUND_AMBIGUITY','A refund fits more than one purchase',
                 'Friday tested alternative allocations. Several purchase/refund explanations fit the same records; no purchase is declared refunded. Open Money shield to see the bounds.',
                 trail['evidence'],trail['refund_total_minor'],1,trail_id=trail['trail_id'])
-        elif status=='UNIQUE_UNDER_ASSUMPTIONS' and trail['compatible_minor']<trail['purchase_total_minor']:
+        elif status=='FIXED_TOTALS_UNDER_ASSUMPTIONS' and trail['compatible_minor']<trail['purchase_total_minor']:
             add('REFUND_PARTIAL_TRAIL','Only part of this purchase trail has a matching return',
                 'A partial matching amount appears under the name/date/account assumptions. The remaining purchase amount is not an amount owed; the bank or merchant must confirm the relationship and any expected refund.',
                 trail['evidence'],trail['purchase_total_minor']-trail['compatible_minor'],2,trail_id=trail['trail_id'])
         elif trail['certificate'] is None:
-            add('REFUND_LINK_WITHHELD','This refund needs its original purchase',
+            add('REFUND_LINK_WITHHELD','This refund trail needs confirmation',
                 'Friday withheld a purchase link because history, merchant detail, non-overlapping rows or graph capacity was insufficient. This is not fraud or a missing-refund verdict. No row was removed.',
                 trail['evidence'],trail['refund_total_minor'],2,trail_id=trail['trail_id'])
 

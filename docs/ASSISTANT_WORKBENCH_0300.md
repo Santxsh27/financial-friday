@@ -22,7 +22,7 @@ get worksheets, not complaints. Refund bounds remain conditional alternatives,
 not a recovered sum. Cleanup and later evidence invalidate earlier work.
 
 The optional voice briefing sends only a server-composed aggregate script (at
-most 70 words) through the existing Vertex client to Gemini 2.5 Flash TTS. Strict
+most 50 words) through the existing Vertex client to Gemini 2.5 Flash TTS. Strict
 consent, tenant identity, existing quotas, current revision/generation, post-call
 freshness and completed PCM checks are required. WAV output is generated in
 memory, bounded to 30 seconds, never persisted or auto-played. No microphone or

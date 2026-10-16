@@ -45,7 +45,7 @@ autonomous resolution or model training.
 
 An in-app guide reacts only to actual local workflow events. It is pauseable and
 does not poll or monitor a financial account. The optional briefing route sends
-only server-composed aggregate text (at most 70 words) to `gemini-2.5-flash-tts`
+only server-composed aggregate text (at most 50 words) to `gemini-2.5-flash-tts`
 through the configured Vertex client. Explicit per-action consent, current
 revision/generation and source recheck after generation are mandatory. Only
 completed mono 16-bit 24 kHz PCM, bounded to 30 seconds, is wrapped as WAV in memory.

@@ -87,8 +87,8 @@ class FridaySpeechTests(unittest.TestCase):
         self.assertFalse(body['money_moved'])
         self.assertEqual(body['source_revision'], 7)
         self.assertEqual(body['workspace_generation'], 'test-generation')
-        self.assertLessEqual(len(body['spoken_text'].split()), 70)
-        self.assertIn('45,000.00 rupees', body['spoken_text'])
+        self.assertLessEqual(len(body['spoken_text'].split()), 50)
+        self.assertNotIn('45,000.00 rupees', body['spoken_text'])
         self.assertIn('1,250.50 rupees', body['spoken_text'])
         self.assertIn('not a live balance or confirmed fraud', body['spoken_text'])
         call = self.base.model.models.generate_content.call_args.kwargs
@@ -98,6 +98,8 @@ class FridaySpeechTests(unittest.TestCase):
             self.assertNotIn(private, call['contents'])
         self.assertFalse(call['config'].tools)
         self.assertTrue(call['config'].automatic_function_calling.disable)
+        self.assertEqual(call['config'].http_options.timeout, 60_000)
+        self.assertEqual(call['config'].http_options.retry_options.attempts, 1)
         self.assertEqual(call['config'].response_modalities, ['AUDIO'])
         self.assertEqual(self.base.model.models.generate_content.call_count, 1)
         self.assertEqual(body['mime'], 'audio/wav')
@@ -173,7 +175,9 @@ class FridaySpeechTests(unittest.TestCase):
             result = self.audio()
         self.assertEqual(result.status_code, 503)
         self.assertNotIn('PRIVATE', result.text)
-        warning.assert_not_called(); exception.assert_not_called()
+        warning.assert_called_once_with('friday_speech_provider_rejected type=%s status=%s','RuntimeError','unknown')
+        self.assertNotIn('PRIVATE',repr(warning.call_args))
+        exception.assert_not_called()
 
     def test_truncated_or_malformed_responses_never_return_audio(self):
         truncated = speech_response(); truncated.candidates[0].finish_reason = 'MAX_TOKENS'

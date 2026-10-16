@@ -5,6 +5,7 @@ model-authored financial conclusions enter this path.
 """
 import base64
 import io
+import logging
 import wave
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -45,17 +46,16 @@ def spoken_brief(view):
     if not _count(summary['statement_count']) or not _count(summary['transaction_count']):
         raise ValueError('Include a saved statement before requesting a briefing')
     totals, checkup = summary['totals'], view['checkup']
+    # Reject a damaged aggregate snapshot even for totals omitted from speech.
+    for key in ('identified_income_minor','classified_spending_minor','loan_repayments_minor'):
+        _rupees(totals[key])
     text = (
-        f"From your included, user-reviewed statements, I counted {_count(summary['transaction_count'])} "
-        f"transactions across {_count(summary['statement_count'])} statements. "
-        f"Identified income totals {_rupees(totals['identified_income_minor'])} rupees; "
-        f"classified spending totals {_rupees(totals['classified_spending_minor'])} rupees, "
-        f"and recorded loan repayments total {_rupees(totals['loan_repayments_minor'])} rupees. "
-        f"There are {_count(checkup['open_count'])} checkup review candidates and "
-        f"{_count(len(checkup['recurring']))} regular-payment patterns. "
-        "These are statement totals, not a live balance or confirmed fraud. No money was moved."
+        f"{_count(summary['transaction_count'])} supplied entries checked. "
+        f"Classified spending: {_rupees(totals['classified_spending_minor'])} rupees. "
+        f"{_count(checkup['open_count'])} candidates need review. "
+        "Statement totals, not a live balance or confirmed fraud. No money was moved."
     )
-    if len(text.split()) > 70:
+    if len(text.split()) > 50:
         raise ValueError('Statement briefing exceeds its word limit')
     return text
 
@@ -117,6 +117,8 @@ def briefing_audio(planner, portfolio, tenant, request: BriefingAudioRequest):
             model=MODEL,
             contents='Read the following exactly, calmly and clearly, without additions: ' + text,
             config=types.GenerateContentConfig(
+                http_options=types.HttpOptions(timeout=60_000,
+                    retry_options=types.HttpRetryOptions(attempts=1)),
                 response_modalities=['AUDIO'], max_output_tokens=1024, tools=[],
                 automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
                 speech_config=types.SpeechConfig(language_code='en-IN',
@@ -124,9 +126,13 @@ def briefing_audio(planner, portfolio, tenant, request: BriefingAudioRequest):
                         prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name='Kore')))),
         )
         pcm = _pcm(response)
-    except SpeechUnavailable:
+    except SpeechUnavailable as error:
+        logging.getLogger(__name__).warning('friday_speech_output_rejected reason=%s', str(error))
         raise
-    except Exception:
+    except Exception as error:
+        code=getattr(error,'code',None)
+        logging.getLogger(__name__).warning('friday_speech_provider_rejected type=%s status=%s',
+            type(error).__name__, code if type(code) is int else 'unknown')
         raise SpeechUnavailable('Google voice is currently unavailable') from None
     current = portfolio.view(tenant)
     if _source(current) != source or spoken_brief(current) != text:

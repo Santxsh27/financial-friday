@@ -68,7 +68,7 @@ def main():
             'workspace_generation':after['workspace_generation'],'confirm_send_derived_totals_to_google':True})
         assert audio['mode']=='VERTEX_AI' and audio['model']=='gemini-2.5-flash-tts' and audio['model_calls']==1
         assert audio['money_moved'] is False and audio['source_revision']==after['revision']
-        assert '90,000.00 rupees' in audio['spoken_text'] and '45,648.00 rupees' in audio['spoken_text']
+        assert '45,648.00 rupees' in audio['spoken_text']
         assert audio['mime']=='audio/wav'
         with wave.open(io.BytesIO(base64.b64decode(audio['audio_base64'])),'rb') as wav:
             assert (wav.getnchannels(),wav.getsampwidth(),wav.getframerate())==(1,2,24000)

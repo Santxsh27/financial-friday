@@ -26,6 +26,7 @@
     "mandate_read_only": true,
     "literal_narration_engine": "NARRATION_1",
     "checkup_engine": "CHECKUP_2",
+    "finding_ids_versioned_prior_candidates_may_resurface": true,
     "labelled_checkup_scores_unchanged": true,
     "signed_csv_tamper_rejection_replay_and_mismatch_block": true,
     "final_candidate_live_vertex_pdf": true,

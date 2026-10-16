@@ -43,6 +43,10 @@ match. Original evidence and every row remain unchanged. Findings report their
 match basis and uncertainty; a reference token is not a verified bank identity.
 Recurring/increase/outlier thresholds and the refund algorithm are unchanged.
 
+Finding IDs include the checkup engine version. Previously acknowledged candidates
+can reappear for review after this upgrade; the saved acknowledgement history
+and original transaction rows are retained, not silently rewritten.
+
 Existing description minimisation may already mask numeric references. An
 explicit masked reference can support a weak literal-payee recurring candidate,
 but cannot prove two entries share a reliable transaction reference. Identical

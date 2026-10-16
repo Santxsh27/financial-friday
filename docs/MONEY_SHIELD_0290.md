@@ -127,8 +127,19 @@ The model can route to the visual and ask the server to prepare the artifact.
   Full-page JavaScript syntax checks are included in the native suite.
 - Phone check at 390 × 844: content width 390; tabs scroll internally. Light/dark
   themes and exact amounts were inspected; temporary viewport was reset afterward.
-- Live cloud acceptance results will be recorded here after checks; deployment
-  is not inferred from a passing unit test or Git commit.
+- Final private cloud acceptance passed using real Vertex AI and Firestore:
+  Money Shield selection, source-filled enquiry, server-owned receipts, unchanged
+  source transactions/payment rules, and verified synthetic cleanup. Two final
+  model calls used `gemini-3.5-flash-lite`; earlier diagnostics/failure are separate.
+- API `financial-friday-api-shield0290c` and web `financial-friday-web-shield0290`
+  were activated at 100% traffic after acceptance. Anonymous API access returned
+  403; Google login, IAM, OAuth and recovery-worker target remain unchanged.
+  Immutable images, builds and differing API/web source commits are in
+  [CURRENT_RELEASE.json](CURRENT_RELEASE.json).
+- Canonical Google-login website: a general refund-versus-salary question received
+  a real Vertex reply; all four personal-context switches were confirmed off.
+  The chat busy state cleared and no browser console error was observed. This
+  was one additional generic model call, not a check of the owner's statements.
 
 The first staged enquiry check returned a fail-closed 503 after the visual
 selection passed. Its disposable workspace was cleaned and no action occurred.

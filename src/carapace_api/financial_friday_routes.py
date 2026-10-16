@@ -353,6 +353,9 @@ def register_financial_friday_routes(application, service, authenticate):
         try:
             return await run_in_threadpool(reply_to_user,service,review,bank,tenant.tenant_id,payload)
         except Exception as error:
+            import logging
+            from carapace_ai.friday_chat import chat_failure_category
+            logging.getLogger('friday.chat').warning('friday_chat_rejected category=%s',chat_failure_category(error))
             raise HTTPException(503,"Friday chat is unavailable. No payment or other action was performed.") from error
 
     class ReviewTextRequest(BaseModel):

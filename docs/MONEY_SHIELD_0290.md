@@ -73,6 +73,12 @@ shared/saved context it reports that no personal check was completed. This is a
 specific authority firewall, not a guarantee that every free-form answer is true.
 Gemini has no arbitrary code, SQL, bank, browsing or sending tools in this path.
 
+The same server-selected citation allowlist is included explicitly in the model
+request and used by the validator. A finding ID is a selection field, not a
+citation or new authority. Rejections log only a fixed reason code (schema,
+unsupported amount, unavailable reference, stale context or provider/unexpected),
+never user records, model replies, credentials or provider exception messages.
+
 No statement weights are trained. No local WebGPU redactor, legal filing service,
 autonomous cancellation, fraud classifier or payment-blocking bank integration
 was added. Existing Google login is not consent to access a bank, Gmail or SMS.
@@ -104,8 +110,8 @@ The model can route to the visual and ask the server to prepare the artifact.
 
 ## Verification and release evidence
 
-- Native suite: 610 tests run, 609 passed, one optional skip.
-- New module: 11 test methods, including an independent exhaustive oracle over
+- Native suite: 613 tests run, 612 passed, one optional skip.
+- New module: 14 test methods, including an independent exhaustive oracle over
   80 fixed-seed small integer graphs. All feasible edge allocations are enumerated
   separately, then compared with maximum total and every purchase's lower/upper
   optimum. This tests mathematical correctness, not financial truth.
@@ -116,12 +122,22 @@ The model can route to the visual and ask the server to prepare the artifact.
   sandbox state. Existing tenant/stale revision checks remain covered.
 - Local browser acceptance used only a separate artificial workspace: upload,
   review/save, automatic shield, source table and enquiry assembly.
-- Container suite: 610 run, 586 passed, 24 optional skips (no user volumes mounted).
-- Tooling suite: 24 passed. Follow-up graph/checkup/full-UI syntax checks: 33 passed.
+- Container suite: 613 run, 589 passed, 24 optional skips (no user volumes mounted).
+- Tooling suite: 24 passed. Targeted graph/checkup/chat API checks: 41 passed.
+  Full-page JavaScript syntax checks are included in the native suite.
 - Phone check at 390 × 844: content width 390; tabs scroll internally. Light/dark
   themes and exact amounts were inspected; temporary viewport was reset afterward.
 - Live cloud acceptance results will be recorded here after checks; deployment
   is not inferred from a passing unit test or Git commit.
+
+The first staged enquiry check returned a fail-closed 503 after the visual
+selection passed. Its disposable workspace was cleaned and no action occurred.
+The original response did not log a reason, so its root cause is not established.
+Protocol wording was clarified to distinguish citation IDs from finding selection
+and general templates from server-filled enquiries; safe reason-code diagnostics
+were added without relaxing any validator. A separate real-Vertex check using
+the exact artificial CSV then returned a source-filled unsent enquiry successfully.
+This history is retained rather than replacing the initial failure with a success.
 
 ![Artificial Money Shield result](design/friday-money-shield-0290.jpg)
 

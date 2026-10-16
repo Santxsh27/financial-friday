@@ -86,8 +86,10 @@ for statement totals, or 'Add a statement' if none has been saved. These control
 never unlock live balances, bank monitoring or settlement evidence.
 For unfamiliar charges, provide a short practical checklist and offer an unsent
 verification message; never pronounce a charge fraudulent without evidence.
-When a user asks for a draft, include the unsent draft in this reply rather than
-asking again whether they want one. Use placeholders for missing details, not
+For a general draft, include an unsent template in this reply rather than
+asking again. For a saved checkup finding, use PREPARE_ENQUIRY instead: the server
+fills private source details. Do not try to include those details in reply.
+Use placeholders for missing details in general templates, not
 invented amounts, merchants or transaction references. Never claim it was sent.
 For getting started, offer one question or document task and its expected result.
 Mention limitations relevant to the question, not a long list.
@@ -192,7 +194,7 @@ INSTRUCTION += ''' Money Shield is the purchase/refund evidence graph. For refun
 tracking, whether a purchase was returned, money protection or refund ambiguity,
 use checkup_action=MONEY_SHIELD and next_screen=dashboard. The server calculates
 integer-capacity matching and lower/upper allocation bounds. No new input is
-needed to open this visual. A compatible or unique match is conditional on
+needed to open this visual. A compatible match or fixed purchase total is conditional on
 literal merchant/account/date assumptions, not bank confirmation. Never equate
 an unallocated amount or remaining purchase amount with money owed, missing
 refunds, loss, recoverable money or tax deductions. Statements cannot prove unused
@@ -200,7 +202,38 @@ subscriptions, authorisation, illegal fees or refund entitlement. Offer an unsen
 enquiry when needed; do not cite laws, file disputes or browse/cancel subscriptions.
 For an enquiry use PREPARE_ENQUIRY with a supplied REFUND finding ID when present.
 Money Shield does not prevent future banking transactions or replace reporting
-an actually unrecognised payment through the bank's official channel.'''
+an actually unrecognised payment through the bank's official channel.
+An explicit request for an enquiry/clarification takes precedence over merely
+showing Money Shield: use PREPARE_ENQUIRY, not MONEY_SHIELD, for that task.
+available_citations is the complete citation allowlist. evidence_ids may contain
+only those strings. A finding_... ID belongs ONLY in finding_id, not evidence_ids.
+Copy it exactly from automatic_checkup.findings; use null if none is appropriate.'''
+
+
+def _allowed_citations(request,context,cashflow,diary,statements):
+    ids={item['evidence_id'] for item in context.get('evidence',[])} if request.include_workspace else set()
+    if request.include_cashflow and cashflow:ids.add('cashflow:current')
+    if request.include_diary and diary:ids.add('diary:current')
+    if request.include_statements and statements:
+        ids.add('statements:current')
+        if statements.get('automatic_checkup'):ids.add('checkup:current')
+    return ids
+
+
+def chat_failure_category(error):
+    """Whitelisted reason codes only; never log a model reply or user records."""
+    from pydantic import ValidationError
+    if isinstance(error,ValidationError):return 'SCHEMA'
+    reasons={
+        'Model cited an unavailable evidence reference':'UNAVAILABLE_CITATION',
+        'Model selected an unavailable finding':'UNAVAILABLE_FINDING',
+        'Model cash-flow amount is not supported by the calculator':'UNSUPPORTED_AMOUNT',
+        'Choose one financial workflow, not conflicting proposals':'CONFLICTING_WORKFLOWS',
+        'Choose one planning workflow':'CONFLICTING_WORKFLOWS',
+        'Model contradicted the supplied context permissions':'CONTEXT_PERMISSION_CONTRADICTION',
+        'Statement history changed during this answer; reload before relying on it':'STALE_CONTEXT',
+    }
+    return reasons.get(str(error),'PROVIDER_OR_UNEXPECTED')
 
 
 def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:
@@ -210,7 +243,9 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
 
     # Scrub recognizable credentials from history, current message and evidence.
     # This is best-effort minimisation, not a guarantee of detecting all secrets.
+    allowed_ids=_allowed_citations(request,context,cashflow,diary,statements)
     raw = json.dumps({"message": request.message,
+                      "available_citations":sorted(allowed_ids),
                       "untrusted_history": [turn.model_dump() for turn in request.history],
                       "context_permissions": {"financial_inbox":request.include_workspace,
                           "statement_totals":request.include_statements,
@@ -253,12 +288,7 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
         _check_cashflow_amounts(answer.reply, {'diary':diary,'cashflow':cashflow if request.include_cashflow else {}})
     elif request.include_cashflow and cashflow:
         _check_cashflow_amounts(answer.reply, cashflow)
-    allowed_ids = {item["evidence_id"] for item in context.get("evidence", [])}
-    if request.include_cashflow and cashflow: allowed_ids.add('cashflow:current')
-    if request.include_diary and diary: allowed_ids.add('diary:current')
-    if request.include_statements and statements:allowed_ids.add('statements:current')
     checkup=statements.get('automatic_checkup',{}) if request.include_statements and statements else {}
-    if checkup:allowed_ids.add('checkup:current')
     if answer.finding_id and answer.finding_id not in {f['finding_id'] for f in checkup.get('findings',[])}:
         raise ValueError('Model selected an unavailable finding')
     if answer.checkup_action!='NONE' and (answer.plan or answer.rehearsal_goal):

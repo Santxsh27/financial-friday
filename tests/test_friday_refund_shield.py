@@ -191,3 +191,23 @@ class RefundShieldAPITests(unittest.TestCase):
         self.assertIn('2026-09-03',body['checkup_view']['draft']);self.assertIn('UNSENT',body['checkup_view']['draft'])
         self.assertIn('not assumed that a refund is due',body['checkup_view']['draft'])
         self.assertEqual(self.service.portfolio.view('one'),before)
+
+    def test_available_citations_are_server_selected_not_finding_or_user_authority(self):
+        self.base.answer(checkup_action='MONEY_SHIELD',evidence_ids=['checkup:current'])
+        self.assertEqual(self.base.chat(include_statements=True).status_code,200)
+        c=json.loads(self.base.model.models.generate_content.call_args.kwargs['contents'])
+        self.assertEqual(c['available_citations'],['checkup:current','statements:current'])
+        f=self.service.portfolio.view('one')['checkup']['findings'][0]['finding_id']
+        self.base.answer(evidence_ids=[f])
+        with self.assertLogs('friday.chat',level='WARNING') as logs:
+            r=self.base.chat(include_statements=True)
+        self.assertEqual(r.status_code,503)
+        self.assertIn('UNAVAILABLE_CITATION',' '.join(logs.output))
+
+    def test_rejection_logging_never_exposes_provider_message_or_credentials(self):
+        self.base.model.models.generate_content.side_effect=RuntimeError('password=private-secret owner bank data')
+        with self.assertLogs('friday.chat',level='WARNING') as logs:
+            r=self.base.chat(include_statements=True)
+        self.assertEqual(r.status_code,503)
+        self.assertIn('PROVIDER_OR_UNEXPECTED',' '.join(logs.output))
+        self.assertNotIn('private-secret',' '.join(logs.output));self.assertNotIn('owner bank data',r.text)

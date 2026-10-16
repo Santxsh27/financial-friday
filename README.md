@@ -267,7 +267,7 @@ Stop with `docker compose stop`; do not delete the development data volumes.
 
 ## Tests, CI and release evidence
 
-Latest local checks, 16 October 2026: **610 tests ran, 609 passed, one optional
+Latest local checks, 16 October 2026: **613 tests ran, 612 passed, one optional
 skip; 24 tooling checks passed**. Ten buddy tests additionally cover private
 preferences, presentation-only opt-in, no nickname in prompts, no financial-rule
 changes and local gateway JSON validation. See [buddy boundaries](docs/BUDDY_0200.md).
@@ -281,8 +281,8 @@ validation, stale leases, scheduling failure and no-second-debit recovery.
 These do not establish actual Cloud Tasks dispatch. See
 [0.19 cloud boundaries](docs/CLOUD_EXTENSIONS_0190.md).
 
-Docker: **610 ran, 586 passed, twenty-four optional skips**.
-Eleven Money Shield tests cover independent exhaustive allocation checks across
+Docker: **613 ran, 589 passed, twenty-four optional skips**.
+Fourteen Money Shield tests cover independent exhaustive allocation checks across
 80 synthetic graphs, ambiguity/partial/split returns, bounded coverage and
 server-owned completion receipts. These are mathematical and safety tests, not
 an independently measured fraud-detection rate.

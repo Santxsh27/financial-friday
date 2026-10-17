@@ -54,6 +54,13 @@ renders cards without a second model rewrite. The final direct home-loan smoke
 returned four cards, six provider sources and eight grounding support segments.
 That verifies the integration—not every research claim's correctness.
 
+Fresh-link browser QA also found a missing Research parent label and a parent
+navigation path that could create a Back loop after reload. Both were corrected:
+direct Research → Goals → Home replaces the initial route, while normal in-app
+Back uses browser history. Executable JavaScript route tests cover both paths.
+Research paragraph text was reduced from oversized bold text to normal readable
+body text; this is presentation, not a new financial or model capability.
+
 ## Verification
 
 Focused tests cover shared-pool non-duplication, deadline ordering, missing buffers,
@@ -63,10 +70,44 @@ unsafe URLs and inert rendering. Eighty developer-authored random single-goal
 cases are compared with a closed-form arithmetic oracle. This is not independent
 human validation or evidence of optimal financial policy.
 
-Native: 801 run, 800 passed, one skipped. Container: 801 run, 769 passed,
+Native: 803 run, 802 passed, one skipped. Container: 803 run, 771 passed,
 32 skipped. Tool tests: 65 passed. Browser acceptance and live revision results
 are recorded in CURRENT_RELEASE after completion. Historical suites and model
 studies remain preserved; this release does not fix all their measured misses.
+
+## Live release acceptance
+
+The final staged API passed the following bounded, fresh-visitor checks:
+
+- Real Vertex goal intake matched all seven supplied artificial numeric facts.
+- The exact car scenario funded its upfront target in baseline and returned the
+  expected ₹2,32,000 stress shortfall. Goals were not persisted.
+- Real Google Search research returned provider attribution (two sources and
+  three support segments in that particular run), not model-invented links.
+- All five packaged CSV controls, real Vertex PDF extraction and statement chat,
+  Firestore source-selection race (409/200), restoration and cleanup passed.
+- The canonical browser completed Gemini intake, assumptions review, charted
+  calculation and public research with five source links and Google suggestions.
+  No private saved records were shared in those new browser model requests.
+- The final UI follow-up also rendered a fresh public gold request with two
+  provider links, visible Google suggestions, 14px body text and no observed new
+  console errors. Direct Research → Back to Goals → Back to Home was verified
+  after a page reload, not only through in-app navigation.
+- Local browser checks exercised consent gating, manual calculation, Back,
+  preserved navigation state and a funded down payment with a later monthly
+  deficit. A 390px research viewport had no horizontal document overflow and
+  the temporary viewport override was reset.
+
+Content-free cloud model events were observed for goal intake (2,249.118 ms,
+1,271 total tokens) and research (3,520.891 ms, 618 total tokens). These isolated
+observations are not an SLA or billed-cost estimate; Search may issue multiple
+queries. Provider-sourced research can include aggregators, not just official
+institutions. Attribution is not an independent fact check.
+
+Runtime image/build identities, source CI, traffic and remaining human submission
+gates are in CURRENT_RELEASE. The UI-only readability follow-up does not change
+the accepted API engine or add model calls. Export's click handler is tested;
+an actual browser file download was not re-run in this release.
 
 ## Limits
 

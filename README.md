@@ -49,10 +49,12 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note (17 October):** API 0.34.1 and the statement-only web release are
-deployed at the main link, with 100% traffic verified. Live synthetic CSV/PDF,
-Gemini, Firestore conflict and cleanup checks passed. The release manifest records
-the separate API/web source commits, image digests and successful source CI.
+**Release note (17 October):** API/web 0.35.0 are deployed at the main link,
+with 100% traffic verified. Real Vertex goal intake and Search grounding, exact
+baseline/stress calculations, synthetic CSV/PDF, statement chat, Firestore conflict
+and cleanup checks passed. The release manifest records the separate API/web
+source commits, image digests and successful source CI. Native tests: 803 run,
+802 passed, one skipped. Container: 803 run, 771 passed, 32 skipped. Tool tests: 65 passed.
 A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
 listed in the checklist below.
 

@@ -1,16 +1,16 @@
 # Financial Friday — documentation and evidence index
 
 The **0.35.0 goals/research expansion** is described in
-[its implementation report](GOALS_RESEARCH_0350.md). Local checks ran 801 tests
-(800 passed, one skipped), plus 65 tool tests; the container ran 801 tests
-(769 passed, 32 skipped). Consult CURRENT_RELEASE for activation, not this count.
+[its implementation report](GOALS_RESEARCH_0350.md). Local checks ran 803 tests
+(802 passed, one skipped), plus 65 tool tests; the container ran 803 tests
+(771 passed, 32 skipped). Consult CURRENT_RELEASE for exact source identities.
 
-Updated 17 October 2026, deployed statement-only web release **0.34.0** and
-API **0.34.1**, both verified at 100% traffic. The **0.33.0 workflow repair**
+Updated 17 October 2026, deployed API and web release **0.35.0**,
+both verified at 100% traffic. The **0.33.0 workflow repair**
 is included: [its repair report](WORKFLOW_REPAIR_0330.md) documents the
 source-selection contract, browser captures and Desktop organization.
-The [current release report](SUBMISSION_READINESS_0340.md) records live synthetic
-acceptance, the telemetry follow-up and remaining human submission gates.
+The [0.34 release report](SUBMISSION_READINESS_0340.md) retains earlier synthetic
+acceptance and telemetry evidence; the current goal/research report extends it.
 Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not
@@ -39,6 +39,7 @@ acceptance evidence. A new source version alone does not prove deployment.
 
 | Evidence | Scope and limitations |
 | --- | --- |
+| [Goals and public research 0.35.0](GOALS_RESEARCH_0350.md) | Quote-bound real Gemini intake, confirmed single-pool purchase scenarios, exact amortisation and repayment overlap, visual stress comparison and separately consented Search grounding. No live quote feed, optimal investing or financial execution. |
 | [Statement-only release 0.34 / API 0.34.1](SUBMISSION_READINESS_0340.md) | Supported statement journey, retired consumer bill routes, hosted bank-labelled artificial samples, synthetic Vertex PDF/chat, actual Firestore selection conflict, source restoration, content-free chat telemetry and verified deployment. Not independent bank validation or completed submission. |
 | [Consumer assurance 0.32.0](CONSUMER_ASSURANCE_0320.md) | Consumer admission, opt-in legacy demos, strict narration, unchanged authored quality, transparent live AI failures/follow-up, final-read privacy, preview recovery, real Firestore API races and bounded quota abort handling. Verified revisions and counts in CURRENT_RELEASE. |
 | [Statement reliability 0.31.0](STATEMENT_RELIABILITY_0310.md) | Literal-grounded reconciliation, signed extraction receipts, labelled synthetic quality baseline with misses/false warnings, privacy races and content-free request correlation. Not independent fraud validation or bank authentication. |
@@ -62,7 +63,7 @@ acceptance evidence. A new source version alone does not prove deployment.
 | [Independent evaluation protocol](INDEPENDENT_EVALUATION.md) | Held-out testing method and pending independent validation. |
 
 Each dated report retains its own test and live-acceptance counts. Final
-0.34/0.34.1 counts and cloud activation are recorded in
+0.35 counts and cloud activation are recorded in
 [CURRENT_RELEASE](CURRENT_RELEASE.json); historical suite counts do not establish
 later releases' acceptance. Later commits have their own
 [Actions status](https://github.com/Santxsh27/financial-friday/actions).

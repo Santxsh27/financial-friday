@@ -6,10 +6,11 @@ in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json), not inferred from this document
 
 ## 1. Product and authority
 
-Financial Friday helps people understand supplied INR bank/card statements:
-extract once, review the rows, save privately, see visual evidence and ask an AI
-assistant for explanations and checked next steps. The primary journey is
-**Home → Add statement → Review → My money → Ask Friday**.
+Financial Friday is an INR financial decision workspace: describe a purchase,
+confirm the proposed facts, compare shared-budget scenarios and optionally research
+public information through Friday. Supplied bank/card statements provide a separate
+reviewed spending picture. The two main journeys are **Home → Goals → Confirm →
+Visual plan**, and **Add statement → Review → My money → Ask Friday**.
 
 It is not a payment processor, bank feed, settlement witness, investment adviser,
 official credit score or continuously listening assistant. It cannot pay, reverse,
@@ -22,7 +23,8 @@ The separate bill/receipt inbox is not part of the consumer release.
 Home also offers Goals: one explicitly confirmed budget funds up to three
 purchase targets over 1–60 months. A pure integer-paise earliest-deadline-first
 engine excludes/tops up the selected buffer, allocates savings once, estimates
-monthly-rounded financing and computes baseline/adverse scenarios. It is not
+monthly-rounded financing, checks peak overlapping repayments beyond purchase
+deadlines and computes baseline/adverse scenarios. It is not
 an optimal financial strategy, return forecast, investment selection or loan
 approval. Fees, future recurring costs and prices are user assumptions, not
 automatically researched inputs. Goals remain in page memory; export is explicit.
@@ -42,7 +44,7 @@ Authenticated read-only endpoints: POST /v1/friday/goals/interpret,
 tools do not give ordinary chat browsing or payment authority. See
 [the full extension report](docs/GOALS_RESEARCH_0350.md).
 
-## 2. Inputs and extraction
+## 2. Statement inputs and extraction
 
 Supported input: INR bank/card PDF or CSV, not a screenshot/image bill upload.
 PDFs are limited to 4 MB, six pages and 200 proposed rows. CSVs are limited to
@@ -231,5 +233,6 @@ confirmation, proposal deck/PDF, public short video and final form acknowledgeme
 No novelty, patent, selection, prize or production certification is guaranteed.
 
 See [release checklist](docs/submission/RELEASE_CHECKLIST.md),
-[current evidence](docs/SUBMISSION_READINESS_0340.md) and
+[statement release evidence](docs/SUBMISSION_READINESS_0340.md),
+[goal/research evidence](docs/GOALS_RESEARCH_0350.md) and
 [independent review protocol](docs/VALIDATION_HANDOFF.md).

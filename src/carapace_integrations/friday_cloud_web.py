@@ -177,7 +177,7 @@ def create_cloud_web(settings: WebSettings | None = None, *, verifier=verify_iap
     if settings.public_demo_secret:
         html = html.replace('<main class="shell layout">',
             '<div class="shell" role="note" style="padding-top:12px;font-size:13px">'
-            'Your private statement review. No bank connection or payment permission needed. '
+            'Your private financial workspace. No bank connection or payment permission needed. '
             '<a href="/about">Access, privacy &amp; demo limits</a></div>'
             '<main class="shell layout">')
     html = surface_html(html, legacy_demo_enabled=settings.legacy_demo_enabled)

@@ -81,18 +81,27 @@ def research_public_topic(planner, request):
     candidates = getattr(response, 'candidates', None) or []
     metadata = getattr(candidates[0], 'grounding_metadata', None) if candidates else None
     chunks = getattr(metadata, 'grounding_chunks', None) or []
-    sources = []
-    for chunk in chunks[:12]:
+    sources, chunk_sources = [], {}
+    for chunk_index, chunk in enumerate(chunks[:12]):
         web = getattr(chunk, 'web', None)
         uri, title = getattr(web, 'uri', ''), getattr(web, 'title', '')
-        if safe_source_url(uri) and uri not in {s['url'] for s in sources}:
-            sources.append({'url': uri, 'title': (title or 'Source')[:180]})
+        if safe_source_url(uri):
+            if uri not in {s['url'] for s in sources}:
+                sources.append({'id':len(sources)+1, 'url': uri, 'title': (title or 'Source')[:180]})
+            chunk_sources[chunk_index] = next(s['id'] for s in sources if s['url'] == uri)
     entry = getattr(metadata, 'search_entry_point', None)
     suggestions = getattr(entry, 'rendered_content', None)
     supports = getattr(metadata, 'grounding_supports', None) or []
     # Sources/suggestions must be provider metadata, not model-invented links.
     if not sources or not isinstance(suggestions, str) or not suggestions.strip() or len(suggestions) > 100000:
         raise RuntimeError('Search attribution was not returned; no current result is displayed')
+    citations = []
+    for support in supports[:40]:
+        quote = getattr(getattr(support, 'segment', None), 'text', None)
+        indices = getattr(support, 'grounding_chunk_indices', None) or []
+        ids = sorted({chunk_sources[i] for i in indices if type(i) is int and i in chunk_sources})
+        if isinstance(quote, str) and quote.strip() and quote in text and ids:
+            citations.append({'quote':quote, 'source_ids':ids})
     bullets = [line.strip() for line in re.split(r'\n(?=\s*(?:[-*]|\d+[.)])\s+)', text.strip()) if line.strip()]
     if len(bullets) > 4:
         raise RuntimeError('Research exceeded the four-card output bound')
@@ -101,13 +110,16 @@ def research_public_topic(planner, request):
         cleaned = re.sub(r'^\s*(?:[-*]|\d+[.)])\s+', '', bullet)
         match = re.match(r'\*\*(.{1,60}?)\*\*\s*:?\s*(.*)', cleaned, re.S)
         label, value = (match.group(1).rstrip(':'), match.group(2)) if match else ('Source snapshot ' + str(index + 1), cleaned)
-        facts.append(ResearchFact(label=label, value=value, note='Search-grounded text; confirm details with the linked sources.').model_dump())
+        cited = sorted({i for c in citations if c['quote'] in cleaned or cleaned in c['quote'] for i in c['source_ids']})
+        fact = ResearchFact(label=label, value=value, note='Confirm details with linked sources.' if cited else 'No exact card-level citation returned; consult the full source response.').model_dump()
+        fact['source_ids'] = cited
+        facts.append(fact)
     title = {'GOLD': 'Gold reference snapshot', 'FUEL': 'Fuel reference snapshot',
         'HOME_LOANS': 'Home-loan research', 'QUESTION': 'Your financial research'}[request.topic]
     return {'title': title, 'summary': 'Public-source research, separate from your personal plan. Prices and terms can change.',
         'facts': facts, 'full_response': text,
         'cautions': ['Not a streaming quote feed, forecast or personalised investment recommendation.'],
-        'sources': sources, 'search_suggestions_html': suggestions,
+        'sources': sources, 'citations': citations, 'search_suggestions_html': suggestions,
         'retrieved_at': datetime.now(timezone.utc).isoformat(), 'topic': request.topic,
         'city': request.city, 'scope': 'PUBLIC_GOOGLE_SEARCH_RESEARCH',
         'grounding_support_count': len(supports), 'independently_fact_checked': False,

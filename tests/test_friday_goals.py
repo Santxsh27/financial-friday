@@ -80,6 +80,17 @@ class GoalEngineTests(unittest.TestCase):
             a=amortisation(principal,rate,months)
             self.assertEqual(a['total_minor'],principal+a['interest_minor'])
 
+    def test_last_goal_loan_is_checked_beyond_purchase_deadline(self):
+        result=build_goal_scenario(request(goals=[{'title':'Large purchase',
+            'price_inr':'5000000','months':1,'down_payment_percent':1,
+            'annual_interest_percent':'0','loan_months':120}]))
+        b=result['baseline']
+        self.assertEqual(b['funded_count'],1)  # Down payment only.
+        self.assertEqual(b['calendar'][0]['new_emi_inr'],'0.00')
+        self.assertEqual(b['peak_planned_emi_inr'],'41250.00')
+        self.assertEqual(b['monthly_capacity_at_peak_emi_inr'],'-21250.00')
+        self.assertEqual(b['worst_monthly_deficit_inr'],'21250.00')
+
     def test_random_single_goal_against_simple_oracle(self):
         rng=random.Random(35)
         for _ in range(80):
@@ -147,6 +158,16 @@ class ResearchTests(unittest.TestCase):
         config=p._client.models.generate_content.call_args.kwargs
         self.assertEqual(len(config['config'].tools),1)
         self.assertNotIn('statement',config['contents'].lower())
+
+    def test_card_citations_use_provider_segments_and_chunk_indices(self):
+        metadata=self.metadata()
+        metadata.grounding_supports=[SimpleNamespace(
+            segment=SimpleNamespace(text='Not established. Confirm with the source.'),
+            grounding_chunk_indices=[0,99,True])]
+        result=research_public_topic(self.result(metadata),ResearchRequest(topic='FUEL',confirm_public_search=True))
+        self.assertEqual(result['facts'][0]['source_ids'],[1])
+        self.assertEqual(result['citations'][0]['source_ids'],[1])
+        self.assertEqual(result['sources'][0]['id'],1)
 
     def test_no_request_without_consent(self):
         p=self.result(self.metadata())

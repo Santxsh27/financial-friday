@@ -1,10 +1,19 @@
 # Financial Friday submission pack
 
-Current statement-first web: 0.34.0; API telemetry follow-up: 0.34.1. Use the
+Current source: goals/research extension 0.35.0. Use the
 [release manifest](../CURRENT_RELEASE.json) for the actual deployed source and
 acceptance status, and [the checklist](RELEASE_CHECKLIST.md) for human submission gates.
 
 ## What to demonstrate
+
+Start with **Goals** and the artificial prompt in [TRY-GOALS](../../jugges/TRY-GOALS.txt).
+Let real Gemini propose the supplied facts, confirm them and show the baseline
+versus stress timeline. Open **Research financing** or a public topic, explicitly
+consent and show provider sources and Google Search attribution. Research never
+silently changes a personal scenario. This demonstrates AI intake, exact shared
+budget calculations and current-source retrieval rather than a general chat alone.
+
+For the statement part:
 
 1. Open Friday, identify the signed-in Google account and choose the visible sample walkthrough.
 2. Supply a new artificial bank-format CSV or the supported two-row PDF.
@@ -26,11 +35,13 @@ richer review candidates. Do not mix these and present the sum as one person's f
 - [Artificial kit](../../jugges/README.md)
 - [Current user guide](../../USER_GUIDE.md)
 - [Release evidence](../SUBMISSION_READINESS_0340.md)
+- [Goal/research evidence](../GOALS_RESEARCH_0350.md)
 
 ## Claims and artifacts
 
-Describe statement understanding, exact evidence checks, review candidates,
-bounded AI assistance and reduced user administration. Do not claim a real bank
+Describe confirmed goal planning, exact shared-budget stress checks, separately
+attributed public research, statement understanding and reduced administration.
+Do not claim optimal investing, lender eligibility, guaranteed returns or a real bank
 connection, verified fraud detection, automatic payment/refund/cancellation,
 independently established accuracy or trained ML. Show unknown states and failures honestly.
 

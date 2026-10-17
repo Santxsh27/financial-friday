@@ -19,7 +19,9 @@ The same Friday chat remains available and can suggest these two destinations.
   missing buffer. No borrowed cash or investment returns are manufactured.
 - Upfront funding, explicit extras and fixed-rate monthly-rounded amortisation.
   A funded purchase starts EMI next month; the final loan instalment reconciles
-  exact paise. Later goals see the earlier loan commitment.
+  exact paise. Later goals see the earlier loan commitment. Peak overlapping
+  repayments are also inspected after the last purchase deadline; a funded
+  down payment does not hide a subsequent monthly deficit or establish affordability.
 - Stress runs use income −10%, essentials +10%, rate +2 percentage points. These
   are chosen adverse assumptions, not calibrated probabilities or predictions.
 - Literal quote binding for every Gemini-proposed number, including lakh/crore

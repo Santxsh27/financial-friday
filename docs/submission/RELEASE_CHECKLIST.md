@@ -6,6 +6,9 @@ Hack2skill form or establish every eligibility requirement.
 
 ## Software and demonstration
 
+- [x] Quote-bound Gemini goal intake, manually confirmed assumptions and visual shared-budget scenarios.
+- [x] Explicit public Search research with actual provider attribution; no private-record retrieval in research.
+- [x] Last-purchase loan commitment check; upfront funding is not loan affordability.
 - [x] Statement-first consumer flow, source checks and exact integer-paise analysis.
 - [x] Source library, reversible fresh review, Back navigation and visible Listen.
 - [x] Separate bill/receipt inbox removed from current consumer admission.
@@ -28,6 +31,8 @@ Hack2skill form or establish every eligibility requirement.
   are authorised for release acceptance. No owner records are sent to AI.
 - Budget alerts/app quotas do not guarantee zero costs or uninterrupted availability.
   Keep the trial/account operational throughout evaluation; monitor errors and usage.
+- Goals remain in page memory unless exported. Research is on request, not a
+  licensed live market feed, independent fact-check or personalised investment advice.
 - Do not expose the backend or disable Google identity to resolve a login problem.
 
 ## Share the right links

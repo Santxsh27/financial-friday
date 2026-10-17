@@ -7,7 +7,7 @@ EMI in the following month. No returns, property growth or lender approval assum
 from decimal import Decimal, ROUND_HALF_UP, localcontext
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 def paise(value):
@@ -105,11 +105,15 @@ def _run(request, *, income_percent=100, expenses_percent=100, extra_rate=0):
             item['allocated_minor'] += transfer
             cash -= transfer
 
+    def active_payment(month):
+        return sum(i['final_instalment_minor'] if month - i['deadline_month'] == i['loan_months'] else i['emi_minor']
+            for i in items if i['status'] == 'SCENARIO_FUNDED'
+            and 0 < month - i['deadline_month'] <= i['loan_months'])
+
     allocate()
     calendar = []
     for month in range(1, max(g.months for g in request.goals) + 1):
-        active_emi = sum(i['final_instalment_minor'] if month - i['deadline_month'] == i['loan_months'] else i['emi_minor'] for i in items if i['status'] == 'SCENARIO_FUNDED'
-            and 0 < month - i['deadline_month'] <= i['loan_months'])
+        active_emi = active_payment(month)
         capacity = income - essentials - existing - active_emi
         worst_deficit = max(worst_deficit, -capacity)
         contribution = max(0, capacity)
@@ -133,12 +137,20 @@ def _run(request, *, income_percent=100, expenses_percent=100, extra_rate=0):
             'new_emi_inr': rupees(active_emi), 'earmarked_inr': rupees(reserved),
             'unallocated_inr': rupees(cash), 'deficit_inr': rupees(max(0, -capacity)),
             'buffer_top_up_inr': rupees(top_up)})
+    # Upfront funding is not loan affordability. Inspect the full overlapping
+    # repayment commitments, including those starting after the last deadline.
+    last_repayment = max(i['deadline_month'] + i['loan_months'] for i in items)
+    peak_emi = max(active_payment(month) for month in range(1, last_repayment + 1))
+    capacity_at_peak = income - essentials - existing - peak_emi
+    worst_deficit = max(worst_deficit, -capacity_at_peak)
     return {'goals': [{**{k: v for k, v in i.items() if not k.endswith('_minor')},
                 **{k.removesuffix('_minor') + '_inr': rupees(v) for k, v in i.items() if k.endswith('_minor')}} for i in items],
         'calendar': calendar, 'monthly_capacity_inr': rupees(income - essentials - existing),
         'spendable_savings_inr': rupees(spendable), 'buffer_gap_inr': rupees(max(0, buffer - savings)),
         'remaining_buffer_gap_inr': rupees(buffer_gap),
         'worst_monthly_deficit_inr': rupees(worst_deficit),
+        'peak_planned_emi_inr': rupees(peak_emi),
+        'monthly_capacity_at_peak_emi_inr': rupees(capacity_at_peak),
         'funded_count': sum(i['status'] == 'SCENARIO_FUNDED' for i in items)}
 
 
@@ -158,5 +170,6 @@ def build_goal_scenario(request: GoalScenario):
             'Protected buffer is excluded. Positive monthly capacity tops up a missing buffer before funding goals.',
             'Shortfall goals keep their earmarked cash; later goals cannot reuse it.',
             'Future income and expenses are assumptions; EMIs are fixed-rate estimates, rounded monthly.',
+            'Upfront funding does not establish loan affordability. Peak repayment uses the same constant budget beyond the purchase horizon.',
             'Recurring ownership costs must be included in expenses. No live bank or lender connection.'],
         'money_moved': False, 'payment_authorized': False, 'persisted': False, 'ai_called': False}

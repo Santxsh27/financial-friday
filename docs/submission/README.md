@@ -1,6 +1,6 @@
 # Financial Friday submission pack
 
-Current statement-first source: 0.34.0. Use the
+Current statement-first web: 0.34.0; API telemetry follow-up: 0.34.1. Use the
 [release manifest](../CURRENT_RELEASE.json) for the actual deployed source and
 acceptance status, and [the checklist](RELEASE_CHECKLIST.md) for human submission gates.
 

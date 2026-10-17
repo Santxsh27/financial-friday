@@ -13,8 +13,9 @@ Hack2skill form or establish every eligibility requirement.
 - [x] In-app sample walkthrough/downloads that do not depend on GitHub access.
 - [x] Scoped Gemini prompts, consent, evidence references and stale-response checks.
 - [x] Cross-tenant, concurrent and cleanup regressions; private API retained.
-- [ ] Latest matching API/web revisions promoted and cloud acceptance recorded.
-- [ ] Latest source and updated release records pushed; GitHub CI checked.
+- [x] Final API/web revisions promoted; cloud acceptance recorded in CURRENT_RELEASE.
+- [x] Runtime/API and web source pushed; matching source GitHub CI passed.
+- [x] Final documentation handoff saved and pushed; remote equality checked at handoff.
 - [ ] Another person's Google account completes the full walkthrough.
 
 ## Evidence and product limits

@@ -20,8 +20,9 @@ The website's historical service name does not require Anthos. Local ports bind
 to loopback, not a public bank service. Development API credentials in Compose
 are published dummy values and are explicitly forbidden for production use.
 
-Offline mode can exercise sandbox planning/tests. Chat and multimodal review need
-Gemini and fail explicitly when unavailable. Start your live-AI tour on the hosted
+Offline mode can exercise supported CSV imports, exact charts and tests. Chat,
+PDF extraction and speech need live services and fail explicitly when unavailable.
+Start your live-AI tour on the hosted
 site if you do not have development credentials.
 
 ## Optional local live Gemini
@@ -92,12 +93,12 @@ delete evidence, weaken limits or disable safety checks to make a demo succeed.
 | --- | --- |
 | Cannot reach localhost | Docker running? `docker compose ps`; readiness and service logs. |
 | SQLite cannot open | `/data` named-volume permissions/data-init; do not delete the DB. |
-| Live chat/document review unavailable | Provider selection, quota, authorised credentials; offline mode cannot OCR/chat. |
-| New inbox looks empty | Expected; use a question or explicitly run the guided example. |
-| Document cannot be matched | Reference/payee/currency evidence; ambiguity is not a reason to guess. |
+| Live chat/PDF reading unavailable | Provider selection, quota, authorised credentials; offline mode cannot OCR/chat. |
+| New account has no statements | Expected; Add a statement or explicitly try the artificial example. |
+| Statement format rejected | Supported headings/dates, clear debit/credit roles and source warnings; never alter amounts to pass. |
 | Cloud returns 403/401 | Google login, verified canonical origin and private API invocation; do not loosen auth. |
 | 429/demo limit reached | Admission quota, not a broken payment; avoid repeated writes and use saved evidence. |
-| Bill is outside a plan | Single-payment limit, reserve, provider record or evidence reason—not automatically fraud. |
+| Source mismatch or save conflict | Reload Statements, inspect selected sources/revision and printed facts; do not bypass the check. |
 | Cloud follow-through unavailable | Connector is not implemented; do not relabel it as a successful correction. |
 
 For improvements, propose the affected workflow, expected user benefit, trust

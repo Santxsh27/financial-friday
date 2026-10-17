@@ -28,9 +28,9 @@ product, production banking readiness or a competition result.
 
 ## Verification record
 
-Native suite: 775 ran, 774 passed, one optional historical Anthos integration
+Final native suite: 776 ran, 775 passed, one optional historical Anthos integration
 skipped. Tool suite: 65 passed. Container, browser and live cloud results are
-recorded below after completion and in CURRENT_RELEASE.json. Passing unit tests
+recorded below and in CURRENT_RELEASE.json. Passing unit tests
 are not evidence of representative AI accuracy or independent bank validation.
 
 The bounded cloud verifier uses one new artificial visitor, five CSV previews,
@@ -48,9 +48,37 @@ money, new permissions or larger quotas were involved. PDF model telemetry recor
 
 The log check found chat did not use the shared telemetry wrapper. API 0.34.1
 adds that wrapper with a regression ensuring usage/latency are logged without
-prompt/reply text. A bounded chat-only follow-up is checked before final promotion.
+prompt/reply text. The bounded chat-only follow-up passed, including synthetic
+cleanup. Its actual content-free event recorded model/version
+gemini-3.5-flash-lite, 1,328 ms and 3,663 returned tokens. It shared no private
+financial context. These are individual observations, not general service targets.
 The final web-only copy change has a separate source identity from the API; the
 release manifest records both rather than claiming one commit built every image.
+
+Final API-patch native run: **776 ran, 775 passed, one skipped**. Container:
+**776 ran, 744 passed, 32 skipped**. Offline tools: **65 passed**. Container skips
+include Node-only checks executed natively, the excluded guide-folder byte check
+and optional historical Anthos integration. No skip is counted as a pass.
+
+GitHub CI for initial runtime source 3015e73768f761265023acce7e7a4dff1430239d
+passed at run 39028618198. Final API/web source identities and subsequent CI
+are recorded in CURRENT_RELEASE after verification. The local browser followed
+Home → walkthrough and downloaded the HDFC-labelled artificial CSV. That one
+browser download stalled unexpectedly before finishing; other files are checked
+by packaged-asset byte/control tests rather than falsely reported browser downloads.
+
+The final API source b36166a88074a0f075f461a64f92f933138afd4f passed CI
+39032249893; the web source 73ca189e3c3ce88ca82a87374a265724327349ce passed
+CI 39031952241. Revisions financial-friday-api-submission0341 and
+financial-friday-web-submission0340final were promoted; readback confirmed each
+serves 100% canonical traffic. Anonymous API access returns 403; the web returns
+302 to Google sign-in. Local Docker API/web remain healthy at ports 8080/8090.
+No owner records, authentication policy, service identity, limits or recovery
+target were changed. The canonical browser displays the new Home walkthrough link.
+The canonical browser also returned a real general Vertex reply with statement
+sharing off, displayed the account identity/profile and updated focus label, and
+opened the hosted guide with all six sample links. No new console errors were
+observed. This uses the owner's existing Google session, not a second user's login.
 
 ## Access and sharing
 

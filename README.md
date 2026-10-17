@@ -23,10 +23,12 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note:** local API source is 0.34.1. The release manifest distinguishes staged,
-promoted and verified revisions. A GitHub commit alone does not deploy Cloud Run.
-Use the deployed version recorded there, not this source number, when evaluating
-the hosted site.
+**Release note (17 October):** API 0.34.1 and the statement-only web release are
+deployed at the main link, with 100% traffic verified. Live synthetic CSV/PDF,
+Gemini, Firestore conflict and cleanup checks passed. The release manifest records
+the separate API/web source commits, image digests and successful source CI.
+A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
+listed in the checklist below.
 
 This repository is private. A GitHub link alone does not grant source access. Invite
 the required reviewers, or use the organisers' approved source-delivery method.

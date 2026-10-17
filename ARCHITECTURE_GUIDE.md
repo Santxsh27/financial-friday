@@ -1,6 +1,6 @@
 # Financial Friday — architecture guide
 
-Current reference: 17 October 2026, statement-only web 0.34 / API 0.34.1.
+Current reference: 17 October 2026, goal/research expansion 0.35.0.
 [SPEC](SPEC.md) defines the contract; [CURRENT_RELEASE](docs/CURRENT_RELEASE.json)
 identifies the actual source commits, container digests, revisions and verification.
 Earlier dated reports describe history, not additional current consumer features.
@@ -17,6 +17,15 @@ There is no consumer bill inbox, real bank feed or payment execution. A repeated
 row is a candidate for review, not a verified duplicate debit. Refund worksheets
 do not establish entitlement or recover money. No personalised securities calls,
 guaranteed savings, universal safety or bank authentication are claimed.
+
+## Goal/research boundary
+
+`friday_goals.py` is a pure shared-pool purchase-scenario calculator. Quote-bound
+`friday_goal_intake.py` supplies reviewed proposals only. `friday_research.py`
+uses explicit public Google Search grounding separately from private records and
+ordinary chat. `friday_goals_ui.py` supplies goal cards, charts, tables and
+sandboxed Search Suggestions. There is no server goal persistence or background
+market polling. Details and limitations: [0.35 report](docs/GOALS_RESEARCH_0350.md).
 
 ## Runtime and deployment
 

@@ -1,5 +1,10 @@
 {
-  "local_code_version": "0.34.1",
+  "local_code_version": "0.35.0",
+  "local_0350_status": "TESTED_CANDIDATE_NOT_YET_PROMOTED",
+  "local_0350_report": "docs/GOALS_RESEARCH_0350.md",
+  "local_0350_native_tests": {"ran":801,"passed":800,"skipped":1},
+  "local_0350_docker_tests": {"ran":801,"passed":769,"skipped":32},
+  "local_0350_tool_tests": {"ran":65,"passed":65,"skipped":0},
   "submission_candidate_status": "PROMOTED_VERIFIED_HUMAN_SUBMISSION_GATES_PENDING",
   "submission_report": "docs/SUBMISSION_READINESS_0340.md",
   "local_0340_native_tests": {"ran":775,"passed":774,"skipped":1},

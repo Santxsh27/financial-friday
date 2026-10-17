@@ -13,6 +13,10 @@ the source changes have been promoted.
 
 ## A short tour
 
+For the new goal/research path, start with [TRY-GOALS.txt](TRY-GOALS.txt).
+It has one artificial purchase scenario, expected results and the separate
+public-research consent steps. Goals are not saved long-term.
+
 1. Home → Add a statement → choose `statements/03-Simple-4-Rows.csv`.
 2. Confirm processing → Read my statement → compare four rows.
 3. Confirm storage → Save & see my spending.

@@ -2,9 +2,9 @@
 
 CONSUMER_JS = r'''
     if(consumerOnly){
-      const supported=new Set(['home','library','statements','statement-review','dashboard','coach','profile','plan','rehearsal','privacy','settings','tools']);
+      const supported=new Set(['home','library','statements','statement-review','dashboard','coach','profile','plan','rehearsal','privacy','settings','tools','goals','research']);
       const safeShow=show;
-      show=function(name,push=true){if(!supported.has(name)){safeShow('home',push);toast('This site is for statement guidance. Payment demonstrations are not enabled.');return;}safeShow(name,push);};
+      show=function(name,push=true){if(!supported.has(name)){safeShow('home',push);toast('This site provides statement guidance, goal scenarios and public research. Payment demonstrations are not enabled.');return;}safeShow(name,push);};
       for(const [name,panel] of Object.entries(views)){if(!supported.has(name)){panel.hidden=true;panel.dataset.consumerExcluded='true';}}
       root.querySelectorAll('[data-screen-link]').forEach(b=>{if(!supported.has(b.dataset.screenLink))b.remove();});
       // Keep dormant legacy nodes available to shared presentation handlers.

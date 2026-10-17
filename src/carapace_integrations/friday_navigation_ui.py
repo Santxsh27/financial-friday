@@ -24,7 +24,7 @@ NAVIGATION_HELPERS_JS = r'''
       }
       function fridayParent(screen,part){
         if(screen==='dashboard'&&part)return 'dashboard';
-        return ({'statement-review':'statements',statements:'library',plan:'dashboard',rehearsal:'dashboard',privacy:'profile',tools:'profile',document:'profile',review:'document'})[screen]||'home';
+        return ({'statement-review':'statements',statements:'library',plan:'dashboard',rehearsal:'dashboard',privacy:'profile',tools:'profile',document:'profile',review:'document',research:'goals'})[screen]||'home';
       }
 '''
 

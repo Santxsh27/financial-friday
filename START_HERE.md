@@ -1,7 +1,9 @@
 # Financial Friday start here
 
-Friday turns supplied INR bank/card statements into spending charts, review
-candidates and private next steps. Google sign-in identifies your workspace;
+Friday helps with confirmed purchase scenarios, explicit public-source research
+and optional INR statement understanding. Try Home → Plan my next purchase;
+[the artificial goal test](jugges/TRY-GOALS.txt) gives exact inputs/results.
+Google sign-in identifies your workspace;
 it does not connect your bank. Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json)
 to distinguish local preview changes from the hosted release.
 

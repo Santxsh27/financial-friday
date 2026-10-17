@@ -439,6 +439,43 @@ def create_demo_app() -> FastAPI:
             '/v1/friday/assistant/briefing-audio', 'POST', payload.model_dump(mode='json'), 120)
         return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
 
+    @application.post('/api/friday/goals/{operation}')
+    async def friday_goals(operation: str, request: StarletteRequest):
+        from carapace_core.friday_goals import GoalScenario
+        from carapace_ai.friday_goal_intake import GoalIntakeRequest
+        from fastapi.responses import JSONResponse
+        if operation not in {'preview', 'interpret'}:
+            raise HTTPException(404, 'Unknown goal operation')
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 16000:
+                raise HTTPException(413, 'Goal request is too large')
+            data.extend(chunk)
+        try:
+            payload = (GoalScenario if operation == 'preview' else GoalIntakeRequest).model_validate_json(bytes(data))
+        except ValueError as error:
+            raise HTTPException(422, 'Review the goal inputs') from error
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            '/v1/friday/goals/' + operation, 'POST', payload.model_dump(mode='json'), 120)
+        return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
+
+    @application.post('/api/friday/research')
+    async def friday_research(request: StarletteRequest):
+        from carapace_ai.friday_research import ResearchRequest
+        from fastapi.responses import JSONResponse
+        data = bytearray()
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > 4000:
+                raise HTTPException(413, 'Public question is too long')
+            data.extend(chunk)
+        try:
+            payload = ResearchRequest.model_validate_json(bytes(data))
+        except ValueError as error:
+            raise HTTPException(422, 'Use a public financial question without account details') from error
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            '/v1/friday/research', 'POST', payload.model_dump(mode='json'), 120)
+        return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
+
     @application.post('/api/friday/plans/preview')
     async def friday_plan_preview(request: StarletteRequest):
         from carapace_core.friday_money_plan import MoneyPlanPreview

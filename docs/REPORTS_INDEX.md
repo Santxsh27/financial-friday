@@ -1,5 +1,10 @@
 # Financial Friday — documentation and evidence index
 
+The **0.35.0 goals/research expansion** is described in
+[its implementation report](GOALS_RESEARCH_0350.md). Local checks ran 801 tests
+(800 passed, one skipped), plus 65 tool tests; the container ran 801 tests
+(769 passed, 32 skipped). Consult CURRENT_RELEASE for activation, not this count.
+
 Updated 17 October 2026, deployed statement-only web release **0.34.0** and
 API **0.34.1**, both verified at 100% traffic. The **0.33.0 workflow repair**
 is included: [its repair report](WORKFLOW_REPAIR_0330.md) documents the

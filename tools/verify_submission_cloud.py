@@ -35,6 +35,7 @@ def main():
     p.add_argument('--gcloud',default='gcloud');p.add_argument('--ca-file')
     p.add_argument('--run-live',action='store_true',help='Allow one artificial PDF extraction and one artificial-context chat')
     p.add_argument('--chat-only',action='store_true',help='One general live chat for a telemetry-only follow-up; no statement records')
+    p.add_argument('--goals-only',action='store_true',help='Two bounded Gemini calls plus an exact synthetic scenario; no saved financial inputs')
     args=p.parse_args()
     if not args.run_live:p.error('Explicit --run-live is required; this check consumes bounded trial resources')
     base=validated_origin(args.url)
@@ -83,6 +84,27 @@ def main():
     root=Path(__file__).resolve().parents[1];catalog=json.loads((root/'examples/friday-bank-format-cases.json').read_text())
     results={'owner_data_used':False,'money_moved':False,'new_permissions':False,'format_checks':[]}
     try:
+        if args.goals_only:
+            intake=ok('/v1/friday/goals/interpret',{'message':'Artificial example: a 12 lakh car in 24 months. Monthly income 90000, monthly essentials 40000, existing monthly debt 5000, liquid savings 3 lakh, protected buffer 1 lakh.','confirm_send_to_gemini':True})
+            f=intake['fields']
+            expected={'price_inr':'1200000','months':24,'monthly_income_inr':'90000','monthly_essentials_inr':'40000','monthly_existing_debt_inr':'5000','savings_inr':'300000','protected_buffer_inr':'100000'}
+            from decimal import Decimal
+            assert set(f)==set(expected) and all(Decimal(str(f[k]))==Decimal(str(v)) for k,v in expected.items())
+            payload={k:f[k] for k in ('monthly_income_inr','monthly_essentials_inr','monthly_existing_debt_inr','savings_inr','protected_buffer_inr')}
+            payload.update(goals=[{'title':'Artificial car','price_inr':f['price_inr'],'months':f['months']}],confirm_assumptions=True)
+            scenario=ok('/v1/friday/goals/preview',payload)
+            assert scenario['baseline']['funded_count']==1 and scenario['stress']['funded_count']==0
+            assert scenario['stress']['goals'][0]['gap_inr']=='232000.00'
+            assert not scenario['persisted'] and not scenario['money_moved']
+            research=ok('/v1/friday/research',{'topic':'GOLD','city':'Chennai','confirm_public_search':True})
+            assert research['sources'] and research['search_suggestions_html'] and research['facts']
+            assert not research['quote_feed'] and not research['private_records_used'] and not research['independently_fact_checked']
+            assert not ok('/v1/friday/statements')['imports'] and ok('/v1/friday/mandate')==mandate
+            print(json.dumps({'real_vertex_goal_intake':True,'all_seven_supplied_facts_matched':True,
+                'real_vertex_google_search':True,'provider_sources':len(research['sources']),
+                'grounding_supports':research['grounding_support_count'],'baseline_and_stress_exact':True,
+                'owner_data_used':False,'private_inputs_saved':False,'money_moved':False,'new_permissions':False}),flush=True)
+            return
         if args.chat_only:
             chat=ok('/v1/friday/chat',{'message':'Explain why a loan is not income. Do not perform any action.'})
             assert chat['mode']=='VERTEX_AI' and chat['reply'] and chat['actions_executed']==[]

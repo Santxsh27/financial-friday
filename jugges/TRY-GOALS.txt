@@ -1,0 +1,33 @@
+FINANCIAL FRIDAY — ARTIFICIAL GOAL TEST
+
+This is invented test data, not financial advice or a real person's finances.
+
+1. Home -> Plan my next purchase.
+2. Paste:
+
+I want a 12 lakh car in 24 months. Monthly income 90000, monthly essentials 40000,
+existing monthly debt 5000, liquid savings 3 lakh, protected buffer 1 lakh.
+
+3. Read the disclosure and tick the Gemini-text consent, then Read my goal.
+4. Review the proposed numbers. Missing values must remain blank. If live intake
+   is unavailable, Enter or edit my numbers works without a model.
+5. Keep financing off (100% down payment) for this first example. Confirm the
+   assumptions and Build my visual plan.
+6. Expect initial savings outside buffer INR 200,000, baseline monthly capacity
+   INR 45,000 and an upfront goal INR 1,200,000. At 24 months the baseline funds
+   it, while the stated stress case has a shortfall. Inspect the exact table.
+7. Adjust: add another goal drawing from the SAME savings. Calculate and inspect
+   which target loses funding. The savings must not be counted twice.
+8. Optional financing: enter a user-chosen down-payment percent, interest estimate
+   and term. These are assumptions, not a current bank offer. Confirm and recalculate.
+9. Export my plan downloads the scenario JSON. It is not stored long-term by Friday.
+
+PUBLIC RESEARCH
+Home -> Research gold or fuel (or Research financing from a plan).
+Choose city/topic, read the separate disclosure, confirm public Google research,
+then Search with Friday. Expect dated source-linked information and Google Search
+Suggestions. It must not label an unattributed answer live. No private statements
+or chat history are included. The source date may differ from retrieval time.
+
+The model may fail, a source may be unavailable, and existing demo limits apply.
+No payment, trade, loan approval or forecast is involved.

@@ -17,6 +17,9 @@ _VARIABLES = {
 # Exact registered API templates. Adding a new endpoint does not automatically
 # admit it into the production consumer API or public web proxy.
 CONSUMER_FRIDAY_METHODS = {
+    "goals/preview": frozenset({"POST"}),
+    "goals/interpret": frozenset({"POST"}),
+    "research": frozenset({"POST"}),
     "assistant/briefing-audio": frozenset({"POST"}),
     "statements": frozenset({"GET", "POST"}),
     "statements/prepare": frozenset({"POST"}),

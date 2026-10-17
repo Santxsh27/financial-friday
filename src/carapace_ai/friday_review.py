@@ -33,8 +33,15 @@ def generation_schema(value):
     Stripping generation hints is not stripping Pydantic validation or authority.
     """
     if isinstance(value,dict):
-        return {key:generation_schema(item) for key,item in value.items()
-                if key not in {"pattern","minLength","maxLength","maxItems","default","title"}}
+        result = {}
+        for key, item in value.items():
+            if key in {"properties", "$defs"}:
+                # Names in these maps are user schema fields, not metadata.
+                # A real field named title/default/pattern must not disappear.
+                result[key] = {name: generation_schema(schema) for name, schema in item.items()}
+            elif key not in {"pattern","minLength","maxLength","maxItems","default","title"}:
+                result[key] = generation_schema(item)
+        return result
     if isinstance(value,list):
         return [generation_schema(item) for item in value]
     return value

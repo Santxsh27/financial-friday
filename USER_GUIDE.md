@@ -1,8 +1,32 @@
 # Financial Friday user guide
 
-The main journey is **Add → Review → My money → Ask Friday**. Optional tools
-stay outside it. Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) before
+Choose **Goals** for a purchase plan, **Research** for an explicitly requested
+public-source snapshot, or **Statements** for **Add → Review → My money → Ask Friday**.
+Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) before
 assuming local changes are already on the hosted site.
+
+## Plan a purchase or research a question
+
+Home → Plan my next purchase. Describe the goal and whatever budget facts you
+know. Confirm sending only this text to Gemini, or choose Enter or edit my numbers
+without an AI call. Review the proposed fields; fill unknowns honestly. Existing
+debt means monthly repayments, not total debt balance. Savings means available
+liquid savings, not property value or a bank-confirmed balance.
+
+Optional financing starts off at 100% down payment. Enter your own assumed down
+payment/rate/term and extra costs if needed. Add at most two more goals. Review
+and confirm all assumptions, then Build my visual plan. Inspect baseline/stress
+cards, timeline and exact figures. Adjust recalculates; Export downloads JSON.
+The app does not remember these goals after reload. No return or price forecast.
+
+Research current info opens a separate tool. Choose city/topic or type a public
+financial question, without account details or personal financial circumstances.
+Confirm public Google processing and press Search. Inspect source dates, units,
+source links and Google Search Suggestions. A retrieval time is not the price's
+date; these are research results, not a streaming feed or personalised advice.
+A failure is not replaced by a made-up figure. Saved statements are not shared.
+
+[Artificial goal walkthrough](jugges/TRY-GOALS.txt).
 
 ## Sign in and identify your workspace
 

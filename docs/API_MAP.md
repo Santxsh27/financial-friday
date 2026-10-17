@@ -1,6 +1,6 @@
 # Financial Friday current API map
 
-Statement-first consumer release 0.34.0. Actual deployed version and source:
+Statement consumer product with 0.35.0 goal/research extension. Actual deployed version and source:
 [CURRENT_RELEASE](CURRENT_RELEASE.json). Schema authority is the running API's
 OpenAPI document. The private API is not the judge-facing website.
 
@@ -8,6 +8,19 @@ The browser calls its same-origin /api/friday proxy. Google IAP verifies identit
 the gateway derives tenant credentials and invokes the private /v1/friday API.
 The consumer allowlist is explicit in src/carapace_core/friday_surface.py.
 X-Request-ID correlates bounded telemetry; it grants no authority.
+
+## Goals and public research
+
+| Method and path | Meaning |
+| --- | --- |
+| POST /v1/friday/goals/interpret | Explicitly consented Gemini extraction of quoted numbers from supplied goal text only; no saved history. |
+| POST /v1/friday/goals/preview | Confirmed INR shared-budget baseline/stress calculator; no model, persistence or financial action. |
+| POST /v1/friday/research | Explicitly consented public Google Search grounding through Vertex AI; provider attribution required. Never loads private records. |
+
+These routes use the same authenticated gateway and existing visitor limits.
+Research is not a streaming quote feed, independently verified market data or
+personalised investment recommendation. Goal scenarios are conditional on the
+confirmed inputs, not lender eligibility or advice.
 
 ## Statement journey
 

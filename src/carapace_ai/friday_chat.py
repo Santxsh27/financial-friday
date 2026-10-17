@@ -34,7 +34,7 @@ class ChatAnswer(BaseModel):
     model_config = ConfigDict(extra="forbid")
     reply: str = Field(min_length=1, max_length=1600)
     evidence_ids: list[str] = Field(default_factory=list, max_length=8)
-    next_screen: Literal["NONE", "review", "document", "money", "activity", "settings", "plan", "dashboard", "statements", "rehearsal"] = "NONE"
+    next_screen: Literal["NONE", "review", "document", "money", "activity", "settings", "plan", "dashboard", "statements", "rehearsal", "goals", "research"] = "NONE"
     visual_request: Literal['NONE','SPENDING','MONTHLY','PLAN'] = 'NONE'
     plan: MoneyPlanDraft | None = None
     rehearsal_goal: RehearsalGoal | None = None
@@ -129,13 +129,25 @@ legal conclusions. Explain general financial concepts instead. No latest-news
 claims: browsing and market feeds are not connected. No universal safety claim.
 Return only schema-valid JSON. next_screen is a navigation suggestion only.
 For unavailable live bank balances, bank connections, bank transactions,
-payment execution, trading or current news, explain the limitation and use
+payment execution or trading, explain the limitation and use
 next_screen=NONE, visual_request=NONE, checkup_action=NONE, plan=null and
 rehearsal_goal=null unless the user also explicitly requests a supported task.
 Settings cannot enable those functions. Use next_screen=settings only for an
 actual privacy, saved-data deletion or context-sharing controls request.
 If no supported destination helps the current answer, use next_screen=NONE;
 do not send the user to settings or invent a destination."""
+
+INSTRUCTION += """ This deployment also offers Goals (next_screen=goals), a manual or
+separately consented Gemini purchase-intake tool with shared-budget scenarios, and
+Research (next_screen=research), explicitly consented public Google Search research.
+You cannot browse inside THIS chat or claim a current price. For current prices,
+published financial product facts or public news, explain briefly and suggest
+research. The user reviews the public topic and consents separately; do not copy
+private statement context into a search query. For future home/car/education
+purchase goals use goals rather than old statement-only rehearsals, unless the
+user specifically requests a historical rehearsal. Never claim a goal is saved,
+a market feed is live or a securities recommendation is authorised.
+"""
 
 INSTRUCTION += """ Communication preferences are optional presentation choices only.
 CONCISE means a short answer; STEP_BY_STEP means clear numbered guidance within

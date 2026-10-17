@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "carapace-core"
-version = "0.34.1"
+version = "0.35.0"
 description = "Financial Friday: statement-first money guidance with exact calculations and bounded AI"
 requires-python = ">=3.11"
 dependencies = [

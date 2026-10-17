@@ -15,6 +15,7 @@ LOG.propagate = False
 _PURPOSES = frozenset({
     "task_prepare", "diary_prepare", "statement_extract", "document_review",
     "statement_coach", "rehearsal_interpret", "rehearsal_explain", "briefing_audio", "test",
+    "goal_intake", "public_research",
 })
 _MODEL = re.compile(r"(?:models/)?(gemini-[A-Za-z0-9][A-Za-z0-9._-]{0,93}|model)\Z", re.ASCII)
 _VERSION = re.compile(r"v?[0-9]{1,10}(?:[._-][0-9]{1,10}){0,5}\Z", re.ASCII)

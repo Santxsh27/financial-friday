@@ -1,6 +1,6 @@
 # Financial Friday technical specification
 
-Statement-first consumer release 0.34, with API telemetry follow-up 0.34.1.
+Goal/research expansion 0.35.0 over the statement-first consumer foundation.
 Deployment identity, source commits, verification and remaining gates are recorded
 in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json), not inferred from this document.
 
@@ -16,6 +16,31 @@ official credit score or continuously listening assistant. It cannot pay, revers
 recover funds, cancel subscriptions, submit complaints, change bank records or
 guarantee savings. A finding means review may be useful, not fraud was proved.
 The separate bill/receipt inbox is not part of the consumer release.
+
+## Goal and research extension (0.35.0)
+
+Home also offers Goals: one explicitly confirmed budget funds up to three
+purchase targets over 1–60 months. A pure integer-paise earliest-deadline-first
+engine excludes/tops up the selected buffer, allocates savings once, estimates
+monthly-rounded financing and computes baseline/adverse scenarios. It is not
+an optimal financial strategy, return forecast, investment selection or loan
+approval. Fees, future recurring costs and prices are user assumptions, not
+automatically researched inputs. Goals remain in page memory; export is explicit.
+
+Gemini goal intake receives only the supplied text after consent. Every proposed
+number must bind to a literal quote, including supported lakh/crore conversion;
+missing fields stay unknown and require review. No statement-derived income or
+personal facts are inferred into a plan. Research is a separate consented public
+question/topic, with no private portfolio/preferences/history reads. Provider
+grounding sources and Google Search Suggestions are required. Output is sourced
+model text, not an independently checked market feed or personalised investment
+advice. Suggestions render unmodified in a script-disabled sandbox with an outer
+new-tab base target. Other output uses text nodes, not model HTML.
+
+Authenticated read-only endpoints: POST /v1/friday/goals/interpret,
+/goals/preview and /research. Existing visitor method quotas apply. The separate
+tools do not give ordinary chat browsing or payment authority. See
+[the full extension report](docs/GOALS_RESEARCH_0350.md).
 
 ## 2. Inputs and extraction
 

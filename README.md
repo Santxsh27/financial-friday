@@ -1,11 +1,37 @@
 # Financial Friday
 
-**One statement. Less admin. A clearer next step.**
+**Plan what’s next. Research what matters. Understand your money.**
 
-Financial Friday is a statement-first financial assistant for Indian digital-banking
-users. Import a supported INR bank/card PDF or CSV, review the extracted rows once,
-and Friday prepares a visual spending picture, source-linked review candidates,
-refund-evidence worksheets and practical guidance through Gemini on Vertex AI.
+Financial Friday is a financial decision workspace for Indian digital-banking
+users. Describe a purchase goal, review the proposed facts and compare exact
+shared-budget scenarios. Explicit public research retrieves attributed information
+through Gemini on Vertex AI and Google Search. Optional INR bank/card PDF or CSV
+imports provide a separate reviewed spending picture and source-linked guidance.
+
+The goal/research expansion is release **0.35.0**. Consult CURRENT_RELEASE for
+deployment status; source changes are not automatically live.
+
+## Goals and research
+
+- **Goals:** Gemini extracts only quoted numbers from the user's text; missing
+  fields stay empty. Review and confirm the budget before calculating.
+- **One budget, up to three goals:** the same savings cannot be allocated twice.
+  A protected buffer is excluded or topped up first. Earlier deadlines receive
+  funding first; this is a stated policy, not optimal financial advice.
+- **Optional financing:** exact monthly-rounded amortisation, upfront extra costs,
+  later-goal EMI effects and explicit deficits/shortfalls. No lender approval.
+- **Stress comparison:** income −10%, essentials +10%, new loan rate +2 percentage
+  points. These scenarios are not forecasts. No returns/property growth assumed.
+- **Public research:** gold, fuel, home-loan information or a public financial
+  question. Actual provider source links and Search Suggestions are required.
+  Retrieval time is not a quote date. No licensed streaming quote feed is claimed.
+- **Visual output:** goal cards, a shared savings timeline, exact tables and an
+  exportable JSON scenario. Goals stay in page memory, not long-term storage.
+
+Research never loads saved statements, preferences or chat history. Model research
+is not independently fact-checked or a personalised securities recommendation.
+General chat can suggest Goals/Research; these separate tools require explicit
+inputs/consent and are not hidden autonomous actions.
 
 It is a Google Cloud AI Builder Cup 2026 **BFSI: Intelligent Risk, Fraud &
 Financial Experiences** prototype. Its purpose is to reduce the work of understanding
@@ -34,7 +60,7 @@ This repository is private. A GitHub link alone does not grant source access. In
 the required reviewers, or use the organisers' approved source-delivery method.
 The hosted walkthrough and sample downloads do not depend on GitHub access.
 
-## The complete user journey
+## Optional statement journey
 
 1. **Add a statement.** Choose a supported bank/card PDF or CSV and confirm processing.
 2. **Review before saving.** Compare rows, dates, amounts and proposed categories;

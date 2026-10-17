@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "all_data": "ARTIFICIAL. No bank account, person, bank authentication or exact current bank export certification.",
+  "expected": {"transaction_count": 4, "money_in_minor": 5000000, "money_out_minor": 139075, "opening_balance_minor": 1000000, "last_running_balance_minor": 5860925},
+  "cases": [
+    {
+      "file": "01-hdfc-illustration.csv", "delimiter": ",",
+      "basis": "OFFICIAL_ILLUSTRATION_HEADERS_ONLY",
+      "source": "https://www.hdfc.bank.in/terms-and-conditions",
+      "differences": "Own artificial transactions, four-digit years and synthetic banner. This is a CSV rendering of published illustrative headings, not a downloaded HDFC export.",
+      "rows": [
+        ["ARTIFICIAL HDFC illustration-shaped test - NOT a bank document"],
+        ["Sr. No.", "Date", "Narrarion", "Withdrawal", "Deposit", "Closing balance"],
+        ["1", "01-Aug-2026", "Opening Balance", "", "", "10,000.00"],
+        ["2", "02-Aug-2026", "ARTIFICIAL Salary", "", "50,000.00", "60,000.00"],
+        ["3", "03-Aug-2026", "ARTIFICIAL Groceries", "1,234.50", "", "58,765.50"],
+        ["4", "04-Aug-2026", "ARTIFICIAL Metro", "56.25", "", "58,709.25"],
+        ["5", "05-Aug-2026", "ARTIFICIAL Membership", "100.00", "", "58,609.25"]
+      ]
+    },
+    {
+      "file": "02-kotak-illustration.csv", "delimiter": ",",
+      "basis": "OFFICIAL_ILLUSTRATION_HEADERS_AND_LITERAL_STYLE",
+      "source": "https://www.kotak.bank.in/en/get-help/accounts.html",
+      "differences": "Own artificial transactions and dates. No logo or customer data. Not an exact current downloaded Kotak statement.",
+      "rows": [
+        ["ARTIFICIAL Kotak illustration-shaped test - NOT a bank document"],
+        ["Sr. no.", "Date", "Narration", "Withdrawal", "Deposit", "Closing balance"],
+        ["1", "August 1st, 2026", "Opening Balance", "", "", "Rs. 10,000/-"],
+        ["2", "August 2nd, 2026", "ARTIFICIAL Salary", "", "Rs. 50,000/-", "Rs. 60,000/-"],
+        ["3", "August 3rd, 2026", "ARTIFICIAL Groceries", "Rs. 1,234.50/-", "", "Rs. 58,765.50/-"],
+        ["4", "August 4th, 2026", "ARTIFICIAL Metro", "Rs. 56.25/-", "", "Rs. 58,709.25/-"],
+        ["5", "August 5th, 2026", "ARTIFICIAL Membership", "Rs. 100/-", "", "Rs. 58,609.25/-"]
+      ]
+    },
+    {
+      "file": "03-icici-candidate.csv", "delimiter": ",",
+      "basis": "SYNTHETIC_CANDIDATE_NOT_VERIFIED_EXPORT_LAYOUT",
+      "source": "https://www.icici.bank.in/personal-banking/ways-to-bank/net-banking/online-services",
+      "differences": "Official source confirms PDF and CSV availability only. Headings are a synthetic candidate, not verified ICICI export headings.",
+      "rows": [
+        ["ARTIFICIAL ICICI candidate test - NOT a bank document"],
+        ["Detailed Statement"],
+        ["S No.", "Value Date", "Transaction Date", "Transaction Remarks", "Withdrawal Amount (INR)", "Deposit Amount (INR)", "Balance (INR)"],
+        ["1", "01/08/2026", "01/08/2026", "Opening Balance", "", "", "10,000.00"],
+        ["2", "02/08/2026", "02/08/2026", "ARTIFICIAL Salary", "", "50,000.00", "60,000.00"],
+        ["3", "03/08/2026", "03/08/2026", "ARTIFICIAL Groceries", "1,234.50", "", "58,765.50"],
+        ["4", "04/08/2026", "04/08/2026", "ARTIFICIAL Metro", "56.25", "", "58,709.25"],
+        ["5", "05/08/2026", "05/08/2026", "ARTIFICIAL Membership", "100.00", "", "58,609.25"]
+      ]
+    },
+    {
+      "file": "04-tab-export-candidate.csv", "delimiter": "\t",
+      "basis": "GENERIC_SYNTHETIC_STRESS_CASE_NO_BANK_CERTIFICATION",
+      "source": null,
+      "differences": "Tab-delimited .csv to exercise export variation. No claim this is an SBI or any bank's actual export.",
+      "rows": [
+        ["ARTIFICIAL tab-delimited export test - NOT a bank document"],
+        ["Txn Date", "Value Date", "Description", "Ref No./Cheque No.", "Debit", "Credit", "Balance"],
+        ["01/08/2026", "01/08/2026", "Opening Balance", "", "", "", "10000.00"],
+        ["02/08/2026", "02/08/2026", "ARTIFICIAL Salary", "TEST-001", "-", "50000.00", "60000.00"],
+        ["03/08/2026", "03/08/2026", "ARTIFICIAL Groceries", "TEST-002", "1234.50", "-", "58765.50"],
+        ["04/08/2026", "04/08/2026", "ARTIFICIAL Metro", "TEST-003", "56.25", "-", "58709.25"],
+        ["05/08/2026", "05/08/2026", "ARTIFICIAL Membership", "TEST-004", "100.00", "-", "58609.25"]
+      ]
+    },
+    {
+      "file": "05-semicolon-export-candidate.csv", "delimiter": ";",
+      "basis": "GENERIC_SYNTHETIC_STRESS_CASE_NO_BANK_CERTIFICATION",
+      "source": null,
+      "differences": "Reordered columns, semicolon delimiter and dotted dates. No claim this is an Axis or any bank's actual export.",
+      "rows": [
+        ["ARTIFICIAL semicolon export test - NOT a bank document"],
+        ["Value Date", "Particulars", "Balance (INR)", "Credit Amount", "Tran Date", "Debit Amount", "Chq No."],
+        ["01.08.2026", "Opening Balance", "10,000.00", "", "01.08.2026", "", ""],
+        ["02.08.2026", "ARTIFICIAL Salary", "60,000.00", "50,000.00", "02.08.2026", "", ""],
+        ["03.08.2026", "ARTIFICIAL Groceries", "58,765.50", "", "03.08.2026", "1,234.50", ""],
+        ["04.08.2026", "ARTIFICIAL Metro", "58,709.25", "", "04.08.2026", "56.25", ""],
+        ["05.08.2026", "ARTIFICIAL Membership", "58,609.25", "", "05.08.2026", "100.00", ""]
+      ]
+    }
+  ]
+}

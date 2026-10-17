@@ -1,0 +1,7 @@
+ARTIFICIAL tab-delimited export test - NOT a bank document						
+Txn Date	Value Date	Description	Ref No./Cheque No.	Debit	Credit	Balance
+01/08/2026	01/08/2026	Opening Balance				10000.00
+02/08/2026	02/08/2026	ARTIFICIAL Salary	TEST-001	-	50000.00	60000.00
+03/08/2026	03/08/2026	ARTIFICIAL Groceries	TEST-002	1234.50	-	58765.50
+04/08/2026	04/08/2026	ARTIFICIAL Metro	TEST-003	56.25	-	58709.25
+05/08/2026	05/08/2026	ARTIFICIAL Membership	TEST-004	100.00	-	58609.25

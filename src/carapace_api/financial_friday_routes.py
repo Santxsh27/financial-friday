@@ -96,7 +96,7 @@ def register_financial_friday_routes(application, service, authenticate):
     from carapace_ai.friday_diary import DiaryParseRequest, parse_diary, diagnose_diary_error
     service.diary = FridayDiary(service)
     from .friday_portfolio import FridayPortfolio
-    from carapace_core.friday_portfolio import SaveStatement, StatementVisibility, summarize_statements
+    from carapace_core.friday_portfolio import SaveStatement, StatementVisibility, StatementSelection, summarize_statements
     from carapace_core.friday_checkup import ReviewFinding, FindingRequest, prepare_enquiry
     service.portfolio = FridayPortfolio(service)
 
@@ -134,6 +134,11 @@ def register_financial_friday_routes(application, service, authenticate):
     @application.post('/v1/friday/statements/visibility',tags=['friday-statements'])
     def statement_visibility(payload: StatementVisibility,tenant: TenantContext=Depends(authenticate)):
         try:return service.portfolio.set_visibility(tenant.tenant_id,payload)
+        except ValueError as error:raise HTTPException(409,str(error)) from error
+
+    @application.post('/v1/friday/statements/selection', tags=['friday-statements'])
+    def statement_selection(payload: StatementSelection, tenant: TenantContext=Depends(authenticate)):
+        try:return service.portfolio.select_sources(tenant.tenant_id, payload)
         except ValueError as error:raise HTTPException(409,str(error)) from error
 
     @application.post('/v1/friday/statements/findings/review',tags=['friday-statements'])

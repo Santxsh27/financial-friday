@@ -16,7 +16,10 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, model_validator
 
 def source_money_minor(text: str, *, signed: bool = False) -> int:
     """Parse literal INR rupees with exact integer-paise arithmetic."""
-    value = text.strip().removeprefix('INR').removeprefix('₹').strip()
+    value = text.strip()
+    value = re.sub(r'^(?:INR\s*|₹\s*|Rs\.?\s*)', '', value, flags=re.I)
+    if value.endswith('/-'):
+        value = value[:-2].strip()
     negative = value.startswith('-')
     if negative:
         if not signed:
@@ -42,7 +45,7 @@ class SourceReference(BaseModel):
 def _literal_in_source(literal, refs):
     # A number must be a whole source token, not a substring of another amount.
     source = ' '.join(ref.text for ref in refs)
-    numeric = bool(re.fullmatch(r'(?:INR\s*|₹\s*)?-?\d[\d,.]*', literal))
+    numeric = bool(re.fullmatch(r'(?:INR\s*|₹\s*|Rs\.?\s*)?-?\d[\d,.]*(?:/-)?', literal, re.I))
     found = re.search(r'(?<![\d.,+-])' + re.escape(literal) + r'(?![\d.,])', source) if numeric else literal in source
     if not literal or not found:
         raise ValueError('Declared facts require their exact literal source value')
@@ -78,7 +81,8 @@ class CountSourceFact(BaseModel):
 
 CONVENTION_LITERALS = {
     'BANK_CREDIT_INCREASES': ('credits increase balance; debits decrease balance',
-                             'withdrawal amt.,deposit amt.,closing balance'),
+                             'withdrawal amt.,deposit amt.,closing balance',
+                             'withdrawal,deposit,closing balance'),
     'CARD_DEBIT_INCREASES_AMOUNT_DUE': ('debits increase amount due; credits decrease amount due',),
     'CARD_CREDIT_INCREASES_AMOUNT_DUE': ('credits increase amount due; debits decrease amount due',),
 }
@@ -117,7 +121,7 @@ class OrderingSourceFact(BaseModel):
 class StatementSourceFacts(BaseModel):
     """Optional evidence only. No client-computed reconciliation status is accepted."""
     model_config = ConfigDict(extra='forbid')
-    adapter: Literal['CANONICAL_V1', 'BANK_STYLE_V1', 'PDF_TEXT', 'OCR_TEXT'] = 'CANONICAL_V1'
+    adapter: Literal['CANONICAL_V1', 'BANK_STYLE_V1', 'BANK_EXPORT_V2', 'PDF_TEXT', 'OCR_TEXT'] = 'CANONICAL_V1'
     opening_balance: MinorSourceFact | None = None
     closing_balance: MinorSourceFact | None = None
     debit_total: MinorSourceFact | None = None

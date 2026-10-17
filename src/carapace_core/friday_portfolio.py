@@ -73,6 +73,22 @@ class StatementVisibility(BaseModel):
     workspace_generation: str = Field(min_length=1,max_length=80)
 
 
+class StatementSelection(BaseModel):
+    """An atomic, reversible analysis selection; never a deletion request."""
+    model_config = ConfigDict(extra='forbid')
+    included_sources: list[str] = Field(max_length=10)
+    expected_revision: int = Field(ge=0, strict=True)
+    workspace_generation: str = Field(min_length=1, max_length=80)
+
+    @model_validator(mode='after')
+    def check(self):
+        if any(not re.fullmatch(r'[a-f0-9]{64}', value) for value in self.included_sources):
+            raise ValueError('Choose saved statement sources only')
+        if len(set(self.included_sources)) != len(self.included_sources):
+            raise ValueError('Statement selection must be unique')
+        return self
+
+
 def classify(description, debit):
     """Conservative local proposals. Generic credits are not guessed salary."""
     d = description.casefold()

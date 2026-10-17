@@ -514,3 +514,22 @@ is a functional AI-assisted financial experience and bounded-execution prototype
 not a claimed replacement for banking infrastructure. Review the official
 [requirements](https://aibuildercup.com/themes.html) and
 [submission checklist](docs/submission/README.md).
+
+## Local workflow repair 0.33.0
+
+The local consumer journey is Home → Add statement → Preview → My money →
+Ask Friday. Statements is the saved-source library, not another upload page.
+Selected imports are shown by nickname/type, dates, row count and source identity.
+An authenticated, revision/generation-bound bulk selection updates all inclusions
+atomically. Starting a new review excludes earlier imports without deleting them;
+restore remains available. Charts, checks and shared Gemini context use that same
+selection. Chat preparation does not cause unsolicited page navigation.
+
+Bank-export CSV support uses explicit bounded adapters, not a universal format
+guarantee. Unknown financial headings/rows fail without partial import. Actual
+ICICI compatibility still requires authorised redacted exports. Five artificial
+public-illustration/candidate CSV layouts are independently checked; the source
+and limitations are listed in `jugges/bank-formats/README.md`. This is parser
+compatibility work, not Gemini fine-tuning. Deployment identities
+remain in CURRENT_RELEASE; local version 0.33.0 is not yet the hosted release.
+See [the workflow repair report](docs/WORKFLOW_REPAIR_0330.md).

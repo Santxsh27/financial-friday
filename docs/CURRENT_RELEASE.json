@@ -1,4 +1,11 @@
 {
+  "local_code_version": "0.33.0",
+  "workflow_repair_status": "LOCAL_TESTS_VERIFIED_CLOUD_NOT_DEPLOYED",
+  "local_0330_native_tests": {"ran":770,"passed":769,"skipped":1},
+  "local_0330_docker_tests": {"ran":770,"passed":738,"skipped":32},
+  "local_0330_bank_format_cases": 5,
+  "local_0330_bank_model_calls": 0,
+  "workflow_repair_report": "docs/WORKFLOW_REPAIR_0330.md",
   "code_version": "0.32.0",
   "web_ui_version": "consumer-assurance-0.32.0",
   "deployment_status": "DEPLOYED_VERIFIED",

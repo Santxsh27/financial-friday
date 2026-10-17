@@ -222,7 +222,14 @@ def _extract_source_facts(extracted, units, page_count, adapter):
 def extract_statement(planner, *, data, mime, account_alias, account_type, use_ai, grounder=None, reserve=None):
     digest=hashlib.sha256(data).hexdigest()
     if mime=='text/csv':
-        text=data.decode('utf-8-sig')
+        try:
+            # UTF-16 is accepted only with its BOM. Never silently replace bytes
+            # or guess legacy encodings which could alter financial fields.
+            text=data.decode('utf-16' if data.startswith((b'\xff\xfe',b'\xfe\xff')) else 'utf-8-sig')
+        except UnicodeError as error:
+            raise ValueError('Use a UTF-8 or BOM-marked UTF-16 CSV, or the original PDF export') from error
+        if '\x00' in text:
+            raise ValueError('CSV contains unsupported binary or unmarked UTF-16 data')
         parsed=parse_statement_csv(text,account_type=account_type)
         if parsed['transaction_count']>500:raise ValueError('Import at most 500 rows per CSV; split a larger export')
         entries=[]

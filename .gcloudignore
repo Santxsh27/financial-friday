@@ -11,4 +11,7 @@ build
 dist
 *.egg-info
 .env
+archive/
+my-testing/
+jugges/
 work

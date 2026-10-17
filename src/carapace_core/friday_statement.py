@@ -3,24 +3,16 @@ from __future__ import annotations
 
 import csv
 import io
-import re
 from collections import Counter, defaultdict
 from datetime import datetime
-from decimal import Decimal
 from hashlib import sha256
+from .friday_statement_reconciliation import source_money_minor
 
 
 def _money(value: str) -> int:
-    value = value.strip().removeprefix("INR").removeprefix("₹").strip()
-    if not value:
+    if not value.strip():
         return 0
-    if "," in value:
-        if not re.fullmatch(r"(?:\d{1,3}(?:,\d{3})+|\d{1,2}(?:,\d{2})*,\d{3})(?:\.\d{1,2})?", value):
-            raise ValueError("Invalid amount grouping")
-        value = value.replace(",", "")
-    if not re.fullmatch(r"\d{1,12}(?:\.\d{1,2})?", value):
-        raise ValueError("Amounts must be non-negative INR values with at most two decimals")
-    return int(Decimal(value) * 100)
+    return source_money_minor(value)
 
 
 def analyze_statement(text: str, *, include_entries: bool = False) -> dict:

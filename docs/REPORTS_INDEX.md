@@ -1,6 +1,9 @@
 # Financial Friday — documentation and evidence index
 
 Updated 17 October 2026, deployed consumer release **0.32.0**.
+Local **0.33.0 workflow repair** is separate: see
+[its repair report](WORKFLOW_REPAIR_0330.md), including the source-selection
+contract, browser captures, Desktop organization and remaining acceptance work.
 Deployed versions are listed below and
 in CURRENT_RELEASE rather than inferred from a source version. Start here to separate
 what is implemented, what was verified, and what is proposed. GitHub code is not

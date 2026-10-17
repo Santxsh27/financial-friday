@@ -2,6 +2,22 @@
 
 **One statement. Less admin. A clearer next step.**
 
+### Workflow repair 0.33.0
+
+The local build adds a statement library, explicit analysis-source selection,
+reversible **Start a new review**, visible **Listen** access, history-aware Back
+navigation and chat results that open only when requested. Bank-export CSV
+headings and recognised preambles no longer require demo-column rewriting.
+Compatibility is bounded: synthetic export-shaped tests are not validation of
+every real ICICI statement. Source files remain saved when excluded from review.
+
+Use [Start Here](START_HERE.md), the replaced [user guide](USER_GUIDE.md), and
+[judge samples](jugges/README.md) for the current journey. The one working Desktop
+folder is `CARAPACE`; old snapshots and personal testing now live inside it,
+excluded from Git and image uploads. This repair is being verified locally;
+the hosted service remains the 0.32.0 release described below until an explicit
+verified rollout. [Workflow report](docs/WORKFLOW_REPAIR_0330.md).
+
 ### Consumer assurance release 0.32.0
 
 Current source work narrows the consumer API and web proxy to explicit routes;

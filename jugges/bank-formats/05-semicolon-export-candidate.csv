@@ -1,0 +1,7 @@
+ARTIFICIAL semicolon export test - NOT a bank document;;;;;;
+Value Date;Particulars;Balance (INR);Credit Amount;Tran Date;Debit Amount;Chq No.
+01.08.2026;Opening Balance;10,000.00;;01.08.2026;;
+02.08.2026;ARTIFICIAL Salary;60,000.00;50,000.00;02.08.2026;;
+03.08.2026;ARTIFICIAL Groceries;58,765.50;;03.08.2026;1,234.50;
+04.08.2026;ARTIFICIAL Metro;58,709.25;;04.08.2026;56.25;
+05.08.2026;ARTIFICIAL Membership;58,609.25;;05.08.2026;100.00;

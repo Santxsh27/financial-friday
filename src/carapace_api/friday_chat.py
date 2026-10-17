@@ -51,7 +51,10 @@ def reply_to_user(service, review, bank, tenant, request):
         raise ValueError('Shared records changed during this answer; reload before relying on it')
     result['context_receipt']={'statement_totals':'SHARED' if statements else 'EMPTY' if request.include_statements else 'NOT_SHARED',
         'financial_inbox':'SHARED' if request.include_workspace else 'NOT_SHARED',
-        'transaction_descriptions_shared':False,'bank_connected':False}
+        'transaction_descriptions_shared':False,'bank_connected':False,
+        'statement_revision':view['revision'] if view else None,
+        'included_statement_count':view['summary']['statement_count'] if view else 0,
+        'statement_period':view['summary']['period'] if view else None}
     if view:
         current=service.portfolio.view(tenant)
         if (current['revision'],current['workspace_generation'])!=(view['revision'],view['workspace_generation']):

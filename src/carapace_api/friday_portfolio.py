@@ -41,6 +41,7 @@ class FridayPortfolio:
             'checkup':build_checkup(included,summary,record.get('reviewed_findings',[]) if record else []),
             'imports':[{'source_sha256':s['source_sha256'],'account_alias':s['account_alias'],'account_type':s['account_type'],
                 'extraction':s['extraction'],'row_count':len(s['entries']),'excluded':s['source_sha256'] in record.get('excluded',[]),
+                'period': {'start': min(e['date'] for e in s['entries']), 'end': max(e['date'] for e in s['entries'])},
                 **self.import_checks(tenant,generation,s)} for s in record['statements']] if record else [],
             'raw_file_stored':False,'payment_authorized':False,'updated_at':record.get('updated_at') if record else None}
         view['assistant_work']=build_assistant_work(view)
@@ -80,6 +81,14 @@ class FridayPortfolio:
                 existing=next((s for s in old['statements'] if s['source_sha256']==statement['source_sha256']),None)
                 if existing:
                     if StatementImport.model_validate(existing).model_dump(mode='json',exclude_none=True)!=statement:raise ValueError('This source was already imported with different details; do not count it twice')
+                    if statement['source_sha256'] in old.get('excluded', []):
+                        if request.expected_revision != old['revision']:
+                            raise ValueError('Statement selection changed; reload before restoring this source')
+                        result = deepcopy(old)
+                        result['excluded'].remove(statement['source_sha256'])
+                        result['revision'] += 1
+                        result['updated_at'] = datetime.now(timezone.utc).isoformat()
+                        return result
                     return old
             if request.expected_revision!=(old['revision'] if old else 0):raise ValueError('Statements changed in another session; reload before saving')
             result=deepcopy(old) if old else {'generation':generation,'revision':0,'statements':[]}
@@ -141,6 +150,45 @@ class FridayPortfolio:
                 record=update(json.loads(old[0]) if old else None)
                 db.execute('INSERT OR REPLACE INTO friday_portfolio VALUES (?,?)',(tenant,json.dumps(record)))
         return self.view(tenant,record)
+
+    def select_sources(self, tenant, request):
+        """All-or-nothing source selection, shared by charts and model context.
+
+        The generation and revision are checked even for no-op requests. No
+        statements, review history, diary or other records are erased.
+        """
+        generation = privacy_generation(self.service, tenant)
+        if request.workspace_generation != str(generation):
+            raise ValueError('Workspace changed; reload Statements first')
+
+        def update(old):
+            if not old or old['generation'] != generation:
+                raise ValueError('No saved statement history')
+            if request.expected_revision != old['revision']:
+                raise ValueError('Statement selection changed in another tab; reload first')
+            sources = {s['source_sha256'] for s in old['statements']}
+            if not set(request.included_sources) <= sources:
+                raise ValueError('Statement is not in this workspace')
+            excluded = sources - set(request.included_sources)
+            if excluded == set(old.get('excluded', [])):
+                return old
+            result = deepcopy(old)
+            result['excluded'] = sorted(excluded)
+            result['revision'] += 1
+            result['updated_at'] = datetime.now(timezone.utc).isoformat()
+            return result
+
+        if self.service.durable.mode == 'FIRESTORE_TRANSACTIONAL':
+            record = self.service.durable.update_portfolio(tenant, generation, update)
+        else:
+            with self.service.connect() as db:
+                db.execute('BEGIN IMMEDIATE')
+                if privacy_generation(self.service, tenant, db) != generation:
+                    raise ValueError('Workspace changed while selecting sources')
+                row = db.execute('SELECT record FROM friday_portfolio WHERE tenant=?', (tenant,)).fetchone()
+                record = update(json.loads(row[0]) if row else None)
+                db.execute('INSERT OR REPLACE INTO friday_portfolio VALUES (?,?)', (tenant, json.dumps(record)))
+        return self.view(tenant, record)
 
     def set_visibility(self,tenant,request):
         generation=privacy_generation(self.service,tenant)

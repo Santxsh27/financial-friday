@@ -475,6 +475,7 @@ def create_demo_app() -> FastAPI:
     @application.post('/api/friday/statements/findings/review')
     @application.post('/api/friday/statements/findings/enquiry')
     @application.post('/api/friday/statements/visibility')
+    @application.post('/api/friday/statements/selection')
     async def friday_statement_input(request: StarletteRequest):
         data=bytearray()
         async for chunk in request.stream():
@@ -484,7 +485,7 @@ def create_demo_app() -> FastAPI:
             import json
             payload=json.loads(data)
         except (ValueError,UnicodeError) as error:raise HTTPException(422,'Invalid statement request') from error
-        path='/v1/friday/statements'+('/prepare' if request.url.path.endswith('/prepare') else '/visibility' if request.url.path.endswith('/visibility') else '/findings/review' if request.url.path.endswith('/findings/review') else '/findings/enquiry' if request.url.path.endswith('/findings/enquiry') else '')
+        path='/v1/friday/statements'+('/prepare' if request.url.path.endswith('/prepare') else '/visibility' if request.url.path.endswith('/visibility') else '/selection' if request.url.path.endswith('/selection') else '/findings/review' if request.url.path.endswith('/findings/review') else '/findings/enquiry' if request.url.path.endswith('/findings/enquiry') else '')
         code,result=await run_in_threadpool(_api_call,api_base_url,path,'POST',payload,150)
         if code!=200:raise HTTPException(code,result.get('detail','Statement request was not confirmed'))
         return result

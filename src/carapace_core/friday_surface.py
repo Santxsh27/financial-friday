@@ -21,6 +21,7 @@ CONSUMER_FRIDAY_METHODS = {
     "statements": frozenset({"GET", "POST"}),
     "statements/prepare": frozenset({"POST"}),
     "statements/visibility": frozenset({"POST"}),
+    "statements/selection": frozenset({"POST"}),
     "statements/findings/review": frozenset({"POST"}),
     "statements/findings/enquiry": frozenset({"POST"}),
     "statements/analyze": frozenset({"POST"}),

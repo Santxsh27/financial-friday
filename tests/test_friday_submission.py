@@ -81,5 +81,19 @@ class SubmissionTests(unittest.TestCase):
             self.assertIn('STATEMENT-ONLY',model.models.generate_content.call_args.kwargs['config'].system_instruction)
             self.assertEqual(result['actions_executed'],[])
 
+    def test_actual_chat_emits_content_free_usage_and_latency(self):
+        model=Mock();model.models.generate_content.return_value=SimpleNamespace(
+            text=json.dumps({'reply':'A loan is not income.','evidence_ids':[]}),
+            model_version='gemini-test',usage_metadata=SimpleNamespace(prompt_token_count=10,candidates_token_count=8,total_token_count=18))
+        planner=GeminiFinancialFridayPlanner(model,'gemini-test','VERTEX_AI')
+        with self.assertLogs('carapace_ai.friday_observability',level='INFO') as logs:
+            answer_chat(planner,FridayChatRequest(message='PRIVATE TEST CONTENT: Explain a loan.'),{},statement_only=True)
+        event=json.loads(logs.records[-1].message)
+        self.assertEqual(event['purpose'],'statement_coach')
+        self.assertEqual(event['tokens']['total_token_count'],18)
+        self.assertIn('duration_ms',event)
+        self.assertNotIn('PRIVATE TEST CONTENT',str(event))
+        self.assertNotIn('A loan is not income',str(event))
+
 
 if __name__=='__main__':unittest.main()

@@ -23,7 +23,7 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note:** local source is 0.34.0. The release manifest distinguishes staged,
+**Release note:** local API source is 0.34.1. The release manifest distinguishes staged,
 promoted and verified revisions. A GitHub commit alone does not deploy Cloud Run.
 Use the deployed version recorded there, not this source number, when evaluating
 the hosted site.

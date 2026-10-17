@@ -34,6 +34,7 @@ def main():
     p.add_argument('--url',required=True);p.add_argument('--project',required=True)
     p.add_argument('--gcloud',default='gcloud');p.add_argument('--ca-file')
     p.add_argument('--run-live',action='store_true',help='Allow one artificial PDF extraction and one artificial-context chat')
+    p.add_argument('--chat-only',action='store_true',help='One general live chat for a telemetry-only follow-up; no statement records')
     args=p.parse_args()
     if not args.run_live:p.error('Explicit --run-live is required; this check consumes bounded trial resources')
     base=validated_origin(args.url)
@@ -82,6 +83,13 @@ def main():
     root=Path(__file__).resolve().parents[1];catalog=json.loads((root/'examples/friday-bank-format-cases.json').read_text())
     results={'owner_data_used':False,'money_moved':False,'new_permissions':False,'format_checks':[]}
     try:
+        if args.chat_only:
+            chat=ok('/v1/friday/chat',{'message':'Explain why a loan is not income. Do not perform any action.'})
+            assert chat['mode']=='VERTEX_AI' and chat['reply'] and chat['actions_executed']==[]
+            assert chat['context_receipt']['statement_totals']=='NOT_SHARED'
+            print(json.dumps({'real_vertex_general_chat':True,'private_financial_context_shared':False,
+                'actions_executed':0,'owner_data_used':False,'money_moved':False}),flush=True)
+            return
         first=None
         for item in catalog['cases']:
             proposal=prepare((root/'src/carapace_integrations/assets'/item['file']).read_bytes(),'text/csv','Artificial release CSV')

@@ -1,4 +1,4 @@
-# Statement-first submission release 0.34.0
+# Statement-first submission release 0.34.0 / API telemetry follow-up 0.34.1
 
 Prepared 17 October 2026. This document separates tested software from pending
 human validation and submission artifacts. It does not certify an error-free
@@ -39,6 +39,18 @@ race and cleanup. It respects the existing burst allowance, makes no payments,
 uses no owner financial history and does not increase permissions or quotas.
 Its source is tools/verify_submission_cloud.py; offline controls reject live use
 without an explicit flag and reject non-fixed API origins.
+
+The full staged 0.34.0 acceptance passed: all five exact CSV controls, one real
+Vertex PDF, one real statement-context chat, a Firestore selection race returning
+409/200, restore without re-upload and verified synthetic cleanup. No owner data,
+money, new permissions or larger quotas were involved. PDF model telemetry recorded
+2,668 ms and 3,636 returned tokens. This is one synthetic call, not a latency/cost SLA.
+
+The log check found chat did not use the shared telemetry wrapper. API 0.34.1
+adds that wrapper with a regression ensuring usage/latency are logged without
+prompt/reply text. A bounded chat-only follow-up is checked before final promotion.
+The final web-only copy change has a separate source identity from the API; the
+release manifest records both rather than claiming one commit built every image.
 
 ## Access and sharing
 

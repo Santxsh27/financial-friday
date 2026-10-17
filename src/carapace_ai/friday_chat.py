@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .friday_review import generation_schema
 from .redaction import redact_for_model
+from .friday_observability import generate
 from carapace_core.friday_money_plan import MoneyPlanDraft
 from carapace_core.friday_rehearsal import RehearsalGoal
 
@@ -294,7 +295,7 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
     redacted = redact_for_model(raw)
     surface_instruction = (' This deployment is STATEMENT-ONLY. Do not offer a bill or receipt inbox, bill upload, payment tools or a connection. For importing bank/card statements use next_screen=statements; for saved statement charts use dashboard. You can explain general bill/loan concepts without claiming a separate bill feature.' if statement_only else '')
     for attempt in range(2):
-        response = planner._client.models.generate_content(
+        response = generate(planner._client, purpose='statement_coach',
             model=planner.model_name, contents=redacted.text,
             config=types.GenerateContentConfig(temperature=0.2, max_output_tokens=2200,
                 system_instruction=INSTRUCTION + surface_instruction + (' Statement totals ARE supplied; financial_inbox is a different permission. Correct the false workspace-permission claim.' if attempt else ''),

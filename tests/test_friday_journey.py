@@ -208,13 +208,17 @@ function renderPlan(){rendered++;}
     def test_route_resolution_and_safe_parents_execute_in_javascript(self):
         node=shutil.which('node')
         if not node:self.skipTest('Node is optional')
-        script=NAVIGATION_HELPERS_JS+"\nconsole.log(JSON.stringify(['dashboard/transactions','money','settings','assistant','library'].map(v=>{const d=fridayDestination(v);return [d,fridayParent(d.screen,d.part)];})));"
+        script=NAVIGATION_HELPERS_JS+"\nconsole.log(JSON.stringify(['dashboard/transactions','money','settings','assistant','library','research','goals'].map(v=>{const d=fridayDestination(v);return [d,fridayParent(d.screen,d.part)];})));"
         result=subprocess.run([node,'-e',script],capture_output=True,text=True,check=True)
         values=json.loads(result.stdout)
         self.assertEqual(values[0],[{'screen':'dashboard','part':'transactions'},'dashboard'])
         self.assertEqual(values[1][0]['screen'],'dashboard')
         self.assertEqual(values[2],[{'screen':'privacy','part':None},'profile'])
         self.assertEqual(values[3][0]['screen'],'coach')
+        self.assertEqual(values[5],[{'screen':'research','part':None},'goals'])
+        self.assertEqual(values[6],[{'screen':'goals','part':None},'home'])
+        labels=subprocess.run([node,'-e',NAVIGATION_HELPERS_JS+"\nconsole.log(JSON.stringify(['goals','research','unknown'].map(fridayScreenLabel)));"],capture_output=True,text=True,check=True)
+        self.assertEqual(json.loads(labels.stdout),['Goals','Research','Home'])
 
     def test_navigation_composed_after_consumer_guards_and_no_model_calls_or_delete(self):
         self.assertIn(NAVIGATION_JS,FINANCIAL_FRIDAY_HTML)

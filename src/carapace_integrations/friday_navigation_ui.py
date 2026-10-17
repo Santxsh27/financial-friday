@@ -26,6 +26,9 @@ NAVIGATION_HELPERS_JS = r'''
         if(screen==='dashboard'&&part)return 'dashboard';
         return ({'statement-review':'statements',statements:'library',plan:'dashboard',rehearsal:'dashboard',privacy:'profile',tools:'profile',document:'profile',review:'document',research:'goals'})[screen]||'home';
       }
+      function fridayScreenLabel(screen){
+        return ({home:'Home',library:'Statements',statements:'Add a statement',dashboard:'My money',profile:'My account',document:'Document review',goals:'Goals',research:'Research'})[screen]||'Home';
+      }
 '''
 
 NAVIGATION_JS = r'''
@@ -77,7 +80,7 @@ NAVIGATION_JS = r'''
         beforeNavigation(target.screen,false);routeKey=key;if(push&&!replacePreview){depth++;history.pushState({fridayNavigation:{session:navSession,depth}},'','#'+key);}else{const saved=history.state?.fridayNavigation;depth=saved?.session===navSession?saved.depth:0;history.replaceState({fridayNavigation:{session:navSession,depth}},'','#'+key);}completedPreview=false;
         const group=['library','statements','statement-review'].includes(target.screen)?'library':['dashboard','plan','rehearsal'].includes(target.screen)?'dashboard':target.screen;nav.querySelectorAll('[data-screen-link]').forEach(b=>b.setAttribute('aria-current',b.dataset.screenLink===group?(target.screen===group?'page':'location'):'false'));
         const dock=root.querySelector('.studio-chat-dock');if(dock&&views[target.screen].parentNode===root)root.insertBefore(views[target.screen],dock);
-        const parent=fridayParent(target.screen,target.part),back=views[target.screen].querySelector('.screen-back');if(back){back.removeAttribute('data-screen-link');back.textContent=depth?'Back':'Back to '+({home:'Home',library:'Statements',statements:'Add a statement',dashboard:'My money',profile:'My account',document:'Document review'})[parent];back.onclick=()=>{if(depth>0)history.back();else show(parent);};}
+        const parent=fridayParent(target.screen,target.part),back=views[target.screen].querySelector('.screen-back');if(back){back.removeAttribute('data-screen-link');back.textContent=depth?'Back':'Back to '+fridayScreenLabel(parent);back.onclick=()=>{if(depth>0)history.back();else show(parent);};}
         const title=views[target.screen].querySelector('h1');if(title&&target.screen==='dashboard')title.textContent=target.part?({transactions:'Your transactions',regular:'Regular payment patterns',findings:'Your review history',shield:'Refund evidence','spending-change':'What changed'})[target.part]||'Your money, checked.':titles.dashboard;
         if(target.screen==='library'){renderLibrary();root.statementWorkspace.reload();}
         if(target.screen==='statements'){const path=views.statements.querySelector('.statement-path');if(path)path.setAttribute('aria-label','Step 1 of 3: upload, review, understand');}

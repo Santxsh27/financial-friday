@@ -1,52 +1,46 @@
-# Financial Friday — Submission Pack
+# Financial Friday submission pack
 
-Use this folder for the final demo script, evaluation results, slides and submission links. Current build status is in [Start Here](../../START_HERE.md), [README](../../README.md) and [SPEC](../../SPEC.md).
+Current statement-first source: 0.34.0. Use the
+[release manifest](../CURRENT_RELEASE.json) for the actual deployed source and
+acceptance status, and [the checklist](RELEASE_CHECKLIST.md) for human submission gates.
 
-**Current handover, 14 October, version 0.22.0:** read [the architecture guide](../../ARCHITECTURE_GUIDE.md),
-[actual deployment manifest](../CURRENT_RELEASE.json) and [reports index](../REPORTS_INDEX.md)
-first. Money Runway adds read-only personal scenarios and optional AI explanations.
-The default
-customer journey is live chat and read-only claim review; artificial execution is
-separate. Earlier scripts/materials need review before being used as final artifacts.
+## What to demonstrate
 
-Implemented evidence: [proposal safety evaluation](SAFETY_EVALUATION.md),
-[security boundaries](SECURITY_BOUNDARIES.md), and [live demo script](DEMO_SCRIPT.md).
-The generated safety corpus is not a live model benchmark.
-The [current readiness checklist](RELEASE_CHECKLIST.md) supersedes earlier readiness
-claims; source reviewers need explicit access to the private GitHub repository.
-Historical readiness verification: [readiness pass](READINESS_1012.md).
-The [October 9 handoff](FINAL_HANDOFF_1009.md) is historical evidence.
-Live multimodal evidence: [document verification](../FRIDAY_DOCUMENT_VERIFICATION_1008.md),
-including the initial failure, fail-closed fix and two successful safety retests.
+1. Open Friday, identify the signed-in Google account and choose the visible sample walkthrough.
+2. Supply a new artificial bank-format CSV or the supported two-row PDF.
+3. Show the unsaved preview, original row references and source-check limitations.
+4. Save once. Show the category visual, source banner and review queue.
+5. Share statement totals explicitly and ask Gemini for a chart or explanation.
+6. Open a detail and use Back. Start a new review, then restore a saved source.
+7. Optionally generate and play the separately consented spoken briefing.
 
-## Demo story
+The five named bank-format CSVs encode the same four transactions. The separate
+generic-bank PDF has two different rows. The in-app 35-row example provides
+richer review candidates. Do not mix these and present the sum as one person's finances.
 
-Start with a useful live question/draft, then review an unfamiliar bill/receipt
-and show an evidence discrepancy. Demonstrate the **separate** execution layer:
-save a sandbox instruction → supply a fresh test-provider bill → Gemini interprets
-it → independent checks enforce permission → one artificial payment → signed
-outcome/replay. Do not imply chat or an uploaded receipt paid through a real bank.
-The connected **Prepare next step** workflow now uses live Gemini risk analysis,
-an expiring evidence-bound task, explicit confirmation and the same execution
-gate. A request-only risk check needs no saved-record access. See the task release
-record for actual live results; do not present these few probes as fraud accuracy.
+## Share these links
 
-Official [requirements](https://aibuildercup.com/themes.html) specify a working
-Google-AI/cloud prototype, proposal deck/PDF and public short demo-video link.
-The [public timeline](https://aibuildercup.com/) checked 14 October lists team
-formation by 14 October and submission by 18 October 2026. Verify the dashboard's
-exact cutoff, eligibility and fields. This update does not submit the entry or
-create the video/deck.
+- [App](https://financial-friday-web-171681243260.asia-south1.run.app/#home)
+- [Walkthrough and downloads](https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judge-guide.html)
+- [Source](https://github.com/Santxsh27/financial-friday) — private; source reviewers need access.
+- [Artificial kit](../../jugges/README.md)
+- [Current user guide](../../USER_GUIDE.md)
+- [Release evidence](../SUBMISSION_READINESS_0340.md)
 
-## Completion checklist
+## Claims and artifacts
 
-- Latest Google Cloud URL and verified version.
-- Live Google AI calls with visible model provenance.
-- New input supplied during the demo.
-- Correct task completed and unsafe task held.
-- Measured completion, false holds, unsafe actions, latency and cost.
-- Architecture, threat model, limits and provider integration roadmap.
-- Repository, video and organizer-required deck/document.
-- Confirmed dashboard deadline, eligibility and team details.
+Describe statement understanding, exact evidence checks, review candidates,
+bounded AI assistance and reduced user administration. Do not claim a real bank
+connection, verified fraud detection, automatic payment/refund/cancellation,
+independently established accuracy or trained ML. Show unknown states and failures honestly.
 
-This pack is complete only when these artifacts and checked links exist.
+Historical scripts in this folder describe earlier bill/artificial-payment experiments.
+They are engineering history, not the current submission demo. In particular, do
+not use the old bill/execution DEMO_SCRIPT as the statement-first walkthrough.
+
+The official [requirements](https://aibuildercup.com/themes.html) specify Google AI,
+a Google Cloud deployment, an English proposal deck/PDF and a public approximately
+three-minute video. The [timeline](https://aibuildercup.com/) checked 17 October
+lists submission on 18 October 2026. Confirm dashboard cutoff/timezone, eligibility,
+team roster, source access and the final acknowledgement. This pack is not the
+finished deck/video or a submitted entry.

@@ -1,160 +1,93 @@
-# Financial Friday — Current API map
+# Financial Friday current API map
 
-Updated 16 October 2026, version 0.31.0. The local OpenAPI reference at
-<http://localhost:8080/docs> is the source for exact request/response schemas.
-Source: `src/carapace_api/financial_friday_routes.py`.
+Statement-first consumer release 0.34.0. Actual deployed version and source:
+[CURRENT_RELEASE](CURRENT_RELEASE.json). Schema authority is the running API's
+OpenAPI document. The private API is not the judge-facing website.
 
-Statement prepare additionally returns `source_bound`, `reconciliation`,
-`save_allowed` and a signed `statement.extraction_receipt`. Preserve the receipt
-when saving reviewed labels. The API verifies it and recomputes checks; mismatches
-or modified source fields fail. Legacy normalized imports have no source-bound
-claim. Responses carry `X-Request-ID` for correlation, never authentication.
+The browser calls its same-origin /api/friday proxy. Google IAP verifies identity;
+the gateway derives tenant credentials and invokes the private /v1/friday API.
+The consumer allowlist is explicit in src/carapace_core/friday_surface.py.
+X-Request-ID correlates bounded telemetry; it grants no authority.
 
-The browser calls `/api/friday/...` on its web origin. The gateway maps approved
-operations to `/v1/friday/...` on the private API. Direct API calls need tenant
-authentication; hosted calls additionally need authorised Cloud Run invocation.
-Do not paste owner credentials into the browser or impersonate another tenant.
+## Statement journey
 
-## Default customer: no financial execution
-
-| Method and path | Purpose / authority |
+| Method and path | Meaning |
 | --- | --- |
-| GET `/api/friday/profile` (web gateway only) | Already verified Google email/provider or explicit local demo identity; no tokens or bank access. |
-| GET `/v1/friday/statements` | Tenant-private normalized history, exact aggregates, import states, revision/generation and automatically prepared `assistant_work`. No financial action. |
-| POST `/v1/friday/assistant/briefing-audio` | Explicit derived-total sharing consent, expected revision/generation; bounded server-composed Gemini TTS briefing returned as in-memory WAV/base64. No arbitrary text, microphone, storage or financial action. Existing visitor quotas apply. |
-| POST `/v1/friday/statements/prepare` | Consented bounded base64 PDF/CSV; unsaved row proposal. PDF uses Google AI, CSV exact local parsing. No financial action. |
-| POST `/v1/friday/statements` | Explicit user-reviewed import; revision/generation, same-source replay guard. Not bank-authenticated evidence. |
-| POST `/v1/friday/statements/visibility` | Reversibly exclude/restore one import from calculations, never a bank correction. |
-| GET `/v1/friday/diary` | Private user-reported diary, chosen-buffer coverage and current revision/generation. No model, bank balance or score. |
-| POST `/v1/friday/diary/prepare` | Explicitly shared text; live Gemini selects grounded source IDs/amounts; unsaved proposal only. |
-| POST `/v1/friday/diary` | Explicit START/ADD/UNDO bookkeeping, operation ID, revision and privacy generation. No payment. |
-| GET `/v1/friday/obligations` | Complete bounded claims, provider matches, constraints and next steps; no model call or payment. |
-| GET `/v1/friday/obligations/{id}/result` | Verify an existing artificial-payment journal record; never retry or claim external settlement. |
-| POST `/v1/friday/chat` | Message, bounded history, optional context; live guidance only. |
-| POST `/v1/friday/plans/preview` | Exact unsaved source-month scenario; target reduction, protected/preferred categories, cut cap, income shock, expected revision and privacy generation. No AI call or execution. |
-| POST `/v1/friday/rehearsals/interpret` | Explicitly consented single Gemini call; question to strict proposed goal/stress fields. No statements, balance or execution. |
-| POST `/v1/friday/rehearsals/preview` | Revision/generation-bound bank-account history replay; daily floors, exact purchase envelope, later date and minimum proportional flexible cut. No model call, save or financial action. |
-| POST `/v1/friday/rehearsals/explain` | Separately consented explanation of server-recomputed result aggregates; no client-supplied result trusted, source freshness checked again after Gemini. No raw descriptions or account aliases sent. |
-| GET `/v1/friday/reviews` | Saved document claims and deterministic reconciliation; read-only. |
-| POST `/v1/friday/reviews` | Read supplied text and save extracted claims; never pay. |
-| POST `/v1/friday/reviews/documents?filename=...` | Raw supported file body; extract/store claims, discard raw upload. |
-| POST `/v1/friday/reviews/statement` | Consented bounded INR CSV claim import, no AI/payment. |
-| POST `/v1/friday/statements/analyze` | Read-only INR CSV spending calculation, not a real balance. |
-| GET `/v1/friday/cashflow` | Latest optional private what-if snapshot; no model call or payment. |
-| POST `/v1/friday/cashflow` | Strict dated INR assumptions, exact cash-flow/daily-cap calculation; transient unless `save_to_workspace:true`. Never pays or trains. |
-| GET `/v1/friday/buddy` | Read-only private saved-record overview; no background monitoring. |
-| GET/PUT `/v1/friday/buddy/preferences` | Communication preferences only; not financial permission. |
-| GET/PUT `/v1/friday/privacy` | Read/save manual retention policy; does not automatically delete records. |
-| POST `/v1/friday/privacy/reviews/delete` | Explicit private-input cleanup; also clears follow-ups/runway snapshot. Payment journal/replay safeguards retained. |
-| POST `/v1/friday/obligations/{id}/followup` | Evidence/revision-bound tracking; not payment, external sending or settlement. |
+| GET /api/friday/profile | Web-only verified Google identity or explicit local demo identity; no bank connection. |
+| GET /v1/friday/statements | Private imports, selected source set, review revision/generation, computed summaries/checkup/work. |
+| POST /v1/friday/statements/prepare | Consented bounded PDF/CSV extraction; unsaved proposal with source checks and signed receipt. |
+| POST /v1/friday/statements | Confirmed reviewed save with expected revision/generation and unchanged signed amounts/dates/source facts. |
+| POST /v1/friday/statements/selection | Atomic inclusion set with expected revision/generation. An empty set starts a fresh analysis without deleting imports. |
+| POST /v1/friday/statements/visibility | Compatibility single-source exclusion/restore; not a financial correction. |
+| POST /v1/friday/statements/findings/review | Reversible finding acknowledgement, not a bank dispute or proof of resolution. |
+| POST /v1/friday/statements/findings/enquiry | Prepare a private unsent clarification worksheet/draft with source/version checks. |
+| POST /v1/friday/statements/analyze | Transient exact INR CSV summary. |
+| POST /v1/friday/chat | Bounded conversational guidance and typed supported presentation/plan intent; no executor. |
+| POST /v1/friday/assistant/briefing-audio | Separately consented derived-total Gemini speech, expected revision/generation and no microphone/autoplay. |
 
-Example chat body (do not include financial secrets):
+Statement preparation checks declared totals/counts, pages, source rows, balances
+and direction/order where supplied. Missing facts remain UNKNOWN; MISMATCH blocks
+saving. Friday's Ed25519 extraction receipt binds its own processing, not bank
+authenticity. Category/meaning proposals can be reviewed; immutable source fields
+cannot be edited to bypass the receipt.
+
+Sample chat body:
 
 ```json
-{"message":"Draft an unsent question about an unfamiliar charge using placeholders.","history":[],"include_workspace":false,"include_preferences":false,"include_cashflow":false,"include_diary":false}
+{"message":"Show my spending by category.","include_statements":true}
 ```
 
-Chat returns a schema-checked reply, available evidence IDs, a next-screen
-suggestion, provider/model provenance and explicit no-execution fields. It also
-returns a context receipt, typed visual intent and, when actual statement totals
-were shared, a checked `money_plan` or statement chart series. No record is
-silently shared because an old inbox flag is enabled/disabled. Failure
-is unavailable, not a canned answer masquerading as Gemini. Text review takes a
-`text` field; file review uses its actual media type rather than pretending a file
-path/string is an uploaded image. Read each schema before sending a request.
+Statement, diary, cash-flow and communication-preference sharing are independent
+and opt-in. include_workspace=true belongs to the retired bill inbox and is
+rejected in consumer mode before context/model access. Returned source receipts
+identify the selected statement revision/count/period; they do not expose account
+identifiers or transaction descriptions to aggregate chat.
 
-Cash-flow sharing is independent of inbox consent. Context uses formatted INR
-aggregates and the available citation `cashflow:current`, not raw paise or individual
-bills. Unsupported explicit rupee amounts fail closed; this is not complete semantic
-verification. See [Money Runway](MONEY_RUNWAY_0220.md) for input bounds and privacy.
+## Optional user-owned planning and settings
 
-## Evidence-bound assistant tasks
-
-| Method and path | Authority |
+| Method and path | Meaning |
 | --- | --- |
-| POST `/v1/friday/tasks` | `message`, optional strict `include_workspace`; live Gemini prepares a signed task and quoted risk findings. Saved-record payment tasks require consent. Never pays during preparation. |
-| GET `/v1/friday/tasks/{task_id}` | Tenant-scoped signed draft readback; expired tasks remain non-executable. |
-| POST `/v1/friday/tasks/{task_id}/reconcile` | Read existing artificial journal after uncertainty; never submit another payment. |
-| POST `/v1/friday/tasks/{task_id}/confirm` | Exact `expected_task_sha256` and strict `confirm_sandbox_execution:true`; rechecks and calls the existing artificial-money executor. A HOLD cannot be overridden. |
+| POST /v1/friday/plans/preview | Exact revision-bound category-reduction scenario; no payment or automatic savings claim. |
+| POST /v1/friday/rehearsals/interpret | Consented Gemini proposal of purchase/stress fields. |
+| POST /v1/friday/rehearsals/preview | Exact history replay under confirmed assumptions, not predicted bank affordability. |
+| POST /v1/friday/rehearsals/explain | Consented explanation of server-recomputed, freshness-bound scenario. |
+| GET/POST /v1/friday/diary | Explicit user-reported START/ADD/UNDO bookkeeping, never a bank transaction. |
+| POST /v1/friday/diary/prepare | Gemini proposes grounded diary fields; no save before confirmation. |
+| GET/POST /v1/friday/cashflow | Optional user-entered forecast assumptions and calculator snapshot. |
+| GET /v1/friday/buddy | Private saved-record overview, no continuous bank monitoring. |
+| GET/PUT /v1/friday/buddy/preferences | Communication preferences, not financial permission. |
+| GET/PUT /v1/friday/privacy | Manual retention preferences, not automatic erasure. |
+| POST /v1/friday/privacy/reviews/delete | Explicit private-input cleanup; durable financial journals retained for recovery safety. |
 
-Unknown/invented bills or citations fail closed. Model failure is unavailable,
-not a fabricated task. No arbitrary tool names, account numbers, payment amount
-overrides, SQL or URLs are accepted from the model. See
-[the task guide](FRIDAY_TASKS.md) for scope and limitations.
+## Retained recovery and diagnostics
 
-## Sandbox preview/configuration: may change rules or test records, not pay directly
+Existing signed task/run inspection, journal-only reconciliation, GET mandate and
+storage-status remain compatibility diagnostics. They cannot prepare/confirm a new
+payment in consumer mode. The internal recovery endpoint retains its existing
+OIDC/signature checks and target; no money is connected.
 
-| Method and path | Purpose |
-| --- | --- |
-| GET `/v1/friday/mandate` | Saved permission and artificial account summary. |
-| PUT `/v1/friday/mandate` | Change standing rules/automatic sandbox permission. Security-relevant configuration, not chat. |
-| GET `/v1/friday/test-provider/bills` | Bounded test-provider records. |
-| POST `/v1/friday/test-provider/bills` | Publish/update an artificial bill; not a real utility connector. |
-| GET `/v1/friday/workspace` | Bounded non-atomic artificial balance/bill/commitment overview. |
-| GET `/v1/friday/bill-plan` | Exact reserve-aware preview; no permission or reservation. |
-| GET `/v1/friday/today` | Recent recorded outcomes/briefing. |
-| GET `/v1/friday/storage-status` | Active persistence boundary. |
-| GET `/v1/friday/live-input` | Original sandbox interpretations, distinct from the new review inbox. |
-| GET `/v1/friday/scenarios` | Controlled developer test scenarios and supported model modes. |
-| GET `/v1/friday/runs/{run_id}` | Reopen recorded outcome; independent replay, no payment. |
+Health and model-status endpoints are diagnostics. API docs are developer reference,
+not the consumer interface. Private Cloud Run invocation and tenant authentication
+remain required; do not expose the API or copy its credentials into a browser.
 
-## Execution-capable or historical developer routes
+## Removed from consumer admission
 
-| Method and path | Important caution |
-| --- | --- |
-| POST `/v1/friday/bills/handle` | Exact reviewed bill reference/digest and explicit sandbox confirmation. Can move artificial funds under rules. |
-| POST `/v1/friday/live-input` | Original sandbox intake. May execute inside saved automatic authority; **not a prepare-only conversation tool**. |
-| POST `/v1/friday/documents` | Original execution-model document path; default UI uses `/reviews/documents` instead. |
-| POST `/v1/friday/live-input/{event_id}/run` | Execute/reconcile the supported dynamic sandbox case. |
-| POST `/v1/friday/scenarios/{case_id}/run` | Run a controlled case with explicit confirmation; can affect artificial state. |
-| POST `/v1/friday/follow-through` | Local signed acknowledgement only; cloud returns UNAVAILABLE. Never refund/settle. |
-| GET `/v1/friday/inbox` | Historical sandbox background inbox. Not exposed in the public visitor route allowlist. |
-| POST `/v1/friday/watch` | Historical sandbox monitoring permission, not phone/bank access; not public visitor capability. |
-| POST `/v1/friday/arrivals/{case_id}` | Deliver a synthetic provider event; can initiate bounded background handling. Not public visitor capability. |
-| POST `/v1/friday/inbox/{event_id}/retry` | Controlled historical sandbox retry; not public visitor capability. |
-| GET `/v1/friday/bank` | Retired optional Anthos developer projection; no customer navigation. Unmapped callers see NOT_LINKED. |
+Bill/receipt /reviews (text/file/statement), /obligations and its follow-ups,
+new /tasks and confirmation, preflight/contracts, provider enrollment, watch,
+synthetic arrivals and payment execution are not consumer actions or current
+OpenAPI entries. Historical code/tests remain behind explicit legacy opt-in.
+Application admission is not a separate process/IAM boundary.
 
-The allowlist is implemented in `src/carapace_core/friday_access.py`; a private
-API route existing does not mean public visitors may use it. Earlier `/v1/contracts`,
-witness/case/release-passport endpoints also remain for legacy engineering
-experiments; they are not the default customer workflow or granted by the public
-Friday allowlist. Health endpoints are diagnostic, not customer financial features.
+## Error interpretation
 
-## States and interpreting failures
+- 401/403: identity, tenant, origin or invocation refusal. Do not disable auth.
+- 404: not part of this surface, or unavailable record; not an invitation to try another route.
+- 409: stale revision/generation, invalid signed source, conflicting evidence or source mismatch.
+- 422: unsupported input or context choice. Nothing was saved merely by attempting it.
+- 429: configured usage allowance reached. Failed processing can still count.
+- 503: model, storage or transport unavailable/rejected. Not a successful financial action.
 
-- Reviews: `BILL_TO_VERIFY`, `RECEIPT_MATCHED_CLAIM`, `RECORDED_PAYMENT_CLAIM`,
-  `CONFLICT_REVIEW`, `INCOMPLETE_REVIEW`; no bank verdict is implied.
-- Plans: `PLANNED`, record ambiguity/incompleteness and planning-limit states.
-- Runs include held, approval-required and explicit synthetic/reconciled outcomes;
-  inspect `money_moved`, receipt and assurance, not only a title/status colour.
-- Assurance includes verified internal outcomes, conflict, unavailable and legacy
-  unsealed evidence. A signature does not authenticate an external bank statement.
-- 401/403: identity/origin/permission issue; 422: input validation; 429: admission
-  limits; 503: a bounded operation unavailable. Do not retry an unknown money
-  outcome as if it were definitely failed. Check the recorded operation first.
-
-These are human-readable summaries, not an SDK contract replacing OpenAPI or
-server validation. Preserve exact enum names, strict booleans and minor-unit
-integers when building an integration. Never pass model text directly to a route
-that creates financial authority or executes a payment.
-
-## Automatic statement checkup
-
-Version 0.29 adds `checkup.money_shield` to the same private statement response:
-`REFUND_FLOW_1`, source-linked trails, allocation bounds, coverage holds and
-calculation certificates. These are name/date/account assumptions, not verified
-bank links or amounts owed. No new public route or payment permission is added.
-Chat's typed `MONEY_SHIELD` request opens this visual only with separately shared
-statement context. `PREPARE_ENQUIRY` still builds an unsent artifact. Completion
-text for these two operations is server-owned; model claims cannot announce
-external recovery/submission. See [Money Shield](MONEY_SHIELD_0290.md).
-
-`GET /v1/friday/statements` also returns deterministic `checkup` findings,
-recurring patterns, source references and exact category-change attribution.
-`POST /v1/friday/statements/findings/enquiry` prepares a private **unsent** draft
-from a current finding. `POST /v1/friday/statements/findings/review` reversibly
-acknowledges/reopens a finding. Both require the tenant's current finding ID,
-revision and privacy generation; neither alters transaction rows or payments.
-The existing chat accepts separately opted-in derived findings, selects a typed
-visual/draft request and returns a checked `checkup_view`. No arbitrary tools,
-URLs, source descriptions, bank authority or model training are added.
+Do not re-upload changed source content to bypass a conflict. Reload Statements,
+inspect the current selection and use the original source. Unknown outcomes must
+not be turned into success messages. Full raw prompts/statements/replies are
+excluded from the new request telemetry.

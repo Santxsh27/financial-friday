@@ -14,6 +14,7 @@ from carapace_core.friday_statement_csv import parse_statement_csv
 from carapace_integrations.friday_assets import ASSETS, friday_asset
 from carapace_integrations.friday_consumer_ui import CONSUMER_JS
 from carapace_integrations.friday_navigation_ui import NAVIGATION_JS
+from carapace_integrations.friday_buddy_ui import BUDDY_JS
 import test_friday_surface_isolation
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -53,6 +54,7 @@ class SubmissionTests(unittest.TestCase):
         self.assertIn('Try a sample',NAVIGATION_JS)
         self.assertNotIn("['document','Check a separate bill']",NAVIGATION_JS)
         self.assertNotIn("'review','document'",CONSUMER_JS)
+        self.assertNotIn('Keep bills organised',BUDDY_JS)
 
     def test_retired_bill_context_is_rejected_before_any_storage_or_model_read(self):
         service=Mock();review=Mock();bank=Mock()

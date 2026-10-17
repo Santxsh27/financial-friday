@@ -4,7 +4,7 @@
   "expected": {"transaction_count": 4, "money_in_minor": 5000000, "money_out_minor": 139075, "opening_balance_minor": 1000000, "last_running_balance_minor": 5860925},
   "cases": [
     {
-      "file": "01-hdfc-illustration.csv", "delimiter": ",",
+      "file": "ARTIFICIAL-HDFC-Illustration.csv", "delimiter": ",",
       "basis": "OFFICIAL_ILLUSTRATION_HEADERS_ONLY",
       "source": "https://www.hdfc.bank.in/terms-and-conditions",
       "differences": "Own artificial transactions, four-digit years and synthetic banner. This is a CSV rendering of published illustrative headings, not a downloaded HDFC export.",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "file": "02-kotak-illustration.csv", "delimiter": ",",
+      "file": "ARTIFICIAL-Kotak-Illustration.csv", "delimiter": ",",
       "basis": "OFFICIAL_ILLUSTRATION_HEADERS_AND_LITERAL_STYLE",
       "source": "https://www.kotak.bank.in/en/get-help/accounts.html",
       "differences": "Own artificial transactions and dates. No logo or customer data. Not an exact current downloaded Kotak statement.",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "file": "03-icici-candidate.csv", "delimiter": ",",
+      "file": "ARTIFICIAL-ICICI-Candidate.csv", "delimiter": ",",
       "basis": "SYNTHETIC_CANDIDATE_NOT_VERIFIED_EXPORT_LAYOUT",
       "source": "https://www.icici.bank.in/personal-banking/ways-to-bank/net-banking/online-services",
       "differences": "Official source confirms PDF and CSV availability only. Headings are a synthetic candidate, not verified ICICI export headings.",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "file": "04-tab-export-candidate.csv", "delimiter": "\t",
+      "file": "ARTIFICIAL-Generic-Bank-Tab.csv", "delimiter": "\t",
       "basis": "GENERIC_SYNTHETIC_STRESS_CASE_NO_BANK_CERTIFICATION",
       "source": null,
       "differences": "Tab-delimited .csv to exercise export variation. No claim this is an SBI or any bank's actual export.",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "file": "05-semicolon-export-candidate.csv", "delimiter": ";",
+      "file": "ARTIFICIAL-Generic-Bank-Semicolon.csv", "delimiter": ";",
       "basis": "GENERIC_SYNTHETIC_STRESS_CASE_NO_BANK_CERTIFICATION",
       "source": null,
       "differences": "Reordered columns, semicolon delimiter and dotted dates. No claim this is an Axis or any bank's actual export.",

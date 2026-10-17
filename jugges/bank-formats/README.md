@@ -26,19 +26,19 @@ Missing closing totals/page controls remain **Unknown**, not a green guarantee.
 
 ## What was researched
 
-1. `01-hdfc-illustration.csv`: headings from the public [HDFC average-monthly-balance
+1. `ARTIFICIAL-HDFC-Illustration.csv`: headings from the public [HDFC average-monthly-balance
    illustration](https://www.hdfc.bank.in/terms-and-conditions). Its printed
    `Narrarion` spelling is preserved. Values and dates are invented; our fixture
    uses four-digit years. This is not a current downloadable-export specification.
-2. `02-kotak-illustration.csv`: headings, English ordinal date style and `Rs.`
+2. `ARTIFICIAL-Kotak-Illustration.csv`: headings, English ordinal date style and `Rs.`
    notation from the public [Kotak account FAQ illustration](https://www.kotak.bank.in/en/get-help/accounts.html).
    The transactions are invented. This is not a current downloadable-export specification.
-3. `03-icici-candidate.csv`: a **synthetic candidate layout**. [ICICI confirms
+3. `ARTIFICIAL-ICICI-Candidate.csv`: a **synthetic candidate layout**. [ICICI confirms
    PDF and CSV downloads](https://www.icici.bank.in/personal-banking/ways-to-bank/net-banking/online-services),
    but that page does not specify its exact table columns. Do not present this
    file as an exact ICICI export or evidence of universal ICICI compatibility.
-4. `04-tab-export-candidate.csv`: generic tab-separated export variation.
-5. `05-semicolon-export-candidate.csv`: generic semicolon-separated, reordered
+4. `ARTIFICIAL-Generic-Bank-Tab.csv`: generic tab-separated export variation.
+5. `ARTIFICIAL-Generic-Bank-Semicolon.csv`: generic semicolon-separated, reordered
    columns with dotted day-first dates.
 
 Public sources checked 17 October 2026. No customer statements from search results

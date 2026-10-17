@@ -9,13 +9,14 @@ NAVIGATION_CSS = r'''
 @media(max-width:600px){.journey-source{display:block;padding:16px}.journey-source button{margin-top:10px}.journey-tools{grid-template-columns:1fr}.journey-bar{align-items:flex-start}.journey-library-row{padding:16px}.journey-actions{width:100%}.journey-actions button{flex:1}.journey-listen{padding:8px 12px!important}}
 .topbar,.topbar .shell{height:auto!important}.studio-workspace .screen-back{width:auto;min-width:64px;min-height:44px;padding:8px 12px;text-align:left;background:transparent;border-radius:12px;box-shadow:none}
 .friday-nav button[aria-current=location]{background:var(--studio-lilac);color:var(--blue)}
+.journey-sample-guide{display:block;width:fit-content;position:relative;z-index:2;min-height:44px;padding:12px 0;font-size:13px;color:var(--blue);text-underline-offset:4px}.journey-sample-guide:focus-visible{outline:3px solid var(--blue);outline-offset:4px;border-radius:6px}
 @media(max-width:1450px){.topbar .shell{flex-wrap:wrap;gap:12px;padding-top:12px;padding-bottom:12px}.topbar .friday-nav{position:static;order:5;flex:1 0 100%;width:100%;min-width:0;display:flex;flex-direction:row;gap:6px;overflow-x:auto;justify-content:space-between}.topbar .friday-nav button{flex:1;min-width:max-content}.topbar .friday-preference-actions{margin-left:auto}.topbar .studio-account{margin-left:0}}
 @media(max-width:600px){.topbar .friday-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}.topbar .friday-nav button{min-width:0;white-space:normal}}
 '''
 
 NAVIGATION_HELPERS_JS = r'''
       function fridayDestination(value){
-        const aliases={money:'dashboard',bank:'dashboard',bill:'document',settings:'privacy',assistant:'coach',activity:'library'};
+        const aliases={money:'dashboard',bank:'dashboard',bill:'statements',document:'statements',review:'library',settings:'privacy',assistant:'coach',activity:'library'};
         const raw=String(value||'home').replace(/^#/,'');
         const [original,part]=raw.split('/');const screen=aliases[original]||original;
         const parts=['overview','transactions','regular','findings','shield','spending-change'];
@@ -64,8 +65,10 @@ NAVIGATION_JS = r'''
       const listen=action('Listen',()=>openVoice(),'journey-listen');listen.setAttribute('aria-label','Listen to my review');listen.title='Optional spoken statement briefing. No microphone or automatic audio.';nav.append(listen);
       const chatVoice=action('Listen to my review',()=>openVoice(),'studio-link-button');everydayAssistant.querySelector('.studio-chat-footer').append(chatVoice);
       function openVoice(){if(!snapshot?.summary.transaction_count){show('library');toast('Select a saved statement or add one before creating a briefing.');return;}show('dashboard');const voice=views.dashboard.querySelector('.work-voice');if(!voice){toast('Review is loading. Try Listen again once the charts appear.');return;}voice.open=true;voice.querySelector('summary')?.focus();voice.scrollIntoView({behavior:document.documentElement.dataset.motion==='off'||matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});}
-      moreItems.replaceChildren();[['plan','Build a money plan'],['rehearsal','Explore a purchase'],['document','Check a separate bill'],['review','Bill review inbox'],['tools','Diary & runway']].forEach(([route,label])=>moreItems.append(link(label,route)));
+      moreItems.replaceChildren();[['plan','Build a money plan'],['rehearsal','Explore a purchase'],['tools','Diary & runway']].forEach(([route,label])=>moreItems.append(link(label,route)));
       more.querySelector('summary').firstElementChild.textContent='Optional tools · separate from statements';
+      const sampleGuide=element('a','Try a sample · quick walkthrough','journey-sample-guide');sampleGuide.href='/assets/friday-judge-guide.html';sampleGuide.target='_blank';sampleGuide.rel='noopener';home.querySelector('.studio-welcome').append(sampleGuide);
+      const menuGuide=sampleGuide.cloneNode(true);menuGuide.textContent='Sample statements & walkthrough';moreItems.append(menuGuide);
       const beforeNavigation=show;
       show=function(value,push=true){const target=fridayDestination(value);if(!views[target.screen]||views[target.screen].dataset.consumerExcluded==='true'){if(routeKey===null)show('home',false);toast('This older page is not part of your statement review. Open Statements or My money.');return;}
         const key=target.screen+(target.part?'/'+target.part:'');if(key===routeKey){if(!push&&location.hash!=='#'+key)history.replaceState(history.state,'','#'+key);return;}

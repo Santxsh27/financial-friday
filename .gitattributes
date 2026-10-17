@@ -2,3 +2,5 @@
 jugges/bank-formats/*.csv -text whitespace=-blank-at-eol
 # ASCII-only PDFs still have binary offsets. Never normalize their line endings.
 jugges/documents/*.pdf binary
+src/carapace_integrations/assets/ARTIFICIAL-*.csv -text whitespace=-blank-at-eol
+src/carapace_integrations/assets/ARTIFICIAL-*.pdf binary

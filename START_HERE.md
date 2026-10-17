@@ -7,6 +7,9 @@ to distinguish local preview changes from the hosted release.
 
 ## The main journey
 
+For a guided artificial-data trial, use **Home → Try a sample · quick walkthrough**.
+The guide and bank-labelled files are served by Friday; no repository access is needed.
+
 1. **Home → Add a statement.** Choose a PDF or CSV and a useful account nickname,
    such as `ICICI salary`, not an account number.
 2. Confirm processing, then **Read my statement**. The preview is not saved.

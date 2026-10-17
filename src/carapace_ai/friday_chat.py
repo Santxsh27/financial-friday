@@ -271,7 +271,7 @@ def chat_failure_category(error):
     return reasons.get(str(error),'PROVIDER_OR_UNEXPECTED')
 
 
-def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None) -> dict:
+def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None, *, statement_only=False) -> dict:
     if planner.mode == "LOCAL_RULES":
         raise RuntimeError("Live Gemini chat is not configured")
     from google.genai import types
@@ -292,11 +292,12 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
                       "money_diary": diary if request.include_diary and diary else {},
                       "statement_summary":statements if request.include_statements and statements else {}}, ensure_ascii=False)
     redacted = redact_for_model(raw)
+    surface_instruction = (' This deployment is STATEMENT-ONLY. Do not offer a bill or receipt inbox, bill upload, payment tools or a connection. For importing bank/card statements use next_screen=statements; for saved statement charts use dashboard. You can explain general bill/loan concepts without claiming a separate bill feature.' if statement_only else '')
     for attempt in range(2):
         response = planner._client.models.generate_content(
             model=planner.model_name, contents=redacted.text,
             config=types.GenerateContentConfig(temperature=0.2, max_output_tokens=2200,
-                system_instruction=INSTRUCTION + (' Statement totals ARE supplied; financial_inbox is a different permission. Correct the false workspace-permission claim.' if attempt else ''),
+                system_instruction=INSTRUCTION + surface_instruction + (' Statement totals ARE supplied; financial_inbox is a different permission. Correct the false workspace-permission claim.' if attempt else ''),
                 response_mime_type="application/json",
                 response_json_schema=generation_schema(ChatAnswer.model_json_schema())))
         answer = ChatAnswer.model_validate_json(response.text or "")
@@ -329,6 +330,8 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
     if any(identity not in allowed_ids for identity in answer.evidence_ids):
         raise ValueError("Model cited an unavailable evidence reference")
     answer = coherent_navigation(answer)
+    if statement_only and answer.next_screen in {'review','document','money','activity'}:
+        answer=answer.model_copy(update={'next_screen':'dashboard' if statements else 'statements'})
     clean_reply = redact_for_model(answer.reply)
     return {**answer.model_dump(), "reply": clean_reply.text,
             "read_only": True, "money_moved": False, "payment_authorized": False,

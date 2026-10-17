@@ -1,65 +1,63 @@
-# Friday — current submission readiness
+# Financial Friday submission checklist
 
-Updated 15 October 2026 for version 0.24.0. This replaces stale owner-only
-access and older test counts. Dated release reports retain their historical
-evidence; see [reports index](../REPORTS_INDEX.md).
+Updated 17 October 2026. Current source/revision/test state:
+[CURRENT_RELEASE](../CURRENT_RELEASE.json). Engineering work does not submit the
+Hack2skill form or establish every eligibility requirement.
 
-## Implemented and verified
+## Software and demonstration
 
-- Statement-first Home → upload → review → spending → optional coaching path.
-- Verified Google account display; live Vertex PDF extraction and aggregate
-  coaching; transactional statement storage/replay; reversible exclusions;
-  hosted artificial CSV preview without polluting owner history.
-- Current test counts and exact deployed sources: [CURRENT_RELEASE](../CURRENT_RELEASE.json).
-- Still pending: independent bank-format/accuracy and usefulness evaluation,
-  dedicated outstanding-loan/APR extraction, human eligibility/deadline checks
-  and final submission artifacts. No production-bank readiness guarantee.
+- [x] Statement-first consumer flow, source checks and exact integer-paise analysis.
+- [x] Source library, reversible fresh review, Back navigation and visible Listen.
+- [x] Separate bill/receipt inbox removed from current consumer admission.
+- [x] Bank-labelled artificial CSV/PDF samples; no real customer records copied.
+- [x] In-app sample walkthrough/downloads that do not depend on GitHub access.
+- [x] Scoped Gemini prompts, consent, evidence references and stale-response checks.
+- [x] Cross-tenant, concurrent and cleanup regressions; private API retained.
+- [ ] Latest matching API/web revisions promoted and cloud acceptance recorded.
+- [ ] Latest source and updated release records pushed; GitHub CI checked.
+- [ ] Another person's Google account completes the full walkthrough.
 
-- Google-sign-in Cloud Run website, isolated visitor workspaces and private API.
-- Live Gemini/Vertex conversation, document facts, quoted risk reasoning and typed
-  restricted plans. Document AI OCR anchors are not issuer authentication.
-- Private document reconciliation, unsent verification drafts and selected-obligation
-  preparation with fresh evidence checks. Preparation cannot pay.
-- Separate signed artificial-payment tasks, exact confirmation, reserve/permission
-  gates, idempotency and independent recorded-outcome checks.
-- Transactional Firestore in cloud and SQLite/Docker development; server-held
-  credentials, explicit context consent and request limits.
-- Low-rate keyless Cloud Tasks journal-only recovery with historical actual
-  callback acceptance. No blind financial retry or continuous bank intake.
-- Private buddy preferences/follow-ups, manual cleanup and in-flight cancellation.
-- Money Runway: exact dated INR assumptions, spending caps, delayed-income chart,
-  optional latest-plan memory and separately consented Gemini explanation.
-- Native 526 tests: 525 passed, one optional skip. Docker 526: 503 passed,
-  twenty-three optional skips. Twenty-four tooling checks passed; published Money
-  Runway GitHub checks also passed on Python 3.11/3.12 and Docker.
-- Corrected real Vertex/Firestore runway acceptance verified exact rupee caps,
-  save/readback/cleanup, unchanged rules and no money movement. The initial
-  zero-traffic unit error is documented, not hidden.
-- [Deployment manifest](../CURRENT_RELEASE.json) records actual source commits,
-  immutable images, build IDs and historical/current acceptance scopes.
+## Evidence and product limits
 
-## Required before claiming the submission is complete
+- Current authored review-candidate benchmark has false warnings and misses.
+  It is not independent fraud validation. See [validation handoff](../VALIDATION_HANDOFF.md).
+- Broader real bank layouts, scanned extraction, explanation accuracy and usefulness
+  require independent review. No universal format/security/financial-outcome claim.
+- Local and hosted data are separate. Only artificial, fresh-tenant cloud checks
+  are authorised for release acceptance. No owner records are sent to AI.
+- Budget alerts/app quotas do not guarantee zero costs or uninterrupted availability.
+  Keep the trial/account operational throughout evaluation; monitor errors and usage.
+- Do not expose the backend or disable Google identity to resolve a login problem.
 
-1. Confirm exact cutoff/timezone, eligibility and roster in the dashboard. The
-   [official timeline](https://aibuildercup.com/) checked 14 October lists team
-   formation by 14 October and submission by 18 October 2026. Dashboard-specific
-   completion is not verified by this documentation pass.
-2. Test the app with a second person's Google account. Visitor enrollment is not
-   owner-only, but managed accounts may be restricted. Never expose the API to
-   solve a login issue. Source access needs an invitation to this private GitHub
-   repository or an organiser-approved source-delivery method; a link is not access.
-3. Complete held-out usefulness/risk tests; report misses, false warnings, latency
-   and cost. Unit counts/developer cases are not real-world fraud accuracy. Preserve
-   the paired comparison; do not invent superiority over plain Gemini.
-4. Finish/confirm deck as PDF, public approximately three-minute video, English
-   submission fields and checked links. This file does not submit the entry.
-5. Keep a labelled outage fallback and verify trial/billing availability through
-   evaluation. Budget alerts and app quotas are not guaranteed spending/uptime caps.
+## Share the right links
 
-## Production work, not claimed as hackathon implementation
+App:
+https://financial-friday-web-171681243260.asia-south1.run.app/#home
 
-Authorised independent bank/utility integration, real settlement/refunds, automatic
-bank/SMS/email intake, external notifications, native voice, account-erasure and
-regulatory/security review, independent large-scale validation and trusted-reference
-retrieval remain future work. Do not claim unrestricted financial Jarvis, perfect
-safety, trained fraud classification or autonomous production patching.
+Walkthrough and samples:
+https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judge-guide.html
+
+Source:
+https://github.com/Santxsh27/financial-friday
+
+The repository is private. Invite required source reviewers or use an officially
+accepted source-delivery method. A private GitHub URL alone is not access. Do not
+share credentials, databases, .env files or the owner archive/testing folders.
+
+## Human-controlled submission requirements
+
+- [ ] Confirm exact cutoff/timezone in the Hack2skill dashboard.
+- [ ] Confirm working-professional/age/team eligibility and final roster.
+- [ ] Finish the English proposal deck converted to PDF.
+- [ ] Publish and test the approximately three-minute video link.
+- [ ] Confirm source access instructions required by the dashboard.
+- [ ] Open every final link from a separate eligible Google account.
+- [ ] Submit the form and retain its acknowledgment.
+
+The [official timeline](https://aibuildercup.com/) checked 17 October lists
+submission on **18 October 2026**, evaluation **19 October–6 November**, and
+working-professional/age/team restrictions. The [requirements page](https://aibuildercup.com/themes.html)
+lists Google AI use, Cloud Run/Firebase deployment, English materials, a proposal
+deck/PDF and a public demonstration video. Dashboard-specific instructions take
+precedence if the organiser clarifies an ambiguity. This checklist does not
+guarantee selection, prizes or production-bank readiness.

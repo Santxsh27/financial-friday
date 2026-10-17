@@ -26,7 +26,9 @@ def chat_context(service, review, bank, tenant: str) -> dict:
             "bank": {"status": "NOT_CONNECTED", "scope": "NO_REAL_BANK_ACCESS"}}
 
 
-def reply_to_user(service, review, bank, tenant, request):
+def reply_to_user(service, review, bank, tenant, request, *, statement_only=False):
+    if statement_only and request.include_workspace:
+        raise ValueError('The bill inbox is retired here; share statement totals instead')
     from .friday_buddy import FridayBuddy
     from .friday_privacy import privacy_generation
     from carapace_core.friday_trace import record_stage
@@ -38,7 +40,7 @@ def reply_to_user(service, review, bank, tenant, request):
     diary = service.diary.model_context(tenant) if request.include_diary else {}
     view=service.portfolio.view(tenant) if request.include_statements else None
     statements=service.portfolio.model_context(tenant,view) if view else {}
-    result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements)
+    result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements, statement_only=statement_only)
     # A consented old context must not reappear after cleanup, even when only
     # a diary, forecast or older inbox was shared (not statement totals).
     if private_context and privacy_generation(service,tenant)!=generation:

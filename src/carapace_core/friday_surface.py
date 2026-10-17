@@ -37,12 +37,8 @@ CONSUMER_FRIDAY_METHODS = {
     "rehearsals/interpret": frozenset({"POST"}),
     "rehearsals/explain": frozenset({"POST"}),
     "plans/preview": frozenset({"POST"}),
-    "reviews": frozenset({"GET", "POST"}),
-    "reviews/documents": frozenset({"POST"}),
-    "reviews/statement": frozenset({"POST"}),
-    "obligations": frozenset({"GET"}),
-    "obligations/{obligation_id}/followup": frozenset({"POST"}),
-    "obligations/{obligation_id}/result": frozenset({"GET"}),
+    # Historical bill/receipt inbox routes belong to the explicit legacy demo,
+    # not the statement-first consumer release. Stored history is retained.
     # Existing journal inspection/reconciliation never prepares or retries a
     # payment. Keep these available after disabling new demo submissions.
     "tasks/{task_id}": frozenset({"GET"}),

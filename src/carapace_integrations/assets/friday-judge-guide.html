@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Try Financial Friday</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#29283d;background:#faf7f2;color-scheme:light dark}*{box-sizing:border-box}body{margin:0}main{max-width:850px;margin:auto;padding:36px 24px 70px}h1{font-size:clamp(30px,6vw,46px);letter-spacing:-.05em;line-height:1.12}h2{font-size:22px;margin-top:35px}p,li{line-height:1.7}a{color:#573d9a}a:focus-visible,summary:focus-visible{outline:3px solid #b47cff;outline-offset:4px}.return{display:inline-block;padding:12px 18px;border-radius:14px;background:#ee896d;color:#302238;text-decoration:none;font-weight:650}.samples{display:grid;grid-template-columns:1fr 1fr;gap:12px}.sample{display:block;padding:18px;border:1px solid #ded5e9;border-radius:18px;background:#fff;text-decoration:none}.sample strong,.sample small{display:block}.sample small{color:#676079;margin-top:6px;line-height:1.5}.note{padding:18px;border-radius:18px;background:#eee7f5}.steps li{padding:7px 0}.answers{display:flex;gap:12px;flex-wrap:wrap}.answers p{background:#fff;border-radius:16px;padding:16px;flex:1;min-width:135px}.answers strong{display:block;font-size:25px}details{border-top:1px solid #ded5e9;padding-top:16px;margin-top:26px}summary{cursor:pointer;min-height:44px;font-weight:650}@media(max-width:540px){.samples{grid-template-columns:1fr}}@media(prefers-color-scheme:dark){:root{background:#151520;color:#eeeaf5}a{color:#c8adf3}.sample,.answers p{background:#232331;border-color:#444052}.sample small{color:#c6bed4}.note{background:#30283e}}
+</style></head><body><main>
+<a class="return" href="/#home">Open Financial Friday</a>
+<h1>One statement.<br>A clearer money picture.</h1>
+<p>Friday reads a supported INR bank or card statement, checks its source evidence,
+organises the reviewed history, and helps explain what deserves your attention.
+No bank connection, payment or screenshot collection is required.</p>
+<h2>Try it in five steps</h2>
+<ol class="steps">
+<li><strong>Sign in with Google.</strong> Top-right <strong>My account</strong> shows which account is active. A returning browser may reuse Google sign-in. Each visitor has a separate workspace.</li>
+<li><strong>Download one artificial sample below.</strong> The five CSVs represent the same activity in different layouts. Do not combine them as different accounts.</li>
+<li><strong>Home → Add a statement.</strong> Select the file, use a nickname such as <em>Sample HDFC</em>, leave Bank account selected, confirm processing, then choose <strong>Read my statement</strong>.</li>
+<li><strong>Review before saving.</strong> Check four transactions and the totals below. Open Source checks to see both agreement and missing evidence. Confirm the rows and choose <strong>Save & see my spending</strong>.</li>
+<li><strong>Explore, then ask Friday.</strong> Open All entries and use Back. In chat choose <strong>Statements ready · tap to share</strong>, enable statement totals, then ask a question. To test another file, choose <strong>Statements → Start a new review</strong>; old imports are preserved and can be restored.</li>
+</ol>
+<h2>Artificial bank-format samples</h2>
+<div class="samples">
+<a class="sample" download href="ARTIFICIAL-HDFC-Illustration.csv"><strong>HDFC illustration · CSV</strong><small>Public illustrative headings; invented transactions, not an exact current HDFC export.</small></a>
+<a class="sample" download href="ARTIFICIAL-Kotak-Illustration.csv"><strong>Kotak illustration · CSV</strong><small>English ordinal dates and Rs. amounts. Invented data, not a bank-issued document.</small></a>
+<a class="sample" download href="ARTIFICIAL-ICICI-Candidate.csv"><strong>ICICI candidate · CSV</strong><small>Synthetic export-shaped headings, not an independently verified ICICI format.</small></a>
+<a class="sample" download href="ARTIFICIAL-Generic-Bank-Tab.csv"><strong>Generic bank · tab-separated CSV</strong><small>Tests metadata, explicit debit/credit columns and dash placeholders.</small></a>
+<a class="sample" download href="ARTIFICIAL-Generic-Bank-Semicolon.csv"><strong>Generic bank · semicolon CSV</strong><small>Tests reordered headings and dotted day-first dates.</small></a>
+<a class="sample" download href="ARTIFICIAL-Generic-Bank-Statement.pdf"><strong>Generic bank · two-row PDF</strong><small>Separate small PDF test using configured Google extraction. Different totals: ₹50 in, ₹100 out. Not one of the four-row CSVs.</small></a>
+</div>
+<h2>Expected result for each CSV</h2>
+<div class="answers"><p>Transactions<strong>4</strong></p><p>Money in<strong>₹50,000.00</strong></p><p>Money out<strong>₹1,390.75</strong></p></div>
+<p>Net flow: ₹48,609.25. Printed opening balance: ₹10,000.00. Last running
+balance: ₹58,609.25. The opening row is not income. Missing source totals or
+page controls remain Unknown; arithmetic agreement is not bank authentication.</p>
+<h2>Questions to try</h2>
+<ul><li>“Show my spending by category.”</li><li>“What do these statements tell you, and what can’t they tell you?”</li><li>“Explain the difference between income, a refund and a loan.”</li></ul>
+<p>For a richer review queue, use <strong>Add a statement → Try with an example</strong>
+inside Friday. That example has 35 artificial entries across three months.
+Questions are sent only when you press Send. Sharing statement totals with chat
+and generating a spoken briefing require separate consent.</p>
+<h2>Optional spoken briefing</h2><p>Choose the visible <strong>Listen</strong> button,
+read the disclosure, confirm Google processing, then Generate and Play. It is a
+spoken review, not an always-listening microphone or a bank monitor.</p>
+<details><summary>Limits, privacy and troubleshooting</summary>
+<p>CSV: 1 MB / 500 rows; PDF: 4 MB / six pages / 200 rows. INR only. Supported
+headings and four-digit years are required for these CSV adapters. Unknown
+financial fields are rejected without a partial import. Unlock PDFs locally;
+never enter their passwords, PINs, OTPs or card secrets here.</p>
+<p>CSV reading is deterministic. PDF extraction uses Gemini on Vertex AI;
+scans require configured Document AI. Imported statements are user-supplied
+evidence, not authenticated bank feeds. Raw files are not archived; reviewed
+normalised rows are stored after confirmation. Sharing totals does not share
+transaction descriptions. Use My account → Privacy for data controls.</p>
+<p>If AI is unavailable or a daily quota is reached, it says so. Do not claim a
+successful reply or retry repeatedly. No source change or re-upload is needed to
+bypass a save conflict: reload Statements first. Google organisational accounts
+may have administrator restrictions; try an authorised personal Google account
+or report the exact access error to the project owner. The API stays private.</p>
+<p>Friday cannot send payments, cancel subscriptions, recover money, provide a
+live balance or guarantee that a transaction is legitimate. Findings are review
+candidates and may be wrong. It does not offer personalised securities trades.</p>
+<p>Layout provenance: <a href="https://www.hdfc.bank.in/terms-and-conditions">HDFC illustration</a>,
+<a href="https://www.kotak.bank.in/en/get-help/accounts.html">Kotak illustration</a>,
+<a href="https://www.icici.bank.in/personal-banking/ways-to-bank/net-banking/online-services">ICICI PDF/CSV availability</a>.
+No searched customer statements were copied. No universal bank support or model training is claimed.</p>
+</details>
+<p><a class="return" href="/#home">Back to Friday</a></p>
+</main></body></html>

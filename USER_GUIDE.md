@@ -118,7 +118,7 @@ Share relevant context explicitly before asking about your own figures.
 
 **New chat** clears only the page conversation. Changing sources/context clears
 stale conversation state. Source changes during a model request invalidate the
-older answer. Optional diary, cash-flow and inbox context have separate choices
+older answer. Optional diary and cash-flow context have separate choices
 and do not become statement totals. If Gemini is unavailable or rejects an
 unsupported answer, saved charts still work; no canned live reply is substituted.
 
@@ -142,8 +142,6 @@ unavailable, use the on-screen review.
 | --- | --- |
 | Build a money plan | Checked category-reduction scenarios, not guaranteed savings or automatic changes |
 | Explore a purchase | Replays confirmed cash-buffer/purchase assumptions against supplied history, not live bank affordability |
-| Check a separate bill | Extracts document claims; receipts/invoices are not statements or settlement evidence |
-| Bill review inbox | Optional document cases and unsent follow-up preparation |
 | Diary & runway | User-entered diary/cash-flow assumptions, separate from statement totals |
 
 The moon/sun control changes theme. Settings opens appearance, sound and motion
@@ -159,6 +157,9 @@ proposed labels: identified income INR 10,000; spending INR 3,200.50.
 review between independent examples to avoid combining their totals.
 
 The artificial bank PDF and source-check CSV describe the same two transactions:
-do not combine them for isolated totals. `05-Artificial-Bill.pdf` belongs in
-**Check a separate bill**, not statement upload. Never use a shared Google account
-or local demo workspace for personal financial statements.
+do not combine them for isolated totals. The judge kit includes bank-labelled
+CSV names and `documents/ARTIFICIAL-Generic-Bank-Statement.pdf`. A standalone bill
+is not a bank statement; the retired bill example is not part of this product.
+Use **Home → Try a sample · quick walkthrough** to download samples without
+GitHub access. Never use a shared Google account or local demo workspace for
+personal financial statements.

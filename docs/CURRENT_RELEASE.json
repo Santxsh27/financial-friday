@@ -1,5 +1,9 @@
 {
-  "local_code_version": "0.33.0",
+  "local_code_version": "0.34.0",
+  "submission_candidate_status": "LOCAL_VERIFIED_CLOUD_ACCEPTANCE_PENDING",
+  "submission_report": "docs/SUBMISSION_READINESS_0340.md",
+  "local_0340_native_tests": {"ran":775,"passed":774,"skipped":1},
+  "local_0340_tool_tests": {"ran":65,"passed":65,"skipped":0},
   "workflow_repair_status": "LOCAL_TESTS_VERIFIED_CLOUD_NOT_DEPLOYED",
   "local_0330_native_tests": {"ran":770,"passed":769,"skipped":1},
   "local_0330_docker_tests": {"ran":770,"passed":738,"skipped":32},

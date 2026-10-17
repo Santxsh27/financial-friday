@@ -388,8 +388,11 @@ def register_financial_friday_routes(application, service, authenticate):
 
     @application.post("/v1/friday/chat", tags=["friday-assistant"])
     async def chat(payload: FridayChatRequest, tenant: TenantContext = Depends(authenticate)):
+        statement_only=not getattr(application.state,'legacy_demo_enabled',True)
+        if statement_only and payload.include_workspace:
+            raise HTTPException(422,'This statement-first site has no bill inbox. Share statement totals instead.')
         try:
-            return await run_in_threadpool(reply_to_user,service,review,bank,tenant.tenant_id,payload)
+            return await run_in_threadpool(reply_to_user,service,review,bank,tenant.tenant_id,payload,statement_only=statement_only)
         except Exception as error:
             import logging
             from carapace_ai.friday_chat import chat_failure_category

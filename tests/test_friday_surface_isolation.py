@@ -39,6 +39,11 @@ EXECUTION_REQUESTS = (
     ("POST", "/v1/friday/inbox/synthetic/retry"),
     ("PUT", "/v1/friday/mandate"),
     ("POST", "/v1/friday/test-provider/bills"),
+    ("GET", "/v1/friday/reviews"),
+    ("POST", "/v1/friday/reviews"),
+    ("POST", "/v1/friday/reviews/documents"),
+    ("POST", "/v1/friday/reviews/statement"),
+    ("GET", "/v1/friday/obligations"),
     ("POST", "/v1/contracts"),
     ("POST", "/v1/contracts/synthetic/runs"),
     ("POST", "/v1/preflight/orders"),
@@ -74,7 +79,7 @@ class SurfaceConfigurationTests(unittest.TestCase):
         self.assertFalse(permitted_consumer_friday_route("GET", "/v1/friday/bank"))
         self.assertFalse(permitted_consumer_friday_route("POST", "/v1/friday/new-execution"))
         for method, path in (("GET", "/v1/friday/statements"), ("POST", "/v1/friday/statements/prepare"),
-                             ("POST", "/v1/friday/reviews/documents"), ("POST", "/v1/friday/chat"),
+                             ("POST", "/v1/friday/chat"),
                              ("GET", "/v1/friday/mandate"), ("GET", "/v1/friday/tasks/task_" + "a" * 32),
                              ("POST", "/v1/friday/tasks/task_" + "a" * 32 + "/reconcile"),
                              ("GET", "/v1/friday/runs/synthetic")):

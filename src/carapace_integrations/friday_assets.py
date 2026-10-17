@@ -7,6 +7,13 @@ ICONS = frozenset({"arrow-right", "chevron-down", "file-text", "shield", "user",
                    "book-open", "bar-chart-2", "alert-circle", "clock", "check-circle",
                    "home", "upload", "shopping-cart", "coffee", "truck", "log-out"})
 ASSETS = {
+    "friday-judge-guide.html": "text/html",
+    "ARTIFICIAL-HDFC-Illustration.csv": "text/csv",
+    "ARTIFICIAL-Kotak-Illustration.csv": "text/csv",
+    "ARTIFICIAL-ICICI-Candidate.csv": "text/csv",
+    "ARTIFICIAL-Generic-Bank-Tab.csv": "text/csv",
+    "ARTIFICIAL-Generic-Bank-Semicolon.csv": "text/csv",
+    "ARTIFICIAL-Generic-Bank-Statement.pdf": "application/pdf",
     "friday-chart.js": "application/javascript",
     "friday-jade-orb.png": "image/png",  # Historical bookmarked asset.
     "friday-orb.png": "image/png",

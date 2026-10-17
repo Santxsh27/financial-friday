@@ -2,7 +2,7 @@
 
 CONSUMER_JS = r'''
     if(consumerOnly){
-      const supported=new Set(['home','library','statements','statement-review','dashboard','coach','profile','plan','rehearsal','privacy','settings','tools','review','document']);
+      const supported=new Set(['home','library','statements','statement-review','dashboard','coach','profile','plan','rehearsal','privacy','settings','tools']);
       const safeShow=show;
       show=function(name,push=true){if(!supported.has(name)){safeShow('home',push);toast('This site is for statement guidance. Payment demonstrations are not enabled.');return;}safeShow(name,push);};
       for(const [name,panel] of Object.entries(views)){if(!supported.has(name)){panel.hidden=true;panel.dataset.consumerExcluded='true';}}
@@ -18,5 +18,8 @@ CONSUMER_JS = r'''
       }
       const sandbox=document.getElementById('review-sandbox-mode');if(sandbox){sandbox.checked=false;sandbox.disabled=true;const label=sandbox.closest('label');if(label)label.hidden=true;}
       document.querySelectorAll('.friday-prepare-button').forEach(b=>{b.hidden=true;b.disabled=true;});
+      // Remove the retired bill-inbox sharing option, including previously
+      // checked browser state. Statement/diary/forecast consent is independent.
+      const inboxChoice=document.getElementById('friday-chat-workspace');if(inboxChoice){inboxChoice.checked=false;inboxChoice.disabled=true;inboxChoice.closest('label').hidden=true;}
     }
 '''

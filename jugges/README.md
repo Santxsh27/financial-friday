@@ -4,10 +4,12 @@ All files in this folder contain artificial data, not a real customer's records.
 The folder name follows the requested `jugges` spelling. Share this folder only,
 not `.env`, private testing folders or the entire local working directory.
 
-The new library workflow is in local 0.33.0 verification. The hosted 0.32.0 site
-does not yet have the new source-selection/fresh-review controls. See the root
-[Start Here](../START_HERE.md) and [release record](../docs/CURRENT_RELEASE.json)
-before conducting a hosted judging tour.
+Start with [the hosted walkthrough and downloads](https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judge-guide.html).
+It explains Google sign-in, every main step, expected results, optional voice and
+limits without requiring access to the private GitHub repository. The deployment
+identity and acceptance state are recorded in [the release record](../docs/CURRENT_RELEASE.json).
+If a candidate release is still local/staged, use that record rather than assume
+the source changes have been promoted.
 
 ## A short tour
 
@@ -35,8 +37,7 @@ they repeat the same activity and must not be treated as five different accounts
 | --- | --- |
 | `statements/01-Complete-35-Rows.csv` | Three-month artificial history with multiple review candidates |
 | `statements/02-Source-Checks-2-Rows.csv` | Two-row source-fact reconciliation exercise |
-| `documents/04-Artificial-Bank-Statement.pdf` | The same two-row example in PDF; uses configured Google extraction |
-| `documents/05-Artificial-Bill.pdf` | Separate document review, not statement upload |
+| `documents/ARTIFICIAL-Generic-Bank-Statement.pdf` | The same two-row example in PDF; uses configured Google extraction |
 
 Do not combine independent samples when checking their isolated totals. The
 two-row CSV and PDF overlap. Real AI reading may fail or reach trial limits;

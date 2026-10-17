@@ -219,6 +219,11 @@ function renderPlan(){rendered++;}
         self.assertEqual(values[6],[{'screen':'goals','part':None},'home'])
         labels=subprocess.run([node,'-e',NAVIGATION_HELPERS_JS+"\nconsole.log(JSON.stringify(['goals','research','unknown'].map(fridayScreenLabel)));"],capture_output=True,text=True,check=True)
         self.assertEqual(json.loads(labels.stdout),['Goals','Research','Home'])
+        import re
+        handler=re.search(r'back.onclick=(\(\)=>\{[^}]+\})',NAVIGATION_JS).group(1)
+        script="let depth=0,parent='goals';const calls=[],history={back:()=>calls.push('history')},show=(...args)=>calls.push(args);const back="+handler+";back();depth=1;back();console.log(JSON.stringify(calls));"
+        back_result=subprocess.run([node,'-e',script],capture_output=True,text=True,check=True)
+        self.assertEqual(json.loads(back_result.stdout),[['goals',False],'history'])
 
     def test_navigation_composed_after_consumer_guards_and_no_model_calls_or_delete(self):
         self.assertIn(NAVIGATION_JS,FINANCIAL_FRIDAY_HTML)

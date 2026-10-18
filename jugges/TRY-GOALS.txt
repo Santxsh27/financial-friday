@@ -1,18 +1,19 @@
-FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.36
+FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.37
 
 This is invented test data, not financial advice or a real person's finances.
 
-1. Open Goals, allow Gemini for goal text/roadmap totals, choose Talk to Friday.
+1. Open Goals and use Friday's message box. Allow Gemini goal processing there.
 2. Paste:
 
 I want a travel savings fund of INR 120000 in 12 months. Monthly income INR 50000,
 living costs excluding debt INR 30000, monthly debt payments INR 0,
 liquid savings INR 70000, protected buffer INR 50000.
 
-3. Ask Friday. If a fact was not extracted, answer the one missing question.
-   Edit numbers is available without AI. Use statement trends only after review.
+3. Send once. If consent was off, enabling it resumes the pending request.
+   Answer missing questions in the same chat; the roadmap appears automatically.
+   Goal tools -> Edit numbers works without AI. Review any offered statement estimates.
 4. Expect a starting pot INR 20000, target INR 120000, monthly step INR 8333.34.
-   Cards round for display; exact amounts are under Numbers, assumptions & limits.
+   Exact assumptions are under Numbers, assumptions & limits.
 5. Save my roadmap -> tick confirmation -> Confirm & save. Reload the page.
    The saved roadmap should restore, not disappear.
 6. I saved some money -> enter 1000 -> Review update -> confirm. The reported
@@ -30,11 +31,16 @@ No bank balance is verified, money transferred, or financial stability guarantee
 If a save is uncertain, Reload saved goal before trying again.
 
 PUBLIC RESEARCH
-Home -> Research gold or fuel (or Research financing from a plan).
-Choose city/topic, read the separate disclosure, confirm public Google research,
-then Search with Friday. Expect dated source-linked information and Google Search
+Chat -> Current info. Enter a public question, read the disclosure, confirm Google Search,
+then Search & show here. Expect dated source-linked information and Google Search
 Suggestions. It must not label an unattributed answer live. No private statements
 or chat history are included. The source date may differ from retrieval time.
 
 The model may fail, a source may be unavailable, and existing demo limits apply.
 No payment, trade, loan approval or forecast is involved.
+
+OPTIONAL VOICE
+Talk to Friday -> confirm Google processing -> Start recording -> Stop & transcribe.
+Review the transcript in the normal message box, then send. Type instead is available.
+Speak short replies opts into Google narration of displayed text; Stop audio stops it.
+No audio is saved by Friday. This is not always-on listening or an autonomous bank agent.

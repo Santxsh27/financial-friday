@@ -12,7 +12,8 @@ Hack2skill form or establish every eligibility requirement.
 - [x] Explicit public Search research with actual provider attribution; no private-record retrieval in research.
 - [x] Last-purchase loan commitment check; upfront funding is not loan affordability.
 - [x] Statement-first consumer flow, source checks and exact integer-paise analysis.
-- [x] Source library, reversible fresh review, Back navigation and visible Listen.
+- [x] Source library, reversible fresh review, Back navigation and discoverable opt-in voice.
+- [x] Single-conversation goal preparation, inline public research and reviewable voice transcripts.
 - [x] Separate bill/receipt inbox removed from current consumer admission.
 - [x] Bank-labelled artificial CSV/PDF samples; no real customer records copied.
 - [x] In-app sample walkthrough/downloads that do not depend on GitHub access.

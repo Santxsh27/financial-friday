@@ -174,6 +174,9 @@ A commit is not automatically deployed; historical reports retain their dated sc
 passed / 1 skipped** natively and in both Python CI jobs; container **868 / 818 /
 50** (environment-dependent skips); **68 tooling tests passed**. Exact-source
 [GitHub CI passed](https://github.com/Santxsh27/financial-friday/actions/runs/39130403143).
+The final navigation-only web follow-up also passed
+[both Python and container CI](https://github.com/Santxsh27/financial-friday/actions/runs/39133138287)
+and 33 focused native tests; API and voice code are unchanged.
 Eight isolated real-Google calls verified speech/transcription/Search and goal
 save/restore/report/Undo. A separate public browser question and TTS call completed
 audio playback and cached replay/Stop. Only artificial/general test inputs were

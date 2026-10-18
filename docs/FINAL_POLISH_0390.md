@@ -6,11 +6,23 @@ Deployment identities and final acceptance are recorded in CURRENT_RELEASE.json.
 
 ## Final result
 
-API `financial-friday-api-voice0390` and web `financial-friday-web-voice0390`
-are promoted at 100% main traffic. Both images come from
+API `financial-friday-api-voice0390` and web `financial-friday-web-voice0390final`
+are promoted at 100% main traffic. API comes from
 `0c8f8829a513c2a292a8a12b8cffded638cf1035`; exact-source GitHub CI
 [39130403143](https://github.com/Santxsh27/financial-friday/actions/runs/39130403143)
 passed Python 3.11, Python 3.12 and the fresh container build/test jobs.
+
+The last web-only navigation follow-up is
+`b9766cb17411dc978bddd36c3ec9e18d00ba570f`, verified by
+[CI 39133138287](https://github.com/Santxsh27/financial-friday/actions/runs/39133138287)
+(both Python jobs and container), plus 33 focused native tests. It resets the
+selected assistant topic and placeholder on Goals → Home, and keeps New chat's
+topic appropriate to the current page. Local browser verified Ask anything and
+the general money-question prompt after that roundtrip. After promotion the
+canonical website passed the same Goals → Home check with zero console errors,
+and voice was off (no background microphone). API and voice code did
+not change; the successful live voice evidence below is from the preceding
+0.39 web image, not misrepresented as a second paid speech run.
 
 Native: 868 run, 867 passed, one optional integration skipped. Container: 868 run,
 818 passed, 50 environment-dependent skips (including browser-JS Node tests and

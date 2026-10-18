@@ -7,6 +7,9 @@ ICONS = frozenset({"arrow-right", "chevron-down", "file-text", "shield", "user",
                    "book-open", "bar-chart-2", "alert-circle", "clock", "check-circle",
                    "home", "upload", "shopping-cart", "coffee", "truck", "log-out"})
 ASSETS = {
+    **{"ARTIFICIAL-0390-" + name: "text/csv" for name in (
+        "HDFC-Illustration-6-Months.csv", "Kotak-Illustration-6-Months.csv",
+        "ICICI-Candidate-6-Months.csv", "Generic-Tab-6-Months.csv", "Generic-Semicolon-6-Months.csv")},
     "friday-judge-guide.html": "text/html",
     "ARTIFICIAL-HDFC-Illustration.csv": "text/csv",
     "ARTIFICIAL-Kotak-Illustration.csv": "text/csv",

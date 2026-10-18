@@ -2,7 +2,7 @@
 
 Friday helps with a saved purchase/savings/reserve roadmap, explicit public-source
 research and optional INR statement understanding. Try Home → Goals;
-[the artificial goal test](jugges/TRY-GOALS.txt) gives exact inputs/results.
+[the current judge kit](judge-kit/README.md) gives exact inputs/results.
 Google sign-in identifies your workspace;
 it does not connect your bank. Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json)
 to distinguish local preview changes from the hosted release.
@@ -21,8 +21,10 @@ The guide and bank-labelled files are served by Friday; no repository access is 
    identifies the selected statements, dates and review version.
 5. **Ask Friday → Choose what I can use** controls optional Gemini context.
    Results stay in chat until you choose to open them.
-6. **Listen** opens the optional spoken review. Confirm sharing its totals with
-   Google, generate it, then Play. This is not a microphone/voice-command feature.
+6. **My money** has an optional aggregate spoken briefing. **Talk to Friday**
+   separately offers a short Google-transcribed question; review then Send.
+   **Read last reply → Enable voice & read** enables spoken chat previews.
+   Stop audio cancels playing/queued/loading playback. No background microphone.
 
 ## Start fresh without losing history
 
@@ -42,7 +44,9 @@ Docker, VS Code and environment paths keep working.
 | Location | Use |
 | --- | --- |
 | `src/`, `tests/`, `tools/` | Current app, automated tests and engineering tools |
-| `jugges/` | Shareable artificial sample files and visitor walkthrough |
+| `judge-kit/` | Fresh six-month, bank/style-labelled CSVs and judge walkthrough |
+| `jugges/` | Older small artificial fixtures retained for regression testing |
+| `../Financial Friday Testing/` | Separate Desktop upload files and personal test notes |
 | `my-testing/` | Your separate sample kits and testing notes; not committed |
 | `archive/` | Old submission snapshot and superseded guides; not committed |
 | [USER_GUIDE.md](USER_GUIDE.md) | Current click-by-click guide and limits |

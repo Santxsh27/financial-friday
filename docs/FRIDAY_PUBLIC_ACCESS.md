@@ -1,7 +1,10 @@
 # Google-account access to Financial Friday
 
 The user authorized access for anyone signing in with Google on October 12, 2026.
-This is an artificial-money demo, not permission to connect real bank accounts.
+Current consumer scope is statement understanding, visual cash goals, consented
+AI questions/research and optional short Google voice turns. It does not connect
+real bank accounts or make payments. Source repository visibility was independently
+checked as PUBLIC on 18 October; source access does not grant workspace access.
 
 ## Boundaries
 
@@ -17,10 +20,11 @@ This is an artificial-money demo, not permission to connect real bank accounts.
    web/runtime service identities. No key reaches browser HTML or JavaScript.
 5. Cloud Run API invocation remains private. Visitor keys have an additional
    Friday-route allowlist: no legacy contracts, bank bridge or background monitor.
-6. All state reads and financial records stay tenant scoped. A new visitor has no
-   saved bills or runs, default automatic permission off, and an artificial ₹50,000
-   opening balance. Save My rules to establish a durable account before executing
-   a live-input bill; saving again cannot replenish an existing balance.
+6. All state reads, reviewed statements and confirmed goals stay tenant scoped.
+   A new visitor starts without imported history or a confirmed roadmap. The
+   consumer flow does not require My rules or a simulated balance. Goal changes,
+   private-context sharing, voice processing and public searches require their
+   own explicit choices. Legacy payment routes are not the consumer journey.
 7. Mutations require the fixed web Origin. Proxy paths, queries, content types and
    upload sizes remain validated. No payment request is retried by the gateway.
 
@@ -45,7 +49,7 @@ Daily usage records currently require operator-managed retention; no automatic
 deletion policy is provisioned. Do not rotate the enrollment secret casually:
 identity-derived namespaces would change; preserve it for stable visitor history.
 
-## Verification
+## Verification boundaries
 
 Automated tests cover two isolated visitor identities, stable identities across
 requests, owner-header spoofing, rejected missing/forged/non-user identity,
@@ -53,10 +57,14 @@ restricted legacy routes, wrong keys, origin/query attacks, shared limits,
 concurrent admission, daily/global caps, day reset, and fail-closed storage.
 Existing private-pilot tests still verify owner access and no request retries.
 
-Native suite: 329 tests ran, 328 passed, one optional Anthos integration skipped.
-Unit mocks alone are not proof of external Google login.
+Current counts and actual cloud checks are recorded in CURRENT_RELEASE.json.
+Unit mocks or synthetic visitor identities alone are not proof of external
+Google login. A separate person's real Google sign-in is still a human check.
 
-## Live rollout, October 12
+## Historical live rollout, October 12 (not the current UI)
+
+The bill/rules/balance details and 329-test count below describe the earlier
+artificial-payment implementation only. Do not use them as current visitor steps.
 
 - Clean source commit `7525c15` built successfully by Cloud Build
   `5d6e2b64-66af-4d47-9fde-912924092b55`.

@@ -55,9 +55,10 @@ https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judg
 Source:
 https://github.com/Santxsh27/financial-friday
 
-The repository is private. Invite required source reviewers or use an officially
-accepted source-delivery method. A private GitHub URL alone is not access. Do not
-share credentials, databases, .env files or the owner archive/testing folders.
+The repository is public (verified 18 October). Judges can read source and download
+the current `judge-kit/` files anonymously. The app still requires Google sign-in,
+and each visitor's records remain private. Do not share credentials, databases,
+.env files or owner archive/testing folders.
 
 ## Human-controlled submission requirements
 

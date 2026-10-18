@@ -200,7 +200,7 @@ FINANCIAL_FRIDAY_HTML = r"""<!doctype html>
     }
     async function jsonRequest(path,method='GET',body){
       const options={method,headers:{'Content-Type':'application/json'}};if(body!==undefined)options.body=JSON.stringify(body);
-      const response=await fetch(path,options);const data=await response.json();if(!response.ok)throw new Error(data.detail||'Request failed');return data;
+      const response=await fetch(path,options);const data=await response.json();if(!response.ok){const error=new Error(data.detail||'Request failed');error.status=response.status;throw error;}return data;
     }
     async function loadMandate(){
       try{const data=await jsonRequest('/api/friday/mandate');const m=data.mandate;$('goal').value=m.instruction;$('reserve').value=(m.protected_balance_minor/100).toFixed(2);$('auto-limit').value=(m.automatic_payment_limit_minor/100).toFixed(2);$('increase-review').value=m.bill_increase_review_percent??30;$('auto-execute').checked=m.automatic_sandbox_execution;$('visible-limit').innerHTML='<i>✓</i>'+money(m.automatic_payment_limit_minor);}

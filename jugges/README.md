@@ -1,4 +1,6 @@
-# Try Financial Friday
+# Older Financial Friday test fixtures
+
+**Use [the new judge kit](../judge-kit/README.md) for the current six-month samples, goals, voice and click-by-click walkthrough.** These older files are kept for regression tests; their totals differ.
 
 All files in this folder contain artificial data, not a real customer's records.
 The folder name follows the requested `jugges` spelling. Share this folder only,
@@ -6,7 +8,7 @@ not `.env`, private testing folders or the entire local working directory.
 
 Start with [the hosted walkthrough and downloads](https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judge-guide.html).
 It explains Google sign-in, every main step, expected results, optional voice and
-limits without requiring access to the private GitHub repository. The deployment
+limits without requiring GitHub sign-in. The source repository is now public. The deployment
 identity and acceptance state are recorded in [the release record](../docs/CURRENT_RELEASE.json).
 If a candidate release is still local/staged, use that record rather than assume
 the source changes have been promoted.
@@ -15,7 +17,7 @@ the source changes have been promoted.
 
 For the new goal/research path, start with [TRY-GOALS.txt](TRY-GOALS.txt).
 It has one artificial purchase scenario, expected results and the separate
-public-research consent steps. Goals are not saved long-term.
+public-research consent steps. One confirmed priority and self-reported updates persist privately; unsaved previews do not.
 
 1. Home → Add a statement → choose `statements/03-Simple-4-Rows.csv`.
 2. Confirm processing → Read my statement → compare four rows.

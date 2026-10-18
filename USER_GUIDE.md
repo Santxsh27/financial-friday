@@ -191,20 +191,24 @@ unsupported answer, saved charts still work; no canned live reply is substituted
 ## Talk to Friday and hear replies
 
 1. Choose the floating **Talk to Friday** button, or the same button beside chat.
-2. Confirm sending the short clip to Google, then **Start recording**. Your browser
+2. Choose **Record & send to Google** after reading the processing notice. Your browser
    asks for microphone permission. You can decline and choose **Type instead**.
 3. Ask a short question. **Stop & transcribe**, or it stops after 25 seconds.
 4. The transcript appears in the normal message box. Check numbers and wording,
    correct anything wrong, then send. A transcript is not a financial instruction.
-5. Optional **Speak short replies** allows Google narration of displayed reply text.
-   It reads eligible new replies; **Read last reply** repeats one. **Stop audio**
-   stops playback. Long replies remain text-only; use on-screen numbers as reference.
+5. **Read last reply → Enable voice & read** enables Google narration. New replies
+   queue automatically while enabled. Long replies get a labelled short preview;
+   the complete answer remains on screen. **Stop audio** cancels playing, queued
+   and still-loading playback. It cannot recall a provider request already sent.
+   If autoplay is blocked, press **Play** in the visible player. Last-clip replay
+   uses page memory where available; New chat/cleanup clears it.
 6. New chat or privacy cleanup stops audio and turns voice-reply consent off.
 
 This is push-to-talk, not a wake-word or continuous Live API session. Friday stores
 no recordings; microphone capture is limited to an explicit turn. Google provider
 processing still applies. Speech can mishear or mispronounce financial figures.
-Typing and visual output remain the reliable fallback.
+Typing and visual output remain the reliable fallback. Use the Vertex-enabled
+hosted service for this voice path; Developer-API-only local mode cannot supply it.
 
 ## Listen to your statement review
 

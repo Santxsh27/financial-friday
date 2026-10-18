@@ -113,3 +113,8 @@ external alerts and independently measured large-scale effectiveness remain
 unimplemented. Reference datasets require provenance/licensing and a separate
 design; private customer records are not automatically training data. Deck/video,
 dashboard confirmation and a second-person access test remain submission tasks.
+# Latest release
+
+[0.39 voice, workflow and judge-kit polish](FINAL_POLISH_0390.md) — use
+[CURRENT_RELEASE.json](CURRENT_RELEASE.json) for actual deployment/test identities.
+

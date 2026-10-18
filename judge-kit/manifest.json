@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "release": "0.39.0",
+  "data": "ARTIFICIAL_ONLY",
+  "period": {"from": "2026-04-01", "to": "2026-09-25"},
+  "same_activity_in_all_files": true,
+  "import_one_at_a_time": true,
+  "expected_per_file": {
+    "transaction_count": 42,
+    "total_credit_minor": 30000000,
+    "total_debit_minor": 16469400,
+    "opening_balance_minor": 4000000,
+    "last_running_balance_minor": 17530600,
+    "reconciliation_overall": "UNKNOWN",
+    "model_calls_to_parse_csv": 0
+  },
+  "files": [
+    {"name":"01-HDFC-Illustration-6-Months.csv","basis":"PUBLIC_ILLUSTRATIVE_HEADINGS_ONLY","source_catalog":"../examples/friday-bank-format-cases.json"},
+    {"name":"02-Kotak-Illustration-6-Months.csv","basis":"PUBLIC_ILLUSTRATIVE_HEADINGS_ONLY","source_catalog":"../examples/friday-bank-format-cases.json"},
+    {"name":"03-ICICI-Candidate-6-Months.csv","basis":"SYNTHETIC_CANDIDATE_NOT_VERIFIED_EXPORT"},
+    {"name":"04-Generic-Tab-6-Months.csv","basis":"GENERIC_SYNTHETIC_TAB_DELIMITER"},
+    {"name":"05-Generic-Semicolon-6-Months.csv","basis":"GENERIC_SYNTHETIC_REORDERED_SEMICOLON"}
+  ],
+  "not_claimed": ["bank-authenticated", "exact current bank exports", "universal compatibility", "real financial records", "fraud ground truth"]
+}

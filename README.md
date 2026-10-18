@@ -73,10 +73,16 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note (18 October):** the last verified public deployment is 0.36.0;
-0.37.0's assistant upgrade is undergoing final verification. See
-[the release report](docs/ASSISTANT_0370.md) and the manifest for actual test,
-build and deployment evidence. A source version alone does not confirm deployment.
+**Release note (18 October):** API/web **0.37.0 are deployed**, both at 100% main
+traffic. Six real Google calls in a fresh artificial visitor verified generated
+speech → transcription, general chat, attributed public Search, goal interpretation
+and exact unsaved-roadmap coaching. The published browser also rendered a public
+Search result with citations and Search Suggestions; no private records were sent.
+Native: **838 run / 837 passed / 1 skipped**. Docker: **838 / 804 / 34**.
+Offline tools: **68 passed**. Matching API/web source CI passed. See
+[the release report](docs/ASSISTANT_0370.md) and manifest for exact image/source
+identities and scope. Human microphone testing, another person's sign-in and
+submission remain human checks; these numbers are not independent financial accuracy.
 A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
 listed in the checklist below.
 

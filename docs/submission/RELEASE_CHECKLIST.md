@@ -1,12 +1,14 @@
 # Financial Friday submission checklist
 
-Updated 17 October 2026. Current source/revision/test state:
+Updated 18 October 2026. Current source/revision/test state:
 [CURRENT_RELEASE](../CURRENT_RELEASE.json). Engineering work does not submit the
 Hack2skill form or establish every eligibility requirement.
 
 ## Software and demonstration
 
 - [x] Quote-bound Gemini goal intake, manually confirmed assumptions and visual shared-budget scenarios.
+- [x] Conversation-first purchase/savings/reserve roadmap, private persistence, additional savings reports and Undo.
+- [x] Separate saved-goal coaching consent, exact INR output checks, cleanup/replay/stale-tab tests.
 - [x] Explicit public Search research with actual provider attribution; no private-record retrieval in research.
 - [x] Last-purchase loan commitment check; upfront funding is not loan affordability.
 - [x] Statement-first consumer flow, source checks and exact integer-paise analysis.
@@ -31,7 +33,10 @@ Hack2skill form or establish every eligibility requirement.
   are authorised for release acceptance. No owner records are sent to AI.
 - Budget alerts/app quotas do not guarantee zero costs or uninterrupted availability.
   Keep the trial/account operational throughout evaluation; monitor errors and usage.
-- Goals remain in page memory unless exported. Research is on request, not a
+- One confirmed priority roadmap is saved privately; the Advanced multi-purchase
+  calculator alone remains unsaved. Progress is self-reported, never a bank balance.
+  External reminders/automatic savings tracking are not implemented.
+  Research is on request, not a
   licensed live market feed, independent fact-check or personalised investment advice.
 - Do not expose the backend or disable Google identity to resolve a login problem.
 

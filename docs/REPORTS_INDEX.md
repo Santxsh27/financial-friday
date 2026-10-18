@@ -2,7 +2,10 @@
 
 The **0.36.0 conversation-first roadmap** is described in
 [ROADMAP_0360](ROADMAP_0360.md). Consult CURRENT_RELEASE for its actual deployment
-and verification status. The 0.35 counts below are retained historical evidence.
+and verification status. Deployed 18 October at 100% API/web traffic: native 825
+run / 824 passed / 1 skipped; Docker 825 / 792 / 33; tools 65 passed. Exact-source
+CI and bounded real Vertex/Firestore checks passed. The 0.35 counts below are
+retained historical evidence.
 
 The **0.35.0 goals/research expansion** is described in
 [its implementation report](GOALS_RESEARCH_0350.md). Local checks ran 803 tests

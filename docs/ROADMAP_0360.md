@@ -36,6 +36,27 @@ separate and unsaved. Public Google Search research is unchanged.
 
 ## Verification and release
 
+Deployed 18 October 2026: API `financial-friday-api-roadmap0360final` and web
+`financial-friday-web-roadmap0360final`, both at 100% main traffic. Application
+source `e5ef072699526bda832c0c0a84eb44f18be75784`; matching CI run `39093993771`
+succeeded. Native: 825 run / 824 passed / 1 skipped. Docker: 825 / 792 / 33.
+The JavaScript syntax check is native-only; all 65 offline tool tests passed.
+
+Two bounded artificial cloud runs exercised real Vertex intake/coaching, exact
+calculation, Firestore persistence/restore, progress, Undo, replay/payload conflict,
+export, cleanup and stale-generation rejection. The final run used the exact
+promoted API image. No owner records, bank money, new IAM or quota changes.
+Local browser checks covered real intake, save/reload, report/Undo, a reserve goal
+using the already reviewed artificial budget, and readable INR coaching. The
+canonical browser loaded the new Goals page and its private proxy read correctly.
+API anonymous access remains 403; the web redirects unauthenticated visitors to
+Google sign-in. A second person's login is still a human check, not inferred here.
+
+This release did not re-certify all historical statement layouts or public Search
+results. They retain their dated evidence; regression/CI coverage remains green.
+Automatic reminder delivery is not implemented. The roadmap does not monitor bank
+accounts or count reduced spending as actual savings.
+
 [CURRENT_RELEASE.json](CURRENT_RELEASE.json) records actual source identities,
 test outcomes, deployed artifacts and completed browser/live checks. Source changes
 alone are not deployment. `tests/test_friday_roadmap.py` covers math, strict input,

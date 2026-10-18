@@ -81,23 +81,22 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note (18 October):** API/web **0.37.0 are deployed**, both at 100% main
-traffic. Six real Google calls in a fresh artificial visitor verified generated
-speech → transcription, general chat, attributed public Search, goal interpretation
-and exact unsaved-roadmap coaching. The published browser also rendered a public
-Search result with citations and Search Suggestions; no private records were sent.
-Native: **838 run / 837 passed / 1 skipped**. Docker: **838 / 804 / 34**.
-Offline tools: **68 passed**. Matching API/web source CI passed. See
-[the release report](docs/ASSISTANT_0370.md) and manifest for exact image/source
-identities and scope. Human microphone testing, another person's sign-in and
+**Release note (18 October):** API/web **0.38.0 are deployed**, both at 100% main
+traffic. A fresh artificial visitor verified real Vertex goal intake and coaching,
+exact allocation/pressure cases, Firestore save/restore, progress/Undo, replay and
+payload-conflict protection, export, cleanup and stale-write rejection. The main
+signed-in website also completed an artificial goal → explicit Gemini permission
+→ automatic visual playbook, plus the investment-education question shortcut.
+No real bank money moved or owner financial records were used.
+Native: **851 run / 850 passed / 1 skipped**. Docker: **851 / 816 / 35**.
+Offline tools: **68 passed**. Matching Python 3.11/3.12 and container CI passed. See
+[the release report](docs/GOAL_PLAYBOOK_0380.md) and manifest for exact image/source
+identities and scope. Earlier voice/Search evidence is retained in the
+[0.37 report](docs/ASSISTANT_0370.md), not claimed as newly retested in 0.38.
+Human microphone testing, another person's sign-in and
 submission remain human checks; these numbers are not independent financial accuracy.
 A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
 listed in the checklist below.
-
-**0.38 source update:** the new goal playbook and explicit-action consent flow are
-being verified. [Goal playbook report](docs/GOAL_PLAYBOOK_0380.md) and CURRENT_RELEASE
-record whether that source has been promoted; the older 0.37 evidence above is
-historical until the new release checks finish.
 
 This repository is private. A GitHub link alone does not grant source access. Invite
 the required reviewers, or use the organisers' approved source-delivery method.

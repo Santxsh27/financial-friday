@@ -74,6 +74,8 @@ class VoicePlaybackTests(unittest.TestCase):
         self.assertNotIn('if(voiceBusy',ASSISTANT_JS)
         self.assertIn('playback.stop(true)',ASSISTANT_JS)
         self.assertNotIn('speechSynthesis',ASSISTANT_JS)
+        self.assertIn("chooseTopic(active==='goals'?'goal':'chat')",ASSISTANT_JS)
+        self.assertIn("field.placeholder='Ask Friday about your money…'",ASSISTANT_JS)
         from carapace_integrations.friday_roadmap_ui import ROADMAP_JS
         self.assertIn("friday:visual-spoken-reply",ROADMAP_JS)
         self.assertIn("node.dataset.voiceSkip==='true'",ASSISTANT_JS)

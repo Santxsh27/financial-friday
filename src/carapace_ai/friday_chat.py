@@ -267,6 +267,19 @@ evidence_ids, not prose. For one next step prefer the supplied recommended_month
 not the entire monthly capacity. If capacity is short, explain the gap and offer
 reviewing the target or timeline, never skipping essentials or promising returns.'''
 
+INSTRUCTION += ''' The roadmap now includes a server-calculated playbook:
+monthly allocation, checkpoints, pressure cases and exact alternatives. Explain
+these existing amounts rather than recalculating them. Scenarios have explicit
+assumptions and no probabilities. A 5% annual simple cost increase is an
+illustration, not an inflation forecast. An unallocated amount is not verified
+disposable income. A proposed longer date or lower target has NOT been applied.
+For investment education explain risk, liquidity, diversification and costs;
+never rank schemes or stocks for this person, assign a portfolio, promise gains
+or suggest market-linked holdings are guaranteed cash. Friday has no broker,
+live NAV/holdings feed or trade tools. User-reported goal savings track cash set
+aside only, not returns or holdings valuation. Current public product terms need
+the separate consented Research flow and primary-source review.'''
+
 
 def _allowed_citations(request,context,cashflow,diary,statements,roadmap=None):
     ids={item['evidence_id'] for item in context.get('evidence',[])} if request.include_workspace else set()

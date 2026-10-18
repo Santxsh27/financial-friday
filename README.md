@@ -8,7 +8,7 @@ roadmap, then track money you actually report setting aside. Explicit public res
 through Gemini on Vertex AI and Google Search. Optional INR bank/card PDF or CSV
 imports provide a separate reviewed spending picture and source-linked guidance.
 
-The unified assistant upgrade is release **0.37.0**. Consult CURRENT_RELEASE for
+The visual goal playbook upgrade is release **0.38.0**. Consult CURRENT_RELEASE for
 deployment status; source changes are not automatically live.
 
 ## Goals and research
@@ -19,7 +19,7 @@ deployment status; source changes are not automatically live.
   Historical statement trends are offered as reviewable estimates to reduce typing;
   current savings are never guessed. Saving still needs explicit confirmation.
 - **One saved priority:** purchase, savings target or emergency reserve, with a
-  progress ring, 25/50/75/100% milestones, monthly step and baseline/stress chart.
+  reported-progress ring, exact monthly money split and dated amount checkpoints.
   A reserve target is one part of stability, not a financial-health score.
 - **Track real reports:** confirm additional money actually set aside, restore the
   roadmap after reload, or Undo a report. Imports, time and spending reductions
@@ -28,8 +28,16 @@ deployment status; source changes are not automatically live.
   Unsupported explicit INR figures are rejected. Chat cannot edit goals.
 - **Advanced calculator:** the former three-purchase/shared-budget loan calculator
   remains collapsed and unsaved, separate from the cash-only tracked goal.
-- **Stress comparison:** income −10%, living costs +10%. Scenarios, not forecasts;
-  no investment returns, guaranteed savings or lender approval.
+- **Visual playbook:** compare constant cash flow, income −10%/costs +10%, a missed
+  saving month and an illustrative 5% annual simple target-cost increase. Short
+  budgets get exact smaller-target, longer-date or extra-capacity alternatives.
+  Known inputs and unestablished factors are shown separately. Scenarios, not forecasts.
+- **Clear permission:** a visible **Continue with Gemini** dialog or calculator-only
+  route replaces the easy-to-miss goal checkbox. **Confirm & save** confirms storage
+  directly. Revoke/New chat/cleanup reset goal-sharing permission; server guards remain.
+- **Investment education:** visual cash/deposit, mutual-fund and share/gold comparison,
+  SEBI/AMFI references and an Ask Friday shortcut. No personal product selection,
+  live holdings, trade execution or assumed investment growth.
 - **Public research:** gold, fuel, home-loan information or a public financial
   question. Actual provider source links and Search Suggestions are required.
   Retrieval time is not a quote date. No licensed streaming quote feed is claimed.
@@ -85,6 +93,11 @@ identities and scope. Human microphone testing, another person's sign-in and
 submission remain human checks; these numbers are not independent financial accuracy.
 A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
 listed in the checklist below.
+
+**0.38 source update:** the new goal playbook and explicit-action consent flow are
+being verified. [Goal playbook report](docs/GOAL_PLAYBOOK_0380.md) and CURRENT_RELEASE
+record whether that source has been promoted; the older 0.37 evidence above is
+historical until the new release checks finish.
 
 This repository is private. A GitHub link alone does not grant source access. Invite
 the required reviewers, or use the organisers' approved source-delivery method.

@@ -64,14 +64,20 @@ def main():
             'operation_id':uuid4().hex,'confirm_store':True,**parts}
     preview=call('goals/roadmap-preview',{'plan':plan})
     assert preview['current_inr']=='20000.00' and preview['required_monthly_inr']=='8333.34'
+    book=preview['playbook']
+    assert book['scenarios'][2]['end_inr']=='111666.74'
+    assert book['scenarios'][3]['target_inr']=='126000.00'
+    assert [v['amount_inr'] for v in book['allocation']['slices']]==['30000.00','0.00','8333.34','11666.66']
     state=call('goals/roadmap',body('SAVE',plan=plan));assert state['revision']==1
     assert call('goals/roadmap')['plan']==state['plan']
     add=body('ADD',amount_inr='1000');state=call('goals/roadmap',add)
     assert state['summary']['current_inr']=='21000.00'
+    assert state['summary']['playbook']['checkpoints'][0]['target_inr']=='30000.00'
     replay=call('goals/roadmap',add);assert replay['revision']==2 and len(replay['entries'])==1
     call('goals/roadmap',{**add,'amount_inr':'9999'},expected=409)
     state=call('goals/roadmap',body('UNDO',undo_operation_id=add['operation_id']))
     assert state['summary']['current_inr']=='20000.00'
+    assert state['summary']['playbook']==book
     answer=call('chat',{'message':'What is my next practical step for this saved goal? Be concise.','include_roadmap':True})
     assert answer['read_only'] and answer['roadmap_included'] and answer['actions_executed']==[]
     assert answer['context_receipt']['saved_roadmap']=='SHARED'
@@ -82,7 +88,7 @@ def main():
     assert cleanup['deleted']['goal_roadmap']==1
     assert call('goals/roadmap')['plan'] is None
     call('goals/roadmap',stale,expected=409)
-    print(json.dumps({'passed':True,'real_vertex_intake':True,'exact_math':True,'live_private_persistence':True,
+    print(json.dumps({'passed':True,'real_vertex_intake':True,'exact_math':True,'playbook_allocation_cases_and_undo':True,'live_private_persistence':True,
         'restore':True,'progress_and_undo':True,'replay_once_and_payload_conflict':True,
         'real_vertex_goal_coaching':True,'model_cannot_edit':True,'export':True,
         'cleanup_and_stale_write':True,'owner_records_used':False,'bank_money_moved':False}),flush=True)

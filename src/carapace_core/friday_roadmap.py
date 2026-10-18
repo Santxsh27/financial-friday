@@ -94,7 +94,7 @@ def calculate_roadmap(plan, entries=(), started=None, today=None):
         milestones.append({'percent':percent,'reached':current>=threshold,
             'estimated_date':month_date(today,wait).isoformat() if wait is not None and wait<=60 else None})
     status = 'REPORTED_TARGET_REACHED' if gap == 0 else 'DEADLINE_PASSED' if remaining == 0 else 'BUDGET_SHORTFALL' if required > max(0,capacity) else 'ON_PLAN_SCENARIO'
-    return {'title':plan.title,'kind':plan.kind,'target_inr':rupees(target),
+    summary = {'title':plan.title,'kind':plan.kind,'target_inr':rupees(target),
         'opening_inr':rupees(opening),'reported_additions_inr':rupees(reported),'current_inr':rupees(current),
         'gap_inr':rupees(gap),'progress_percent':min(100,current*100//target),
         'monthly_capacity_inr':rupees(capacity),'recommended_monthly_inr':rupees(contribution),
@@ -104,3 +104,6 @@ def calculate_roadmap(plan, entries=(), started=None, today=None):
         'remaining_months':remaining,'status':status,'milestones':milestones,'calendar':chart,
         'stress_reaches_target':project(remaining,min(contribution,stress_capacity))>=target,
         'money_moved':False,'bank_verified':False,'investment_returns_assumed':False}
+    from .friday_goal_playbook import goal_playbook
+    summary['playbook'] = goal_playbook(plan, summary, today, month_date)
+    return summary

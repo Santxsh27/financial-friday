@@ -7,17 +7,22 @@ assuming local changes are already on the hosted site.
 
 ## Build and track a goal
 
-1. Open **Goals**, or choose **Plan a goal** in Friday's chat. Allow Gemini goal
-   processing beside the message box; **Goal tools → Edit numbers** works without AI.
+1. Open **Goals**, or choose **Plan a goal** in Friday's chat. Send your message,
+   then choose **Continue with Gemini** in the permission dialog. No checkbox is
+   required. **Use calculator without AI** keeps interpretation local/manual.
 2. Describe the goal: “A travel fund of ₹1,20,000 in 12 months.” Include any budget
    facts you know. Answer only missing questions, one number at a time.
 3. Reply to missing questions in the same message box. Friday automatically offers
    available statement trends as optional estimates. Review their coverage before
    accepting. It cannot infer current cash. You need not switch to another form.
 4. The result appears automatically in the conversation:
-   **progress ring → milestones → monthly step → projected path**. Exact math
-   and assumptions are collapsed. Dashed stress path is not a forecast.
-5. **Save my roadmap → confirm → Confirm & save**. It restores after reload.
+   **current pot → monthly step → money-split ring → dated checkpoints**.
+   Open **Pressure tests** for the cash plan, lower income/higher costs, a missed
+   saving month and an illustrative cost increase. Gaps are shown in rupees.
+   A short budget gets exact smaller-target/longer-date/extra-capacity alternatives;
+   nothing is applied automatically. **What this plan checks** names missing evidence.
+5. **Save my roadmap → Confirm & save**. The clearly labelled action confirms
+   private storage; no extra checkbox. It restores after reload.
 6. **I saved some money → amount → Review update → confirm** records additional
    money actually set aside, not your starting savings again. Or tell Friday
    “I saved ₹1000”. **My savings updates → Undo** corrects a report, not a payment.
@@ -25,6 +30,14 @@ assuming local changes are already on the hosted site.
    saved or current unsaved roadmap totals only. Chat cannot change the goal or move money.
 8. **Goal tools → Reload saved goal** checks uncertain save outcomes. **Export saved goal**
    includes archives. Privacy's explicit input cleanup clears goals too.
+9. **Savings, mutual funds & shares** is a collapsed educational comparison with
+   SEBI/AMFI links and an **Ask Friday** shortcut. It explains risk, liquidity and
+   costs; it does not pick products, track a broker portfolio or assume returns.
+
+**Turn Gemini off** stops further goal sharing and discards an in-flight reply.
+New chat and privacy cleanup also reset this conversation permission. The permission
+dialog appears before any pending goal message is sent, not after a failed request.
+Statement-processing and independent context-selection permissions still apply.
 
 One priority is active. Starting another doesn't replace it until you confirm.
 “Stable by 2028” can become a reserve of your chosen months of living costs plus

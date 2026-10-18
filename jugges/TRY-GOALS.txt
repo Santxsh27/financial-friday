@@ -1,20 +1,25 @@
-FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.37
+FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.38
 
 This is invented test data, not financial advice or a real person's finances.
 
-1. Open Goals and use Friday's message box. Allow Gemini goal processing there.
+1. Open Goals and use Friday's message box.
 2. Paste:
 
 I want a travel savings fund of INR 120000 in 12 months. Monthly income INR 50000,
 living costs excluding debt INR 30000, monthly debt payments INR 0,
 liquid savings INR 70000, protected buffer INR 50000.
 
-3. Send once. If consent was off, enabling it resumes the pending request.
+3. Send once. Choose Continue with Gemini in the permission dialog.
    Answer missing questions in the same chat; the roadmap appears automatically.
    Goal tools -> Edit numbers works without AI. Review any offered statement estimates.
 4. Expect a starting pot INR 20000, target INR 120000, monthly step INR 8333.34.
-   Exact assumptions are under Numbers, assumptions & limits.
-5. Save my roadmap -> tick confirmation -> Confirm & save. Reload the page.
+   The money-split ring shows living costs 30000, goal 8333.34, unallocated 11666.66.
+   Open Pressure tests: missed month ends at 111666.74, cost-increase illustration
+   target 126000. No forecast, tax estimate or investment return is claimed.
+   Edit income to 35000: smaller target 80000, 20-month timeline, or extra monthly
+   capacity 3333.34. These are alternatives, not automatic changes.
+   What this plan checks separates supplied assumptions from missing evidence.
+5. Save my roadmap -> Confirm & save. No extra checkbox. Reload the page.
    The saved roadmap should restore, not disappear.
 6. I saved some money -> enter 1000 -> Review update -> confirm. The reported
    pot becomes INR 21000. My savings updates -> Undo -> confirm returns to 20000.
@@ -24,6 +29,10 @@ liquid savings INR 70000, protected buffer INR 50000.
    Missing facts must be asked, not guessed. Replacing a goal requires confirmation.
 9. Export saved goal includes reports/archives. The separate Advanced calculator
    still offers unsaved multi-purchase/loan scenarios; these are not tracked goals.
+10. Savings, mutual funds & shares offers general risk/cost/liquidity education,
+    authoritative links and an Ask Friday shortcut. No stock picks or broker feed.
+11. Turn Gemini off revokes goal sharing and discards an in-flight reply. New chat
+    resets this permission. The calculator and saved exact visuals remain usable.
 
 Only report ADDITIONAL money actually set aside. Do not recount initial savings.
 Time, imports and reduced spending never automatically increase actual progress.

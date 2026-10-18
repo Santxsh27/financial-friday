@@ -7,21 +7,23 @@ assuming local changes are already on the hosted site.
 
 ## Build and track a goal
 
-1. Open **Goals**. Choose a starter or **Talk to Friday**. Allow Gemini processing
-   for interpretation; **Edit numbers** also works without AI.
+1. Open **Goals**, or choose **Plan a goal** in Friday's chat. Allow Gemini goal
+   processing beside the message box; **Goal tools → Edit numbers** works without AI.
 2. Describe the goal: “A travel fund of ₹1,20,000 in 12 months.” Include any budget
    facts you know. Answer only missing questions, one number at a time.
-3. Already saved statements? **Use statement trends** proposes historical budget
-   averages. Review coverage warnings before accepting. It cannot infer current cash.
-4. See **progress ring → milestones → monthly step → projected path**. Exact math
+3. Reply to missing questions in the same message box. Friday automatically offers
+   available statement trends as optional estimates. Review their coverage before
+   accepting. It cannot infer current cash. You need not switch to another form.
+4. The result appears automatically in the conversation:
+   **progress ring → milestones → monthly step → projected path**. Exact math
    and assumptions are collapsed. Dashed stress path is not a forecast.
 5. **Save my roadmap → confirm → Confirm & save**. It restores after reload.
 6. **I saved some money → amount → Review update → confirm** records additional
    money actually set aside, not your starting savings again. Or tell Friday
    “I saved ₹1000”. **My savings updates → Undo** corrects a report, not a payment.
 7. With goal/roadmap consent enabled, ask Friday “What should I focus on?” It sees
-   saved roadmap totals only. Chat cannot change the goal or move money.
-8. **Reload saved goal** checks uncertain save outcomes. **Export saved goal**
+   saved or current unsaved roadmap totals only. Chat cannot change the goal or move money.
+8. **Goal tools → Reload saved goal** checks uncertain save outcomes. **Export saved goal**
    includes archives. Privacy's explicit input cleanup clears goals too.
 
 One priority is active. Starting another doesn't replace it until you confirm.
@@ -44,9 +46,10 @@ cards, timeline and exact figures. Adjust recalculates; Export downloads JSON.
 The advanced calculator does not remember these scenarios after reload; the
 separate saved priority roadmap above does. No return or price forecast.
 
-Research current info opens a separate tool. Choose city/topic or type a public
-financial question, without account details or personal financial circumstances.
-Confirm public Google processing and press Search. Inspect source dates, units,
+Chat's **Current info** opens a short query-review dialog. Type a public financial
+question, without account details or personal financial circumstances. Confirm
+Google Search processing and choose **Search & show here**. Results appear in chat.
+The advanced Research tool remains available separately. Inspect source dates, units,
 source links and Google Search Suggestions. A retrieval time is not the price's
 date; these are research results, not a streaming feed or personalised advice.
 A failure is not replaced by a made-up figure. Saved statements are not shared.
@@ -158,8 +161,9 @@ screens. Small screens use a dedicated chat page.
 3. Type a question and send with the arrow or **Ctrl/⌘ + Enter**.
 4. The reply's source line distinguishes general guidance from an answer based
    on a specified selected-statement review version.
-5. Choose an **Open…** button to view a prepared plan or finding. Chat does not
-   unexpectedly navigate to another page.
+5. Goals prepare in the conversation, with explicit interpretation consent. A public
+   query is shown before any Search call. Statement detail tools use labelled
+   **Open…** buttons. No chat message authorises a bank action.
 
 Try **Where did my spending go?**, **Show my regular payment patterns**, or
 **Help me reduce spending by INR 1000 per month without cutting transport**.
@@ -171,10 +175,28 @@ older answer. Optional diary and cash-flow context have separate choices
 and do not become statement totals. If Gemini is unavailable or rejects an
 unsupported answer, saved charts still work; no canned live reply is substituted.
 
-## Listen to your review
+## Talk to Friday and hear replies
 
-1. Choose **Listen** in navigation or **Listen to my review** in chat.
-2. The statement briefing opens in My money. With no selected statement, first
+1. Choose the floating **Talk to Friday** button, or the same button beside chat.
+2. Confirm sending the short clip to Google, then **Start recording**. Your browser
+   asks for microphone permission. You can decline and choose **Type instead**.
+3. Ask a short question. **Stop & transcribe**, or it stops after 25 seconds.
+4. The transcript appears in the normal message box. Check numbers and wording,
+   correct anything wrong, then send. A transcript is not a financial instruction.
+5. Optional **Speak short replies** allows Google narration of displayed reply text.
+   It reads eligible new replies; **Read last reply** repeats one. **Stop audio**
+   stops playback. Long replies remain text-only; use on-screen numbers as reference.
+6. New chat or privacy cleanup stops audio and turns voice-reply consent off.
+
+This is push-to-talk, not a wake-word or continuous Live API session. Friday stores
+no recordings; microphone capture is limited to an explicit turn. Google provider
+processing still applies. Speech can mishear or mispronounce financial figures.
+Typing and visual output remain the reliable fallback.
+
+## Listen to your statement review
+
+1. Open **My money** and expand its voice briefing.
+2. With no selected statement, first
    choose a saved import or add one.
 3. Tick consent to send its derived briefing totals to Google.
 4. **Generate my briefing → Play**. **Read the spoken figures** shows a transcript.

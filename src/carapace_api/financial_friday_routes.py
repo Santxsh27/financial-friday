@@ -79,6 +79,8 @@ async def _read_bounded_document(request: Request) -> bytes:
 
 
 def register_financial_friday_routes(application, service, authenticate):
+    from .friday_voice import register_voice_routes
+    register_voice_routes(application, service, authenticate)
     from .friday_goals import register_goal_routes
     register_goal_routes(application, service, authenticate)
     from .friday_review import FridayReviewService

@@ -26,6 +26,8 @@ CONSUMER_FRIDAY_METHODS = {
     "goals/conversation": frozenset({"POST"}),
     "research": frozenset({"POST"}),
     "assistant/briefing-audio": frozenset({"POST"}),
+    "assistant/transcribe": frozenset({"POST"}),
+    "assistant/speak": frozenset({"POST"}),
     "statements": frozenset({"GET", "POST"}),
     "statements/prepare": frozenset({"POST"}),
     "statements/visibility": frozenset({"POST"}),

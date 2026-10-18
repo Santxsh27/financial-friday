@@ -122,7 +122,7 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
             return error.code, {'detail': {409:'Roadmap changed or the workspace was cleared. Reload Goals before retrying a save.',
                 422: 'Review the goal numbers and required confirmation.',
                 503: 'Goal interpretation or current-source research is unavailable. No financial result was guessed.'}.get(error.code, 'Planning request could not be confirmed. Reload Goals before retrying a save.')}
-        if path == '/v1/friday/assistant/briefing-audio':
+        if path in {'/v1/friday/assistant/briefing-audio', '/v1/friday/assistant/speak', '/v1/friday/assistant/transcribe'}:
             detail = {409: 'Statement history changed. Reload Spending before requesting a briefing.',
                       422: 'Use the current statement revision and confirm sharing the derived briefing totals with Google.',
                       503: 'Google voice is unavailable. Read the on-screen briefing; no money was moved.'}
@@ -142,7 +142,7 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
     except (URLError, TimeoutError, ValueError):
         if path.startswith('/v1/friday/goals/') or path == '/v1/friday/research':
             return 502, {'detail': 'Planning connection interrupted. No bank action was requested. If saving a roadmap, reload Goals to check whether it was recorded before retrying.'}
-        if path == '/v1/friday/assistant/briefing-audio':
+        if path in {'/v1/friday/assistant/briefing-audio', '/v1/friday/assistant/speak', '/v1/friday/assistant/transcribe'}:
             return 502, {'detail': 'The voice connection was interrupted. Read the on-screen briefing; no money was moved.'}
         if path.startswith('/v1/friday/rehearsals/'):
             return 502, {'detail':'The rehearsal connection was interrupted. No financial action was requested; calculate again when the connection is available.'}

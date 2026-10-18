@@ -40,7 +40,15 @@ def reply_to_user(service, review, bank, tenant, request, *, statement_only=Fals
     diary = service.diary.model_context(tenant) if request.include_diary else {}
     view=service.portfolio.view(tenant) if request.include_statements else None
     statements=service.portfolio.model_context(tenant,view) if view else {}
-    roadmap=service.roadmap.model_context(tenant) if request.include_roadmap else {}
+    if request.roadmap_proposal and not request.include_roadmap:
+        raise ValueError('Confirm sharing the proposed roadmap first')
+    saved_roadmap=service.roadmap.model_context(tenant) if request.include_roadmap else {}
+    roadmap=saved_roadmap
+    if request.roadmap_proposal:
+        from carapace_core.friday_roadmap import calculate_roadmap
+        proposal=calculate_roadmap(request.roadmap_proposal)
+        roadmap={'scope':'UNSAVED_USER_PROPOSAL','plan':request.roadmap_proposal.model_dump(),
+            'summary':{k:v for k,v in proposal.items() if k!='calendar' and v is not None}}
     result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements, statement_only=statement_only,roadmap=roadmap)
     # A consented old context must not reappear after cleanup, even when only
     # a diary, forecast or older inbox was shared (not statement totals).
@@ -50,12 +58,13 @@ def reply_to_user(service, review, bank, tenant, request, *, statement_only=Fals
     if ((request.include_cashflow and service.cashflow.model_context(tenant)!=cashflow) or
             (request.include_diary and service.diary.model_context(tenant)!=diary) or
             (request.include_workspace and chat_context(service,review,bank,tenant)!=context) or
-            (request.include_roadmap and service.roadmap.model_context(tenant)!=roadmap)):
+            (request.include_roadmap and service.roadmap.model_context(tenant)!=saved_roadmap)):
         record_stage('validation',ok=False,reason='stale_revision')
         raise ValueError('Shared records changed during this answer; reload before relying on it')
     result['context_receipt']={'statement_totals':'SHARED' if statements else 'EMPTY' if request.include_statements else 'NOT_SHARED',
         'financial_inbox':'SHARED' if request.include_workspace else 'NOT_SHARED',
         'saved_roadmap':'SHARED' if roadmap else 'EMPTY' if request.include_roadmap else 'NOT_SHARED',
+        'roadmap_scope':'UNSAVED_USER_PROPOSAL' if request.roadmap_proposal else 'SAVED' if roadmap else 'NONE',
         'transaction_descriptions_shared':False,'bank_connected':False,
         'statement_revision':view['revision'] if view else None,
         'included_statement_count':view['summary']['statement_count'] if view else 0,

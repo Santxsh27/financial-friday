@@ -11,6 +11,7 @@ from .redaction import redact_for_model
 from .friday_observability import generate
 from carapace_core.friday_money_plan import MoneyPlanDraft
 from carapace_core.friday_rehearsal import RehearsalGoal
+from carapace_core.friday_roadmap import RoadmapPlan
 
 
 class ChatTurn(BaseModel):
@@ -29,6 +30,7 @@ class FridayChatRequest(BaseModel):
     include_diary: bool = Field(default=False, strict=True)
     include_statements: bool = Field(default=False, strict=True)
     include_roadmap: bool = Field(default=False, strict=True)
+    roadmap_proposal: RoadmapPlan | None = None
 
 
 class ChatAnswer(BaseModel):

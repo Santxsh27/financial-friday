@@ -8,21 +8,23 @@ roadmap, then track money you actually report setting aside. Explicit public res
 through Gemini on Vertex AI and Google Search. Optional INR bank/card PDF or CSV
 imports provide a separate reviewed spending picture and source-linked guidance.
 
-The conversation-first roadmap is release **0.36.0**. Consult CURRENT_RELEASE for
+The unified assistant upgrade is release **0.37.0**. Consult CURRENT_RELEASE for
 deployment status; source changes are not automatically live.
 
 ## Goals and research
 
-- **Talk, don't fill a long form:** Gemini extracts quote-bound goal facts. Friday
-  asks for one missing number at a time. Historical statement trends can propose
-  three budget averages locally after review; current savings are never guessed.
+- **One conversation, one result:** describe a goal in Friday's chat. Gemini
+  extracts quote-bound facts, missing numbers are asked in that same conversation,
+  and the visual roadmap appears automatically. No separate calculation form.
+  Historical statement trends are offered as reviewable estimates to reduce typing;
+  current savings are never guessed. Saving still needs explicit confirmation.
 - **One saved priority:** purchase, savings target or emergency reserve, with a
   progress ring, 25/50/75/100% milestones, monthly step and baseline/stress chart.
   A reserve target is one part of stability, not a financial-health score.
 - **Track real reports:** confirm additional money actually set aside, restore the
   roadmap after reload, or Undo a report. Imports, time and spending reductions
   never manufacture savings. No bank money moves.
-- **Ask about the plan:** consented saved-roadmap totals ground Gemini answers.
+- **Ask about the plan:** consented saved or unsaved roadmap totals ground Gemini answers.
   Unsupported explicit INR figures are rejected. Chat cannot edit goals.
 - **Advanced calculator:** the former three-purchase/shared-budget loan calculator
   remains collapsed and unsaved, separate from the cash-only tracked goal.
@@ -38,8 +40,22 @@ deployment status; source changes are not automatically live.
 
 Research never loads saved statements, preferences or chat history. Model research
 is not independently fact-checked or a personalised securities recommendation.
-General chat can suggest Goals/Research; these separate tools require explicit
-inputs/consent and are not hidden autonomous actions.
+Chat topic shortcuts cover questions, goals, spending and current information.
+Friday prepares a goal automatically after interpretation consent. Public searches
+show the exact query for review and explicit consent, then present attributed
+cards in the conversation. Private records/history are never attached to Search.
+
+### Optional Google voice
+
+**Talk to Friday** is available across pages and beside the composer. Push to talk
+records at most 25 seconds in supported secure-context browsers; Google Gemini on
+Vertex AI returns a reviewable transcript. Check and send it yourself. The browser
+does not use an undeclared speech-recognition provider. Optional **Speak short
+replies** sends displayed reply text to Gemini TTS; audio has Play/Stop controls.
+No microphone opens on page load, no wake word, no background monitoring, no raw
+audio storage by Friday, and no payment authority. Narration is not independently
+verified financial evidence. Typing remains available if microphone/provider fails.
+Audio input support follows [Google's model documentation](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite).
 
 It is a Google Cloud AI Builder Cup 2026 **BFSI: Intelligent Risk, Fraud &
 Financial Experiences** prototype. Its purpose is to reduce the work of understanding
@@ -57,13 +73,10 @@ The website's existing access policy admits authenticated Google users. Organisa
 account restrictions and a second person's real login still need human confirmation.
 No bank, Gmail, Drive or SMS permission is requested. The API remains private.
 
-**Release note (18 October):** API/web 0.36.0 are deployed at the main link,
-with 100% traffic verified. Real Vertex intake and saved-goal coaching, exact
-roadmap math, Firestore save/restore, progress/Undo, replay conflict, export and
-cleanup checks passed in a fresh artificial visitor. The manifest distinguishes
-these new checks from historical statement/Search evidence. Native tests: 825 run,
-824 passed, one skipped. Container: 825 run, 792 passed, 33 skipped. Tool tests: 65 passed.
-Matching source CI passed; exact image digests/source commits are recorded.
+**Release note (18 October):** the last verified public deployment is 0.36.0;
+0.37.0's assistant upgrade is undergoing final verification. See
+[the release report](docs/ASSISTANT_0370.md) and the manifest for actual test,
+build and deployment evidence. A source version alone does not confirm deployment.
 A GitHub commit alone does not deploy Cloud Run. Human submission gates remain
 listed in the checklist below.
 
@@ -83,8 +96,8 @@ The hosted walkthrough and sample downloads do not depend on GitHub access.
 5. **Keep control.** Statements shows exactly which imports power the review. Start a
    new review excludes earlier imports without deleting them; restore them without
    re-uploading. Back returns from detail views.
-6. **Listen, optionally.** A separately consented Google-generated spoken briefing
-   has a transcript and manual Play control. It is not a live microphone.
+6. **Listen, optionally.** My money retains an opt-in aggregate statement briefing.
+   Talk to Friday adds short voice questions and opt-in spoken chat replies.
 
 The main consumer product has no separate bill/receipt inbox or artificial-payment
 workflow. Historical modules and tests remain for engineering history, disabled by
@@ -98,6 +111,7 @@ default. They are not extra features for a judge to discover.
 | Read supported scans | Document AI OCR, followed by validated Gemini extraction |
 | Interpret questions and select a supported chart/plan/review workflow | Typed Gemini output; server-owned destination and evidence allowlists |
 | Explain shared totals and prepare an unsent message | Gemini, with independent context consent and citation/amount checks |
+| Transcribe a short spoken question / narrate a short displayed reply | Vertex Gemini / Gemini TTS; explicit consent, no recording storage or action tools |
 | Parse known CSV headings and amount/date spellings | Deterministic adapters; no model call |
 | Categorise CSV rows initially | Local proposed labels, editable by the user; not trained ML |
 | Reconcile source facts and calculate summaries | Exact integer-paise calculations; never floating-point money |

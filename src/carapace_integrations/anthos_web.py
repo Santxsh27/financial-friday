@@ -422,7 +422,28 @@ def create_demo_app() -> FastAPI:
         if code!=200:raise HTTPException(code,result.get('detail','The rehearsal could not be completed'))
         return result
 
-    @application.post('/api/friday/assistant/briefing-audio')
+    @application.post('/api/friday/assistant/{voice_operation}')
+    async def friday_voice_turn(voice_operation: str, request: StarletteRequest):
+        from carapace_ai.friday_voice import VoiceInput, VoiceReply
+        from fastapi.responses import JSONResponse
+        if voice_operation == 'briefing-audio':
+            return await friday_briefing_audio(request)
+        if voice_operation not in {'transcribe', 'speak'}:
+            raise HTTPException(404, 'Voice operation unavailable')
+        data = bytearray()
+        limit = 1_400_000 if voice_operation == 'transcribe' else 8000
+        async for chunk in request.stream():
+            if len(data) + len(chunk) > limit:
+                raise HTTPException(413, 'Voice turn is too large')
+            data.extend(chunk)
+        try:
+            payload = (VoiceInput if voice_operation == 'transcribe' else VoiceReply).model_validate_json(bytes(data))
+        except ValueError as error:
+            raise HTTPException(422, 'Use valid voice content and explicit Google consent') from error
+        code, result = await run_in_threadpool(_api_call, api_base_url,
+            '/v1/friday/assistant/' + voice_operation, 'POST', payload.model_dump(mode='json'), 120)
+        return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
+
     async def friday_briefing_audio(request: StarletteRequest):
         from carapace_ai.friday_speech import BriefingAudioRequest
         from fastapi.responses import JSONResponse

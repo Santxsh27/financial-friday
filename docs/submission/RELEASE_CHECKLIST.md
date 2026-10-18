@@ -66,7 +66,7 @@ and each visitor's records remain private. Do not share credentials, databases,
 
 - [x] Participant supplied dashboard cutoff: **18 October 2026, 11:59 PM IST**.
 - [ ] Confirm working-professional/age/team eligibility and final roster.
-- [ ] Confirm registered team name on the prescribed-template English deck.
+- [x] Registered team name Financial Friday confirmed by the participant on 18 October 2026 and applied to the prescribed-template deck.
 - [ ] Upload the completed prescribed-template PDF, no larger than **5 MB**.
 - [ ] Publish and test the **3-4 minute** video link (current dashboard rule).
 - [ ] Confirm source access instructions required by the dashboard.

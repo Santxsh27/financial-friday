@@ -214,7 +214,7 @@ does not submit an entry. [Submission checklist](docs/submission/RELEASE_CHECKLI
 [copy-ready form details](docs/submission/SUBMISSION_DETAILS.txt).
 The supplied dashboard cutoff is **18 October 2026, 11:59 PM IST** and its video
 requirement is **3-4 minutes**. The participant supplies the final video separately.
-Confirm the cover's team name matches the registered roster before uploading.
+The deck uses the registered team name **Financial Friday**, confirmed by the participant on 18 October 2026.
 
 On this Mac, source stays in `Desktop/CARAPACE`; fresh upload files and personal
 notes are in **`Desktop/Financial Friday Testing`**. Older materials remain

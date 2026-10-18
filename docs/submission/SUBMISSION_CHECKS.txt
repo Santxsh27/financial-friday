@@ -2,7 +2,9 @@ FINANCIAL FRIDAY - SUBMISSION PACK CHECKS
 18 October 2026
 
 ARTIFACTS
-- PDF: 16 pages, 826229 bytes (0.83 MB), below the 5 MB form limit.
+- PDF: 16 pages, 826168 bytes (0.83 MB), below the 5 MB form limit.
+- Registered team name: Financial Friday, confirmed by the participant on
+  18 October 2026. Team leader: Santosh Ramesh.
 - PPTX: 16 slides, editable text, tables and process/architecture diagrams.
 - Official template canvas: 9144000 x 5143500 EMU (10 x 5.625 inches).
 - Original organiser artwork, section order and instruction slide retained.
@@ -22,8 +24,6 @@ LINKS CHECKED
 - The app has no dependency on the owner's laptop remaining switched on.
 
 REMAINING PARTICIPANT CHECKS
-- Confirm "Vaultkeepers" exactly matches the registered team name. This working
-  name comes from the project's existing team-mark notes, not a dashboard check.
 - Record and publish the required 3-4 minute working demonstration.
 - Supply its public URL in the form. The deck refers to that separate video field
   until the recording exists. A final embedded URL can replace that row later.

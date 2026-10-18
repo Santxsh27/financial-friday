@@ -53,9 +53,8 @@ Public source and sample pack:
 https://github.com/Santxsh27/financial-friday/tree/main/judge-kit
 
 FINAL MANUAL CHECKLIST
-1. Confirm the cover's team name exactly matches your Hack2skill registration.
-   Team leader: Santosh Ramesh. The deck uses "Vaultkeepers" from the existing
-   project/team-mark notes. Its match to the registered team requires confirmation.
+1. The cover now uses the participant-confirmed registered team name:
+   Financial Friday. Team leader: Santosh Ramesh.
 2. Ask another person to complete Google sign-in and the sample walkthrough.
    A signed-in owner's browser is not proof of every Google account's access.
 3. Check the PDF locally, then upload it to the PDF field, maximum 5 MB.

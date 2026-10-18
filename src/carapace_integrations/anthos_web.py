@@ -439,12 +439,25 @@ def create_demo_app() -> FastAPI:
             '/v1/friday/assistant/briefing-audio', 'POST', payload.model_dump(mode='json'), 120)
         return JSONResponse(result, status_code=code, headers={'Cache-Control': 'no-store'})
 
+    @application.get('/api/friday/goals/{operation}')
+    async def friday_goals_read(operation: str):
+        from fastapi.responses import JSONResponse
+        if operation not in {'roadmap','export','budget-hints'}:
+            raise HTTPException(404,'Unknown goal operation')
+        code, result = await run_in_threadpool(_api_call,api_base_url,
+            '/v1/friday/goals/'+operation,'GET',None,30)
+        return JSONResponse(result,status_code=code,headers={'Cache-Control':'no-store'})
+
     @application.post('/api/friday/goals/{operation}')
     async def friday_goals(operation: str, request: StarletteRequest):
         from carapace_core.friday_goals import GoalScenario
         from carapace_ai.friday_goal_intake import GoalIntakeRequest
+        from carapace_ai.friday_roadmap import RoadmapIntakeRequest
+        from carapace_core.friday_roadmap import RoadmapChange, RoadmapPreview
         from fastapi.responses import JSONResponse
-        if operation not in {'preview', 'interpret'}:
+        models={'preview':GoalScenario,'interpret':GoalIntakeRequest,'conversation':RoadmapIntakeRequest,
+            'roadmap':RoadmapChange,'roadmap-preview':RoadmapPreview}
+        if operation not in models:
             raise HTTPException(404, 'Unknown goal operation')
         data = bytearray()
         async for chunk in request.stream():
@@ -452,7 +465,7 @@ def create_demo_app() -> FastAPI:
                 raise HTTPException(413, 'Goal request is too large')
             data.extend(chunk)
         try:
-            payload = (GoalScenario if operation == 'preview' else GoalIntakeRequest).model_validate_json(bytes(data))
+            payload = models[operation].model_validate_json(bytes(data))
         except ValueError as error:
             raise HTTPException(422, 'Review the goal inputs') from error
         code, result = await run_in_threadpool(_api_call, api_base_url,

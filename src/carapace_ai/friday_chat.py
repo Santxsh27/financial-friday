@@ -28,6 +28,7 @@ class FridayChatRequest(BaseModel):
     include_cashflow: bool = Field(default=False, strict=True)
     include_diary: bool = Field(default=False, strict=True)
     include_statements: bool = Field(default=False, strict=True)
+    include_roadmap: bool = Field(default=False, strict=True)
 
 
 class ChatAnswer(BaseModel):
@@ -258,10 +259,11 @@ only those strings. A finding_... ID belongs ONLY in finding_id, not evidence_id
 Copy it exactly from automatic_checkup.findings; use null if none is appropriate.'''
 
 
-def _allowed_citations(request,context,cashflow,diary,statements):
+def _allowed_citations(request,context,cashflow,diary,statements,roadmap=None):
     ids={item['evidence_id'] for item in context.get('evidence',[])} if request.include_workspace else set()
     if request.include_cashflow and cashflow:ids.add('cashflow:current')
     if request.include_diary and diary:ids.add('diary:current')
+    if request.include_roadmap and roadmap:ids.add('roadmap:current')
     if request.include_statements and statements:
         ids.add('statements:current')
         if statements.get('automatic_checkup'):ids.add('checkup:current')
@@ -284,33 +286,34 @@ def chat_failure_category(error):
     return reasons.get(str(error),'PROVIDER_OR_UNEXPECTED')
 
 
-def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None, *, statement_only=False) -> dict:
+def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=None, cashflow=None, diary=None, statements=None, *, statement_only=False,roadmap=None) -> dict:
     if planner.mode == "LOCAL_RULES":
         raise RuntimeError("Live Gemini chat is not configured")
     from google.genai import types
 
     # Scrub recognizable credentials from history, current message and evidence.
     # This is best-effort minimisation, not a guarantee of detecting all secrets.
-    allowed_ids=_allowed_citations(request,context,cashflow,diary,statements)
+    allowed_ids=_allowed_citations(request,context,cashflow,diary,statements,roadmap)
     raw = json.dumps({"message": request.message,
                       "available_citations":sorted(allowed_ids),
                       "untrusted_history": [turn.model_dump() for turn in request.history],
                       "context_permissions": {"financial_inbox":request.include_workspace,
                           "statement_totals":request.include_statements,
                           "cashflow_assumptions":request.include_cashflow,
-                          "diary_totals":request.include_diary},
+                          "diary_totals":request.include_diary,"saved_roadmap":request.include_roadmap},
                       "communication_preferences": preferences or {},
                       "workspace_evidence": context if request.include_workspace else {},
                       "cashflow_scenario": cashflow if request.include_cashflow and cashflow else {},
                       "money_diary": diary if request.include_diary and diary else {},
-                      "statement_summary":statements if request.include_statements and statements else {}}, ensure_ascii=False)
+                      "statement_summary":statements if request.include_statements and statements else {},
+                      "saved_roadmap":roadmap if request.include_roadmap and roadmap else {}}, ensure_ascii=False)
     redacted = redact_for_model(raw)
     surface_instruction = (' This deployment is STATEMENT-ONLY. Do not offer a bill or receipt inbox, bill upload, payment tools or a connection. For importing bank/card statements use next_screen=statements; for saved statement charts use dashboard. You can explain general bill/loan concepts without claiming a separate bill feature.' if statement_only else '')
     for attempt in range(2):
         response = generate(planner._client, purpose='statement_coach',
             model=planner.model_name, contents=redacted.text,
             config=types.GenerateContentConfig(temperature=0.2, max_output_tokens=2200,
-                system_instruction=INSTRUCTION + surface_instruction + (' Statement totals ARE supplied; financial_inbox is a different permission. Correct the false workspace-permission claim.' if attempt else ''),
+                system_instruction=INSTRUCTION + surface_instruction + ' Saved_roadmap is independently consented user-reported goal assumptions and exact cash-only calculations, never bank verification. Use only its given INR amounts; do not invent new calculations. Give one practical next step in at most three short sentences. Explain any shortfall without shame. Milestone dates are scenarios, not promises. You cannot save or edit goals or log savings. Direct users to Goals for confirmed edits. Cite roadmap:current only when provided. Missing statement context does not mean roadmap permission is missing.' + (' Statement totals ARE supplied; financial_inbox is a different permission. Correct the false workspace-permission claim.' if attempt else ''),
                 response_mime_type="application/json",
                 response_json_schema=generation_schema(ChatAnswer.model_json_schema())))
         answer = ChatAnswer.model_validate_json(response.text or "")
@@ -327,11 +330,13 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
         candidates=re.findall(r'(?<![\w.])\d[\d,]*(?:\.\d{1,2})?(?![\w.])',request.message)
         if Decimal(answer.rehearsal_goal.purchase_amount_inr) not in {Decimal(n.replace(',','')) for n in candidates}:
             raise ValueError('Rehearsal purchase amount is not explicitly present in the current request')
-    amount_context={'statements':statements or {},'diary':diary or {},'cashflow':cashflow or {}}
+    amount_context={'statements':statements or {},'diary':diary or {},'cashflow':cashflow or {},'roadmap':roadmap or {}}
     if answer.plan:amount_context['requested_goal_inr']=answer.plan.target_reduction_inr
     if answer.rehearsal_goal and answer.rehearsal_goal.purchase_amount_inr is not None:
         amount_context['requested_purchase_inr']=answer.rehearsal_goal.purchase_amount_inr
-    if request.include_statements and statements:
+    if request.include_roadmap and roadmap:
+        _check_cashflow_amounts(answer.reply,amount_context)
+    elif request.include_statements and statements:
         _check_cashflow_amounts(answer.reply,amount_context)
     elif request.include_diary and diary:
         _check_cashflow_amounts(answer.reply, {'diary':diary,'cashflow':cashflow if request.include_cashflow else {}})
@@ -354,5 +359,6 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
             "cashflow_included": bool(request.include_cashflow and cashflow),
             "diary_included": bool(request.include_diary and diary),
             "statements_included":bool(request.include_statements and statements),
+            "roadmap_included":bool(request.include_roadmap and roadmap),
             "mode": planner.mode, "model": planner.model_name,
             "redaction_applied": redacted.redaction_applied or clean_reply.redaction_applied}

@@ -32,7 +32,7 @@ def reply_to_user(service, review, bank, tenant, request, *, statement_only=Fals
     from .friday_buddy import FridayBuddy
     from .friday_privacy import privacy_generation
     from carapace_core.friday_trace import record_stage
-    private_context=any((request.include_workspace,request.include_cashflow,request.include_diary,request.include_statements))
+    private_context=any((request.include_workspace,request.include_cashflow,request.include_diary,request.include_statements,request.include_roadmap))
     generation=privacy_generation(service,tenant) if private_context else None
     context = chat_context(service, review, bank, tenant) if request.include_workspace else {}
     preferences = FridayBuddy(service).model_preferences(tenant, request.include_preferences)
@@ -40,7 +40,8 @@ def reply_to_user(service, review, bank, tenant, request, *, statement_only=Fals
     diary = service.diary.model_context(tenant) if request.include_diary else {}
     view=service.portfolio.view(tenant) if request.include_statements else None
     statements=service.portfolio.model_context(tenant,view) if view else {}
-    result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements, statement_only=statement_only)
+    roadmap=service.roadmap.model_context(tenant) if request.include_roadmap else {}
+    result=answer_chat(service.planner, request, context, preferences, cashflow, diary, statements, statement_only=statement_only,roadmap=roadmap)
     # A consented old context must not reappear after cleanup, even when only
     # a diary, forecast or older inbox was shared (not statement totals).
     if private_context and privacy_generation(service,tenant)!=generation:
@@ -48,11 +49,13 @@ def reply_to_user(service, review, bank, tenant, request, *, statement_only=Fals
         raise ValueError('Private context changed during this answer; reload before trying again')
     if ((request.include_cashflow and service.cashflow.model_context(tenant)!=cashflow) or
             (request.include_diary and service.diary.model_context(tenant)!=diary) or
-            (request.include_workspace and chat_context(service,review,bank,tenant)!=context)):
+            (request.include_workspace and chat_context(service,review,bank,tenant)!=context) or
+            (request.include_roadmap and service.roadmap.model_context(tenant)!=roadmap)):
         record_stage('validation',ok=False,reason='stale_revision')
         raise ValueError('Shared records changed during this answer; reload before relying on it')
     result['context_receipt']={'statement_totals':'SHARED' if statements else 'EMPTY' if request.include_statements else 'NOT_SHARED',
         'financial_inbox':'SHARED' if request.include_workspace else 'NOT_SHARED',
+        'saved_roadmap':'SHARED' if roadmap else 'EMPTY' if request.include_roadmap else 'NOT_SHARED',
         'transaction_descriptions_shared':False,'bank_connected':False,
         'statement_revision':view['revision'] if view else None,
         'included_statement_count':view['summary']['statement_count'] if view else 0,

@@ -119,8 +119,9 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
         if error.code == 429:
             return 429, {"detail": "Demo allowance reached. Read saved results or try again later. Daily limits reset at midnight UTC."}
         if path.startswith('/v1/friday/goals/') or path == '/v1/friday/research':
-            return error.code, {'detail': {422: 'Review the goal numbers or confirm public research consent.',
-                503: 'Goal interpretation or current-source research is unavailable. No financial result was guessed.'}.get(error.code, 'This read-only planning request could not be completed.')}
+            return error.code, {'detail': {409:'Roadmap changed or the workspace was cleared. Reload Goals before retrying a save.',
+                422: 'Review the goal numbers and required confirmation.',
+                503: 'Goal interpretation or current-source research is unavailable. No financial result was guessed.'}.get(error.code, 'Planning request could not be confirmed. Reload Goals before retrying a save.')}
         if path == '/v1/friday/assistant/briefing-audio':
             detail = {409: 'Statement history changed. Reload Spending before requesting a briefing.',
                       422: 'Use the current statement revision and confirm sharing the derived briefing totals with Google.',
@@ -140,7 +141,7 @@ def backend_request(settings: WebSettings, tenant: str, path: str, method: str,
         return error.code, {"detail": "Friday could not complete this request. Check activity before retrying a payment."}
     except (URLError, TimeoutError, ValueError):
         if path.startswith('/v1/friday/goals/') or path == '/v1/friday/research':
-            return 502, {'detail': 'Read-only planning connection interrupted. No financial action or save was requested.'}
+            return 502, {'detail': 'Planning connection interrupted. No bank action was requested. If saving a roadmap, reload Goals to check whether it was recorded before retrying.'}
         if path == '/v1/friday/assistant/briefing-audio':
             return 502, {'detail': 'The voice connection was interrupted. Read the on-screen briefing; no money was moved.'}
         if path.startswith('/v1/friday/rehearsals/'):

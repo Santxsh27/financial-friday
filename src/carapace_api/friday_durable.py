@@ -10,7 +10,7 @@ from carapace_core.friday_assurance import seal_friday_run
 from carapace_core.friday_evidence_snapshot import MAX_SAFETY_DOCUMENTS, expand_records
 
 
-KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow", "diary", "statement_portfolio"}
+KINDS = {"mandates", "accounts", "provider_bills", "signals", "dynamic_cases", "runs", "payments", "idempotency", "reviews", "assistant_tasks", "evidence_versions", "task_executions", "privacy", "buddy_preferences", "followups", "cashflow", "diary", "statement_portfolio", "goal_roadmap"}
 
 
 class FridayDurableState(Protocol):
@@ -186,6 +186,9 @@ class FirestoreFridayState:
     def update_diary(self, tenant, generation, change):
         return self._update_private_current('diary',tenant,generation,change)
 
+    def update_roadmap(self, tenant, generation, change):
+        return self._update_private_current('goal_roadmap',tenant,generation,change)
+
     def _update_private_current(self, kind, tenant, generation, change):
         self._validate(kind, tenant, 'current')
         ref = self._documents(kind, tenant).document('current')
@@ -243,6 +246,8 @@ class FirestoreFridayState:
             transaction.set(version,{'epoch':(epoch.to_dict().get('epoch',0) if epoch.exists else 0)+1})
         self._atomic(barrier)
         counts={}
+        counts['goal_roadmap'] = int(self.get('goal_roadmap', tenant, 'current') is not None)
+        self._documents('goal_roadmap', tenant).document('current').delete()
         counts['statement_portfolio'] = int(self.get('statement_portfolio', tenant, 'current') is not None)
         self._documents('statement_portfolio', tenant).document('current').delete()
         counts['diary'] = int(self.get('diary', tenant, 'current') is not None)

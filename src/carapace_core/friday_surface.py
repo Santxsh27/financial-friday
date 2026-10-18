@@ -19,6 +19,11 @@ _VARIABLES = {
 CONSUMER_FRIDAY_METHODS = {
     "goals/preview": frozenset({"POST"}),
     "goals/interpret": frozenset({"POST"}),
+    "goals/roadmap": frozenset({"GET", "POST"}),
+    "goals/export": frozenset({"GET"}),
+    "goals/budget-hints": frozenset({"GET"}),
+    "goals/roadmap-preview": frozenset({"POST"}),
+    "goals/conversation": frozenset({"POST"}),
     "research": frozenset({"POST"}),
     "assistant/briefing-audio": frozenset({"POST"}),
     "statements": frozenset({"GET", "POST"}),

@@ -77,6 +77,8 @@ class FridayPrivacyService:
                     counts['cashflow']=db.execute('DELETE FROM friday_cashflow WHERE tenant=?',(tenant,)).rowcount
                 if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_diary'").fetchone():
                     counts['diary']=db.execute('DELETE FROM friday_diary WHERE tenant=?',(tenant,)).rowcount
+                if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_roadmap'").fetchone():
+                    counts['goal_roadmap']=db.execute('DELETE FROM friday_roadmap WHERE tenant=?',(tenant,)).rowcount
                 if db.execute("SELECT 1 FROM sqlite_master WHERE name='friday_portfolio'").fetchone():
                     counts['statement_portfolio']=db.execute('DELETE FROM friday_portfolio WHERE tenant=?',(tenant,)).rowcount
                 for table,col,label in [('friday_reviews','tenant','reviews'),('friday_assistant_tasks','tenant_id','drafts')]:
@@ -86,4 +88,4 @@ class FridayPrivacyService:
                     params=(tenant,cutoff) if cutoff else (tenant,)
                     counts[label]=db.execute(f'DELETE FROM {table} WHERE {col}=?'+clause,params).rowcount
         return {'deleted':counts,'money_moved':False,'payment_journal_retained':True,
-            'message':'Requested comparison inputs removed; statement history, follow-up tracking, money diary and the saved cash-flow snapshot cleared. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}
+            'message':'Requested comparison inputs removed; statement history, follow-up tracking, money diary, saved roadmap and cash-flow snapshot cleared. Existing payment receipts remain to prevent repeating a recorded payment. Old prepared tasks cannot be reused.'}

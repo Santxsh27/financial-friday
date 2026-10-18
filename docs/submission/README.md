@@ -1,17 +1,18 @@
 # Financial Friday submission pack
 
-Current source: goals/research extension 0.35.0. Use the
+Current source: conversation-first saved roadmap 0.36.0. Use the
 [release manifest](../CURRENT_RELEASE.json) for the actual deployed source and
 acceptance status, and [the checklist](RELEASE_CHECKLIST.md) for human submission gates.
 
 ## What to demonstrate
 
 Start with **Goals** and the artificial prompt in [TRY-GOALS](../../jugges/TRY-GOALS.txt).
-Let real Gemini propose the supplied facts, confirm them and show the baseline
-versus stress timeline. Open **Research financing** or a public topic, explicitly
+Let real Gemini propose supplied facts, answer any missing question, show the
+ring/milestones/path, confirm a save, reload, report extra savings and Undo.
+Ask Friday about the saved plan using explicit roadmap consent. Open a public topic, explicitly
 consent and show provider sources and Google Search attribution. Research never
 silently changes a personal scenario. This demonstrates AI intake, exact shared
-budget calculations and current-source retrieval rather than a general chat alone.
+budget calculations, private durable progress and current-source retrieval rather than general chat alone.
 
 For the statement part:
 

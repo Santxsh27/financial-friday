@@ -3,30 +3,38 @@
 **Plan what’s next. Research what matters. Understand your money.**
 
 Financial Friday is a financial decision workspace for Indian digital-banking
-users. Describe a purchase goal, review the proposed facts and compare exact
-shared-budget scenarios. Explicit public research retrieves attributed information
+users. Tell Friday a purchase, savings or emergency-reserve goal, review a visual
+roadmap, then track money you actually report setting aside. Explicit public research retrieves attributed information
 through Gemini on Vertex AI and Google Search. Optional INR bank/card PDF or CSV
 imports provide a separate reviewed spending picture and source-linked guidance.
 
-The goal/research expansion is release **0.35.0**. Consult CURRENT_RELEASE for
+The conversation-first roadmap is release **0.36.0**. Consult CURRENT_RELEASE for
 deployment status; source changes are not automatically live.
 
 ## Goals and research
 
-- **Goals:** Gemini extracts only quoted numbers from the user's text; missing
-  fields stay empty. Review and confirm the budget before calculating.
-- **One budget, up to three goals:** the same savings cannot be allocated twice.
-  A protected buffer is excluded or topped up first. Earlier deadlines receive
-  funding first; this is a stated policy, not optimal financial advice.
-- **Optional financing:** exact monthly-rounded amortisation, upfront extra costs,
-  later-goal EMI effects and explicit deficits/shortfalls. No lender approval.
-- **Stress comparison:** income −10%, essentials +10%, new loan rate +2 percentage
-  points. These scenarios are not forecasts. No returns/property growth assumed.
+- **Talk, don't fill a long form:** Gemini extracts quote-bound goal facts. Friday
+  asks for one missing number at a time. Historical statement trends can propose
+  three budget averages locally after review; current savings are never guessed.
+- **One saved priority:** purchase, savings target or emergency reserve, with a
+  progress ring, 25/50/75/100% milestones, monthly step and baseline/stress chart.
+  A reserve target is one part of stability, not a financial-health score.
+- **Track real reports:** confirm additional money actually set aside, restore the
+  roadmap after reload, or Undo a report. Imports, time and spending reductions
+  never manufacture savings. No bank money moves.
+- **Ask about the plan:** consented saved-roadmap totals ground Gemini answers.
+  Unsupported explicit INR figures are rejected. Chat cannot edit goals.
+- **Advanced calculator:** the former three-purchase/shared-budget loan calculator
+  remains collapsed and unsaved, separate from the cash-only tracked goal.
+- **Stress comparison:** income −10%, living costs +10%. Scenarios, not forecasts;
+  no investment returns, guaranteed savings or lender approval.
 - **Public research:** gold, fuel, home-loan information or a public financial
   question. Actual provider source links and Search Suggestions are required.
   Retrieval time is not a quote date. No licensed streaming quote feed is claimed.
-- **Visual output:** goal cards, a shared savings timeline, exact tables and an
-  exportable JSON scenario. Goals stay in page memory, not long-term storage.
+- **Private persistence:** confirmed roadmaps use tenant-private Firestore on
+  Cloud Run, SQLite locally, revision/generation checks and operation replay
+  protection. Export includes archives. Explicit private-input cleanup clears goals
+  too. Goal chat transcripts are not stored.
 
 Research never loads saved statements, preferences or chat history. Model research
 is not independently fact-checked or a personalised securities recommendation.

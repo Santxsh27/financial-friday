@@ -1,26 +1,33 @@
-FINANCIAL FRIDAY — ARTIFICIAL GOAL TEST
+FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.36
 
 This is invented test data, not financial advice or a real person's finances.
 
-1. Home -> Plan my next purchase.
+1. Open Goals, allow Gemini for goal text/roadmap totals, choose Talk to Friday.
 2. Paste:
 
-I want a 12 lakh car in 24 months. Monthly income 90000, monthly essentials 40000,
-existing monthly debt 5000, liquid savings 3 lakh, protected buffer 1 lakh.
+I want a travel savings fund of INR 120000 in 12 months. Monthly income INR 50000,
+living costs excluding debt INR 30000, monthly debt payments INR 0,
+liquid savings INR 70000, protected buffer INR 50000.
 
-3. Read the disclosure and tick the Gemini-text consent, then Read my goal.
-4. Review the proposed numbers. Missing values must remain blank. If live intake
-   is unavailable, Enter or edit my numbers works without a model.
-5. Keep financing off (100% down payment) for this first example. Confirm the
-   assumptions and Build my visual plan.
-6. Expect initial savings outside buffer INR 200,000, baseline monthly capacity
-   INR 45,000 and an upfront goal INR 1,200,000. At 24 months the baseline funds
-   it, while the stated stress case has a shortfall. Inspect the exact table.
-7. Adjust: add another goal drawing from the SAME savings. Calculate and inspect
-   which target loses funding. The savings must not be counted twice.
-8. Optional financing: enter a user-chosen down-payment percent, interest estimate
-   and term. These are assumptions, not a current bank offer. Confirm and recalculate.
-9. Export my plan downloads the scenario JSON. It is not stored long-term by Friday.
+3. Ask Friday. If a fact was not extracted, answer the one missing question.
+   Edit numbers is available without AI. Use statement trends only after review.
+4. Expect a starting pot INR 20000, target INR 120000, monthly step INR 8333.34.
+   Cards round for display; exact amounts are under Numbers, assumptions & limits.
+5. Save my roadmap -> tick confirmation -> Confirm & save. Reload the page.
+   The saved roadmap should restore, not disappear.
+6. I saved some money -> enter 1000 -> Review update -> confirm. The reported
+   pot becomes INR 21000. My savings updates -> Undo -> confirm returns to 20000.
+7. With consent enabled, ask Friday: What should I focus on for my goal?
+   It uses saved roadmap totals, not saved statements, and cannot edit the goal.
+8. Start a new goal: try an emergency reserve covering 3 months in 18 months.
+   Missing facts must be asked, not guessed. Replacing a goal requires confirmation.
+9. Export saved goal includes reports/archives. The separate Advanced calculator
+   still offers unsaved multi-purchase/loan scenarios; these are not tracked goals.
+
+Only report ADDITIONAL money actually set aside. Do not recount initial savings.
+Time, imports and reduced spending never automatically increase actual progress.
+No bank balance is verified, money transferred, or financial stability guaranteed.
+If a save is uncertain, Reload saved goal before trying again.
 
 PUBLIC RESEARCH
 Home -> Research gold or fuel (or Research financing from a plan).

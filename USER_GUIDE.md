@@ -5,9 +5,33 @@ public-source snapshot, or **Statements** for **Add → Review → My money → 
 Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) before
 assuming local changes are already on the hosted site.
 
-## Plan a purchase or research a question
+## Build and track a goal
 
-Home → Plan my next purchase. Describe the goal and whatever budget facts you
+1. Open **Goals**. Choose a starter or **Talk to Friday**. Allow Gemini processing
+   for interpretation; **Edit numbers** also works without AI.
+2. Describe the goal: “A travel fund of ₹1,20,000 in 12 months.” Include any budget
+   facts you know. Answer only missing questions, one number at a time.
+3. Already saved statements? **Use statement trends** proposes historical budget
+   averages. Review coverage warnings before accepting. It cannot infer current cash.
+4. See **progress ring → milestones → monthly step → projected path**. Exact math
+   and assumptions are collapsed. Dashed stress path is not a forecast.
+5. **Save my roadmap → confirm → Confirm & save**. It restores after reload.
+6. **I saved some money → amount → Review update → confirm** records additional
+   money actually set aside, not your starting savings again. Or tell Friday
+   “I saved ₹1000”. **My savings updates → Undo** corrects a report, not a payment.
+7. With goal/roadmap consent enabled, ask Friday “What should I focus on?” It sees
+   saved roadmap totals only. Chat cannot change the goal or move money.
+8. **Reload saved goal** checks uncertain save outcomes. **Export saved goal**
+   includes archives. Privacy's explicit input cleanup clears goals too.
+
+One priority is active. Starting another doesn't replace it until you confirm.
+“Stable by 2028” can become a reserve of your chosen months of living costs plus
+debt payments, not a guarantee or complete financial-health assessment. Check the
+displayed date: a year-only request proposes December of that year.
+
+## Advanced purchase calculator or public research
+
+Goals → **Advanced · unsaved purchase & loan calculator**. Describe the goal and whatever budget facts you
 know. Confirm sending only this text to Gemini, or choose Enter or edit my numbers
 without an AI call. Review the proposed fields; fill unknowns honestly. Existing
 debt means monthly repayments, not total debt balance. Savings means available
@@ -17,7 +41,8 @@ Optional financing starts off at 100% down payment. Enter your own assumed down
 payment/rate/term and extra costs if needed. Add at most two more goals. Review
 and confirm all assumptions, then Build my visual plan. Inspect baseline/stress
 cards, timeline and exact figures. Adjust recalculates; Export downloads JSON.
-The app does not remember these goals after reload. No return or price forecast.
+The advanced calculator does not remember these scenarios after reload; the
+separate saved priority roadmap above does. No return or price forecast.
 
 Research current info opens a separate tool. Choose city/topic or type a public
 financial question, without account details or personal financial circumstances.

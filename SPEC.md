@@ -1,6 +1,6 @@
 # Financial Friday technical specification
 
-Goal/research expansion 0.35.0 over the statement-first consumer foundation.
+Conversation-first roadmap 0.36.0 over the statement/research consumer foundation.
 Deployment identity, source commits, verification and remaining gates are recorded
 in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json), not inferred from this document.
 
@@ -18,16 +18,49 @@ recover funds, cancel subscriptions, submit complaints, change bank records or
 guarantee savings. A finding means review may be useful, not fraud was proved.
 The separate bill/receipt inbox is not part of the consumer release.
 
-## Goal and research extension (0.35.0)
+## Saved priority roadmap (0.36.0)
 
-Home also offers Goals: one explicitly confirmed budget funds up to three
+The default Goals screen uses Friday's existing chat, starter intents, one missing
+number at a time and graphical output. Purchase, savings and emergency-reserve
+goals use one confirmed cash budget. Historical statement budget proposals are
+local averages of supplied months, explicitly accepted, never current cash.
+Potentially overlapping imports suppress these proposals. Year-only requests
+propose a December date, disclosed before save. Horizons are bounded to 1–60 months.
+
+Integer-paise calculation excludes the protected reserve for purchase/savings,
+fills an underfunded reserve first, counts current liquid savings for a reserve
+goal, and reports a monthly step, capacity gap, baseline/stress path and milestones.
+No returns or future savings are assumed. Passing time cannot increase actual
+progress. A reserve is not a complete assessment of financial stability.
+
+One active priority avoids allocating one pot twice. Replacing it requires
+confirmation; up to five previous snapshots are archived. Limits: 100 progress
+reports and 200 changes. ADD is additional user-reported savings, not bank proof.
+UNDO marks a specific report inactive. Every mutation requires tenant credentials,
+strict confirmation, expected revision, privacy generation and an operation ID
+bound to its payload. SQLite/Firestore transactions enclose changes. Cleanup
+invalidates stale writers and clears goals and archives. Export preserves them.
+
+Gemini intake receives only opted-in user text; numeric source quotes are checked,
+but semantic correctness is not proved. Missing facts remain unknown. Goal coaching
+uses a separate include_roadmap chat opt-in, with saved assumptions and exact
+summary/milestones only. INR amounts, citations and context freshness are checked.
+AI never writes goals or authorises money. No new IAM/queue/bank access is needed.
+
+Routes: GET goals/roadmap, goals/export, goals/budget-hints; POST goals/conversation,
+goals/roadmap-preview, goals/roadmap; existing POST chat. Existing quotas remain.
+
+## Advanced calculator and public research (retained from 0.35.0)
+
+The collapsed Advanced calculator offers one explicitly confirmed budget for up to three
 purchase targets over 1–60 months. A pure integer-paise earliest-deadline-first
 engine excludes/tops up the selected buffer, allocates savings once, estimates
 monthly-rounded financing, checks peak overlapping repayments beyond purchase
 deadlines and computes baseline/adverse scenarios. It is not
 an optimal financial strategy, return forecast, investment selection or loan
 approval. Fees, future recurring costs and prices are user assumptions, not
-automatically researched inputs. Goals remain in page memory; export is explicit.
+automatically researched inputs. These advanced scenarios remain in page memory,
+separate from the saved priority roadmap; export is explicit.
 
 Gemini goal intake receives only the supplied text after consent. Every proposed
 number must bind to a literal quote, including supported lakh/crore conversion;

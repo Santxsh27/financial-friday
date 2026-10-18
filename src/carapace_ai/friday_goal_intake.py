@@ -32,12 +32,12 @@ class GoalIntakeRequest(ExactModel):
 
 
 def quoted_value(text):
-    matches = re.findall(r'(?<![\w.])(\d[\d,]*(?:\.\d{1,3})?)\s*(crores?|lakhs?|lacs?|thousand|million)?\b', text, re.I)
+    matches = re.findall(r'(?<![\w.])(\d[\d,]*(?:\.\d{1,3})?)\s*(crores?|lakhs?|lacs?|thousand|million|k)?\b', text, re.I)
     if len(matches) != 1:
         raise ValueError('Use one unambiguous quoted number per field')
     number, scale = matches[0]
     factor = {'crore': 10000000, 'lakh': 100000, 'lac': 100000,
-        'thousand': 1000, 'million': 1000000}.get(scale.lower().rstrip('s'), 1)
+        'thousand': 1000, 'million': 1000000, 'k': 1000}.get(scale.lower().rstrip('s'), 1)
     return Decimal(number.replace(',', '')) * factor
 
 

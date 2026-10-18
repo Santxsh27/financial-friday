@@ -1,6 +1,6 @@
 # Financial Friday current API map
 
-Statement consumer product with 0.35.0 goal/research extension. Actual deployed version and source:
+Financial decision workspace with the 0.36.0 saved-roadmap extension. Actual deployed version and source:
 [CURRENT_RELEASE](CURRENT_RELEASE.json). Schema authority is the running API's
 OpenAPI document. The private API is not the judge-facing website.
 
@@ -13,11 +13,19 @@ X-Request-ID correlates bounded telemetry; it grants no authority.
 
 | Method and path | Meaning |
 | --- | --- |
+| GET /v1/friday/goals/roadmap | Restore one private priority, exact path and user-reported savings; no model call. |
+| POST /v1/friday/goals/conversation | Consented Gemini goal/type/quoted-number proposal, never a save. |
+| GET /v1/friday/goals/budget-hints | Local reviewable historical averages; never current savings or automatic model sharing. |
+| POST /v1/friday/goals/roadmap-preview | Exact cash-only visual roadmap from proposed facts; no persistence. |
+| POST /v1/friday/goals/roadmap | Confirmed SAVE/replacement, ADD savings report or UNDO; atomic tenant/revision/generation/replay checks. |
+| GET /v1/friday/goals/export | Own roadmap, reports and archives; no cross-tenant access. |
 | POST /v1/friday/goals/interpret | Explicitly consented Gemini extraction of quoted numbers from supplied goal text only; no saved history. |
 | POST /v1/friday/goals/preview | Confirmed INR shared-budget baseline/stress calculator; no model, persistence or financial action. |
 | POST /v1/friday/research | Explicitly consented public Google Search grounding through Vertex AI; provider attribution required. Never loads private records. |
 
 These routes use the same authenticated gateway and existing visitor limits.
+POST chat accepts independent include_roadmap consent for current goal summary;
+checked amounts/references and freshness guards apply. Chat has no mutation tools.
 Research is not a streaming quote feed, independently verified market data or
 personalised investment recommendation. Goal scenarios are conditional on the
 confirmed inputs, not lender eligibility or advice.

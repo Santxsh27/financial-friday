@@ -1,7 +1,7 @@
 # Financial Friday start here
 
-Friday helps with confirmed purchase scenarios, explicit public-source research
-and optional INR statement understanding. Try Home → Plan my next purchase;
+Friday helps with a saved purchase/savings/reserve roadmap, explicit public-source
+research and optional INR statement understanding. Try Home → Goals;
 [the artificial goal test](jugges/TRY-GOALS.txt) gives exact inputs/results.
 Google sign-in identifies your workspace;
 it does not connect your bank. Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json)

@@ -1,4 +1,6 @@
-FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.38
+FINANCIAL FRIDAY — ARTIFICIAL ROADMAP TEST · 0.39
+
+Current six-month samples and full walkthrough: ../judge-kit/README.md
 
 This is invented test data, not financial advice or a real person's finances.
 
@@ -17,7 +19,8 @@ liquid savings INR 70000, protected buffer INR 50000.
    Open Pressure tests: missed month ends at 111666.74, cost-increase illustration
    target 126000. No forecast, tax estimate or investment return is claimed.
    Edit income to 35000: smaller target 80000, 20-month timeline, or extra monthly
-   capacity 3333.34. These are alternatives, not automatic changes.
+   capacity 3333.34. Preview this option explores a smaller target or longer time
+   without retyping. This is not a save; Confirm & save is still required.
    What this plan checks separates supplied assumptions from missing evidence.
 5. Save my roadmap -> Confirm & save. No extra checkbox. Reload the page.
    The saved roadmap should restore, not disappear.
@@ -49,7 +52,9 @@ The model may fail, a source may be unavailable, and existing demo limits apply.
 No payment, trade, loan approval or forecast is involved.
 
 OPTIONAL VOICE
-Talk to Friday -> confirm Google processing -> Start recording -> Stop & transcribe.
+Talk to Friday -> Record & send to Google -> Stop & transcribe.
 Review the transcript in the normal message box, then send. Type instead is available.
-Speak short replies opts into Google narration of displayed text; Stop audio stops it.
+Read last reply -> Enable voice & read opts into Google speech. Long replies have
+a labelled short preview. Stop audio cancels playback, queue and loading playback.
+If autoplay is blocked, use Play in the visible audio player. New chat resets voice.
 No audio is saved by Friday. This is not always-on listening or an autonomous bank agent.

@@ -170,6 +170,16 @@ docker compose --profile test run --rm --build tests
 [release report](docs/FINAL_POLISH_0390.md) / [manifest](docs/CURRENT_RELEASE.json).
 A commit is not automatically deployed; historical reports retain their dated scope.
 
+**Deployed:** API and web 0.39.0, each at 100% traffic. **868 tests run / 867
+passed / 1 skipped** natively and in both Python CI jobs; container **868 / 818 /
+50** (environment-dependent skips); **68 tooling tests passed**. Exact-source
+[GitHub CI passed](https://github.com/Santxsh27/financial-friday/actions/runs/39130403143).
+Eight isolated real-Google calls verified speech/transcription/Search and goal
+save/restore/report/Undo. A separate public browser question and TTS call completed
+audio playback and cached replay/Stop. Only artificial/general test inputs were
+sent; no bank money moved. Hardware microphone/speaker and second-human login
+remain manual checks.
+
 The authored 39-case synthetic review-candidate benchmark records **66.67%
 precision / 73.68% recall / 38.89% case-level false-positive rate**. This is not
 fraud ground truth or independently validated bank accuracy. Misses and false

@@ -9,7 +9,9 @@ Hack2skill form or establish every eligibility requirement.
 - [x] Quote-bound Gemini goal intake, explicitly confirmed assumptions and visual shared-budget scenarios.
 - [x] Exact cash goal playbook: monthly split, amount/date checkpoints, pressure cases,
   budget alternatives and named unknowns; educational SEBI/AMFI links, not securities picks.
-- [x] 0.38 staged-cloud and browser acceptance completed (see CURRENT_RELEASE).
+- [x] 0.39 staged-cloud and canonical browser voice acceptance completed (see CURRENT_RELEASE).
+- [x] Fresh six-month artificial judge pack, public source access and matching hosted download verified.
+- [x] Speech queue, Stop/loading invalidation, cached replay and explicit permission regression tests.
 - [x] Conversation-first purchase/savings/reserve roadmap, private persistence, additional savings reports and Undo.
 - [x] Separate saved-goal coaching consent, exact INR output checks, cleanup/replay/stale-tab tests.
 - [x] Explicit public Search research with actual provider attribution; no private-record retrieval in research.

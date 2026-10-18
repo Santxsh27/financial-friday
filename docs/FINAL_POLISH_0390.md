@@ -4,6 +4,42 @@
 universal accuracy, uninterrupted availability or a perfect production product.
 Deployment identities and final acceptance are recorded in CURRENT_RELEASE.json.
 
+## Final result
+
+API `financial-friday-api-voice0390` and web `financial-friday-web-voice0390`
+are promoted at 100% main traffic. Both images come from
+`0c8f8829a513c2a292a8a12b8cffded638cf1035`; exact-source GitHub CI
+[39130403143](https://github.com/Santxsh27/financial-friday/actions/runs/39130403143)
+passed Python 3.11, Python 3.12 and the fresh container build/test jobs.
+
+Native: 868 run, 867 passed, one optional integration skipped. Container: 868 run,
+818 passed, 50 environment-dependent skips (including browser-JS Node tests and
+the filesystem judge-pack parity check); native/CI cover those unavailable cases.
+Offline tools: 68 passed. Earlier failed build/read attempts below are preserved;
+the final native rerun and matching CI/container run passed.
+
+Six real-Google assistant calls passed generated speech → transcription → chat,
+attributed public Search, goal intake and unsaved-grounded coaching. Two further
+fresh-visitor calls passed goal intake/coaching with Firestore save/restore,
+additional savings/Undo, replay/payload conflict, export, cleanup and stale-write
+checks. Fixtures were cleaned up; no owner records or bank money were used.
+
+On the canonical website, an additional general question used no statement totals.
+Its 19.370958-second Gemini voice clip reached the end with no audio error;
+cached replay and Stop worked. This verifies browser playback, not a physical
+speaker or human microphone. Voice permission was switched off after the test.
+
+The hosted six-month HDFC sample was actually downloaded and matched the GitHub
+CSV SHA-256 `7b4c7408676515d24a14275ea0a6c33e3959973e5f1278b64767004ac67478ac`.
+The download was moved into ignored private testing downloads, not left loose
+on the Desktop. All five pack/asset pairs match in automated tests.
+
+Public repository access returned 200; the website returned a Google sign-in
+redirect (302), private API 403. IAP's existing `allAuthenticatedUsers` accessor
+policy was verified unchanged. No IAM/OAuth/quota weakening was performed.
+Another person's actual login remains a human check. Light/dark and 390/1440px
+content widths were inspected without horizontal overflow; viewport was restored.
+
 ## Fixed from captured evidence
 
 The previous Read last reply control directed users to a small checkbox; long

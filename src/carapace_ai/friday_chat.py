@@ -259,6 +259,13 @@ only those strings. A finding_... ID belongs ONLY in finding_id, not evidence_id
 Copy it exactly from automatic_checkup.findings; use null if none is appropriate.'''
 
 
+INSTRUCTION += ''' When saved_roadmap is supplied, use ordinary currency notation
+like INR 1,00,000, never raw field names or _inr suffixes. Put citation IDs only in
+evidence_ids, not prose. For one next step prefer the supplied recommended_monthly_inr,
+not the entire monthly capacity. If capacity is short, explain the gap and offer
+reviewing the target or timeline, never skipping essentials or promising returns.'''
+
+
 def _allowed_citations(request,context,cashflow,diary,statements,roadmap=None):
     ids={item['evidence_id'] for item in context.get('evidence',[])} if request.include_workspace else set()
     if request.include_cashflow and cashflow:ids.add('cashflow:current')
@@ -330,6 +337,12 @@ def answer_chat(planner, request: FridayChatRequest, context: dict, preferences=
         candidates=re.findall(r'(?<![\w.])\d[\d,]*(?:\.\d{1,2})?(?![\w.])',request.message)
         if Decimal(answer.rehearsal_goal.purchase_amount_inr) not in {Decimal(n.replace(',','')) for n in candidates}:
             raise ValueError('Rehearsal purchase amount is not explicitly present in the current request')
+    if request.include_roadmap and roadmap:
+        # Some models echo typed numeric suffixes. Format them before the same
+        # exact-value validation; presentation must not bypass the amount gate.
+        readable = re.sub(r'(?<![\w.])(-?\d[\d,]*(?:\.\d{1,2})?)_inr\b',r'INR \1',answer.reply)
+        readable = readable.replace('[roadmap:current]','').strip()
+        answer = answer.model_copy(update={'reply':readable})
     amount_context={'statements':statements or {},'diary':diary or {},'cashflow':cashflow or {},'roadmap':roadmap or {}}
     if answer.plan:amount_context['requested_goal_inr']=answer.plan.target_reduction_inr
     if answer.rehearsal_goal and answer.rehearsal_goal.purchase_amount_inr is not None:

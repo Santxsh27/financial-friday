@@ -44,7 +44,7 @@ class FridayPrivacyService:
                 row=db.execute('SELECT policy FROM friday_privacy WHERE tenant=?',(tenant,)).fetchone()
             stored=json.loads(row[0]) if row else None
         return (stored or {'retention_days':None})|{'automatic_deletion_enabled':False,
-            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts; statement history, follow-up tracking, money diary and saved cash-flow snapshot clear on cleanup. Payment journal/idempotency retained.'}
+            'raw_uploads_stored':False,'scope':'Uploaded reviews and assistant drafts; statement history, follow-up tracking, money diary, saved goal roadmap including reports/archives and cash-flow snapshot clear on cleanup. Payment journal/idempotency retained.'}
 
     def save(self,tenant,policy):
         value=policy.model_dump()

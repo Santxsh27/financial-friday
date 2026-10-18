@@ -186,6 +186,19 @@ class RoadmapTests(unittest.TestCase):
         self.base.answer();self.base.chat(message='What is a reserve?')
         self.assertEqual(json.loads(self.base.model.models.generate_content.call_args.kwargs['contents'])['saved_roadmap'],{})
 
+    def test_model_numeric_suffix_is_readable_and_still_amount_checked(self):
+        self.save();self.base.answer(reply='Your gap is 100000.00_inr [roadmap:current].',evidence_ids=['roadmap:current'])
+        response=self.base.chat(message='How is my goal?',include_roadmap=True)
+        self.assertEqual(response.status_code,200,response.text)
+        self.assertNotIn('_inr',response.json()['reply']);self.assertIn('INR 100000.00',response.json()['reply'])
+        self.base.answer(reply='Your gap is 999999.00_inr.',evidence_ids=['roadmap:current'])
+        self.assertEqual(self.base.chat(message='My goal?',include_roadmap=True).status_code,503)
+
+    def test_cleanup_scope_explicitly_includes_goals_and_archives(self):
+        self.assertIn('goal roadmap including reports/archives',self.base.app.state.friday_privacy.policy('one')['scope'])
+        from carapace_integrations.friday_privacy_ui import PRIVACY_JS
+        self.assertIn('saved goal roadmap including reports/archives',PRIVACY_JS)
+
     @unittest.skipUnless(shutil.which('node'), 'JavaScript syntax check requires Node; runs in native suite')
     def test_generated_javascript_is_parseable_and_keeps_confirmation_boundary(self):
         from carapace_integrations.friday_roadmap_ui import ROADMAP_JS

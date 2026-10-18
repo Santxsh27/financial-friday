@@ -1,0 +1,43 @@
+FINANCIAL FRIDAY - SUBMISSION PACK CHECKS
+18 October 2026
+
+ARTIFACTS
+- PDF: 16 pages, 825948 bytes (0.83 MB), below the 5 MB form limit.
+- PPTX: 16 slides, editable text, tables and process/architecture diagrams.
+- Official template canvas: 9144000 x 5143500 EMU (10 x 5.625 inches).
+- Original organiser artwork, section order and instruction slide retained.
+- All final PDF pages rendered and visually reviewed individually.
+- Google Sans Flex fonts embedded in the PDF. Text is searchable.
+- PDF links to the repository, product and walkthrough are clickable.
+- Product screenshots use an artificial local workspace. No private bank records.
+- Source notes distinguish current functionality, synthetic evaluation and plans.
+- Template package, geometry, font-policy and source-family checks passed.
+  These checks do not establish product efficacy or native PowerPoint behaviour.
+
+LINKS CHECKED
+- GitHub repository: PUBLIC, anonymous HTTP 200.
+- Deployed website: HTTP 302 to Google sign-in when anonymous.
+- Signed-in owner browser: Financial Friday home rendered.
+- Private API: anonymous HTTP 403, as intended. Never submit the API URL as app.
+- The app has no dependency on the owner's laptop remaining switched on.
+
+REMAINING PARTICIPANT CHECKS
+- Confirm "Vaultkeepers" exactly matches the registered team name. This working
+  name comes from the project's existing team-mark notes, not a dashboard check.
+- Record and publish the required 3-4 minute working demonstration.
+- Supply its public URL in the form. The deck refers to that separate video field
+  until the recording exists. A final embedded URL can replace that row later.
+- Have a second person test Google sign-in and the sample journey. We have not
+  established every Google account's access, microphone or speaker compatibility.
+- Confirm eligibility/roster and submit before 18 October 2026, 11:59 PM IST.
+- Keep the cloud account, trial/billing, models, quota and source available for
+  evaluation. Current tests cannot guarantee future availability or zero costs.
+
+TECHNOLOGY BOUNDARIES
+Cloud Run, Firestore and Gemini on Vertex AI are implemented. Document AI handles
+supported OCR. Firebase Hosting/Auth are not implemented. The public requirements
+specify Cloud Run OR Firebase; no unnecessary integration or security change was
+made for the deck. Existing runtime deployments remain unchanged.
+
+No video, final form submission, payment, bank authentication, world-first novelty,
+guaranteed returns, regulatory certification or judging outcome is claimed.

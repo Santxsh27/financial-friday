@@ -64,10 +64,11 @@ and each visitor's records remain private. Do not share credentials, databases,
 
 ## Human-controlled submission requirements
 
-- [ ] Confirm exact cutoff/timezone in the Hack2skill dashboard.
+- [x] Participant supplied dashboard cutoff: **18 October 2026, 11:59 PM IST**.
 - [ ] Confirm working-professional/age/team eligibility and final roster.
-- [ ] Finish the English proposal deck converted to PDF.
-- [ ] Publish and test the approximately three-minute video link.
+- [ ] Confirm registered team name on the prescribed-template English deck.
+- [ ] Upload the completed prescribed-template PDF, no larger than **5 MB**.
+- [ ] Publish and test the **3-4 minute** video link (current dashboard rule).
 - [ ] Confirm source access instructions required by the dashboard.
 - [ ] Open every final link from a separate eligible Google account.
 - [ ] Submit the form and retain its acknowledgment.
@@ -79,3 +80,17 @@ lists Google AI use, Cloud Run/Firebase deployment, English materials, a proposa
 deck/PDF and a public demonstration video. Dashboard-specific instructions take
 precedence if the organiser clarifies an ambiguity. This checklist does not
 guarantee selection, prizes or production-bank readiness.
+
+## Submission materials
+
+[Copy-ready form fields and last checks](SUBMISSION_DETAILS.txt).
+The participant's current dashboard instructions require the prescribed
+[Google Slides template](https://docs.google.com/presentation/d/13rg7vW43mEH6DkpuusAE6fdoEylSFz8waNpE4RLzoUg/edit).
+Use a downloaded working copy, not an edit request to the organiser's master.
+The current 3-4 minute dashboard video rule takes precedence over the older
+3-minute label inside that template and the public marketing page.
+
+The public requirements inspected again on 18 October say Google AI with
+**Cloud Run or Firebase** deployment. Friday uses Cloud Run, Firestore and
+Gemini on Vertex AI. Firebase Hosting and Firebase Authentication are not used.
+Do not add an unused service claim to the description.

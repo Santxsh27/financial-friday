@@ -1,0 +1,82 @@
+FINANCIAL FRIDAY - HACK2SKILL SUBMISSION DETAILS
+Prepared 18 October 2026. This file does not submit the entry.
+
+DEADLINE
+18 October 2026, 11:59 PM IST, according to the dashboard instructions supplied
+by the participant. Submit early and retain the confirmation/acknowledgment.
+
+CHALLENGE
+BFSI: Intelligent Risk, Fraud & Financial Experiences
+
+PROTOTYPE LINK DEPLOYED ON GCP OR CLOUD RUN
+https://financial-friday-web-171681243260.asia-south1.run.app/#home
+
+GITHUB REPOSITORY LINK (PUBLIC ACCESS)
+https://github.com/Santxsh27/financial-friday
+
+FINAL PROTOTYPE PPT/DECK CONVERTED INTO PDF
+Upload Financial-Friday-AI-Builder-Cup.pdf from this submission folder.
+Use the PDF, not the PPTX or organiser's template URL, for the PDF upload field.
+Maximum permitted file size: 5 MB. The pack's verification report records size.
+The editable PPTX is supplied separately for revisions.
+
+DEMO VIDEO LINK (3-4 MINUTES)
+Record and upload your actual working demo, then paste its public viewing URL.
+No video or fake video link has been generated. The deck's video row refers
+to the separate submission form until you provide the final recording URL.
+Use the dashboard's 3-4 minute rule despite the template's older 3-minute label.
+Aim for about 3 minutes 30 seconds. Verify the uploaded video's actual duration,
+audio, and access in a private window. Do not use a restricted/edit-only link.
+
+BRIEF DESCRIPTION OF YOUR SOLUTION - COPY THE NEXT PARAGRAPH ONLY
+
+Financial Friday is an India-first AI financial buddy that helps people understand their statement history and plan their next financial goal. Users review a supported INR PDF/CSV statement, explore spending visually, and talk to Friday about purchases, savings or an emergency reserve. Gemini on Vertex AI interprets documents and conversational goals, asks for missing facts, and provides contextual explanations. Independent code validates source evidence and calculates allocations, dated milestones, pressure scenarios and feasible alternatives using exact INR arithmetic. Google Cloud Run hosts the responsive web gateway and private Python/FastAPI API. Cloud Firestore stores tenant-private reviewed history, preferences and confirmed roadmaps. Document AI supports OCR for scanned PDFs, while Google Search grounding supplies attributed public research. Optional Gemini transcription and speech make the assistant accessible by voice. Explicit consent, Google sign-in and stale-response checks protect the workspace. The prototype does not connect to a real bank, execute payments or promise investment returns.
+
+GOOGLE TECHNOLOGY CLARIFICATION
+The official requirements say Google AI with deployment on Cloud Run OR Firebase:
+https://aibuildercup.com/themes.html
+Friday uses Cloud Run, Firestore and Gemini on Vertex AI. It does not use
+Firebase Hosting or Firebase Authentication. Do not claim those integrations.
+It also does not claim BigQuery, Vertex AI Search, model fine-tuning, universal
+fraud detection or authenticated bank statements.
+
+JUDGE ACCESS INSTRUCTIONS - OPTIONAL EXTRA TEXT IF THE FORM ALLOWS IT
+Open the prototype and sign in with a Google account. No bank, Gmail or Drive
+permission is needed. Use "Try a sample" on Home to download an artificial
+statement and follow the walkthrough. Each account has its own workspace.
+For a goal demo, open Goals and use the artificial example in the judge guide.
+
+Walkthrough and downloads:
+https://financial-friday-web-171681243260.asia-south1.run.app/assets/friday-judge-guide.html
+
+Public source and sample pack:
+https://github.com/Santxsh27/financial-friday/tree/main/judge-kit
+
+FINAL MANUAL CHECKLIST
+1. Confirm the cover's team name exactly matches your Hack2skill registration.
+   Team leader: Santosh Ramesh. The deck uses "Vaultkeepers" from the existing
+   project/team-mark notes. Its match to the registered team requires confirmation.
+2. Ask another person to complete Google sign-in and the sample walkthrough.
+   A signed-in owner's browser is not proof of every Google account's access.
+3. Check the PDF locally, then upload it to the PDF field, maximum 5 MB.
+4. Add the public 3-4 minute demo video URL. If you want the video URL embedded
+   in slide 14 too, provide it for a quick deck update before uploading the PDF.
+5. Paste the prototype URL, public GitHub URL and description above.
+6. Confirm team/age/professional eligibility and final roster against the rules.
+7. Submit before the cutoff and save the acknowledgment.
+8. Keep cloud billing/trial, model access, deployment and repository operational
+   throughout evaluation. Do not stop/delete Cloud Run services or restrict IAP.
+   Cloud availability and quotas are dependencies, not an uptime guarantee.
+
+TEMPLATE AND EDITING
+The organiser's view-only template remains unchanged. A downloaded copy provides
+all sixteen original sections/artwork. The PDF is the file to submit. You may
+open the editable PPTX in PowerPoint or import it into your own Google Slides.
+The original shared template is not your editable personal presentation.
+
+Original prescribed template:
+https://docs.google.com/presentation/d/13rg7vW43mEH6DkpuusAE6fdoEylSFz8waNpE4RLzoUg/edit
+
+Official programme and requirements:
+https://aibuildercup.com/
+https://aibuildercup.com/themes.html

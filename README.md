@@ -209,6 +209,13 @@ dashboard. Complete its required proposal/deck, public demo video, team/eligibil
 checks and submission fields. Confirm the dashboard deadline yourself; deployment
 does not submit an entry. [Submission checklist](docs/submission/RELEASE_CHECKLIST.md).
 
+**Submission materials:** [Prescribed-template PDF](docs/submission/Financial-Friday-AI-Builder-Cup.pdf),
+[editable PowerPoint](docs/submission/Financial-Friday-AI-Builder-Cup.pptx) and
+[copy-ready form details](docs/submission/SUBMISSION_DETAILS.txt).
+The supplied dashboard cutoff is **18 October 2026, 11:59 PM IST** and its video
+requirement is **3-4 minutes**. The participant supplies the final video separately.
+Confirm the cover's team name matches the registered roster before uploading.
+
 On this Mac, source stays in `Desktop/CARAPACE`; fresh upload files and personal
 notes are in **`Desktop/Financial Friday Testing`**. Older materials remain
 recoverably in ignored `archive/` and `my-testing/`, not the new judge pack.

@@ -80,6 +80,10 @@ local Docker dependency download timed out at the package host; existing service
 were not deleted. Local verification reused the unchanged installed dependency
 images with new source; cloud builds use the existing immutable release base.
 Do not describe this as a newly resolved/pinned dependency audit.
+One later native rerun also encountered macOS read timeouts in existing local
+virtual-environment dependencies. These are retained as infrastructure failures,
+not silently counted as passes. Final exact-source CI/container results and skips
+are the acceptance evidence in the release manifest.
 
 ## Remaining human gates
 

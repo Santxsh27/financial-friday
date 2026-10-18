@@ -1,5 +1,8 @@
 # Financial Friday — documentation and evidence index
 
+Latest: [0.39 voice, workflow and judge-kit polish](FINAL_POLISH_0390.md).
+Use [CURRENT_RELEASE.json](CURRENT_RELEASE.json) for actual deployment identities.
+
 The **0.36.0 conversation-first roadmap** is described in
 [ROADMAP_0360](ROADMAP_0360.md). Consult CURRENT_RELEASE for its actual deployment
 and verification status. Deployed 18 October at 100% API/web traffic: native 825
@@ -113,8 +116,3 @@ external alerts and independently measured large-scale effectiveness remain
 unimplemented. Reference datasets require provenance/licensing and a separate
 design; private customer records are not automatically training data. Deck/video,
 dashboard confirmation and a second-person access test remain submission tasks.
-# Latest release
-
-[0.39 voice, workflow and judge-kit polish](FINAL_POLISH_0390.md) — use
-[CURRENT_RELEASE.json](CURRENT_RELEASE.json) for actual deployment/test identities.
-

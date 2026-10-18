@@ -48,7 +48,11 @@ class SubmissionTests(unittest.TestCase):
         self.assertEqual(len(downloads),6)
         for name in downloads:
             self.assertIn(name,ASSETS);self.assertTrue((ASSET_ROOT/name).is_file())
-        self.assertNotIn('github.com',page)
+        # Source is now public; the optional source link is not a prerequisite
+        # for any download. All six trial files still come from this server.
+        repo_links=[link for link in links.hrefs if 'github.com' in link]
+        self.assertEqual(repo_links,['https://github.com/Santxsh27/financial-friday/tree/main/judge-kit'])
+        self.assertTrue(all(not link.startswith('https://') for link in downloads))
         self.assertNotIn('localhost',page)
         self.assertNotIn('<script',page)
         self.assertIn('Try a sample',NAVIGATION_JS)

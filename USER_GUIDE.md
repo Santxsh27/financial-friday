@@ -1,6 +1,6 @@
 # Financial Friday user guide
 
-Choose **Goals** for a purchase plan, **Research** for an explicitly requested
+Choose **Goals** for a purchase, savings or reserve roadmap, **Research** for an explicitly requested
 public-source snapshot, or **Statements** for **Add → Review → My money → Ask Friday**.
 Check [CURRENT_RELEASE](docs/CURRENT_RELEASE.json) before
 assuming local changes are already on the hosted site.

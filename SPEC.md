@@ -7,10 +7,10 @@ in [CURRENT_RELEASE](docs/CURRENT_RELEASE.json), not inferred from this document
 ## 1. Product and authority
 
 Financial Friday is an INR financial decision workspace: describe a purchase,
-confirm the proposed facts, compare shared-budget scenarios and optionally research
+savings or reserve goal, confirm proposed facts, track a cash-only roadmap and optionally research
 public information through Friday. Supplied bank/card statements provide a separate
 reviewed spending picture. The two main journeys are **Home → Goals → Confirm →
-Visual plan**, and **Add statement → Review → My money → Ask Friday**.
+Visual roadmap → Report savings**, and **Add statement → Review → My money → Ask Friday**.
 
 It is not a payment processor, bank feed, settlement witness, investment adviser,
 official credit score or continuously listening assistant. It cannot pay, reverse,

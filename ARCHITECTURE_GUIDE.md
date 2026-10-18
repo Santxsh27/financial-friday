@@ -1,6 +1,6 @@
 # Financial Friday — architecture guide
 
-Current reference: 17 October 2026, goal/research expansion 0.35.0.
+Current reference: 18 October 2026, conversation-first saved roadmap 0.36.0.
 [SPEC](SPEC.md) defines the contract; [CURRENT_RELEASE](docs/CURRENT_RELEASE.json)
 identifies the actual source commits, container digests, revisions and verification.
 Earlier dated reports describe history, not additional current consumer features.
@@ -20,12 +20,27 @@ guaranteed savings, universal safety or bank authentication are claimed.
 
 ## Goal/research boundary
 
-`friday_goals.py` is a pure shared-pool purchase-scenario calculator. Quote-bound
+The primary goal path is **message → quote-bound Gemini proposal → missing facts
+only → exact visual roadmap → confirmed save → reported savings / Undo**.
+`carapace_core/friday_roadmap.py` computes a cash-only path and milestones without
+returns or inferred savings. `carapace_api/friday_roadmap.py` stores one private
+priority using transactional revision/generation/operation checks. Hosted state is
+Firestore; local state is SQLite. Explicit privacy cleanup clears plans and archives.
+`friday_roadmap_ui.py` keeps the existing chat, uses graphical output and asks one
+missing amount at a time. Historical budget hints require local acceptance; they
+do not establish current liquid cash. Optional include_roadmap coaching sends only
+confirmed assumptions and exact summary/milestones, never statement descriptions.
+AI can propose/explain but cannot save, update progress or pay. See
+[the 0.36 report](docs/ROADMAP_0360.md) for the current boundaries and verification.
+
+The collapsed Advanced calculator remains separate. `friday_goals.py` is its pure
+shared-pool purchase-scenario calculator. Quote-bound
 `friday_goal_intake.py` supplies reviewed proposals only. `friday_research.py`
 uses explicit public Google Search grounding separately from private records and
 ordinary chat. `friday_goals_ui.py` supplies goal cards, charts, tables and
-sandboxed Search Suggestions. There is no server goal persistence or background
-market polling. Details and limitations: [0.35 report](docs/GOALS_RESEARCH_0350.md).
+sandboxed Search Suggestions. Those advanced scenarios are unsaved; the primary
+priority roadmap above is persisted. No background market polling or automatic
+reminder delivery. Historical calculator/research detail: [0.35 report](docs/GOALS_RESEARCH_0350.md).
 
 ## Runtime and deployment
 
